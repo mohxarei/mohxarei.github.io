@@ -2455,7 +2455,8 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
       <button type="button" class="btn-act" id="btnResetAvatarPos" style="flex:1">Reset Position</button>
     </div>
   </div></section>
-  <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere & motion<span class="t-group-count">13</span></button><div class="t-group-body" id="t-group-sphere" hidden>
+  <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere & motion<span class="t-group-count">14</span></button><div class="t-group-body" id="t-group-sphere" hidden>
+<div class="t-row"><div class="t-row-top"><span>DEFAULT CAMERA ZOOM</span><b id="val_defaultZoom">145</b></div><input id="sl_defaultZoom" type="range" min="60" max="280" value="145" aria-label="DEFAULT CAMERA ZOOM"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE RADIUS</span><b id="val_sphereRadius">48</b></div><input id="sl_sphereRadius" type="range" min="15" max="100" value="48" aria-label="SPHERE RADIUS"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE DEFORMATION / WAVES</span><b id="val_sphereDeform">0.52</b></div><input id="sl_sphereDeform" type="range" min="0" max="150" value="52" aria-label="SPHERE DEFORMATION / WAVES"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE VERTICAL STRETCH</span><b id="val_sphereStretch">1.00</b></div><input id="sl_sphereStretch" type="range" min="40" max="220" value="100" aria-label="SPHERE VERTICAL STRETCH"></div>
@@ -6195,10 +6196,19 @@ function bootSupernovaEngine() {
   applyContactCornerPosition();
 
   const getResponsiveCamDist = () => {
-    const base = PARAMS.defaultZoom || 145;
-    const aspect = window.innerWidth / Math.max(1, window.innerHeight);
-    if (aspect < 0.65) return base * 2.2;  // comfortably smaller on portrait phones
-    if (aspect < 0.85) return base * 1.65; // small tablet / foldable
+    const base = Math.max(30, Number(PARAMS.defaultZoom) || 145);
+    const w = Math.max(10, window.innerWidth || (typeof document !== 'undefined' && document.documentElement && document.documentElement.clientWidth) || 800);
+    const h = Math.max(10, window.innerHeight || (typeof document !== 'undefined' && document.documentElement && document.documentElement.clientHeight) || 600);
+    const aspect = w / h;
+    // Standard Responsive Composition Regulation:
+    // On landscape screens (aspect >= 1.25), vertical height frames the sphere (distance = base).
+    // On portrait screens (aspect < 1.25), width becomes the constraining dimension.
+    // Scales camera distance continuously so the sphere maintains the exact same proportional presence across any phone, tablet, and desktop:
+    const refAspect = 1.25;
+    if (aspect < refAspect) {
+      const containment = refAspect / Math.max(0.38, aspect);
+      return base * (0.58 + 0.42 * containment);
+    }
     return base;
   };
 
@@ -7710,7 +7720,7 @@ function bootSupernovaEngine() {
     }
 
     const rawFrameW = frameW !== undefined ? frameW : (PARAMS.photoCardFrameWidth !== undefined ? PARAMS.photoCardFrameWidth : 2);
-    const pad = Math.max(isDraft ? 4 : 1, Math.round((isDraft ? rawFrameW + 2.5 : rawFrameW) * (canvasW / 260)));
+    const pad = Math.max(isDraft ? 8 : 6, Math.round((isDraft ? rawFrameW + 3.0 : rawFrameW + 1.8) * (canvasW / 240)));
     const photoX = pad;
     const photoY = pad;
     const photoW = Math.max(10, canvasW - pad * 2);
@@ -7747,15 +7757,15 @@ function bootSupernovaEngine() {
 
       // Subtle neutral depth glow (pure monochromatic, no arbitrary colorful pictures)
       const glowGrad = ctx.createRadialGradient(cx, cy, 10, cx, cy, photoW * 0.72);
-      glowGrad.addColorStop(0, "rgba(255, 255, 255, 0.06)");
-      glowGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.015)");
+      glowGrad.addColorStop(0, "rgba(255, 255, 255, 0.08)");
+      glowGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.02)");
       glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
       ctx.fillStyle = glowGrad;
       ctx.fillRect(photoX, photoY, photoW, photoH);
 
       const style = (node.id * 3 + layerIndex * 2 + (node.tags && node.tags.length ? node.tags[0].length : 0)) % 5;
-      ctx.lineWidth = 1.8;
-      ctx.shadowColor = "rgba(255, 255, 255, 0.35)";
+      ctx.lineWidth = 3.0;
+      ctx.shadowColor = "rgba(255, 255, 255, 0.40)";
       ctx.shadowBlur = 6;
 
       if (style === 0) {
@@ -7766,7 +7776,8 @@ function bootSupernovaEngine() {
           ctx.stroke();
         }
       } else if (style === 1) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.90)";
+        ctx.lineWidth = 3.2;
         ctx.beginPath();
         for (let x = photoX + 16; x < photoX + photoW - 16; x += 4) {
           const env = Math.sin(((x - photoX - 16) / (photoW - 32)) * Math.PI);
@@ -7777,15 +7788,15 @@ function bootSupernovaEngine() {
       } else if (style === 2) {
         for (let k = 0; k < 5; k++) {
           ctx.strokeStyle = `rgba(255, 255, 255, ${0.85 - k * 0.14})`;
-          ctx.lineWidth = 3.2 - k * 0.5;
+          ctx.lineWidth = 4.2 - k * 0.6;
           ctx.beginPath();
           ctx.moveTo(photoX + 24, cy + (k - 2) * 20);
           ctx.bezierCurveTo(photoX + photoW * 0.3, cy - photoH * 0.35 + k * 22, photoX + photoW * 0.7, cy + photoH * 0.35 - k * 22, photoX + photoW - 24, cy + (2 - k) * 18);
           ctx.stroke();
         }
       } else if (style === 3) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.65)";
-        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
+        ctx.lineWidth = 2.4;
         for (let a = 0; a < 16; a++) {
           const ang = (a / 16) * Math.PI * 2 + (node.id * 0.2 + layerIndex * 0.4);
           ctx.beginPath();
@@ -7794,13 +7805,13 @@ function bootSupernovaEngine() {
           ctx.stroke();
         }
       } else {
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.45)";
         for (let i = 0; i <= 6; i++) {
           const gx = photoX + (photoW / 6) * i;
           ctx.beginPath(); ctx.moveTo(gx, photoY); ctx.lineTo(gx, photoY + photoH); ctx.stroke();
         }
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.90)";
-        ctx.lineWidth = 2.4;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+        ctx.lineWidth = 3.4;
         ctx.beginPath(); ctx.moveTo(photoX + 20, photoY + photoH - 20); ctx.lineTo(photoX + photoW - 20, photoY + 20); ctx.stroke();
       }
 
@@ -7961,6 +7972,11 @@ function bootSupernovaEngine() {
       ctx.strokeRect(photoX, photoY, photoW, photoH);
     }
 
+    // Crisp outer border stroke so cards remain high-contrast and sharp across all screen sizes & DPIs
+    ctx.strokeStyle = isDraft ? "#eab308" : "rgba(255, 255, 255, 0.95)";
+    ctx.lineWidth = isDraft ? 5.0 : 3.0;
+    ctx.strokeRect(1.5, 1.5, canvasW - 3, canvasH - 3);
+
     return cv;
   }
 
@@ -8119,7 +8135,12 @@ function bootSupernovaEngine() {
     const countLimit = Math.max(0, Math.min(43, Math.round(PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : 43)));
     const activeLayers = Math.max(1, Math.min(4, Math.round(PARAMS.photoCardLayers || 1)));
     const layerSpread = Math.max(0, Math.min(1, Number(PARAMS.photoCardLayerSpread) !== undefined ? Number(PARAMS.photoCardLayerSpread) : 0.30));
-    const baseSize = Math.max(0.2, Number(PARAMS.photoCardSize) || 3.00);
+    const w = Math.max(10, window.innerWidth || 800);
+    const h = Math.max(10, window.innerHeight || 600);
+    const vpAspect = w / h;
+    // Responsive card scale: on narrow/portrait screens, scale cards proportionally so they remain crisp, prominent, and legible
+    const responsiveCardScale = vpAspect < 1.15 ? Math.min(1.42, Math.max(1.0, 1.0 + (1.15 - vpAspect) * 0.52)) : 1.0;
+    const baseSize = Math.max(0.2, Number(PARAMS.photoCardSize) || 3.00) * responsiveCardScale;
     const aspect = Math.max(0.25, Number(PARAMS.photoCardAspect) || 0.62);
     const baseW = 2.4 * baseSize;
     const baseH = baseW / aspect;
@@ -10052,13 +10073,16 @@ function bootSupernovaEngine() {
   bindSl("slFakeVis", e => { PARAMS.fakeVis = e.target.value / 100.0; t3Mat.opacity = Math.min(1.0, 0.55 * PARAMS.fakeVis); $("valFakeVis").textContent = PARAMS.fakeVis.toFixed(2); });
   bindSl("slFakeWidth", e => { PARAMS.fakeWidth = e.target.value / 100.0; uFakeWidth.value = PARAMS.fakeWidth; $("valFakeWidth").textContent = PARAMS.fakeWidth.toFixed(2); });
 
-  const SPHERE_ROWS = [["sphereRadius","SPHERE RADIUS",15,100,1,0],["sphereDeform","SPHERE DEFORMATION / WAVES",0,150,100,2],["sphereStretch","SPHERE VERTICAL STRETCH",40,220,100,2],["sphereTwist","SPHERE TWIST",-150,150,100,2],["sphereFlow","SPHERE FLUID SPEED",0,250,100,2],["sphereSpin","SPHERE GENTLE ROTATION",0,30,100,2],["sphereThickness","SPHERE SHELL THICKNESS",0,1000,100,2],["sphereTension","SPHERE RETURN TENSION",0,100,100,2],["hubSeed","HUB SCATTER SEED",0,9999,1,0],["dragLimit","HUB RELOCATION LIMIT",0,80,1,0],["hubFollowStrength","HUB PARTICLE FOLLOW STRENGTH",0,300,100,2],["mouseEffectStrength","MOUSE EFFECT STRENGTH (0 = OFF)",0,300,100,2]];
+  const SPHERE_ROWS = [["defaultZoom","DEFAULT CAMERA ZOOM",60,280,1,0],["sphereRadius","SPHERE RADIUS",15,100,1,0],["sphereDeform","SPHERE DEFORMATION / WAVES",0,150,100,2],["sphereStretch","SPHERE VERTICAL STRETCH",40,220,100,2],["sphereTwist","SPHERE TWIST",-150,150,100,2],["sphereFlow","SPHERE FLUID SPEED",0,250,100,2],["sphereSpin","SPHERE GENTLE ROTATION",0,30,100,2],["sphereThickness","SPHERE SHELL THICKNESS",0,1000,100,2],["sphereTension","SPHERE RETURN TENSION",0,100,100,2],["hubSeed","HUB SCATTER SEED",0,9999,1,0],["dragLimit","HUB RELOCATION LIMIT",0,80,1,0],["hubFollowStrength","HUB PARTICLE FOLLOW STRENGTH",0,300,100,2],["mouseEffectStrength","MOUSE EFFECT STRENGTH (0 = OFF)",0,300,100,2]];
   SPHERE_ROWS.forEach(([key,label,min,max,scale,digits]) => {
     const el = $('sl_'+key);
     if (!el) return;
     const update = e => {
       PARAMS[key] = Number(e.target.value) / scale;
       if ($('val_'+key)) $('val_'+key).textContent = PARAMS[key].toFixed(digits);
+      if (key === 'defaultZoom') {
+        camDist = getResponsiveCamDist();
+      }
     };
     el.addEventListener('input', update);
     el.addEventListener('change', update);
