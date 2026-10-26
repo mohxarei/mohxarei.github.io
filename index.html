@@ -11804,7 +11804,7 @@ function bootSupernovaEngine() {
       $("subnetStage").style.transform = `translate(${snPanX.toFixed(1)}px, ${snPanY.toFixed(1)}px) scale(${snZoom.toFixed(3)})`;
     }
 
-    uMorph.value = 0; bgUniforms.uMorph.value = 0;
+    uMorph.value = 0; bgUniforms.uMorph.value = 0; const m = 0;
 
     const isProjectOpen = (selectedId >= 0 || (popupEl && popupEl.classList.contains("open")));
     if (!isPointerDown && !isProjectOpen) camYaw += 0.0012 * PARAMS.autoSpeed;
