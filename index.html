@@ -423,27 +423,30 @@ body.desc-unpinned .brand p:not(.open) { pointer-events: none; }
 
 /* Project Pop-Up Window */
 #projectPopup {
-  position: fixed; left: calc(50vw - min(420px, 47vw)); top: calc(50vh - 280px);
-  width: min(840px, 94vw); height: min(620px, 88vh); min-width: 310px; min-height: 300px;
-  background: var(--panel);
-  backdrop-filter: blur(24px); border: 1px solid var(--line);
-  border-radius: var(--ui-radius, 1px); z-index: 22; display: flex; flex-direction: column;
-  box-shadow: 0 28px 80px rgba(0,0,0,0.92); opacity: 0; pointer-events: none;
+  position: fixed; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important;
+  width: min(1080px, 94vw); height: min(780px, 92vh); min-width: 310px; min-height: 320px;
+  background: rgba(6, 10, 8, 0.98);
+  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+  border: 1.5px solid rgba(255, 255, 255, 0.38);
+  border-radius: var(--ui-radius, 1px); z-index: 999; display: flex; flex-direction: column;
+  box-shadow: 0 32px 100px rgba(0,0,0,0.98), 0 0 0 1px rgba(255, 255, 255, 0.18); opacity: 0; pointer-events: none;
   transition: opacity .2s; overflow: hidden;
 }
 #projectPopup.open { opacity: 1; pointer-events: auto; }
-.popup-drag-bar { padding: 14px 18px 4px; display: flex; justify-content: space-between; align-items: baseline; cursor: move; flex-shrink: 0; }
+.popup-drag-bar { padding: 14px 18px 4px; display: flex; justify-content: space-between; align-items: baseline; cursor: default; flex-shrink: 0; }
+body.studio-mode .popup-drag-bar { cursor: move; }
+body.viewer-mode .pop-res { display: none !important; }
 .popup-title-wrap { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; flex: 1; min-width: 0; }
-.popup-title-wrap h2 { margin: 0; font-size: 21px; font-weight: 600; letter-spacing: -.02em; color: var(--text); outline: none; }
-.popup-date { font-size: 10.5px; color: var(--mid); outline: none; }
+.popup-title-wrap h2 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -.02em; color: var(--text); outline: none; }
+.popup-date { font-size: 11px; color: var(--mid); outline: none; }
 .draft-pill { font-size: 9px; padding: 1px 6px; border-radius: var(--ui-radius, 1px); background: rgba(244, 223, 160, 0.12); border: 1px solid #d9c47f; color: #f4dfa0; }
 #projectPopup.is-draft .popup-title-wrap h2,
 #projectPopup.is-draft .popup-date { color: #f4dfa0; }
-.close-btn { width: 26px; height: 26px; border-radius: var(--ui-radius, 1px); border: 1px solid transparent; display: grid; place-items: center; color: var(--mid); font-size: 17px; transition: all .15s; flex-shrink: 0; }
-.close-btn:hover { color: var(--text); border-color: var(--line); }
+.close-btn { width: 28px; height: 28px; border-radius: var(--ui-radius, 1px); border: 1px solid transparent; display: grid; place-items: center; color: var(--mid); font-size: 18px; transition: all .15s; flex-shrink: 0; }
+.close-btn:hover { color: #ffffff; border-color: rgba(255,255,255,0.4); }
 
 .popup-body { padding: 4px 18px 18px; overflow-y: auto; flex: 1; user-select: text; }
-.desc { color: #d8dde6; font-size: 13px; line-height: 1.6; margin: 0 0 12px; white-space: pre-line; outline: none; }
+.desc { color: #d8dde6; font-size: 13.5px; line-height: 1.6; margin: 0 0 12px; white-space: pre-line; outline: none; }
 
 body.studio-mode .editable-field {
   cursor: text; border-radius: var(--ui-radius, 1px); padding: 1px 4px; margin-left: -4px;
@@ -452,8 +455,9 @@ body.studio-mode .editable-field {
 body.studio-mode .editable-field:hover { border-color: rgba(255, 255, 255, 0.28); background: rgba(255, 255, 255, 0.03); }
 body.studio-mode .editable-field:focus { border-color: rgba(255, 255, 255, 0.65); background: rgba(0, 0, 0, 0.45); }
 
-.subnet-viewport { position: relative; width: 100%; height: 380px; min-height: 260px; max-height: 54vh; border: 1px solid var(--line); border-radius: var(--ui-radius, 1px); overflow: hidden; touch-action: none; user-select: none; margin-bottom: 12px; background: rgba(0, 0, 0, 0.45); cursor: grab; }
-.subnet-viewport:active { cursor: grabbing; }
+.subnet-viewport { position: relative; width: 100%; height: 480px; min-height: 320px; max-height: 60vh; border: 1.5px solid rgba(255, 255, 255, 0.30); border-radius: var(--ui-radius, 1px); overflow: hidden; touch-action: none; user-select: none; margin-bottom: 12px; background: #020403; cursor: default; }
+body.studio-mode .subnet-viewport { cursor: grab; }
+body.studio-mode .subnet-viewport:active { cursor: grabbing; }
 canvas#subnetBgCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.42; mask-image: radial-gradient(ellipse at 50% 50%, black 48%, transparent 96%); -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 48%, transparent 96%); }
 .subnet-stage { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; will-change: transform; }
 .subnet-svg { position: absolute; left: -1000px; top: -1000px; width: 3000px; height: 3000px; pointer-events: none; overflow: visible; }
@@ -461,22 +465,36 @@ canvas#subnetBgCanvas { position: absolute; inset: 0; width: 100%; height: 100%;
 .sn-wire-animated { stroke-dasharray: 4 6; animation: dashFlow 1.8s linear infinite; }
 
 .vp-nav-btn {
-  position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 50px;
-  background: rgba(10, 16, 13, 0.78); border: 1px solid var(--line);
-  border-radius: var(--ui-radius, 1px); color: #fff; font-size: 24px;
+  position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 70px;
+  background: transparent !important; border: none !important; box-shadow: none !important; outline: none;
+  color: rgba(255, 255, 255, 0.72); font-size: 54px; line-height: 1; font-family: inherit; font-weight: 300;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; z-index: 10; opacity: 0.65; transition: all .15s; user-select: none;
+  cursor: pointer; z-index: 90; opacity: 0.75; transition: opacity .2s, color .2s, transform .2s; user-select: none;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.95));
 }
-.vp-nav-btn:hover { opacity: 1; background: rgba(15, 24, 19, 0.95); border-color: #fff; color: var(--accent-green); }
-.vp-prev { left: 8px; }
-.vp-next { right: 8px; }
+.vp-nav-btn:hover { opacity: 1; background: transparent !important; border: none !important; color: #ffffff; transform: translateY(-50%) scale(1.18); }
+.vp-prev { left: 10px; }
+.vp-next { right: 10px; }
 
-.subnet-node { position: absolute; transform: translate(-50%,-50%); background: transparent; border: none; border-radius: var(--ui-radius, 1px); overflow: visible; cursor: pointer; transition: filter .2s; }
+.subnet-node { position: absolute; transform: translate(-50%,-50%); background: transparent; border: none; border-radius: var(--ui-radius, 1px); overflow: visible; cursor: pointer; transition: transform .28s cubic-bezier(0.16,1,0.3,1), box-shadow .25s, filter .2s; z-index: 10; }
+.subnet-node:hover { z-index: 25; }
+.subnet-node.active, .subnet-node.active-front { z-index: 60 !important; transform: translate(-50%, -50%) scale(1.36) !important; filter: drop-shadow(0 20px 48px rgba(0, 0, 0, 0.98)); }
+.subnet-node.active-front .sn-img-wrap { border: 2px solid #ffffff !important; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.98), 0 0 24px rgba(255, 255, 255, 0.38) !important; }
 body.studio-mode .subnet-node { cursor: move; }
 .subnet-node.note-node { padding: 22px 10px 8px; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(ellipse at center, rgba(12,15,22,0.72) 0%, transparent 85%); }
 .sn-img-wrap { width: 100%; height: 100%; position: relative; border-radius: var(--ui-radius, 1px); overflow: hidden; box-shadow: 0 12px 32px rgba(0,0,0,0.75); }
 .sn-img-wrap img, .sn-img-wrap canvas, .sn-img-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sn-media-badge { position: absolute; top: 6px; right: 7px; background: rgba(4, 6, 12, 0.78); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: var(--ui-radius, 1px); padding: 1px 5px; font-size: 8.5px; font-weight: 600; letter-spacing: .08em; color: #fff; pointer-events: none; z-index: 4; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.sn-play-btn {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px;
+  border-radius: 50%; background: rgba(4, 6, 8, 0.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.7); color: #ffffff; display: flex; align-items: center; justify-content: center;
+  z-index: 15; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.8), 0 0 16px rgba(255, 255, 255, 0.2); outline: none; pointer-events: auto;
+}
+.sn-play-btn:hover { transform: translate(-50%, -50%) scale(1.12); background: rgba(0, 0, 0, 0.95); border-color: #ffffff; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.95), 0 0 22px rgba(255, 255, 255, 0.4); }
+.sn-play-btn.is-playing { opacity: 0; }
+.subnet-node:hover .sn-play-btn.is-playing { opacity: 0.88; }
 .sn-on-title { position: absolute; top: 6px; left: 9px; right: 9px; pointer-events: none; z-index: 3; font-size: 12.5px; font-weight: 700; letter-spacing: -0.01em; color: #ffffff; text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 14px rgba(0,0,0,0.9), 0 1px 2px rgba(0,0,0,1); line-height: 1.2; }
 .sn-hover-desc { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,4,7,0.92) 0%, rgba(3,4,7,0.55) 60%, transparent 100%); padding: 28px 10px 9px; color: #f3f4f6; font-size: 11px; line-height: 1.42; display: flex; align-items: flex-end; opacity: 0; transition: opacity .2s; pointer-events: none; border-radius: var(--ui-radius, 1px); text-shadow: 0 1px 3px rgba(0,0,0,0.95); }
 .subnet-node:hover .sn-hover-desc { opacity: 1; }
@@ -2110,16 +2128,20 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
   /* 4. Project Popup on Phone & Small Screens */
   #projectPopup {
-    left: 8px !important;
-    top: max(12px, calc(env(safe-area-inset-top, 54px) + 36px)) !important;
-    width: calc(100vw - 16px) !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(calc(100vw - 16px), 1080px) !important;
     max-width: calc(100vw - 16px) !important;
-    max-height: calc(100dvh - env(safe-area-inset-top, 54px) - 50px) !important;
-    height: auto !important;
-    border-radius: 10px !important;
+    max-height: calc(100dvh - env(safe-area-inset-top, 20px) - 24px) !important;
+    height: min(780px, 92vh) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.42) !important;
+    background: rgba(6, 10, 8, 0.98) !important;
+    border-radius: var(--ui-radius, 1px) !important;
+    box-shadow: 0 32px 100px rgba(0, 0, 0, 0.98) !important;
   }
   #projectPopup .popup-body {
-    max-height: calc(100dvh - env(safe-area-inset-top, 54px) - 130px) !important;
+    max-height: calc(100dvh - env(safe-area-inset-top, 20px) - 100px) !important;
   }
 
   /* 5. Bottom Controls: Hashtags (#) and Contacts (*) */
@@ -2720,18 +2742,6 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 /* Global Error Safety Catch */
 window.addEventListener('error', e => {
   console.error("Global Error Caught:", e.error || e.message);
-  try {
-    let b = document.getElementById('debugErrorBanner');
-    if (!b && document.body) {
-      b = document.createElement('div');
-      b.id = 'debugErrorBanner';
-      b.style.cssText = 'position:fixed;top:40px;left:50%;transform:translateX(-50%);background:rgba(220,38,38,0.95);color:#fff;padding:8px 16px;border-radius:6px;font-family:monospace;font-size:12px;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,0.8);max-width:90vw;display:flex;align-items:center;gap:12px;';
-      b.innerHTML = '<span id="debugErrorText"></span><button style="color:#fff;background:rgba(0,0,0,0.3);border:none;padding:2px 8px;border-radius:4px;cursor:pointer;" onclick="this.parentElement.remove()">✕</button>';
-      document.body.appendChild(b);
-    }
-    const t = document.getElementById('debugErrorText');
-    if (t) t.textContent = '⚠️ ' + (e.message || (e.error && e.error.message) || 'Script Error');
-  } catch(err){}
 });
 /* ============================================================================
    MOHSEN ZAREI — SUPERNOVA PORTFOLIO & STUDIO ENGINE v5.8
@@ -9411,9 +9421,18 @@ function bootSupernovaEngine() {
   const popupEl = $("projectPopup");
   let isDraggingPopup = false, resizeDir = null, popStart = { x: 0, y: 0, left: 0, top: 0, w: 0, h: 0 };
 
+  if (popupEl) {
+    popupEl.addEventListener("pointerdown", e => {
+      if (!e.target.closest("video") && !e.target.closest(".sn-play-btn")) {
+        pauseAllVideos();
+      }
+    });
+  }
+
   if ($("popupDragBar")) $("popupDragBar").addEventListener("pointerdown", e => {
     if (e.target.closest("button")) return;
     if (isStudioMode && e.target.closest(".editable-field")) return;
+    if (!isStudioMode) return; // Keep modal fixed in viewer mode
     isDraggingPopup = true;
     const rect = popupEl.getBoundingClientRect();
     popStart = { x: e.clientX, y: e.clientY, left: rect.left, top: rect.top };
@@ -9427,6 +9446,7 @@ function bootSupernovaEngine() {
 
   document.querySelectorAll(".pop-res").forEach(handle => {
     handle.addEventListener("pointerdown", e => {
+      if (!isStudioMode) return; // Keep modal fixed in viewer mode
       e.stopPropagation();
       resizeDir = handle.dataset.dir;
       const rect = popupEl.getBoundingClientRect();
@@ -9510,6 +9530,19 @@ function bootSupernovaEngine() {
     ctx.restore();
   }
 
+  function pauseAllVideos() {
+    try {
+      const vids = document.querySelectorAll("#projectPopup video, #lightbox video");
+      vids.forEach(v => {
+        if (!v.paused) v.pause();
+      });
+      document.querySelectorAll(".sn-play-btn").forEach(btn => {
+        btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        btn.classList.remove("is-playing");
+      });
+    } catch(err) {}
+  }
+
   function renderPhotoSubNetwork(node) {
     const wrap = $("subnetNodesWrap"), svg = $("subnetSvg");
     wrap.innerHTML = ""; svg.innerHTML = "";
@@ -9539,8 +9572,9 @@ function bootSupernovaEngine() {
     mediaList.forEach((m, idx) => {
       const isNote = m.type === "note";
       const isVideo = isVideoMedia(m);
+      const isActive = (idx === activeMediaIdx);
       const card = document.createElement("div");
-      card.className = "subnet-node" + (isNote ? " note-node" : "") + (isVideo ? " video-node" : "") + (idx === activeMediaIdx ? " active" : "");
+      card.className = "subnet-node" + (isNote ? " note-node" : "") + (isVideo ? " video-node" : "") + (isActive ? " active active-front" : "");
       card.style.left = `${m.x}px`; card.style.top = `${m.y}px`;
       card.style.width = `${m.w || (isVideo ? 190 : 170)}px`; card.style.height = `${m.h || (isNote ? 80 : (isVideo ? 125 : 110))}px`;
 
@@ -9555,23 +9589,65 @@ function bootSupernovaEngine() {
         card.innerHTML = `
           <div class="sn-img-wrap sn-video-wrap">
             <span class="sn-media-badge mono">▶ VIDEO</span>
+            <button type="button" class="sn-play-btn" aria-label="Play/Pause Video" title="Play Video">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
             <div class="sn-on-title">${m.title || ""}</div>
             ${m.note ? `<div class="sn-hover-desc">${m.note}</div>` : ""}
           </div>
           <div class="sn-resize-handle studio-only" title="Drag to resize video"></div>
         `;
         const imgWrap = card.querySelector(".sn-img-wrap");
+        const playBtn = card.querySelector(".sn-play-btn");
         if (src) {
           const vid = document.createElement("video");
           vid.src = src;
-          vid.autoplay = true;
+          vid.autoplay = false;
           vid.loop = true;
           vid.muted = true;
           vid.playsInline = true;
+          vid.preload = "metadata";
           vid.setAttribute("playsinline", "");
           vid.setAttribute("webkit-playsinline", "");
           vid.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;";
           imgWrap.prepend(vid);
+
+          const togglePlay = (ev) => {
+            if (ev) { ev.stopPropagation(); ev.preventDefault(); }
+            if (vid.paused) {
+              pauseAllVideos();
+              vid.play().then(() => {
+                if (playBtn) {
+                  playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+                  playBtn.classList.add("is-playing");
+                }
+              }).catch(err => console.warn(err));
+            } else {
+              vid.pause();
+              if (playBtn) {
+                playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+                playBtn.classList.remove("is-playing");
+              }
+            }
+          };
+
+          if (playBtn) {
+            playBtn.addEventListener("pointerdown", e => e.stopPropagation());
+            playBtn.addEventListener("click", togglePlay);
+          }
+
+          vid.addEventListener("play", () => {
+            if (playBtn) {
+              playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+              playBtn.classList.add("is-playing");
+            }
+          });
+          vid.addEventListener("pause", () => {
+            if (playBtn) {
+              playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+              playBtn.classList.remove("is-playing");
+            }
+          });
         } else {
           const cv = document.createElement("canvas"); cv.width = 320; cv.height = 200;
           drawProceduralPhotoCanvas(cv, node, idx, m); imgWrap.prepend(cv);
@@ -9604,13 +9680,13 @@ function bootSupernovaEngine() {
 
       card.addEventListener("pointerdown", e => {
         if (e.target.closest(".sn-resize-handle")) return;
+        if (e.target.closest(".sn-play-btn")) return;
         e.stopPropagation();
         snDragStart = { x: e.clientX, y: e.clientY, origX: m.x, origY: m.y };
         if (isStudioMode) {
           draggedMediaNodeIdx = idx;
         } else {
-          selectPhotoNode(idx, false);
-          openLightbox(idx);
+          selectPhotoNode(idx, true);
         }
       });
 
@@ -9622,12 +9698,14 @@ function bootSupernovaEngine() {
   function selectPhotoNode(idx, zoomIn = true) {
     if (selectedId < 0) return;
     const node = NODES[selectedId], mediaList = node.media || [];
+    if (!mediaList.length) return;
+    pauseAllVideos();
     activeMediaIdx = idx;
     renderPhotoSubNetwork(node);
 
     if (zoomIn && idx >= 0 && mediaList[idx]) {
       const vp = $("subnetViewport"), m = mediaList[idx];
-      snTargetZoom = 1.48;
+      snTargetZoom = 1.36;
       snTargetPanX = vp.clientWidth * 0.5 - m.x * snTargetZoom;
       snTargetPanY = vp.clientHeight * 0.5 - m.y * snTargetZoom;
     }
@@ -9652,8 +9730,18 @@ function bootSupernovaEngine() {
 
   const snVp = $("subnetViewport");
   snVp.addEventListener("pointerdown", e => {
-    isDraggingSubnet = true;
-    snDragStart = { x: e.clientX - snTargetPanX, y: e.clientY - snTargetPanY, rawX: e.clientX, rawY: e.clientY };
+    if (e.target === snVp || e.target.id === "subnetBgCanvas" || e.target.id === "subnetStage" || e.target.id === "subnetSvg") {
+      pauseAllVideos();
+      if (!isStudioMode && activeMediaIdx >= 0) {
+        activeMediaIdx = -1;
+        renderPhotoSubNetwork(NODES[selectedId]);
+        fitPhotoSubNetwork();
+      }
+    }
+    if (isStudioMode) {
+      isDraggingSubnet = true;
+      snDragStart = { x: e.clientX - snTargetPanX, y: e.clientY - snTargetPanY, rawX: e.clientX, rawY: e.clientY };
+    }
   });
   window.addEventListener("pointermove", e => {
     if (resizedMediaNodeIdx >= 0 && selectedId >= 0 && isStudioMode) {
@@ -10444,8 +10532,9 @@ function bootSupernovaEngine() {
 
   function openPopup(id, refitGraph = true) {
     selectedId = id; const node = NODES[id]; if (!node) return;
+    pauseAllVideos();
     if (refitGraph) activeMediaIdx = -1;
-    if (!popupEl.classList.contains("open")) {
+    if (!isStudioMode || !popupEl.classList.contains("open")) {
       popupEl.style.left = "";
       popupEl.style.top = "";
       if (window.innerWidth < 768) {
@@ -10504,6 +10593,7 @@ function bootSupernovaEngine() {
   }
 
   function closePopup() {
+    pauseAllVideos();
     if (selectedId >= 0 && isStudioMode) {
       const n = NODES[selectedId];
       if (n && (n.isNewlyAdded || n.status === "slot")) {
@@ -10517,6 +10607,7 @@ function bootSupernovaEngine() {
       }
     }
     selectedId = -1;
+    activeMediaIdx = -1;
     popupEl.classList.remove("open"); popupEl.setAttribute("aria-hidden", "true");
     popupEl.style.left = "";
     popupEl.style.top = "";
@@ -11106,6 +11197,9 @@ function bootSupernovaEngine() {
   let currentReticleNodeId = -1;
   let reticleGraceTimer = 0;
   let previewPointerX=-1,previewPointerY=-1,previewPointerActive=false,previewPointerOnCanvas=false;
+  let downHitNodeId = -1;
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+
   function clearHoverPreview(){
     hoveredId=-1;currentReticleNodeId=-1;reticleGraceTimer=0;isReticlePhotoHovered=false;
     cursorActiveTarget=0;previewPointerOnCanvas=false;
@@ -11113,7 +11207,7 @@ function bootSupernovaEngine() {
   function leavePreviewWindow(){
     previewPointerActive=false;clearHoverPreview();
     for(const slot of photoCardSlots)slot.isHovered=false;
-    activePointers.clear();isPointerDown=false;draggedNode=null;pointerAction='none';prevPinchDist=0;prevMid=null;
+    activePointers.clear();isPointerDown=false;draggedNode=null;pointerAction='none';prevPinchDist=0;prevMid=null;downHitNodeId=-1;
   }
 
   function updateHoverRaycast(clientX, clientY) {
@@ -11159,7 +11253,7 @@ function bootSupernovaEngine() {
     activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     isPointerDown = true; totalDragMoved = 0; prevX = e.clientX; prevY = e.clientY;
 
-    // Explicit raycast hit test on pointerdown to guarantee 100% reliable node dragging
+    // Explicit raycast hit test on pointerdown
     mouseNDC.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
     raycaster.setFromCamera(mouseNDC, camera);
     const spriteTargets = interactiveSprites.filter(sp => {
@@ -11169,28 +11263,42 @@ function bootSupernovaEngine() {
     const cardTargets = (PARAMS.photoInstancing && photoCardMeshes) ? photoCardMeshes.filter(m => m.visible) : [];
     const targets = cardTargets.length > 0 ? cardTargets : spriteTargets;
     const hits = raycaster.intersectObjects(targets);
-    const hitNodeId = hits.length > 0 ? hits[0].object.userData.nodeId : -1;
+    downHitNodeId = (hits.length > 0 && hits[0].object && hits[0].object.userData) ? hits[0].object.userData.nodeId : -1;
 
     if (activePointers.size === 2) {
       draggedNode = null; pointerAction = "twoFingerPan";
       const [p1, p2] = [...activePointers.values()]; prevPinchDist = Math.hypot(p1.x - p2.x, p1.y - p2.y); prevMid = { x: (p1.x + p2.x) * 0.5, y: (p1.y + p2.y) * 0.5 }; return;
     }
-    if (e.button === 2 || e.shiftKey) pointerAction = "pan";
-    else if (hitNodeId >= 0) {
-      hoveredId = hitNodeId;
-      currentReticleNodeId = hitNodeId;
+    if (e.button === 2 || e.shiftKey) {
+      pointerAction = "pan";
+    } else if (isStudioMode && downHitNodeId >= 0) {
+      // Studio Mode only: allow dragging a node position
+      hoveredId = downHitNodeId;
+      currentReticleNodeId = downHitNodeId;
       pointerAction = "node";
-      draggedNode = NODES[hitNodeId];
-      if (isStudioMode) pushUndoState();
+      draggedNode = NODES[downHitNodeId];
+      pushUndoState();
       const camDir = new THREE.Vector3(); camera.getWorldDirection(camDir); dragPlane.setFromNormalAndCoplanarPoint(camDir, draggedNode.pos);
     } else {
+      // In Viewer Mode or empty canvas: Always Orbit smoothly!
       pointerAction = "orbit";
+      if (downHitNodeId >= 0 && !isTouchDevice) {
+        hoveredId = downHitNodeId;
+        currentReticleNodeId = downHitNodeId;
+      } else {
+        hoveredId = -1;
+        currentReticleNodeId = -1;
+      }
     }
   });
 
   window.addEventListener("pointermove", e => {
-    previewPointerX=e.clientX;previewPointerY=e.clientY;previewPointerActive=true;
-    previewPointerOnCanvas=e.target===canvas;
+    if (e.pointerType !== "touch") {
+      previewPointerX = e.clientX;
+      previewPointerY = e.clientY;
+      previewPointerActive = true;
+      previewPointerOnCanvas = (e.target === canvas);
+    }
     if (activePointers.has(e.pointerId)) activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (activePointers.size === 2) {
       const [p1, p2] = [...activePointers.values()], mid = { x: (p1.x + p2.x) * 0.5, y: (p1.y + p2.y) * 0.5 }, dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
@@ -11199,15 +11307,18 @@ function bootSupernovaEngine() {
       prevMid = mid; prevPinchDist = dist; totalDragMoved = 99; return;
     }
     const overUI = Boolean(e.target && e.target.closest && e.target.closest("#tuner, #projectPopup, .corner-filter, .contact-corner, .studio-bar, .morph-faded-box, #confirmModal, #lightbox, #uiArrangeTools"));
-    const overReticleCard=Boolean(e.target.closest && e.target.closest('#reticlePhotoBox'));
-    if(!isPointerDown && overReticleCard){isReticlePhotoHovered=true;cursorActiveTarget=0;return;}
+    const overReticleCard = Boolean(e.target.closest && e.target.closest('#reticlePhotoBox'));
+    if (!isPointerDown && overReticleCard) { isReticlePhotoHovered = true; cursorActiveTarget = 0; return; }
     if (overUI && !isPointerDown) clearHoverPreview();
     if (!isPointerDown) {
-      if (!overUI) updateHoverRaycast(e.clientX, e.clientY);
+      if (!overUI && e.pointerType !== "touch") updateHoverRaycast(e.clientX, e.clientY);
       canvas.style.cursor = hoveredId >= 0 ? "pointer" : "default";
       return;
     }
     const dx = e.clientX - prevX, dy = e.clientY - prevY; totalDragMoved += Math.abs(dx) + Math.abs(dy); prevX = e.clientX; prevY = e.clientY;
+    if (totalDragMoved > 6 && (e.pointerType === "touch" || !isStudioMode)) {
+      hoveredId = -1; currentReticleNodeId = -1; clearHoverPreview();
+    }
     if (pointerAction === "node" && draggedNode) {
       mouseNDC.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
       raycaster.setFromCamera(mouseNDC, camera);
@@ -11227,21 +11338,36 @@ function bootSupernovaEngine() {
     activePointers.delete(e.pointerId);
     if (activePointers.size < 2) { prevMid = null; prevPinchDist = 0; }
     if (activePointers.size === 0) {
-      if (isPointerDown && totalDragMoved < 7) {
-        if (hoveredId >= 0) {
-          const hn = NODES[hoveredId];
-          if (hn.status === "slot" && isStudioMode) {
-            pushUndoState();
-            setNodeStatus(hn, "draft");
-            showDrafts = true;
-            $("chkShowDrafts").checked = true;
-            buildEdges();
+      if (isPointerDown) {
+        if (totalDragMoved < 8) {
+          // Stationary TAP / CLICK
+          if (downHitNodeId >= 0 && NODES[downHitNodeId]) {
+            const hn = NODES[downHitNodeId];
+            if (hn.status === "slot" && isStudioMode) {
+              pushUndoState();
+              setNodeStatus(hn, "draft");
+              showDrafts = true;
+              $("chkShowDrafts").checked = true;
+              buildEdges();
+            }
+            focusCameraOnNode(hn);
+            openPopup(downHitNodeId, true);
+          } else {
+            // Tapped empty space!
+            closePopup();
+            pauseAllVideos();
+            clearHoverPreview();
           }
-          focusCameraOnNode(hn);
-          openPopup(hoveredId, true);
-        } else closePopup();
+        } else {
+          if (e.pointerType === "touch") {
+            clearHoverPreview();
+          }
+        }
       }
-      isPointerDown = false; draggedNode = null; pointerAction = "none";
+      isPointerDown = false;
+      draggedNode = null;
+      pointerAction = "none";
+      downHitNodeId = -1;
     }
   });
 
@@ -11589,7 +11715,7 @@ function bootSupernovaEngine() {
 
     previewPulseClock += dt * Math.max(0, Number(PARAMS.previewPulseSpeed) || 0);
     reticleGraceTimer = Math.max(0, reticleGraceTimer - dt);
-    if (!isPointerDown && previewPointerActive && previewPointerOnCanvas) updateHoverRaycast(previewPointerX, previewPointerY);
+    if (!isPointerDown && previewPointerActive && previewPointerOnCanvas && !isTouchDevice) updateHoverRaycast(previewPointerX, previewPointerY);
     else if (!isPointerDown && !isReticlePhotoHovered && reticleGraceTimer <= 0) { hoveredId = -1; currentReticleNodeId = -1; }
     uTime.value = t; bgUniforms.uTime.value = t;
 
