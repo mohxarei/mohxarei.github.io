@@ -41,6 +41,7 @@ canvas#webgl { position: fixed; inset: 0; width: 100%; height: 100%; display: bl
 .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .03em; }
 button, input, textarea, select { font: inherit; color: inherit; background: none; border: none; }
 button { cursor: pointer; }
+body:not(.studio-mode) .studio-bar { display: none !important; }
 body:not(.studio-mode) .studio-only { display: none !important; }
 body.studio-mode .viewer-only { display: none !important; }
 body.published-lock .studio-bar, body.published-lock .studio-only { display: none !important; }
@@ -2220,12 +2221,12 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 </style>
 </head>
-<body class="studio-mode">
+<body class="viewer-mode">
 
 <canvas id="webgl"></canvas>
 
 <!-- Top Studio & Publish Master Bar -->
-<div class="studio-bar mono" id="studioBar">
+<div class="studio-bar mono studio-only" id="studioBar">
   <button class="st-pill active" id="btnModeStudio">⚙ STUDIO EDITOR</button>
   <button class="st-pill" id="btnModeViewer">👁 VIEWER PREVIEW</button>
   <span style="color:var(--dim)" class="studio-only">|</span>
@@ -7502,9 +7503,26 @@ function bootSupernovaEngine() {
     }
   }
 
-  // Default to Studio Mode in development/preview
-  setStudioMode(true);
-  document.body.classList.remove("bar-hidden");
+  const isLocalOrIde = (
+    window.location.protocol === "file:" ||
+    window.location.protocol === "vscode-webview:" ||
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.href.includes("preview.html") ||
+    window.location.href.includes("live_preview.html")
+  );
+  const isStudioRoute = window.location.pathname.includes("studio") || window.location.hash.includes("studio") || window.location.hash.includes("admin");
+
+  if (PUBLISHED_VIEWER_ONLY) {
+    setStudioMode(false);
+    document.body.classList.add("published-lock");
+    document.body.classList.remove("studio-mode");
+  } else if (isStudioRoute || (isLocalOrIde && isStudioAuthorized())) {
+    setStudioMode(true);
+    document.body.classList.remove("bar-hidden");
+  } else {
+    setStudioMode(false);
+  }
 
   $("btnModeStudio").onclick = () => {
     setStudioMode(true);
