@@ -1755,56 +1755,214 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     flex-shrink: 0 !important;
   }
 
-  /* 2. Brand Header (MOHSEN ZAREI) Safe Offset */
+  /* 2. Brand Header (MOHSEN ZAREI & 𝗫) */
   header {
-    top: max(10px, env(safe-area-inset-top, 50px)) !important;
-    left: 10px !important;
-    right: 10px !important;
+    top: max(8px, env(safe-area-inset-top, 46px)) !important;
+    left: 12px !important;
+    right: 12px !important;
   }
   body.studio-mode header {
     top: max(10px, calc(env(safe-area-inset-top, 54px) + 38px)) !important;
   }
-  .brand h1 {
-    font-size: 16px !important;
+  .brand-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 0 !important;
   }
-  .brand-x {
-    font-size: 16px !important;
-    padding: 2px 5px !important;
+  .brand h1 {
+    font-size: 52px !important;
+    line-height: 1 !important;
+    translate: none !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 2px 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    color: #e5e7eb !important;
+    opacity: 0.78 !important;
+    cursor: pointer !important;
+    text-shadow: 0 4px 18px rgba(0,0,0,0.85) !important;
+  }
+  .brand h1:hover, .brand h1:active {
+    opacity: 1 !important;
+    text-shadow: 0 0 16px rgba(255,255,255,0.7) !important;
+  }
+  .brand-text-holder {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    max-width: calc(100vw - 84px) !important;
+    padding-top: 2px !important;
+  }
+  .brand-name {
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.04em !important;
   }
   .brand p {
     font-size: 11px !important;
-    max-width: 84vw !important;
-  }
-  .brand-text-holder {
-    max-width: calc(100vw - 70px) !important;
+    line-height: 1.45 !important;
+    max-width: calc(100vw - 84px) !important;
+    margin-top: 4px !important;
   }
 
-  /* 3. Tuner / Sliders on Phone & Small Screens: Full Parity with Desktop, Touch-Friendly */
+  /* 3. Tuner / Sliders on Phone: Minimal, Clean, Fully Touch-Functional */
   #tuner {
-    width: min(340px, calc(100vw - 16px)) !important;
+    width: min(310px, calc(100vw - 16px)) !important;
     max-height: calc(100dvh - max(8px, env(safe-area-inset-top, 54px)) - 80px) !important;
     top: max(56px, calc(env(safe-area-inset-top, 54px) + 38px)) !important;
     right: 8px !important;
-    padding: 10px !important;
+    padding: 8px 10px !important;
     font-size: 10px !important;
+    background: rgba(8, 11, 16, 0.94) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8) !important;
     z-index: 30 !important;
+    transition: width 0.2s ease, padding 0.2s ease;
   }
-  #tuner .tuner-body {
-    max-height: calc(100dvh - max(8px, env(safe-area-inset-top, 54px)) - 170px) !important;
+  #tuner.collapsed {
+    width: auto !important;
+    min-width: 90px !important;
+    padding: 5px 10px !important;
+    border-radius: 20px !important;
+  }
+  #tuner.collapsed .tuner-head span {
+    font-size: 10.5px !important;
+  }
+  .tuner-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 6px !important;
+    gap: 6px !important;
+  }
+  .tuner-head span {
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important;
+    color: #e2e8f0 !important;
+  }
+  #btnSetSaveSliders {
+    padding: 3px 8px !important;
+    font-size: 9.5px !important;
+    background: rgba(99, 102, 241, 0.2) !important;
+    border: 1px solid rgba(165, 180, 252, 0.4) !important;
+    color: #c7d2fe !important;
+    border-radius: 4px !important;
+  }
+  #btnCopyParams {
+    display: none !important;
+  }
+  #btnToggleTuner {
+    width: 24px !important;
+    height: 24px !important;
+    display: grid !important;
+    place-items: center !important;
+    font-size: 13px !important;
+    padding: 0 !important;
+  }
+  .tuner-hub-bar {
+    padding-bottom: 6px !important;
+    margin-bottom: 6px !important;
+    gap: 6px !important;
+  }
+  .btn-add-hub {
+    padding: 3px 8px !important;
+    font-size: 9.5px !important;
+  }
+  .draft-toggle-wrap {
+    font-size: 9px !important;
+  }
+  .tuner-tabs {
+    margin-bottom: 6px !important;
+    gap: 4px !important;
+  }
+  .t-tab {
+    padding: 4px 8px !important;
+    font-size: 9.5px !important;
+    border-radius: 4px !important;
+  }
+  .tuner-body {
+    max-height: calc(100dvh - max(8px, env(safe-area-inset-top, 54px)) - 180px) !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     padding-right: 4px !important;
+    overscroll-behavior: contain !important;
   }
-  #tuner .param-row {
-    margin-bottom: 4px !important;
+  .t-group {
+    margin: 0 0 4px !important;
   }
+  .t-group > .t-sec {
+    padding: 6px 2px !important;
+    font-size: 10px !important;
+  }
+  .t-row {
+    margin-bottom: 6px !important;
+    padding: 2px 0 !important;
+  }
+  .t-row-top {
+    font-size: 9.5px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  .t-row-top b {
+    font-size: 10px !important;
+    color: #93c5fd !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    padding: 1px 4px !important;
+    border-radius: 3px !important;
+  }
+
+  /* Range Sliders on Phone: Large Touch Target, Smooth Dragging, Zero Page Jitter */
   #tuner input[type="range"] {
-    height: 24px !important;
-    touch-action: pan-x !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 100% !important;
+    height: 30px !important;
+    margin: 2px 0 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    touch-action: none !important;
+    cursor: pointer !important;
+  }
+  #tuner input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-radius: 2px !important;
   }
   #tuner input[type="range"]::-webkit-slider-thumb {
-    width: 16px !important;
-    height: 16px !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 2px 5px rgba(0, 0, 0, 0.6) !important;
+    margin-top: -8px !important;
+    cursor: grab !important;
+  }
+  #tuner input[type="range"]::-moz-range-track {
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-radius: 2px !important;
+    border: none !important;
+  }
+  #tuner input[type="range"]::-moz-range-thumb {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 2px 5px rgba(0, 0, 0, 0.6) !important;
+    border: none !important;
+    cursor: grab !important;
   }
 
   /* 4. Project Popup on Phone & Small Screens */
@@ -1830,12 +1988,12 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     min-height: 54px !important;
   }
   .hash-half.hh-l {
-    font-size: 64px !important;
-    height: 54px !important;
-    line-height: 54px !important;
+    font-size: 58px !important;
+    height: 50px !important;
+    line-height: 50px !important;
   }
   .hash-edit-btn {
-    bottom: 58px !important;
+    bottom: 54px !important;
     font-size: 9px !important;
     padding: 2px 5px !important;
   }
@@ -1854,8 +2012,8 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   .contact-corner {
     right: 12px !important;
     bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
-    font-size: 64px !important;
-    line-height: 54px !important;
+    font-size: 58px !important;
+    line-height: 50px !important;
   }
   .contact-corner.open .contact-btn {
     transform: translateX(18px) rotate(150deg) !important;
@@ -1867,20 +2025,51 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     padding: 2px 5px !important;
   }
 
-  /* 6. Bottom Morph Slider */
+  /* 6. Bottom Middle Slider (Line // Particles): Slightly Bigger & Touch-Optimized */
   .morph-faded-box {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important;
-    width: min(220px, calc(100vw - 150px)) !important;
-    padding: 4px 8px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 14px) !important;
+    width: min(290px, calc(100vw - 128px)) !important;
+    padding: 6px 10px !important;
+    opacity: 0.85 !important;
+  }
+  .morph-bottom-row {
+    gap: 8px !important;
   }
   .line-particle-track {
-    height: 22px !important;
+    height: 32px !important;
+  }
+  .line-particle-track::before {
+    background: rgba(255, 255, 255, 0.38) !important;
   }
   .line-particle-label {
-    font-size: 8px !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.05em !important;
+    color: rgba(255, 255, 255, 0.65) !important;
   }
   .line-particle-midpoint {
-    font-size: 11px !important;
+    font-size: 13px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+  #bottomLineParticleMix {
+    height: 32px !important;
+    touch-action: none !important;
+  }
+  #bottomLineParticleMix::-webkit-slider-thumb {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  #bottomLineParticleMix::-moz-range-thumb {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .auto-pill.reset-pill {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  .auto-pill.reset-pill svg {
+    width: 11px !important;
+    height: 11px !important;
   }
 
   /* 7. Modals on Phone & Small Screens */
@@ -2934,13 +3123,15 @@ function bootSupernovaEngine() {
   if ($("slBrandAvatarSize")) {
     $("slBrandAvatarSize").value = BRAND_AVATAR.w;
     if ($("valBrandAvatarSize")) $("valBrandAvatarSize").textContent = `${BRAND_AVATAR.w}px`;
-    $("slBrandAvatarSize").oninput = e => {
+    const updateBrandAvatarSize = e => {
       const val = parseInt(e.target.value, 10) || 180;
       BRAND_AVATAR.w = val;
       BRAND_AVATAR.h = val;
       if ($("valBrandAvatarSize")) $("valBrandAvatarSize").textContent = `${val}px`;
       updateBrandAvatarUI();
     };
+    $("slBrandAvatarSize").addEventListener("input", updateBrandAvatarSize);
+    $("slBrandAvatarSize").addEventListener("change", updateBrandAvatarSize);
   }
   if ($("btnTestBrandAvatar")) {
     $("btnTestBrandAvatar").onclick = () => {
@@ -4839,10 +5030,12 @@ function bootSupernovaEngine() {
   PS_ROWS.forEach(r => {
     const sl = $("slP_" + r.k);
     if (!sl) return;
-    sl.addEventListener("input", () => {
+    const update = () => {
       PSYS[r.k] = sl.value / r.sc;
       if ($("valP_" + r.k)) $("valP_" + r.k).textContent = PSYS[r.k].toFixed(r.d);
-    });
+    };
+    sl.addEventListener("input", update);
+    sl.addEventListener("change", update);
   });
   syncPsSliders();
 
@@ -5277,15 +5470,28 @@ function bootSupernovaEngine() {
 
   [mSlider, topMSlider].filter(Boolean).forEach(sl => {
     sl.addEventListener("pointerdown", () => { isDraggingMorphSlider = true; pushUndoState(); });
-    sl.oninput = e => { morphTarget = e.target.value / 100.0; PARAMS.morphState = morphTarget; updateShapeButtonsUI(morphTarget); };
+    const updateMorph = e => { morphTarget = e.target.value / 100.0; PARAMS.morphState = morphTarget; updateShapeButtonsUI(morphTarget); };
+    sl.addEventListener("input", updateMorph);
+    sl.addEventListener("change", updateMorph);
   });
   window.addEventListener("pointerup", () => { isDraggingMorphSlider = false; });
 
-  document.querySelectorAll(".tuner-body input[type='range']").forEach(sl => {
-    if (sl.id !== "morphSlider") sl.addEventListener("pointerdown", () => pushUndoState());
+  document.querySelectorAll("#tuner input[type='range'], #bottomLineParticleMix, #morphSlider").forEach(sl => {
+    sl.addEventListener("pointerdown", e => {
+      e.stopPropagation();
+      if (sl.id !== "morphSlider") pushUndoState();
+    }, { passive: true });
+    sl.addEventListener("touchstart", e => {
+      e.stopPropagation();
+    }, { passive: true });
   });
 
-  const bindSl = (id, fn) => { const el = $(id); if (el) el.oninput = fn; };
+  const bindSl = (id, fn) => {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener("input", fn);
+    el.addEventListener("change", fn);
+  };
 
   bindSl("slPulseHubCount", e => { PARAMS.pulseHubCount = parseInt(e.target.value, 10); $("valPulseHubCount").textContent = String(PARAMS.pulseHubCount); });
   bindSl("slPulseSpeed", e => { PARAMS.pulseSpeed = e.target.value / 100.0; $("valPulseSpeed").textContent = PARAMS.pulseSpeed.toFixed(2); });
@@ -5321,7 +5527,14 @@ function bootSupernovaEngine() {
 
   const SPHERE_ROWS = [["sphereRadius","SPHERE RADIUS",15,50,1,0],["sphereDeform","SPHERE DEFORMATION / WAVES",0,150,100,2],["sphereStretch","SPHERE VERTICAL STRETCH",40,220,100,2],["sphereTwist","SPHERE TWIST",-150,150,100,2],["sphereFlow","SPHERE FLUID SPEED",0,250,100,2],["sphereSpin","SPHERE GENTLE ROTATION",0,30,100,2],["sphereThickness","SPHERE SHELL THICKNESS",0,1000,100,2],["sphereTension","SPHERE RETURN TENSION",0,100,100,2],["hubSeed","HUB SCATTER SEED",0,9999,1,0],["dragLimit","HUB RELOCATION LIMIT",0,60,1,0],["hubFollowStrength","HUB PARTICLE FOLLOW STRENGTH",0,300,100,2],["mouseEffectStrength","MOUSE EFFECT STRENGTH (0 = OFF)",0,300,100,2]];
   SPHERE_ROWS.forEach(([key,label,min,max,scale,digits]) => {
-    $('sl_'+key).addEventListener('input',e=>{PARAMS[key]=Number(e.target.value)/scale;$('val_'+key).textContent=PARAMS[key].toFixed(digits);});
+    const el = $('sl_'+key);
+    if (!el) return;
+    const update = e => {
+      PARAMS[key] = Number(e.target.value) / scale;
+      if ($('val_'+key)) $('val_'+key).textContent = PARAMS[key].toFixed(digits);
+    };
+    el.addEventListener('input', update);
+    el.addEventListener('change', update);
   });
   function syncSphereSliders() {
     SPHERE_ROWS.forEach(([key,label,min,max,scale,digits])=>{$('sl_'+key).value=Math.round(PARAMS[key]*scale);$('val_'+key).textContent=PARAMS[key].toFixed(digits);});
@@ -5345,7 +5558,9 @@ function bootSupernovaEngine() {
   }
   $('bottomLineParticleMix').addEventListener('pointerdown',()=>{pushUndoState();});
   $('bottomLineParticleMix').addEventListener('keydown',event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key))pushUndoState();});
-  $('bottomLineParticleMix').addEventListener('input',event=>{PARAMS.lineParticleMix=Number(event.target.value)/100;syncLineParticleMix();});
+  const updateLineParticleMix = event => { PARAMS.lineParticleMix = Number(event.target.value) / 100; syncLineParticleMix(); };
+  $('bottomLineParticleMix').addEventListener('input', updateLineParticleMix);
+  $('bottomLineParticleMix').addEventListener('change', updateLineParticleMix);
 
   function syncSlidersFromParams() {
     syncLineParticleMix();
