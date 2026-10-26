@@ -538,6 +538,8 @@ body.studio-mode .subnet-node { cursor: move; }
 #btnSaveDraft:hover { background: rgba(244, 223, 160, 0.22); }
 .btn-hub-red { flex: 1; padding: 8px 10px; background: rgba(248, 113, 113, 0.18); border: 1px solid #fca5a5; color: #fca5a5; font-weight: 600; border-radius: 4px; font-size: 10.5px; transition: opacity .15s; }
 .btn-hub-red:hover { opacity: 0.88; }
+.btn-hub-amber { flex: 1; padding: 8px 10px; background: rgba(234, 179, 8, 0.22); border: 1px solid #facc15; color: #fef08a; font-weight: 600; border-radius: 4px; font-size: 10.5px; transition: opacity .15s; cursor: pointer; }
+.btn-hub-amber:hover { opacity: 0.88; background: rgba(234, 179, 8, 0.32); }
 
 #confirmModal, #secretKeyModal, #githubPublishModal {
   position: fixed; inset: 0; z-index: 70;
@@ -2453,7 +2455,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     </div>
   </div></section>
   <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere & motion<span class="t-group-count">13</span></button><div class="t-group-body" id="t-group-sphere" hidden>
-<div class="t-row"><div class="t-row-top"><span>SPHERE RADIUS</span><b id="val_sphereRadius">32</b></div><input id="sl_sphereRadius" type="range" min="15" max="50" value="32" aria-label="SPHERE RADIUS"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE RADIUS</span><b id="val_sphereRadius">48</b></div><input id="sl_sphereRadius" type="range" min="15" max="100" value="48" aria-label="SPHERE RADIUS"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE DEFORMATION / WAVES</span><b id="val_sphereDeform">0.52</b></div><input id="sl_sphereDeform" type="range" min="0" max="150" value="52" aria-label="SPHERE DEFORMATION / WAVES"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE VERTICAL STRETCH</span><b id="val_sphereStretch">1.00</b></div><input id="sl_sphereStretch" type="range" min="40" max="220" value="100" aria-label="SPHERE VERTICAL STRETCH"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE TWIST</span><b id="val_sphereTwist">0.12</b></div><input id="sl_sphereTwist" type="range" min="-150" max="150" value="12" aria-label="SPHERE TWIST"></div>
@@ -2469,7 +2471,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 </div></section>
 <section class="t-group" data-tuner-group="hubs"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-hubs">Hub layout & movement<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-hubs" hidden>
 <div class="t-row"><div class="t-row-top"><span>HUB SCATTER SEED</span><b id="val_hubSeed">6955</b></div><input id="sl_hubSeed" type="range" min="0" max="9999" value="6955" aria-label="HUB SCATTER SEED"></div>
-<div class="t-row"><div class="t-row-top"><span>HUB RELOCATION LIMIT</span><b id="val_dragLimit">14</b></div><input id="sl_dragLimit" type="range" min="0" max="60" value="14" aria-label="HUB RELOCATION LIMIT"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB RELOCATION LIMIT</span><b id="val_dragLimit">36</b></div><input id="sl_dragLimit" type="range" min="0" max="80" value="36" aria-label="HUB RELOCATION LIMIT"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PARTICLE FOLLOW STRENGTH</span><b id="val_hubFollowStrength">1.25</b></div><input id="sl_hubFollowStrength" type="range" min="0" max="300" value="125" aria-label="HUB PARTICLE FOLLOW STRENGTH"></div>
 <div class="t-row"><div class="t-row-top"><span>PULL RADIUS (AROUND DRAGGED HUB)</span><b id="valP_hubRadius">15</b></div><input id="slP_hubRadius" type="range" min="15" max="140" value="15" aria-label="PULL RADIUS (AROUND DRAGGED HUB)"></div>
 <div class="t-row"><div class="t-row-top"><span>DRAFTING INERTIA (SMOOTH CURVE LAG)</span><b id="valP_follow">0.52</b></div><input id="slP_follow" type="range" min="10" max="95" value="52" aria-label="DRAFTING INERTIA (SMOOTH CURVE LAG)"></div>
@@ -2849,10 +2851,10 @@ let DEFAULTS = {
   "depthScale": 3.24,
   "orbitSpeed": 0.59,
   "autoSpeed": 0.2,
-  "dragLimit": 14,
+  "dragLimit": 36,
   "bgVis": 1.17,
   "responsiveDim": 1,
-  "sphereRadius": 28,
+  "sphereRadius": 48,
   "sphereDeform": 0.52,
   "sphereStretch": 1,
   "sphereTwist": 0.12,
@@ -7253,9 +7255,13 @@ function bootSupernovaEngine() {
 
   /* CONFIRMATION MODAL */
   let pendingConfirmFn = null;
-  function askConfirmation(title, msg, onConfirm) {
+  function askConfirmation(title, msg, onConfirm, okText = "Yes, Delete", okClass = "btn-hub-red") {
     $("confirmTitle").textContent = title;
     $("confirmMsg").textContent = msg;
+    if ($("btnConfirmYes")) {
+      $("btnConfirmYes").textContent = okText;
+      $("btnConfirmYes").className = okClass;
+    }
     pendingConfirmFn = onConfirm;
     $("confirmModal").classList.add("open");
   }
@@ -7463,7 +7469,7 @@ function bootSupernovaEngine() {
   }
   const sphereFormUniforms = {
     uSphereClock: { value: 0 },
-    uSphereRadius: { value: 48 },
+    uSphereRadius: { value: 82 },
     uSphereDeform: { value: .25 },
     uSphereStretch: { value: 1 },
     uSphereTwist: { value: .12 },
@@ -7645,13 +7651,12 @@ function bootSupernovaEngine() {
   const t3Points = new THREE.Points(t3Geo, t3Mat); t3Points.frustumCulled = false; scene.add(t3Points);
 
   function setNodeStatus(node, newStatus) {
-    if (node.isOrigin) newStatus = "active";
     node.status = newStatus;
     node.tier = newStatus === "active" ? 1 : 2;
     if (node.sprite) {
       node.sprite.material.map = newStatus === "active" ? TEX_T1 : (newStatus === "draft" ? TEX_T2 : TEX_DOT);
       node.sprite.material.color.set(newStatus === "draft" ? 0xffea00 : 0xffffff);
-      node.sprite.userData.baseScale = node.isOrigin ? 6.8 : (newStatus === "active" ? 5.6 : (newStatus === "draft" ? 5.2 : 2.9));
+      node.sprite.userData.baseScale = node.isOrigin ? (newStatus === "active" ? 6.8 : (newStatus === "draft" ? 5.6 : 3.2)) : (newStatus === "active" ? 5.6 : (newStatus === "draft" ? 5.2 : 2.9));
       node.sprite.material.needsUpdate = true;
     }
     if (node.beacon) node.beacon.material.color.set(newStatus === "draft" ? 0xffd000 : 0xe5e7eb);
@@ -8321,12 +8326,14 @@ function bootSupernovaEngine() {
           () => {
             pushUndoState();
             hubs.forEach(n => {
-              if (!n.isOrigin) setNodeStatus(n, "slot");
+              setNodeStatus(n, "slot");
             });
             buildEdges();
             refreshPhotoCardTextures();
             renderTunerHubList();
-          }
+          },
+          "Yes, Deactivate",
+          "btn-hub-amber"
         );
       };
     }
@@ -8339,7 +8346,7 @@ function bootSupernovaEngine() {
         showDrafts = true;
         if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
         hubs.forEach(n => {
-          if (!n.isOrigin) setNodeStatus(n, "draft");
+          setNodeStatus(n, "draft");
         });
         buildEdges();
         refreshPhotoCardTextures();
@@ -10044,7 +10051,7 @@ function bootSupernovaEngine() {
   bindSl("slFakeVis", e => { PARAMS.fakeVis = e.target.value / 100.0; t3Mat.opacity = Math.min(1.0, 0.55 * PARAMS.fakeVis); $("valFakeVis").textContent = PARAMS.fakeVis.toFixed(2); });
   bindSl("slFakeWidth", e => { PARAMS.fakeWidth = e.target.value / 100.0; uFakeWidth.value = PARAMS.fakeWidth; $("valFakeWidth").textContent = PARAMS.fakeWidth.toFixed(2); });
 
-  const SPHERE_ROWS = [["sphereRadius","SPHERE RADIUS",15,50,1,0],["sphereDeform","SPHERE DEFORMATION / WAVES",0,150,100,2],["sphereStretch","SPHERE VERTICAL STRETCH",40,220,100,2],["sphereTwist","SPHERE TWIST",-150,150,100,2],["sphereFlow","SPHERE FLUID SPEED",0,250,100,2],["sphereSpin","SPHERE GENTLE ROTATION",0,30,100,2],["sphereThickness","SPHERE SHELL THICKNESS",0,1000,100,2],["sphereTension","SPHERE RETURN TENSION",0,100,100,2],["hubSeed","HUB SCATTER SEED",0,9999,1,0],["dragLimit","HUB RELOCATION LIMIT",0,60,1,0],["hubFollowStrength","HUB PARTICLE FOLLOW STRENGTH",0,300,100,2],["mouseEffectStrength","MOUSE EFFECT STRENGTH (0 = OFF)",0,300,100,2]];
+  const SPHERE_ROWS = [["sphereRadius","SPHERE RADIUS",15,100,1,0],["sphereDeform","SPHERE DEFORMATION / WAVES",0,150,100,2],["sphereStretch","SPHERE VERTICAL STRETCH",40,220,100,2],["sphereTwist","SPHERE TWIST",-150,150,100,2],["sphereFlow","SPHERE FLUID SPEED",0,250,100,2],["sphereSpin","SPHERE GENTLE ROTATION",0,30,100,2],["sphereThickness","SPHERE SHELL THICKNESS",0,1000,100,2],["sphereTension","SPHERE RETURN TENSION",0,100,100,2],["hubSeed","HUB SCATTER SEED",0,9999,1,0],["dragLimit","HUB RELOCATION LIMIT",0,80,1,0],["hubFollowStrength","HUB PARTICLE FOLLOW STRENGTH",0,300,100,2],["mouseEffectStrength","MOUSE EFFECT STRENGTH (0 = OFF)",0,300,100,2]];
   SPHERE_ROWS.forEach(([key,label,min,max,scale,digits]) => {
     const el = $('sl_'+key);
     if (!el) return;
@@ -10677,7 +10684,6 @@ function bootSupernovaEngine() {
     $("btnDeleteNode").onclick = () => {
       if (selectedId < 0) return;
       const n = NODES[selectedId];
-      if (n.isOrigin) return;
       askConfirmation(
         "DISCARD / DELETE HUB?",
         `Are you sure you want to delete "${n.title}" and return it to a dormant dust placeholder?`,
@@ -10690,7 +10696,9 @@ function bootSupernovaEngine() {
           buildEdges();
           renderTunerHubList();
           closePopup();
-        }
+        },
+        "Yes, Delete",
+        "btn-hub-red"
       );
     };
   }
@@ -11271,24 +11279,19 @@ function bootSupernovaEngine() {
     }
     if (e.button === 2 || e.shiftKey) {
       pointerAction = "pan";
-    } else if (isStudioMode && downHitNodeId >= 0) {
-      // Studio Mode only: allow dragging a node position
+    } else if (downHitNodeId >= 0) {
+      // User tapped or grabbed a hub on phone or laptop! Allow moving it around
       hoveredId = downHitNodeId;
       currentReticleNodeId = downHitNodeId;
       pointerAction = "node";
       draggedNode = NODES[downHitNodeId];
-      pushUndoState();
+      if (isStudioMode) pushUndoState();
       const camDir = new THREE.Vector3(); camera.getWorldDirection(camDir); dragPlane.setFromNormalAndCoplanarPoint(camDir, draggedNode.pos);
     } else {
-      // In Viewer Mode or empty canvas: Always Orbit smoothly!
+      // User clicked on empty space: Orbit the sphere!
       pointerAction = "orbit";
-      if (downHitNodeId >= 0 && !isTouchDevice) {
-        hoveredId = downHitNodeId;
-        currentReticleNodeId = downHitNodeId;
-      } else {
-        hoveredId = -1;
-        currentReticleNodeId = -1;
-      }
+      hoveredId = -1;
+      currentReticleNodeId = -1;
     }
   });
 
@@ -11316,7 +11319,7 @@ function bootSupernovaEngine() {
       return;
     }
     const dx = e.clientX - prevX, dy = e.clientY - prevY; totalDragMoved += Math.abs(dx) + Math.abs(dy); prevX = e.clientX; prevY = e.clientY;
-    if (totalDragMoved > 6 && (e.pointerType === "touch" || !isStudioMode)) {
+    if (totalDragMoved > 6 && e.pointerType === "touch" && pointerAction === "orbit") {
       hoveredId = -1; currentReticleNodeId = -1; clearHoverPreview();
     }
     if (pointerAction === "node" && draggedNode) {
@@ -11780,7 +11783,7 @@ function bootSupernovaEngine() {
         hubBasePosArray[idx].copy(baseP);
 
         n.pos.copy(baseP).add(n.userOffset).add(n.elasticOffset);
-        if (n !== draggedNode && !n.isOrigin && floatAmp > 0.005) {
+        if (n !== draggedNode && floatAmp > 0.005) {
           n.pos.x += Math.cos(t * 0.38 + idx * 1.7) * 0.45 * floatAmp;
           n.pos.y += Math.sin(t * 0.45 + idx * 1.1) * 0.55 * floatAmp;
           n.pos.z += Math.sin(t * 0.31 + idx * 2.3) * 0.45 * floatAmp;
