@@ -423,8 +423,9 @@ body.desc-unpinned .brand p:not(.open) { pointer-events: none; }
 
 /* Project Pop-Up Window */
 #projectPopup {
-  position: fixed; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important;
-  width: min(1080px, 94vw); height: min(780px, 92vh); min-width: 310px; min-height: 320px;
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(960px, 94vw); height: min(740px, 92vh); min-width: 310px; min-height: 300px;
+  max-width: calc(100vw - 12px); max-height: calc(100dvh - 12px);
   background: rgba(6, 10, 8, 0.98);
   backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
   border: 1.5px solid rgba(255, 255, 255, 0.38);
@@ -432,10 +433,21 @@ body.desc-unpinned .brand p:not(.open) { pointer-events: none; }
   box-shadow: 0 32px 100px rgba(0,0,0,0.98), 0 0 0 1px rgba(255, 255, 255, 0.18); opacity: 0; pointer-events: none;
   transition: opacity .2s; overflow: hidden;
 }
+#projectPopup.has-dragged { transform: none !important; }
 #projectPopup.open { opacity: 1; pointer-events: auto; }
-.popup-drag-bar { padding: 14px 18px 4px; display: flex; justify-content: space-between; align-items: baseline; cursor: default; flex-shrink: 0; }
+body.popup-open { overflow: hidden !important; }
+.popup-drag-bar { padding: 14px 18px 4px; display: flex; justify-content: space-between; align-items: baseline; cursor: move; flex-shrink: 0; user-select: none; }
 body.studio-mode .popup-drag-bar { cursor: move; }
-body.viewer-mode .pop-res { display: none !important; }
+.media-editor-sticky-bar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(6, 10, 8, 0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.12); margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
+}
+.media-drop-zone-active {
+  outline: 2px dashed #4ade80 !important; outline-offset: -4px;
+  background: rgba(74, 222, 128, 0.08) !important;
+}
 .popup-title-wrap { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; flex: 1; min-width: 0; }
 .popup-title-wrap h2 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -.02em; color: var(--text); outline: none; }
 .popup-date { font-size: 11px; color: var(--mid); outline: none; }
@@ -2130,17 +2142,14 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
   /* 4. Project Popup on Phone & Small Screens */
   #projectPopup {
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: min(calc(100vw - 16px), 1080px) !important;
-    max-width: calc(100vw - 16px) !important;
-    max-height: calc(100dvh - env(safe-area-inset-top, 20px) - 24px) !important;
-    height: min(780px, 92vh) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.42) !important;
-    background: rgba(6, 10, 8, 0.98) !important;
-    border-radius: var(--ui-radius, 1px) !important;
-    box-shadow: 0 32px 100px rgba(0, 0, 0, 0.98) !important;
+    width: min(calc(100vw - 16px), 960px);
+    max-width: calc(100vw - 16px);
+    max-height: calc(100dvh - env(safe-area-inset-top, 20px) - 24px);
+    height: min(740px, 92vh);
+    border: 1.5px solid rgba(255, 255, 255, 0.42);
+    background: rgba(6, 10, 8, 0.98);
+    border-radius: var(--ui-radius, 1px);
+    box-shadow: 0 32px 100px rgba(0, 0, 0, 0.98);
   }
   #projectPopup .popup-body {
     max-height: calc(100dvh - env(safe-area-inset-top, 20px) - 100px) !important;
@@ -2382,12 +2391,11 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   </div>
 </div>
 
-<!-- Bottom-Center Integrated Morph Line -->
+<!-- Bottom-Center Controls -->
 <div class="morph-faded-box mono">
   <div class="morph-bottom-row">
-    <button type="button" class="auto-pill reset-pill" id="btnResetView" title="Reset shape and camera" aria-label="Reset shape and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="auto-pill reset-pill" id="btnResetView" title="Reset view and camera" aria-label="Reset view and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div class="line-particle-track"><span class="line-particle-label">LINE</span><span class="line-particle-label">PARTICLES</span><span class="line-particle-midpoint" aria-hidden="true">|</span><input id="bottomLineParticleMix" type="range" min="0" max="100" value="50" step="1" aria-label="Line–particles visibility balance" title="Left: lines · Middle: both · Right: particles"></div>
-    <button class="auto-pill on" id="btnVisitorAuto" title="Live auto-morph: click to turn on/off"><i></i><span id="topMorphVal" hidden>1.03</span></button>
   </div>
 </div>
 
@@ -2454,7 +2462,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
       <button type="button" class="btn-act" id="btnResetAvatarPos" style="flex:1">Reset Position</button>
     </div>
   </div></section>
-  <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere & motion<span class="t-group-count">14</span></button><div class="t-group-body" id="t-group-sphere" hidden>
+  <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere & motion<span class="t-group-count">11</span></button><div class="t-group-body" id="t-group-sphere" hidden>
 <div class="t-row"><div class="t-row-top"><span>DEFAULT CAMERA ZOOM</span><b id="val_defaultZoom">145</b></div><input id="sl_defaultZoom" type="range" min="60" max="280" value="145" aria-label="DEFAULT CAMERA ZOOM"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE RADIUS</span><b id="val_sphereRadius">48</b></div><input id="sl_sphereRadius" type="range" min="15" max="100" value="48" aria-label="SPHERE RADIUS"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE DEFORMATION / WAVES</span><b id="val_sphereDeform">0.52</b></div><input id="sl_sphereDeform" type="range" min="0" max="150" value="52" aria-label="SPHERE DEFORMATION / WAVES"></div>
@@ -2466,11 +2474,8 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>SPHERE RETURN TENSION</span><b id="val_sphereTension">0.55</b></div><input id="sl_sphereTension" type="range" min="0" max="100" value="55" aria-label="SPHERE RETURN TENSION"></div>
 <div class="t-row"><div class="t-row-top"><span>NEBULA SCALE / EXPANSION</span><b id="valBlast">1.43</b></div><input id="slBlast" type="range" min="40" max="280" value="143" aria-label="NEBULA SCALE / EXPANSION"></div>
 <div class="t-row"><div class="t-row-top"><span>3D DEPTH STRETCH</span><b id="valDepth">3.24</b></div><input id="slDepth" type="range" min="50" max="500" value="324" aria-label="3D DEPTH STRETCH"></div>
-<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkAuto" checked><span>AUTO-MORPH 4 SHAPES</span></label><b id="valAutoMorph">true</b></div></div>
-<div class="t-row"><div class="t-row-top"><span>MORPH SHAPE (0=SHELL · 1=SPIRAL · 2=HOURGLASS · 3=VEIL)</span><b id="valMorphState">1.03</b></div><input id="morphSlider" type="range" min="0" max="300" value="103" aria-label="MORPH SHAPE (0=SHELL · 1=SPIRAL · 2=HOURGLASS · 3=VEIL)"></div>
-<div class="t-row"><div class="t-row-top"><span>AUTO-MORPH SPEED</span><b id="valMorphSpeed">0.007</b></div><input id="slMorphSpeed" type="range" min="0" max="40" value="7" aria-label="AUTO-MORPH SPEED"></div>
 </div></section>
-<section class="t-group" data-tuner-group="hubs"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-hubs">Hub layout & movement<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-hubs" hidden>
+  <section class="t-group" data-tuner-group="hubs"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-hubs">Hubs, movement & pulses<span class="t-group-count">12</span></button><div class="t-group-body" id="t-group-hubs" hidden>
 <div class="t-row"><div class="t-row-top"><span>HUB SCATTER SEED</span><b id="val_hubSeed">6955</b></div><input id="sl_hubSeed" type="range" min="0" max="9999" value="6955" aria-label="HUB SCATTER SEED"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB RELOCATION LIMIT</span><b id="val_dragLimit">36</b></div><input id="sl_dragLimit" type="range" min="0" max="80" value="36" aria-label="HUB RELOCATION LIMIT"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PARTICLE FOLLOW STRENGTH</span><b id="val_hubFollowStrength">1.25</b></div><input id="sl_hubFollowStrength" type="range" min="0" max="300" value="125" aria-label="HUB PARTICLE FOLLOW STRENGTH"></div>
@@ -2479,19 +2484,20 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>NEIGHBOR HUB FOLLOW COUPLING</span><b id="valP_elastic">0.64</b></div><input id="slP_elastic" type="range" min="0" max="90" value="64" aria-label="NEIGHBOR HUB FOLLOW COUPLING"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB SIZE</span><b id="valP_hubSize">1.44</b></div><input id="slP_hubSize" type="range" min="30" max="250" value="144" aria-label="HUB SIZE"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB SHININESS &amp; GLOW</span><b id="valHubBright">0.61</b></div><input id="slHubBright" type="range" min="10" max="250" value="61" aria-label="HUB SHININESS & GLOW"></div>
-</div></section>
-<section class="t-group" data-tuner-group="pulse"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-pulse">Hub pulses<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-pulse" hidden>
 <div class="t-row"><div class="t-row-top"><span>PULSING HUBS COUNT</span><b id="valPulseHubCount">2</b></div><input id="slPulseHubCount" type="range" min="0" max="19" value="2" step="1" aria-label="PULSING HUBS COUNT"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PULSE SPEED</span><b id="valPulseSpeed">0.12</b></div><input id="slPulseSpeed" type="range" min="5" max="250" value="12" aria-label="HUB PULSE SPEED"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PULSE STRENGTH</span><b id="valPulseStrength">1.14</b></div><input id="slPulseStrength" type="range" min="0" max="300" value="114" aria-label="HUB PULSE STRENGTH"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PULSE MAX SIZE</span><b id="valPulseSize">1.61</b></div><input id="slPulseSize" type="range" min="100" max="700" value="161" aria-label="HUB PULSE MAX SIZE"></div>
 </div></section>
-<section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">16</span></button><div class="t-group-body" id="t-group-photos" hidden>
+  <section class="t-group" data-tuner-group="preview"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-preview">Project Preview Window<span class="t-group-count">3</span></button><div class="t-group-body" id="t-group-preview" hidden>
+<div class="t-row"><div class="t-row-top"><span>PREVIEW PANEL WIDTH</span><b id="valPreviewPanelWidth">960px</b></div><input id="slPreviewPanelWidth" type="range" min="360" max="1400" value="960" step="10" aria-label="PREVIEW PANEL WIDTH"></div>
+<div class="t-row"><div class="t-row-top"><span>PREVIEW PANEL HEIGHT</span><b id="valPreviewPanelHeight">740px</b></div><input id="slPreviewPanelHeight" type="range" min="320" max="960" value="740" step="10" aria-label="PREVIEW PANEL HEIGHT"></div>
+<div class="t-row"><div class="t-row-top"><span>MEDIA VIEWPORT HEIGHT</span><b id="valPreviewMediaHeight">440px</b></div><input id="slPreviewMediaHeight" type="range" min="200" max="700" value="440" step="10" aria-label="MEDIA VIEWPORT HEIGHT"></div>
+</div></section>
+  <section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">14</span></button><div class="t-group-body" id="t-group-photos" hidden>
 <div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoInstancing" checked><span>PHOTO INSTANCING ON SPHERE</span></label><b id="valPhotoInstancing">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseFollow" checked><span>MOUSE FOLLOW (FACE CURSOR)</span></label><b id="valPhotoCardMouseFollow">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE FOLLOW STRENGTH</span><b id="valPhotoCardMouseFollowStrength">0.35</b></div><input id="slPhotoCardMouseFollowStrength" type="range" min="0" max="100" value="35" aria-label="MOUSE FOLLOW STRENGTH"></div>
-<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseAttract" checked><span>PHOTO CARD MOUSE ATTRACTION</span></label><b id="valPhotoCardMouseAttract">ON</b></div></div>
-<div class="t-row"><div class="t-row-top"><span>MOUSE ATTRACTION STRENGTH</span><b id="valPhotoCardMouseAttractStrength">0.45</b></div><input id="slPhotoCardMouseAttractStrength" type="range" min="0" max="100" value="45" aria-label="MOUSE ATTRACTION STRENGTH"></div>
 <div class="t-row"><div class="t-row-top"><span>PHOTO LAYERS PER HUB</span><b id="valPhotoCardLayers">1</b></div><input id="slPhotoCardLayers" type="range" min="1" max="4" value="1" step="1" aria-label="PHOTO LAYERS PER HUB"></div>
 <div class="t-row"><div class="t-row-top"><span>LAYER STACK SPREAD / FAN</span><b id="valPhotoCardLayerSpread">0.30</b></div><input id="slPhotoCardLayerSpread" type="range" min="0" max="100" value="30" aria-label="LAYER STACK SPREAD / FAN"></div>
 <div class="t-row"><div class="t-row-top"><span>CARD SIZE</span><b id="valPhotoCardSize">3.00</b></div><input id="slPhotoCardSize" type="range" min="30" max="500" value="300" aria-label="CARD SIZE"></div>
@@ -2610,9 +2616,15 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     </div>
 
     <div class="admin-editor-block studio-only">
-      <div class="minimal-label mono" style="display:flex;justify-content:space-between;align-items:center;margin-top:0">
-        <span style="color:var(--text)">⚙ MEDIA &amp; NOTES (Drag above to position • Drag ◢ to resize)</span>
-        <div style="display:flex;gap:5px">
+      <div class="media-editor-sticky-bar mono">
+        <span style="color:var(--text);font-size:10px;font-weight:600">⚙ MEDIA &amp; NOTES (Drop files anywhere • ◢ resize)</span>
+        <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">
+          <div class="align-btn-group" style="display:flex;gap:2px;align-items:center;margin-right:6px">
+            <span style="font-size:9px;color:var(--mid);margin-right:2px">TEXT:</span>
+            <button type="button" class="btn-act btn-align-text" data-align="left" title="Left Align">⫷ Left</button>
+            <button type="button" class="btn-act btn-align-text" data-align="center" title="Center Align">⫸⫷ Center</button>
+            <button type="button" class="btn-act btn-align-text" data-align="right" title="Right Align">⫸ Right</button>
+          </div>
           <button type="button" class="btn-act" id="btnAddPhotoNode">+ Photo / GIF</button>
           <button type="button" class="btn-act" id="btnAddVideoNode">+ Video (.mp4)</button>
           <button type="button" class="btn-act" id="btnAddTextNode">+ Note</button>
@@ -2881,10 +2893,13 @@ let DEFAULTS = {
   "photoCardBeaconDot": false,
   "photoCardMouseFollow": true,
   "photoCardMouseFollowStrength": 0.35,
-  "photoCardMouseAttract": true,
-  "photoCardMouseAttractStrength": 0.45,
   "photoCardLayers": 1,
   "photoCardLayerSpread": 0.30,
+  "previewPanelWidth": 960,
+  "previewPanelHeight": 740,
+  "previewMediaHeight": 440,
+  "autoMorph": false,
+  "morphState": 0,
   "themeHue": 145,
   "themeSat": 42,
   "themeDarkness": 90,
@@ -7839,95 +7854,23 @@ function bootSupernovaEngine() {
         drawInnerArtwork();
       }
 
-      // Title & Header Overlay at TOP (Bigger, Bold, Clean)
-      const topGrad = ctx.createLinearGradient(0, photoY, 0, photoY + 115);
-      topGrad.addColorStop(0, "rgba(2, 4, 8, 0.94)");
-      topGrad.addColorStop(0.65, "rgba(2, 4, 8, 0.60)");
-      topGrad.addColorStop(1, "rgba(2, 4, 8, 0)");
-      ctx.fillStyle = topGrad;
-      ctx.fillRect(photoX, photoY, photoW, 115);
-
-      // Title at Top (Bigger & Crisp)
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "bold 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-      ctx.textAlign = "left";
-      ctx.shadowColor = "rgba(0, 0, 0, 0.95)";
-      ctx.shadowBlur = 6;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 1;
-
-      const rawTitle = (layerIndex === 0 ? (node.title || "UNTITLED") : mediaTitle).toUpperCase();
-      const titleLines = wrapCanvasText(ctx, rawTitle, photoW - 36);
-      const topTitle = titleLines[0] || rawTitle;
-      ctx.fillText(topTitle, photoX + 18, photoY + 34);
-
-      // Sub-tag and date under title
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = "rgba(226, 232, 240, 0.85)";
-      ctx.font = "11.5px 'IBM Plex Mono', monospace";
-      const tagText = (node.tags && node.tags[0]) ? `#${node.tags[0].toUpperCase()}` : "#PROJECT";
-      const subLabel = layerIndex === 0 ? (node.date || "2026") : `LAYER ${layerIndex + 1}`;
-      ctx.fillText(`${tagText}  ·  ${subLabel}`, photoX + 18, photoY + 56);
-
+      // Crisp subtle draft badge if draft status
       if (isDraft) {
         ctx.save();
         ctx.fillStyle = "#facc15";
-        ctx.fillRect(photoX + photoW - 76, photoY + 14, 60, 20);
+        ctx.fillRect(photoX + photoW - 54, photoY + 8, 46, 16);
         ctx.fillStyle = "#000000";
-        ctx.font = "bold 10px 'IBM Plex Mono', monospace";
+        ctx.font = "bold 9px 'IBM Plex Mono', monospace";
         ctx.textAlign = "center";
-        ctx.fillText("DRAFT", photoX + photoW - 46, photoY + 28);
+        ctx.fillText("DRAFT", photoX + photoW - 31, photoY + 19);
         ctx.restore();
       }
 
-      // If Hover Mode: Sleek dark overlay with description
+      // On Hover: Never cover with dark blue box; keep photo 100% visible with crisp luminous rim
       if (isHover) {
-        ctx.fillStyle = "rgba(4, 6, 12, 0.86)";
-        ctx.fillRect(photoX, photoY, photoW, photoH);
-
-        // Re-render top header
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-        ctx.fillText(topTitle, photoX + 18, photoY + 34);
-        ctx.fillStyle = "#93c5fd";
-        ctx.font = "11.5px 'IBM Plex Mono', monospace";
-        ctx.fillText(`${tagText}  ·  ${subLabel}`, photoX + 18, photoY + 56);
-
-      if (isDraft) {
-        ctx.save();
-        ctx.fillStyle = "#facc15";
-        ctx.fillRect(photoX + photoW - 76, photoY + 14, 60, 20);
-        ctx.fillStyle = "#000000";
-        ctx.font = "bold 10px 'IBM Plex Mono', monospace";
-        ctx.textAlign = "center";
-        ctx.fillText("DRAFT", photoX + photoW - 46, photoY + 28);
-        ctx.restore();
-      }
-
-        // Thin divider
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(photoX + 18, photoY + 70);
-        ctx.lineTo(photoX + photoW - 18, photoY + 70);
-        ctx.stroke();
-
-        // Description text
-        ctx.fillStyle = "#f1f5f9";
-        ctx.font = "14.5px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-        const descText = (layerIndex === 0 ? (node.desc || (currentMedia && currentMedia.note)) : (currentMedia && currentMedia.note) || node.desc || "Interactive visual engineering and creative coding research.").trim();
-        const descLines = wrapCanvasText(ctx, descText, photoW - 36);
-        let startY = photoY + 102;
-        const maxLines = Math.min(8, descLines.length);
-        for (let l = 0; l < maxLines; l++) {
-          ctx.fillText(descLines[l], photoX + 18, startY);
-          startY += 24;
-        }
-
-        // Bottom CTA
-        ctx.fillStyle = "#38bdf8";
-        ctx.font = "bold 13px 'IBM Plex Mono', monospace";
-        ctx.fillText(layerIndex === 0 ? "EXPLORE PROJECT ↗" : "VIEW LAYER MEDIA ↗", photoX + 18, photoY + photoH - 22);
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.90)";
+        ctx.lineWidth = 3.5;
+        ctx.strokeRect(photoX, photoY, photoW, photoH);
       }
 
       ctx.restore();
@@ -9460,9 +9403,12 @@ function bootSupernovaEngine() {
   if ($("popupDragBar")) $("popupDragBar").addEventListener("pointerdown", e => {
     if (e.target.closest("button")) return;
     if (isStudioMode && e.target.closest(".editable-field")) return;
-    if (!isStudioMode) return; // Keep modal fixed in viewer mode
     isDraggingPopup = true;
+    popupEl.classList.add("has-dragged");
     const rect = popupEl.getBoundingClientRect();
+    popupEl.style.transform = "none";
+    popupEl.style.left = `${rect.left}px`;
+    popupEl.style.top = `${rect.top}px`;
     popStart = { x: e.clientX, y: e.clientY, left: rect.left, top: rect.top };
   });
 
@@ -9474,10 +9420,13 @@ function bootSupernovaEngine() {
 
   document.querySelectorAll(".pop-res").forEach(handle => {
     handle.addEventListener("pointerdown", e => {
-      if (!isStudioMode) return; // Keep modal fixed in viewer mode
       e.stopPropagation();
       resizeDir = handle.dataset.dir;
+      popupEl.classList.add("has-dragged");
       const rect = popupEl.getBoundingClientRect();
+      popupEl.style.transform = "none";
+      popupEl.style.left = `${rect.left}px`;
+      popupEl.style.top = `${rect.top}px`;
       popStart = { x: e.clientX, y: e.clientY, left: rect.left, top: rect.top, w: rect.width, h: rect.height };
     });
   });
@@ -9502,7 +9451,15 @@ function bootSupernovaEngine() {
       }
       popupEl.style.width = `${newW}px`; popupEl.style.height = `${newH}px`;
       popupEl.style.left = `${newL}px`; popupEl.style.top = `${newT}px`;
-      if (selectedId >= 0 && !isStudioMode && activeMediaIdx < 0) fitPhotoSubNetwork();
+      if (isStudioMode) {
+        PARAMS.previewPanelWidth = Math.round(newW);
+        PARAMS.previewPanelHeight = Math.round(newH);
+        if ($("slPreviewPanelWidth")) $("slPreviewPanelWidth").value = Math.round(newW);
+        if ($("valPreviewPanelWidth")) $("valPreviewPanelWidth").textContent = `${Math.round(newW)}px`;
+        if ($("slPreviewPanelHeight")) $("slPreviewPanelHeight").value = Math.round(newH);
+        if ($("valPreviewPanelHeight")) $("valPreviewPanelHeight").textContent = `${Math.round(newH)}px`;
+      }
+      if (selectedId >= 0 && activeMediaIdx < 0) fitPhotoSubNetwork();
     }
   });
   window.addEventListener("pointerup", () => { isDraggingPopup = false; resizeDir = null; });
@@ -9913,23 +9870,20 @@ function bootSupernovaEngine() {
   const mSlider = $("morphSlider"), topMSlider = $("topMorphSlider"), chkAuto = $("chkAuto"), btnVisitorAuto = $("btnVisitorAuto");
 
   function updateShapeButtonsUI(val) {
-    const nearest = Math.max(0, Math.min(3, Math.round(val)));
-    document.querySelectorAll(".m-inline-lbl").forEach(el => {
-      el.classList.toggle("active", +el.dataset.idx === nearest);
-    });
-    updateSliderGap();
-    $("valMorphState").textContent = val.toFixed(2);
-    $("topMorphVal").textContent = val.toFixed(2);
-    mSlider.value = Math.round(val * 100);
+    if ($("valMorphState")) $("valMorphState").textContent = val.toFixed(2);
+    if ($("topMorphVal")) $("topMorphVal").textContent = val.toFixed(2);
+    if (mSlider) mSlider.value = Math.round(val * 100);
     if (topMSlider) topMSlider.value = Math.round(val * 100);
   }
 
   function setAutoMorphState(on) {
-    PARAMS.autoMorph = on; chkAuto.checked = on;
-    $("valAutoMorph").textContent = String(on); btnVisitorAuto.classList.toggle("on", on);
+    PARAMS.autoMorph = Boolean(on);
+    if (chkAuto) chkAuto.checked = Boolean(on);
+    if ($("valAutoMorph")) $("valAutoMorph").textContent = String(on);
+    if (btnVisitorAuto) btnVisitorAuto.classList.toggle("on", Boolean(on));
   }
-  chkAuto.onchange = e => { pushUndoState(); setAutoMorphState(e.target.checked); };
-  btnVisitorAuto.onclick = () => setAutoMorphState(!PARAMS.autoMorph);
+  if (chkAuto) chkAuto.onchange = e => { pushUndoState(); setAutoMorphState(e.target.checked); };
+  if (btnVisitorAuto) btnVisitorAuto.onclick = () => setAutoMorphState(!PARAMS.autoMorph);
 
   [mSlider, topMSlider].filter(Boolean).forEach(sl => {
     sl.addEventListener("pointerdown", () => { isDraggingMorphSlider = true; pushUndoState(); });
@@ -10003,16 +9957,6 @@ function bootSupernovaEngine() {
     PARAMS.photoCardMouseFollowStrength = e.target.value / 100.0;
     $("valPhotoCardMouseFollowStrength").textContent = PARAMS.photoCardMouseFollowStrength.toFixed(2);
   });
-  if ($("chkPhotoCardMouseAttract")) {
-    $("chkPhotoCardMouseAttract").addEventListener("change", e => {
-      PARAMS.photoCardMouseAttract = e.target.checked;
-      if ($("valPhotoCardMouseAttract")) $("valPhotoCardMouseAttract").textContent = PARAMS.photoCardMouseAttract ? "ON" : "OFF";
-    });
-  }
-  bindSl("slPhotoCardMouseAttractStrength", e => {
-    PARAMS.photoCardMouseAttractStrength = e.target.value / 100.0;
-    if ($("valPhotoCardMouseAttractStrength")) $("valPhotoCardMouseAttractStrength").textContent = PARAMS.photoCardMouseAttractStrength.toFixed(2);
-  });
   bindSl("slPhotoCardLayers", e => {
     PARAMS.photoCardLayers = parseInt(e.target.value, 10);
     if ($("valPhotoCardLayers")) $("valPhotoCardLayers").textContent = String(PARAMS.photoCardLayers);
@@ -10071,6 +10015,28 @@ function bootSupernovaEngine() {
   bindSl("slFakeAmt", e => { PARAMS.fakeAmt = e.target.value / 100.0; $("valFakeAmt").textContent = PARAMS.fakeAmt.toFixed(2); });
   bindSl("slFakeVis", e => { PARAMS.fakeVis = e.target.value / 100.0; t3Mat.opacity = Math.min(1.0, 0.55 * PARAMS.fakeVis); $("valFakeVis").textContent = PARAMS.fakeVis.toFixed(2); });
   bindSl("slFakeWidth", e => { PARAMS.fakeWidth = e.target.value / 100.0; uFakeWidth.value = PARAMS.fakeWidth; $("valFakeWidth").textContent = PARAMS.fakeWidth.toFixed(2); });
+
+  bindSl("slPreviewPanelWidth", e => {
+    PARAMS.previewPanelWidth = parseInt(e.target.value, 10);
+    if ($("valPreviewPanelWidth")) $("valPreviewPanelWidth").textContent = `${PARAMS.previewPanelWidth}px`;
+    if (popupEl && popupEl.classList.contains("open")) {
+      popupEl.style.width = `${PARAMS.previewPanelWidth}px`;
+    }
+  });
+  bindSl("slPreviewPanelHeight", e => {
+    PARAMS.previewPanelHeight = parseInt(e.target.value, 10);
+    if ($("valPreviewPanelHeight")) $("valPreviewPanelHeight").textContent = `${PARAMS.previewPanelHeight}px`;
+    if (popupEl && popupEl.classList.contains("open")) {
+      popupEl.style.height = `${PARAMS.previewPanelHeight}px`;
+    }
+  });
+  bindSl("slPreviewMediaHeight", e => {
+    PARAMS.previewMediaHeight = parseInt(e.target.value, 10);
+    if ($("valPreviewMediaHeight")) $("valPreviewMediaHeight").textContent = `${PARAMS.previewMediaHeight}px`;
+    const snVp = $("subnetViewport");
+    if (snVp) snVp.style.height = `${PARAMS.previewMediaHeight}px`;
+    if (selectedId >= 0 && activeMediaIdx < 0) fitPhotoSubNetwork();
+  });
 
   const SPHERE_ROWS = [["defaultZoom","DEFAULT CAMERA ZOOM",60,280,1,0],["sphereRadius","SPHERE RADIUS",15,100,1,0],["sphereDeform","SPHERE DEFORMATION / WAVES",0,150,100,2],["sphereStretch","SPHERE VERTICAL STRETCH",40,220,100,2],["sphereTwist","SPHERE TWIST",-150,150,100,2],["sphereFlow","SPHERE FLUID SPEED",0,250,100,2],["sphereSpin","SPHERE GENTLE ROTATION",0,30,100,2],["sphereThickness","SPHERE SHELL THICKNESS",0,1000,100,2],["sphereTension","SPHERE RETURN TENSION",0,100,100,2],["hubSeed","HUB SCATTER SEED",0,9999,1,0],["dragLimit","HUB RELOCATION LIMIT",0,80,1,0],["hubFollowStrength","HUB PARTICLE FOLLOW STRENGTH",0,300,100,2],["mouseEffectStrength","MOUSE EFFECT STRENGTH (0 = OFF)",0,300,100,2]];
   SPHERE_ROWS.forEach(([key,label,min,max,scale,digits]) => {
@@ -10194,11 +10160,18 @@ function bootSupernovaEngine() {
       $("valPhotoCardMouseFollow").textContent = PARAMS.photoCardMouseFollow ? "ON" : "OFF";
     }
     s("slPhotoCardMouseFollowStrength", "valPhotoCardMouseFollowStrength", PARAMS.photoCardMouseFollowStrength !== undefined ? PARAMS.photoCardMouseFollowStrength : 0.35);
-    if ($("chkPhotoCardMouseAttract")) {
-      $("chkPhotoCardMouseAttract").checked = Boolean(PARAMS.photoCardMouseAttract !== undefined ? PARAMS.photoCardMouseAttract : true);
-      if ($("valPhotoCardMouseAttract")) $("valPhotoCardMouseAttract").textContent = PARAMS.photoCardMouseAttract ? "ON" : "OFF";
+    if ($("slPreviewPanelWidth")) {
+      $("slPreviewPanelWidth").value = PARAMS.previewPanelWidth || 960;
+      if ($("valPreviewPanelWidth")) $("valPreviewPanelWidth").textContent = `${PARAMS.previewPanelWidth || 960}px`;
     }
-    s("slPhotoCardMouseAttractStrength", "valPhotoCardMouseAttractStrength", PARAMS.photoCardMouseAttractStrength !== undefined ? PARAMS.photoCardMouseAttractStrength : 0.45);
+    if ($("slPreviewPanelHeight")) {
+      $("slPreviewPanelHeight").value = PARAMS.previewPanelHeight || 740;
+      if ($("valPreviewPanelHeight")) $("valPreviewPanelHeight").textContent = `${PARAMS.previewPanelHeight || 740}px`;
+    }
+    if ($("slPreviewMediaHeight")) {
+      $("slPreviewMediaHeight").value = PARAMS.previewMediaHeight || 440;
+      if ($("valPreviewMediaHeight")) $("valPreviewMediaHeight").textContent = `${PARAMS.previewMediaHeight || 440}px`;
+    }
     s("slPhotoCardLayers", "valPhotoCardLayers", PARAMS.photoCardLayers !== undefined ? PARAMS.photoCardLayers : 1, 1, 0);
     s("slPhotoCardLayerSpread", "valPhotoCardLayerSpread", PARAMS.photoCardLayerSpread !== undefined ? PARAMS.photoCardLayerSpread : 0.30);
     if ($("chkPhotoCardBeaconDot")) {
@@ -10561,21 +10534,96 @@ function bootSupernovaEngine() {
     };
   }
 
+  document.querySelectorAll(".btn-align-text").forEach(btn => {
+    btn.onclick = () => {
+      const align = btn.dataset.align;
+      if (selectedId >= 0 && NODES[selectedId]) {
+        NODES[selectedId].textAlign = align;
+        if ($("dDesc")) $("dDesc").style.textAlign = align;
+        document.querySelectorAll(".btn-align-text").forEach(b => b.classList.toggle("active", b.dataset.align === align));
+      }
+    };
+  });
+
+  function setupMediaDragAndDrop() {
+    const dropTargets = [popupEl, $("subnetViewport"), $("edMediaList")].filter(Boolean);
+    dropTargets.forEach(target => {
+      target.addEventListener("dragover", e => {
+        e.preventDefault(); e.stopPropagation();
+        target.classList.add("media-drop-zone-active");
+      });
+      target.addEventListener("dragleave", e => {
+        e.preventDefault(); e.stopPropagation();
+        target.classList.remove("media-drop-zone-active");
+      });
+      target.addEventListener("drop", e => {
+        e.preventDefault(); e.stopPropagation();
+        target.classList.remove("media-drop-zone-active");
+        if (selectedId < 0) return;
+        const node = NODES[selectedId];
+        if (!node) return;
+        const files = e.dataTransfer && e.dataTransfer.files;
+        if (!files || !files.length) return;
+        Array.from(files).forEach(file => {
+          const isVideo = file.type.startsWith("video/") || file.name.endsWith(".mp4") || file.name.endsWith(".webm");
+          const isImg = file.type.startsWith("image/") || file.name.endsWith(".gif") || file.name.endsWith(".png") || file.name.endsWith(".jpg") || file.name.endsWith(".webp") || file.name.endsWith(".jpeg");
+          if (!isImg && !isVideo) return;
+          const idx = node.media.length;
+          compressImageFile(file, (url, detectedType) => {
+            const finalType = (detectedType === "video" || isVideo) ? "video" : "photo";
+            node.media.push({
+              type: finalType,
+              title: file.name.replace(/\.[^/.]+$/, "").toUpperCase(),
+              note: "",
+              x: 140 + (idx * 55) % 300,
+              y: 80 + (idx * 45) % 180,
+              w: finalType === "video" ? 190 : 170,
+              h: finalType === "video" ? 125 : 110,
+              style: idx % 4,
+              img: url
+            });
+            renderAdminMediaEditor(node);
+            renderPhotoSubNetwork(node);
+            refreshPhotoCardTexture(node.id);
+          });
+        });
+      });
+    });
+  }
+  setupMediaDragAndDrop();
+
   function openPopup(id, refitGraph = true) {
     selectedId = id; const node = NODES[id]; if (!node) return;
     pauseAllVideos();
     if (refitGraph) activeMediaIdx = -1;
-    if (!isStudioMode || !popupEl.classList.contains("open")) {
-      popupEl.style.left = "";
-      popupEl.style.top = "";
-      if (window.innerWidth < 768) {
-        popupEl.style.width = "";
-        popupEl.style.height = "";
-      }
+
+    document.body.classList.add("popup-open");
+
+    // Configured preview panel dimensions
+    const pWidth = Math.min(window.innerWidth - 16, Math.max(320, Number(PARAMS.previewPanelWidth) || 960));
+    const pHeight = Math.min(window.innerHeight - 20, Math.max(300, Number(PARAMS.previewPanelHeight) || 740));
+    popupEl.style.width = `${pWidth}px`;
+    popupEl.style.height = `${pHeight}px`;
+
+    const mHeight = Math.min(pHeight - 160, Math.max(180, Number(PARAMS.previewMediaHeight) || 440));
+    const snVp = $("subnetViewport");
+    if (snVp) snVp.style.height = `${mHeight}px`;
+
+    if (!popupEl.classList.contains("has-dragged")) {
+      const left = Math.max(8, Math.round((window.innerWidth - pWidth) * 0.5));
+      const top = Math.max(8, Math.round((window.innerHeight - pHeight) * 0.5));
+      popupEl.style.left = `${left}px`;
+      popupEl.style.top = `${top}px`;
+      popupEl.style.transform = "none";
     }
+
     $("dTitle").textContent = node.title;
     $("dDate").textContent = node.date;
     $("dDesc").textContent = node.desc;
+    const align = node.textAlign || "left";
+    $("dDesc").style.textAlign = align;
+    document.querySelectorAll(".btn-align-text").forEach(b => b.classList.toggle("active", b.dataset.align === align));
+
     $("dDraftBadge").style.display = node.status === "draft" ? "inline-block" : "none";
     $("projectPopup").classList.toggle("is-draft", node.status === "draft");
     syncEditableFields();
@@ -10625,6 +10673,7 @@ function bootSupernovaEngine() {
 
   function closePopup() {
     pauseAllVideos();
+    document.body.classList.remove("popup-open");
     if (selectedId >= 0 && isStudioMode) {
       const n = NODES[selectedId];
       if (n && (n.isNewlyAdded || n.status === "slot")) {
@@ -10640,6 +10689,7 @@ function bootSupernovaEngine() {
     selectedId = -1;
     activeMediaIdx = -1;
     popupEl.classList.remove("open"); popupEl.setAttribute("aria-hidden", "true");
+    popupEl.classList.remove("has-dragged");
     popupEl.style.left = "";
     popupEl.style.top = "";
     if ($("relatedHubsDropdown")) $("relatedHubsDropdown").open = false;
@@ -10650,7 +10700,10 @@ function bootSupernovaEngine() {
   function applyPopupEditsToNode(n) {
     if ($("dTitle")) n.title = $("dTitle").textContent.trim() || n.title;
     if ($("dDate")) n.date = $("dDate").textContent.trim() || n.date;
-    if ($("dDesc")) n.desc = $("dDesc").textContent.trim();
+    if ($("dDesc")) {
+      n.desc = $("dDesc").textContent.trim();
+      n.textAlign = $("dDesc").style.textAlign || "left";
+    }
     n.tags = [...editingTagsSet];
     registerTagsIntoPool(n.tags);
     n.tags.forEach(t => checkedTags.add(t));
@@ -11751,14 +11804,10 @@ function bootSupernovaEngine() {
       $("subnetStage").style.transform = `translate(${snPanX.toFixed(1)}px, ${snPanY.toFixed(1)}px) scale(${snZoom.toFixed(3)})`;
     }
 
-    if (PARAMS.autoMorph && !isDraggingMorphSlider) {
-      morphTarget += dt * PARAMS.morphSpeed * morphDir;
-      if (morphTarget >= 3.0) { morphTarget = 3.0; morphDir = -1.0; } else if (morphTarget <= 0.0) { morphTarget = 0.0; morphDir = 1.0; }
-      PARAMS.morphState = morphTarget; updateShapeButtonsUI(morphTarget);
-    }
-    uMorph.value += (morphTarget - uMorph.value) * 0.06; const m = uMorph.value; bgUniforms.uMorph.value = m;
+    uMorph.value = 0; bgUniforms.uMorph.value = 0;
 
-    if (!isPointerDown && selectedId < 0) camYaw += 0.0012 * PARAMS.autoSpeed;
+    const isProjectOpen = (selectedId >= 0 || (popupEl && popupEl.classList.contains("open")));
+    if (!isPointerDown && !isProjectOpen) camYaw += 0.0012 * PARAMS.autoSpeed;
     const desiredCam = desiredCameraWork.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist).add(camTarget);
     camera.position.lerp(desiredCam, 0.09); camLook.lerp(camTarget, 0.11); camera.lookAt(camLook);
     camera.getWorldDirection(bgUniforms.uCamDir.value); bgUniforms.uCamRight.value.setFromMatrixColumn(camera.matrixWorld, 0); bgUniforms.uCamUp.value.setFromMatrixColumn(camera.matrixWorld, 1);
@@ -11771,7 +11820,9 @@ function bootSupernovaEngine() {
     uPartVis.value = PARAMS.partVis * rBr; bgUniforms.uBgVis.value = PARAMS.bgVis * rBr;
     t3Mat.opacity = Math.min(1.0, 0.55 * PARAMS.fakeVis) * rBr * particleVisibility; t3Mat.size = 1.05 * rPx;
     particleSystem.material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2) * rPx;
-    sphereTime += dt * PARAMS.sphereFlow * PSYS.driftSpeed;
+    if (!isProjectOpen) {
+      sphereTime += dt * PARAMS.sphereFlow * PSYS.driftSpeed;
+    }
     updateParticles(dt);
 
     const hBright = PARAMS.hubBright * rBr, pAmt = PARAMS.pulseAmt, pSpd = PARAMS.pulseSpeed, pRingVis = PARAMS.pulseRingVis;
