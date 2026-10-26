@@ -1597,7 +1597,99 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   opacity: 1;
 }
 
-@media(max-width:760px){
+@media(max-width:768px){
+  html, body {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* 1. Studio Bar: Horizontally scrollable touch-friendly row */
+  .studio-bar {
+    width: calc(100vw - 12px) !important;
+    max-width: calc(100vw - 12px) !important;
+    left: 6px !important;
+    transform: none !important;
+    top: env(safe-area-inset-top, 0px) !important;
+    padding: 4px 6px !important;
+    gap: 4px !important;
+    font-size: 10px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    justify-content: flex-start !important;
+    border-radius: 0 0 10px 10px !important;
+    box-sizing: border-box !important;
+  }
+  body.bar-hidden .studio-bar {
+    transform: translateY(-100%) !important;
+  }
+  body.bar-hidden .studio-bar:hover, body.bar-hidden .studio-bar:focus-within {
+    transform: translateY(0) !important;
+  }
+  .bar-tab {
+    width: 32px !important;
+    height: 16px !important;
+    bottom: -16px !important;
+    font-size: 8px !important;
+  }
+  .studio-bar .st-pill, .studio-bar .btn-act, .studio-bar .btn-publish {
+    padding: 3px 6px !important;
+    font-size: 9.5px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 2. Brand Header (MOHSEN ZAREI) */
+  header {
+    top: calc(env(safe-area-inset-top, 0px) + 10px) !important;
+    left: 10px !important;
+    right: 10px !important;
+  }
+  .brand h1 {
+    font-size: 16px !important;
+  }
+  .brand-x {
+    font-size: 16px !important;
+    padding: 2px 5px !important;
+  }
+  .brand p {
+    font-size: 11px !important;
+    max-width: 84vw !important;
+  }
+
+  /* 3. Tuner / Sliders on Phone */
+  #tuner {
+    width: min(300px, calc(100vw - 16px)) !important;
+    max-height: 70vh !important;
+    top: 44px !important;
+    right: 8px !important;
+    padding: 8px !important;
+    font-size: 9.5px !important;
+  }
+  #tuner .param-row {
+    margin-bottom: 3px !important;
+  }
+  #tuner input[type="range"] {
+    height: 18px !important;
+  }
+
+  /* 4. Bottom Controls: Hashtags (#) and Contacts (*) */
+  .corner-filter {
+    left: 10px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
+  }
+  .hash-stage {
+    min-height: 54px !important;
+  }
+  .hash-half.hh-l {
+    font-size: 64px !important;
+    height: 54px !important;
+    line-height: 54px !important;
+  }
+  .hash-edit-btn {
+    bottom: 58px !important;
+    font-size: 9px !important;
+    padding: 2px 5px !important;
+  }
   .cf-slot {
     margin-left: 0 !important;
     width: min(300px, calc(100vw - 24px)) !important;
@@ -1609,6 +1701,48 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   .category-dropdown-menu {
     min-width: 190px;
     max-height: 180px;
+  }
+  .contact-corner {
+    right: 12px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
+    font-size: 64px !important;
+    line-height: 54px !important;
+  }
+  .contact-corner.open .contact-btn {
+    transform: translateX(18px) rotate(150deg) !important;
+  }
+  .star-edit-btn {
+    left: -18px !important;
+    top: 6px !important;
+    font-size: 9px !important;
+    padding: 2px 5px !important;
+  }
+
+  /* 5. Bottom Morph Slider */
+  .morph-faded-box {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important;
+    width: min(220px, calc(100vw - 150px)) !important;
+    padding: 4px 8px !important;
+  }
+  .line-particle-track {
+    height: 22px !important;
+  }
+  .line-particle-label {
+    font-size: 8px !important;
+  }
+  .line-particle-midpoint {
+    font-size: 11px !important;
+  }
+
+  /* 6. Modals on Phone */
+  .auth-card, .gh-publish-card, .confirm-card {
+    width: calc(100vw - 24px) !important;
+    padding: 14px 16px !important;
+  }
+  .lb-card {
+    max-width: 96vw !important;
+    max-height: 94vh !important;
+    padding: 10px !important;
   }
 }
 
@@ -2060,7 +2194,9 @@ let STUDIO_SECRET_KEY = "mohsen";
 let SITE_HEADER = {
   name: "MOHSEN ZAREI",
   desc: "Interactive art, embedded systems, kinetic calligraphy & 3D shaders. Click any star hub to explore its project space.",
-  descPinned: true
+  descPinned: true,
+  x: null,
+  y: null
 };
 
 let BRAND_AVATAR = {
@@ -2238,6 +2374,37 @@ function bootSupernovaEngine() {
     }
   } catch (err) {}
 
+  try {
+    const savedHdr = JSON.parse(localStorage.getItem("supernova_site_header") || "null");
+    if (savedHdr) {
+      if (savedHdr.name) SITE_HEADER.name = savedHdr.name;
+      if (savedHdr.desc) SITE_HEADER.desc = savedHdr.desc;
+      if (savedHdr.descPinned !== undefined) SITE_HEADER.descPinned = savedHdr.descPinned;
+      if (savedHdr.x !== undefined) SITE_HEADER.x = savedHdr.x;
+      if (savedHdr.y !== undefined) SITE_HEADER.y = savedHdr.y;
+    }
+  } catch (err) {}
+
+  const applyBrandPosition = () => {
+    const brand = document.querySelector(".brand");
+    if (!brand) return;
+    if (SITE_HEADER.x != null && SITE_HEADER.y != null) {
+      brand.style.position = "fixed";
+      brand.style.left = SITE_HEADER.x + "px";
+      brand.style.top = SITE_HEADER.y + "px";
+      brand.style.right = "auto";
+    }
+  };
+  applyBrandPosition();
+
+  const getResponsiveCamDist = () => {
+    const base = PARAMS.defaultZoom || 145;
+    const aspect = window.innerWidth / Math.max(1, window.innerHeight);
+    if (aspect < 0.65) return base * 1.5;
+    if (aspect < 0.85) return base * 1.25;
+    return base;
+  };
+
   $("btnHomeReset").textContent = "𝗫̘̚";
   $("brandName").textContent = SITE_HEADER.name;
   renderDescWords();
@@ -2361,7 +2528,7 @@ function bootSupernovaEngine() {
   let snPanX = 0, snPanY = 0, snZoom = 1.0, snTargetPanX = 0, snTargetPanY = 0, snTargetZoom = 1.0;
   let isDraggingSubnet = false, draggedMediaNodeIdx = -1, resizedMediaNodeIdx = -1, snDragStart = { x: 0, y: 0 };
 
-  let camYaw = 0.55, camPitch = 0.25, camDist = PARAMS.defaultZoom;
+  let camYaw = 0.55, camPitch = 0.25, camDist = getResponsiveCamDist();
   const camTarget = new THREE.Vector3(0, 0, 0), camLook = new THREE.Vector3(0, 0, 0), MAX_PAN_RADIUS = 65;
   let morphTarget = PARAMS.morphState, morphDir = 1.0, isDraggingMorphSlider = false;
 
@@ -2430,6 +2597,64 @@ function bootSupernovaEngine() {
     p.addEventListener("focus", beginDescriptionEdit);
     p.addEventListener("input", () => { if (isStudioMode) SITE_HEADER.desc = p.textContent; });
     p.addEventListener("blur", () => { SITE_HEADER.desc = p.textContent.trim() || SITE_HEADER.desc; delete p.dataset.editing; renderDescWords(false); });
+  })();
+
+  // Brand Card Drag & Relocation (Studio Mode)
+  (() => {
+    const brand = document.querySelector(".brand");
+    if (!brand) return;
+    
+    const brandRow = brand.querySelector(".brand-row");
+    const dragBtn = document.createElement("button");
+    dragBtn.type = "button";
+    dragBtn.className = "btn-act studio-only brand-drag-btn";
+    dragBtn.title = "Drag to relocate MOHSEN ZAREI text holder anywhere on screen";
+    dragBtn.innerHTML = "⠿ Move";
+    dragBtn.style.cssText = "font-size:10px;padding:2px 6px;margin-left:4px;cursor:grab;color:#a5b4fc;border:1px dashed rgba(165,180,252,0.4);border-radius:4px;";
+    if (brandRow) brandRow.appendChild(dragBtn);
+
+    let isDraggingBrand = false;
+    let dragOrigin = { x: 0, y: 0 };
+    let initialBrandPos = { x: 0, y: 0 };
+
+    function startBrandDrag(e) {
+      if (!isStudioMode) return;
+      isDraggingBrand = true;
+      const rect = brand.getBoundingClientRect();
+      dragOrigin = { x: e.clientX, y: e.clientY };
+      initialBrandPos = { x: rect.left, y: rect.top };
+      brand.classList.add("brand-dragging");
+      try { e.target.setPointerCapture(e.pointerId); } catch(err){}
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    function moveBrandDrag(e) {
+      if (!isDraggingBrand) return;
+      const dx = e.clientX - dragOrigin.x;
+      const dy = e.clientY - dragOrigin.y;
+      const newX = Math.round(initialBrandPos.x + dx);
+      const newY = Math.round(initialBrandPos.y + dy);
+      brand.style.position = "fixed";
+      brand.style.left = newX + "px";
+      brand.style.top = newY + "px";
+      brand.style.right = "auto";
+      SITE_HEADER.x = newX;
+      SITE_HEADER.y = newY;
+    }
+
+    function stopBrandDrag(e) {
+      if (!isDraggingBrand) return;
+      isDraggingBrand = false;
+      brand.classList.remove("brand-dragging");
+      try { e.target.releasePointerCapture(e.pointerId); } catch(err){}
+      localStorage.setItem("supernova_site_header", JSON.stringify(SITE_HEADER));
+    }
+
+    dragBtn.addEventListener("pointerdown", startBrandDrag);
+    dragBtn.addEventListener("pointermove", moveBrandDrag);
+    dragBtn.addEventListener("pointerup", stopBrandDrag);
+    dragBtn.addEventListener("pointercancel", stopBrandDrag);
   })();
 
   function setBrandOpen(open) {
@@ -3032,7 +3257,7 @@ function bootSupernovaEngine() {
     if (!m) return false;
     if (m.type === "video") return true;
     const src = (m.img || m.video || m.url || "").trim();
-    return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(src) || src.startsWith("data:video/");
+    return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(src) || src.startsWith("data:video/") || /youtube\.com|youtu\.be|vimeo\.com/i.test(src);
   }
 
   function ensureProjectMedia(proj, idx) {
@@ -4820,7 +5045,25 @@ function bootSupernovaEngine() {
       nd.textContent = m.note || ""; wrap.appendChild(nd);
     } else if (isVideoMedia(m)) {
       const src = (m.img || m.video || m.url || "").trim();
-      if (src) {
+      const ytMatch = src.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+      const vimMatch = src.match(/vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)/i);
+      if (ytMatch) {
+        const ifr = document.createElement("iframe");
+        ifr.src = `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0`;
+        ifr.setAttribute("frameborder", "0");
+        ifr.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+        ifr.setAttribute("allowfullscreen", "");
+        ifr.style.cssText = "width:min(880px,88vw);aspect-ratio:16/9;max-height:80vh;border-radius:4px;display:block;";
+        wrap.appendChild(ifr);
+      } else if (vimMatch) {
+        const ifr = document.createElement("iframe");
+        ifr.src = `https://player.vimeo.com/video/${vimMatch[3]}?autoplay=1`;
+        ifr.setAttribute("frameborder", "0");
+        ifr.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+        ifr.setAttribute("allowfullscreen", "");
+        ifr.style.cssText = "width:min(880px,88vw);aspect-ratio:16/9;max-height:80vh;border-radius:4px;display:block;";
+        wrap.appendChild(ifr);
+      } else if (src) {
         const vid = document.createElement("video");
         vid.src = src;
         vid.controls = true;
@@ -4845,6 +5088,7 @@ function bootSupernovaEngine() {
     const wrap = $("lbMediaWrap");
     if (wrap) {
       wrap.querySelectorAll("video").forEach(v => { try { v.pause(); v.src = ""; } catch (e) {} });
+      wrap.querySelectorAll("iframe").forEach(f => { try { f.src = ""; } catch (e) {} });
     }
     $("lightbox").classList.remove("open");
   }
@@ -5933,6 +6177,9 @@ function bootSupernovaEngine() {
     renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
     bgUniforms.uResolution.value.set(window.innerWidth, window.innerHeight); uLineResolution.value.set(window.innerWidth, window.innerHeight);
     resizeBackgroundCache();
+    if (!isPointerDown && selectedId < 0) {
+      camDist = getResponsiveCamDist();
+    }
   }
   window.addEventListener("resize", onResize); onResize();
   syncSlidersFromParams();
