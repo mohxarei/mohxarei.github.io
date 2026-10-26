@@ -499,7 +499,7 @@ body.studio-mode .subnet-node { cursor: move; }
 .subnet-node.note-node { padding: 22px 10px 8px; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(ellipse at center, rgba(12,15,22,0.72) 0%, transparent 85%); }
 .sn-img-wrap { width: 100%; height: 100%; position: relative; border-radius: var(--ui-radius, 1px); overflow: hidden; box-shadow: 0 12px 32px rgba(0,0,0,0.75); }
 .sn-img-wrap img, .sn-img-wrap canvas, .sn-img-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.sn-media-badge { position: absolute; top: 6px; right: 7px; background: rgba(4, 6, 12, 0.78); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: var(--ui-radius, 1px); padding: 1px 5px; font-size: 8.5px; font-weight: 600; letter-spacing: .08em; color: #fff; pointer-events: none; z-index: 4; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.sn-media-badge { display: none !important; }
 .sn-play-btn {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px;
   border-radius: 50%; background: rgba(4, 6, 8, 0.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -7953,11 +7953,35 @@ function bootSupernovaEngine() {
         ctx.restore();
       }
 
-      // On Hover: Never cover with dark blue box; keep photo 100% visible with crisp luminous rim
+      // On Hover: Crisp luminous rim + Project title on top of photo card
       if (isHover) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.90)";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
         ctx.lineWidth = 3.5;
         ctx.strokeRect(photoX, photoY, photoW, photoH);
+
+        if (node.title) {
+          ctx.save();
+          // Top semi-transparent banner for title visibility
+          const banH = 58;
+          const banGrad = ctx.createLinearGradient(photoX, photoY, photoX, photoY + banH);
+          banGrad.addColorStop(0, "rgba(2, 4, 8, 0.94)");
+          banGrad.addColorStop(0.70, "rgba(2, 4, 8, 0.72)");
+          banGrad.addColorStop(1, "rgba(2, 4, 8, 0.0)");
+          ctx.fillStyle = banGrad;
+          ctx.fillRect(photoX, photoY, photoW, banH);
+
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "bold 17px 'IBM Plex Mono', monospace";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          ctx.shadowColor = "rgba(0, 0, 0, 0.95)";
+          ctx.shadowBlur = 6;
+
+          let titleStr = String(node.title).toUpperCase();
+          if (titleStr.length > 27) titleStr = titleStr.slice(0, 25) + "...";
+          ctx.fillText(titleStr, photoX + 14, photoY + 24);
+          ctx.restore();
+        }
       }
 
       ctx.restore();
@@ -9681,7 +9705,7 @@ function bootSupernovaEngine() {
         const src = (m.img || m.video || m.url || "").trim();
         card.innerHTML = `
           <div class="sn-img-wrap sn-video-wrap">
-            <span class="sn-media-badge mono">▶ VIDEO</span>
+            
             <button type="button" class="sn-play-btn" aria-label="Play/Pause Video" title="Play Video">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
@@ -12096,8 +12120,8 @@ function bootSupernovaEngine() {
       isReticlePhotoHovered ||
       reticleGraceTimer > 0
     );
-    // Allow sphere to keep rotating naturally during hover ("let sphere bounce and rotate as it is")
-    if (!isPointerDown && !isProjectOpen && (typeof isAutoRotateEnabled === "undefined" || isAutoRotateEnabled)) {
+    // When user hovers: let preview remain and sphere stop rotating (pulse and alive effects continue)
+    if (!isPointerDown && !isProjectOpen && !isPreviewActive && (typeof isAutoRotateEnabled === "undefined" || isAutoRotateEnabled)) {
       camYaw += 0.0012 * PARAMS.autoSpeed;
     }
     const desiredCam = desiredCameraWork.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist).add(camTarget);
@@ -12149,22 +12173,7 @@ function bootSupernovaEngine() {
         const baseP = getBaseNodePos(n, m, basePositionWork);
         hubBasePosArray[idx].copy(baseP);
 
-        // Elastic hover stretch: stretches outward up to tuner stretch limit (PARAMS.dragLimit) then bounces and releases
-        const isThisHovered = (idx === hoveredId || idx === currentReticleNodeId);
-        const stretchLimit = Math.max(10, Math.min(80, Number(PARAMS.dragLimit) || 36));
-        const targetHoverStretch = isThisHovered ? stretchLimit * 0.88 : 0.0;
-        const springK = 22.0, dampK = 0.74;
-        n.hoverStretchVel = (n.hoverStretchVel || 0) + (targetHoverStretch - (n.hoverStretch || 0)) * springK * dt;
-        n.hoverStretchVel *= Math.pow(dampK, dt * 60);
-        n.hoverStretch = (n.hoverStretch || 0) + n.hoverStretchVel * dt;
-
         n.pos.copy(baseP).add(n.userOffset).add(n.elasticOffset);
-        if (Math.abs(n.hoverStretch) > 0.05) {
-          _vSphereNorm.copy(baseP);
-          if (_vSphereNorm.lengthSq() > 0.001) _vSphereNorm.normalize();
-          else _vSphereNorm.set(0, 1, 0);
-          n.pos.addScaledVector(_vSphereNorm, n.hoverStretch);
-        }
 
         if (n !== draggedNode && floatAmp > 0.005) {
           n.pos.x += Math.cos(t * 0.38 + idx * 1.7) * 0.45 * floatAmp;
