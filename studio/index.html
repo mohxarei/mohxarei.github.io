@@ -1597,19 +1597,135 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   opacity: 1;
 }
 
+/* ============================================================================
+   BRAND TEXT HOLDER & PROJECT POPUP ENHANCEMENTS
+   ============================================================================ */
+.brand-text-holder {
+  position: absolute;
+  left: calc(var(--hash-icon-size) * .51 + 12px);
+  top: max(0px, calc(var(--hash-icon-size) * .541875 - 32px));
+  max-width: calc(100vw - var(--hash-icon-size) * .51 - 70px);
+  z-index: 6;
+  pointer-events: none;
+}
+.brand-row.name-open .brand-text-holder {
+  pointer-events: auto;
+}
+.brand-text-holder .brand-name-group {
+  position: static;
+  left: auto;
+  top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  translate: -12px 0;
+  transition: opacity .3s ease, translate .4s ease, visibility .3s;
+}
+.brand-row.name-open .brand-text-holder .brand-name-group {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  translate: 0 0;
+}
+.brand-text-holder #brandDesc {
+  margin-left: 0 !important;
+  margin-top: 6px !important;
+  width: min(42ch, calc(100vw - 32px)) !important;
+  max-width: none !important;
+}
+.brand-text-holder.brand-dragging {
+  cursor: grabbing !important;
+  user-select: none;
+}
+
+/* Subtle, non-clickable Hashtag Pills */
+.popup-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2.5px 7px;
+  margin: 2px 4px 2px 0;
+  pointer-events: none;
+  user-select: text;
+  letter-spacing: 0.02em;
+}
+
+/* Compact Collapsible Related Hubs Dropdown */
+.related-hubs-dropdown {
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 10px;
+}
+.related-hubs-dropdown summary {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--mid);
+  list-style: none;
+  outline: none;
+  transition: color 0.15s ease;
+}
+.related-hubs-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+.related-hubs-dropdown summary:hover {
+  color: var(--text);
+}
+.related-hubs-dropdown summary .dropdown-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 11px;
+}
+.related-hubs-dropdown[open] summary .dropdown-arrow {
+  transform: rotate(90deg);
+}
+.related-hubs-dropdown .conn-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.related-hubs-dropdown .conn-item {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.related-hubs-dropdown .conn-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
 @media(max-width:768px){
   html, body {
     width: 100vw;
     overflow-x: hidden;
   }
 
-  /* 1. Studio Bar: Horizontally scrollable touch-friendly row */
+  /* 1. Studio Bar: Dynamic Island & Notch Safe Area Offset */
   .studio-bar {
     width: calc(100vw - 12px) !important;
     max-width: calc(100vw - 12px) !important;
     left: 6px !important;
     transform: none !important;
-    top: env(safe-area-inset-top, 0px) !important;
+    top: max(8px, env(safe-area-inset-top, 54px)) !important;
     padding: 4px 6px !important;
     gap: 4px !important;
     font-size: 10px !important;
@@ -1617,8 +1733,9 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     -webkit-overflow-scrolling: touch !important;
     white-space: nowrap !important;
     justify-content: flex-start !important;
-    border-radius: 0 0 10px 10px !important;
+    border-radius: 8px !important;
     box-sizing: border-box !important;
+    z-index: 50 !important;
   }
   body.bar-hidden .studio-bar {
     transform: translateY(-100%) !important;
@@ -1638,11 +1755,14 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     flex-shrink: 0 !important;
   }
 
-  /* 2. Brand Header (MOHSEN ZAREI) */
+  /* 2. Brand Header (MOHSEN ZAREI) Safe Offset */
   header {
-    top: calc(env(safe-area-inset-top, 0px) + 10px) !important;
+    top: max(10px, env(safe-area-inset-top, 50px)) !important;
     left: 10px !important;
     right: 10px !important;
+  }
+  body.studio-mode header {
+    top: max(10px, calc(env(safe-area-inset-top, 54px) + 38px)) !important;
   }
   .brand h1 {
     font-size: 16px !important;
@@ -1655,24 +1775,53 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     font-size: 11px !important;
     max-width: 84vw !important;
   }
+  .brand-text-holder {
+    max-width: calc(100vw - 70px) !important;
+  }
 
-  /* 3. Tuner / Sliders on Phone */
+  /* 3. Tuner / Sliders on Phone & Small Screens: Full Parity with Desktop, Touch-Friendly */
   #tuner {
-    width: min(300px, calc(100vw - 16px)) !important;
-    max-height: 70vh !important;
-    top: 44px !important;
+    width: min(340px, calc(100vw - 16px)) !important;
+    max-height: calc(100dvh - max(8px, env(safe-area-inset-top, 54px)) - 80px) !important;
+    top: max(56px, calc(env(safe-area-inset-top, 54px) + 38px)) !important;
     right: 8px !important;
-    padding: 8px !important;
-    font-size: 9.5px !important;
+    padding: 10px !important;
+    font-size: 10px !important;
+    z-index: 30 !important;
+  }
+  #tuner .tuner-body {
+    max-height: calc(100dvh - max(8px, env(safe-area-inset-top, 54px)) - 170px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-right: 4px !important;
   }
   #tuner .param-row {
-    margin-bottom: 3px !important;
+    margin-bottom: 4px !important;
   }
   #tuner input[type="range"] {
-    height: 18px !important;
+    height: 24px !important;
+    touch-action: pan-x !important;
+  }
+  #tuner input[type="range"]::-webkit-slider-thumb {
+    width: 16px !important;
+    height: 16px !important;
   }
 
-  /* 4. Bottom Controls: Hashtags (#) and Contacts (*) */
+  /* 4. Project Popup on Phone & Small Screens */
+  #projectPopup {
+    left: 8px !important;
+    top: max(12px, calc(env(safe-area-inset-top, 54px) + 36px)) !important;
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - env(safe-area-inset-top, 54px) - 50px) !important;
+    height: auto !important;
+    border-radius: 10px !important;
+  }
+  #projectPopup .popup-body {
+    max-height: calc(100dvh - env(safe-area-inset-top, 54px) - 130px) !important;
+  }
+
+  /* 5. Bottom Controls: Hashtags (#) and Contacts (*) */
   .corner-filter {
     left: 10px !important;
     bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
@@ -1718,7 +1867,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     padding: 2px 5px !important;
   }
 
-  /* 5. Bottom Morph Slider */
+  /* 6. Bottom Morph Slider */
   .morph-faded-box {
     bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important;
     width: min(220px, calc(100vw - 150px)) !important;
@@ -1734,10 +1883,14 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     font-size: 11px !important;
   }
 
-  /* 6. Modals on Phone */
+  /* 7. Modals on Phone & Small Screens */
   .auth-card, .gh-publish-card, .confirm-card {
     width: calc(100vw - 24px) !important;
     padding: 14px 16px !important;
+  }
+  #confirmModal, #secretKeyModal, #githubPublishModal {
+    padding-top: max(20px, env(safe-area-inset-top, 54px)) !important;
+    padding-bottom: max(20px, env(safe-area-inset-bottom, 24px)) !important;
   }
   .lb-card {
     max-width: 96vw !important;
@@ -1771,48 +1924,51 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <div class="brand">
     <div class="brand-row">
       <h1 id="btnHomeReset" role="button" tabindex="0" aria-expanded="false" aria-controls="brandName brandDesc" title="Show / hide name" aria-label="Show or hide name and description">𝗫̘̚</h1>
-      <div class="brand-name-group" id="brandNameGroup">
-        <span id="brandName" class="brand-name" aria-hidden="true" spellcheck="false" tabindex="0" aria-label="Name, editable in Studio mode">MOHSEN ZAREI</span>
-        <button type="button" class="btn-bio-photo studio-only mono" id="btnAddBioPhoto" title="Add / change Photo or GIF for bio">📷 + Photo / GIF</button>
-        <div class="bio-photo-popover mono studio-only" id="bioPhotoPopover" style="display:none" role="dialog" aria-label="Bio Photo or GIF Settings">
-          <div class="bpp-header">
-            <span>BIO PHOTO / GIF / VIDEO (𝗫)</span>
-            <button type="button" class="bpp-close-btn" id="btnCloseBioPhotoPop">✕</button>
-          </div>
-          <div class="bpp-row">
-            <label class="bpp-label">1. UPLOAD IMAGE / GIF / VIDEO:</label>
-            <label class="bpp-upload-btn">
-              📁 Choose Local Photo / GIF / Video
-              <input type="file" id="fiBioPhotoFile" accept="image/*,video/*" style="display:none">
-            </label>
-          </div>
-          <div class="bpp-divider"><span>OR</span></div>
-          <div class="bpp-row">
-            <label class="bpp-label">2. PASTE URL OR PATH:</label>
-            <div style="display:flex;gap:5px">
-              <input type="text" id="inBioPhotoUrl" class="bpp-input mono" placeholder="https://... or media/photo.gif">
-              <button type="button" class="btn-act" id="btnApplyBioPhotoUrl">Apply</button>
+      <div class="brand-text-holder" id="brandTextHolder">
+        <div class="brand-name-group" id="brandNameGroup">
+          <span id="brandName" class="brand-name" aria-hidden="true" spellcheck="false" tabindex="0" aria-label="Name, editable in Studio mode">MOHSEN ZAREI</span>
+          <button type="button" class="btn-bio-photo studio-only mono" id="btnAddBioPhoto" title="Add / change Photo or GIF for bio">📷 + Photo / GIF</button>
+          <button type="button" class="btn-act studio-only brand-drag-btn mono" id="btnDragBrandText" title="Drag to relocate MOHSEN ZAREI text holder anywhere on screen" style="font-size:10px;padding:2px 6px;margin-left:4px;cursor:grab;color:#a5b4fc;border:1px dashed rgba(165,180,252,0.4);border-radius:4px;">⠿ Move</button>
+          <div class="bio-photo-popover mono studio-only" id="bioPhotoPopover" style="display:none" role="dialog" aria-label="Bio Photo or GIF Settings">
+            <div class="bpp-header">
+              <span>BIO PHOTO / GIF / VIDEO (𝗫)</span>
+              <button type="button" class="bpp-close-btn" id="btnCloseBioPhotoPop">✕</button>
             </div>
-          </div>
-          <div class="bpp-row" id="bppSizeRow">
-            <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-              <span class="bpp-label" style="margin:0">CARD SIZE:</span>
-              <b id="valBioPhotoSize" style="font-size:10px;color:var(--text)">180px</b>
+            <div class="bpp-row">
+              <label class="bpp-label">1. UPLOAD IMAGE / GIF / VIDEO:</label>
+              <label class="bpp-upload-btn">
+                📁 Choose Local Photo / GIF / Video
+                <input type="file" id="fiBioPhotoFile" accept="image/*,video/*" style="display:none">
+              </label>
             </div>
-            <input type="range" id="slBioPhotoSize" min="80" max="420" step="5" value="180" aria-label="Avatar card size">
-          </div>
-          <div id="bppPreviewBox" style="display:none"></div>
-          <div class="bpp-actions">
-            <button type="button" class="btn-act" id="btnResetBioPhotoPos" title="Reset position near bio">Reset Pos</button>
-            <button type="button" class="btn-act" id="btnRemoveBioPhoto" style="color:#fca5a5" title="Remove photo/GIF">Remove</button>
-          </div>
-          <div class="bpp-tip">
-            ✦ In Studio mode, drag the <b>⠿ DRAG PHOTO / GIF</b> bar on the card to place it anywhere on screen!
+            <div class="bpp-divider"><span>OR</span></div>
+            <div class="bpp-row">
+              <label class="bpp-label">2. PASTE URL OR PATH:</label>
+              <div style="display:flex;gap:5px">
+                <input type="text" id="inBioPhotoUrl" class="bpp-input mono" placeholder="https://... or media/photo.gif">
+                <button type="button" class="btn-act" id="btnApplyBioPhotoUrl">Apply</button>
+              </div>
+            </div>
+            <div class="bpp-row" id="bppSizeRow">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+                <span class="bpp-label" style="margin:0">CARD SIZE:</span>
+                <b id="valBioPhotoSize" style="font-size:10px;color:var(--text)">180px</b>
+              </div>
+              <input type="range" id="slBioPhotoSize" min="80" max="420" step="5" value="180" aria-label="Avatar card size">
+            </div>
+            <div id="bppPreviewBox" style="display:none"></div>
+            <div class="bpp-actions">
+              <button type="button" class="btn-act" id="btnResetBioPhotoPos" title="Reset position near bio">Reset Pos</button>
+              <button type="button" class="btn-act" id="btnRemoveBioPhoto" style="color:#fca5a5" title="Remove photo/GIF">Remove</button>
+            </div>
+            <div class="bpp-tip">
+              ✦ In Studio mode, drag the <b>⠿ DRAG PHOTO / GIF</b> bar on the card to place it anywhere on screen!
+            </div>
           </div>
         </div>
+        <p id="brandDesc" class="editable-field" spellcheck="false" tabindex="0" aria-label="Description, editable in Studio mode" title="Studio mode: click to edit">Interactive art, embedded systems, kinetic calligraphy &amp; 3D shaders. Click any star hub to explore its project space.</p>
       </div>
     </div>
-    <p id="brandDesc" class="editable-field" spellcheck="false" tabindex="0" aria-label="Description, editable in Studio mode" title="Studio mode: click to edit">Interactive art, embedded systems, kinetic calligraphy &amp; 3D shaders. Click any star hub to explore its project space.</p>
   </div>
 </header>
 
@@ -2047,8 +2203,13 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
       <div class="minimal-label mono">Hashtags</div>
       <div class="tag-list mono" id="dTags"></div>
 
-      <div class="minimal-label mono">Related Hubs (<span id="dConnCount">0</span>)</div>
-      <div class="conn-list" id="dConnList"></div>
+      <details class="related-hubs-dropdown" id="relatedHubsDropdown">
+        <summary class="minimal-label mono">
+          <span class="dropdown-arrow">▸</span>
+          <span>Related Hubs (<span id="dConnCount">0</span>)</span>
+        </summary>
+        <div class="conn-list" id="dConnList"></div>
+      </details>
     </div>
 
     <div class="admin-editor-block studio-only">
@@ -2386,13 +2547,18 @@ function bootSupernovaEngine() {
   } catch (err) {}
 
   const applyBrandPosition = () => {
-    const brand = document.querySelector(".brand");
-    if (!brand) return;
+    const textHolder = document.getElementById("brandTextHolder");
+    if (!textHolder) return;
     if (SITE_HEADER.x != null && SITE_HEADER.y != null) {
-      brand.style.position = "fixed";
-      brand.style.left = SITE_HEADER.x + "px";
-      brand.style.top = SITE_HEADER.y + "px";
-      brand.style.right = "auto";
+      textHolder.style.position = "fixed";
+      textHolder.style.left = SITE_HEADER.x + "px";
+      textHolder.style.top = SITE_HEADER.y + "px";
+      textHolder.style.right = "auto";
+      textHolder.style.zIndex = "25";
+    } else {
+      textHolder.style.position = "";
+      textHolder.style.left = "";
+      textHolder.style.top = "";
     }
   };
   applyBrandPosition();
@@ -2400,8 +2566,8 @@ function bootSupernovaEngine() {
   const getResponsiveCamDist = () => {
     const base = PARAMS.defaultZoom || 145;
     const aspect = window.innerWidth / Math.max(1, window.innerHeight);
-    if (aspect < 0.65) return base * 1.5;
-    if (aspect < 0.85) return base * 1.25;
+    if (aspect < 0.65) return base * 2.2;  // comfortably smaller on portrait phones
+    if (aspect < 0.85) return base * 1.65; // small tablet / foldable
     return base;
   };
 
@@ -2599,19 +2765,11 @@ function bootSupernovaEngine() {
     p.addEventListener("blur", () => { SITE_HEADER.desc = p.textContent.trim() || SITE_HEADER.desc; delete p.dataset.editing; renderDescWords(false); });
   })();
 
-  // Brand Card Drag & Relocation (Studio Mode)
+  // Brand Text Holder Drag & Relocation (Studio Mode - Relocates ONLY MOHSEN ZAREI text holder, NOT 𝗫)
   (() => {
-    const brand = document.querySelector(".brand");
-    if (!brand) return;
-    
-    const brandRow = brand.querySelector(".brand-row");
-    const dragBtn = document.createElement("button");
-    dragBtn.type = "button";
-    dragBtn.className = "btn-act studio-only brand-drag-btn";
-    dragBtn.title = "Drag to relocate MOHSEN ZAREI text holder anywhere on screen";
-    dragBtn.innerHTML = "⠿ Move";
-    dragBtn.style.cssText = "font-size:10px;padding:2px 6px;margin-left:4px;cursor:grab;color:#a5b4fc;border:1px dashed rgba(165,180,252,0.4);border-radius:4px;";
-    if (brandRow) brandRow.appendChild(dragBtn);
+    const textHolder = document.getElementById("brandTextHolder");
+    const dragBtn = document.getElementById("btnDragBrandText");
+    if (!textHolder || !dragBtn) return;
 
     let isDraggingBrand = false;
     let dragOrigin = { x: 0, y: 0 };
@@ -2620,11 +2778,11 @@ function bootSupernovaEngine() {
     function startBrandDrag(e) {
       if (!isStudioMode) return;
       isDraggingBrand = true;
-      const rect = brand.getBoundingClientRect();
+      const rect = textHolder.getBoundingClientRect();
       dragOrigin = { x: e.clientX, y: e.clientY };
       initialBrandPos = { x: rect.left, y: rect.top };
-      brand.classList.add("brand-dragging");
-      try { e.target.setPointerCapture(e.pointerId); } catch(err){}
+      textHolder.classList.add("brand-dragging");
+      try { dragBtn.setPointerCapture(e.pointerId); } catch(err){}
       e.stopPropagation();
       e.preventDefault();
     }
@@ -2635,10 +2793,11 @@ function bootSupernovaEngine() {
       const dy = e.clientY - dragOrigin.y;
       const newX = Math.round(initialBrandPos.x + dx);
       const newY = Math.round(initialBrandPos.y + dy);
-      brand.style.position = "fixed";
-      brand.style.left = newX + "px";
-      brand.style.top = newY + "px";
-      brand.style.right = "auto";
+      textHolder.style.position = "fixed";
+      textHolder.style.left = newX + "px";
+      textHolder.style.top = newY + "px";
+      textHolder.style.right = "auto";
+      textHolder.style.zIndex = "25";
       SITE_HEADER.x = newX;
       SITE_HEADER.y = newY;
     }
@@ -2646,8 +2805,8 @@ function bootSupernovaEngine() {
     function stopBrandDrag(e) {
       if (!isDraggingBrand) return;
       isDraggingBrand = false;
-      brand.classList.remove("brand-dragging");
-      try { e.target.releasePointerCapture(e.pointerId); } catch(err){}
+      textHolder.classList.remove("brand-dragging");
+      try { dragBtn.releasePointerCapture(e.pointerId); } catch(err){}
       localStorage.setItem("supernova_site_header", JSON.stringify(SITE_HEADER));
     }
 
@@ -5232,7 +5391,7 @@ function bootSupernovaEngine() {
     uPartGrav.value = PARAMS.partGrav; uPartFlow.value = PARAMS.partFlow;
     uFakeWidth.value = PARAMS.fakeWidth; uLineThickness.value = PARAMS.lineThick; uDepthScale.value = PARAMS.depthScale;
     bgUniforms.uBgVis.value = PARAMS.bgVis; t3Mat.opacity = Math.min(1.0, 0.55 * PARAMS.fakeVis);
-    camDist = PARAMS.defaultZoom;
+    camDist = getResponsiveCamDist();
   }
 
   // Tuner Sub-Tabs switching ("SLIDERS & CONTROLS" vs. "HUB LIST")
@@ -5519,16 +5678,10 @@ function bootSupernovaEngine() {
 
     $("dTags").innerHTML = "";
     node.tags.forEach(t => {
-      const b = document.createElement("button");
-      b.className = checkedTags.has(t) ? "active" : "";
-      b.textContent = `#${t}`;
-      b.onclick = () => {
-        if (checkedTags.has(t)) checkedTags.delete(t); else checkedTags.add(t);
-        renderCornerFilterMatrix();
-        if (typeof syncParticlesToActiveLines === "function") syncParticlesToActiveLines();
-        openPopup(id, false);
-      };
-      $("dTags").appendChild(b);
+      const sp = document.createElement("span");
+      sp.className = "popup-tag-pill mono";
+      sp.textContent = `#${t}`;
+      $("dTags").appendChild(sp);
     });
 
     const rel = [];
@@ -5543,10 +5696,11 @@ function bootSupernovaEngine() {
     rel.sort((a, b) => b.e.weight - a.e.weight);
     $("dConnCount").textContent = rel.length;
     $("dConnList").innerHTML = "";
+    if ($("relatedHubsDropdown")) $("relatedHubsDropdown").open = false;
     rel.slice(0, 8).forEach(({ other, e }) => {
       const d = document.createElement("div"); d.className = "conn-item";
       const why = e.sharedTags && e.sharedTags.length ? `#${e.sharedTags.join(" #")}` : "Proximity";
-      d.innerHTML = `<div><div style="font-weight:600;font-size:12px">${other.title}</div><div class="mono" style="color:var(--mid);font-size:9px">${other.date} • ${why}</div></div><span class="mono" style="color:var(--text)">${Math.round(e.weight * 100)}% &rarr;</span>`;
+      d.innerHTML = `<div><div style="font-weight:600;font-size:11.5px">${other.title}</div><div class="mono" style="color:var(--mid);font-size:8.5px">${other.date} • ${why}</div></div><span class="mono" style="color:var(--text);font-size:10px">${Math.round(e.weight * 100)}% &rarr;</span>`;
       d.onclick = () => { focusCameraOnNode(other); openPopup(other.id, true); };
       $("dConnList").appendChild(d);
     });
@@ -6067,10 +6221,16 @@ function bootSupernovaEngine() {
     morphTarget = PARAMS.morphState = initialView.morph;
     uMorph.value = bgUniforms.uMorph.value = morphTarget; morphDir = 1;
     updateShapeButtonsUI(morphTarget);
-    camYaw = initialView.yaw; camPitch = initialView.pitch; camDist = initialView.distance;
+    camYaw = initialView.yaw; camPitch = initialView.pitch; camDist = getResponsiveCamDist();
     camTarget.set(0, 0, 0); camLook.set(0, 0, 0); bgUniforms.uPanOffset.value.set(0, 0);
     camera.position.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist);
     camera.lookAt(camLook);
+    // Reset Line // Particles mix slider to exact middle (50%)
+    const mixSlider = $("bottomLineParticleMix");
+    if (mixSlider) {
+      mixSlider.value = "50";
+      mixSlider.dispatchEvent(new Event("input"));
+    }
     NODES.forEach((node, i) => {
       if (node.tier > 2) return;
       node.userOffset.set(0, 0, 0); node.elasticOffset.set(0, 0, 0);
