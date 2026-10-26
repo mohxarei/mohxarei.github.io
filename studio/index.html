@@ -93,6 +93,25 @@ body.bar-hidden .bar-tab::before { content: "▾"; }
 .btn-act:hover:not(:disabled) { background: var(--text); color: var(--bg); }
 .btn-act:disabled { opacity: .3; cursor: not-allowed; }
 
+/* Floating Exit Preview Button (visible when viewing preview from Studio) */
+#btnExitStudioPreview {
+  position: fixed; top: 12px; right: 18px; z-index: 99999;
+  background: rgba(15, 23, 42, 0.94); border: 1.5px solid rgba(165, 180, 252, 0.75);
+  color: #ffffff; padding: 7px 16px; font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.75), 0 0 12px rgba(129, 140, 248, 0.35);
+  cursor: pointer; display: none; align-items: center; gap: 8px;
+  transition: all .2s cubic-bezier(0.16, 1, 0.3, 1); user-select: none;
+}
+#btnExitStudioPreview:hover {
+  background: rgba(30, 41, 59, 1); border-color: #ffffff;
+  transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0, 0, 0, 0.85), 0 0 18px rgba(165, 180, 252, 0.6);
+}
+body.studio-previewing #btnExitStudioPreview { display: inline-flex !important; }
+@media (max-width: 600px) {
+  #btnExitStudioPreview { top: 10px; right: 10px; font-size: 10.5px; padding: 5px 12px; }
+}
+
 /* Header */
 header { position: fixed; top: 20px; left: 26px; right: 26px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; z-index: 5; pointer-events: none; }
 header > * { pointer-events: auto; }
@@ -2307,6 +2326,11 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <button type="button" class="bar-tab" id="barTab" title="Show / hide this bar"></button>
 </div>
 
+<!-- Floating Exit Preview Button (visible when viewing preview from Studio) -->
+<button id="btnExitStudioPreview" type="button" class="mono" title="Exit viewer preview and return to Studio Editor">
+  <span style="font-size:13px">←</span> Exit Preview (Back to Studio)
+</button>
+
 <header>
   <div class="brand">
     <div class="brand-row">
@@ -2507,14 +2531,15 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>PREVIEW PANEL HEIGHT</span><b id="valPreviewPanelHeight">740px</b></div><input id="slPreviewPanelHeight" type="range" min="320" max="960" value="740" step="10" aria-label="PREVIEW PANEL HEIGHT"></div>
 <div class="t-row"><div class="t-row-top"><span>MEDIA VIEWPORT HEIGHT</span><b id="valPreviewMediaHeight">440px</b></div><input id="slPreviewMediaHeight" type="range" min="200" max="700" value="440" step="10" aria-label="MEDIA VIEWPORT HEIGHT"></div>
 </div></section>
-  <section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">14</span></button><div class="t-group-body" id="t-group-photos" hidden>
+  <section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">15</span></button><div class="t-group-body" id="t-group-photos" hidden>
 <div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoInstancing" checked><span>PHOTO INSTANCING ON SPHERE</span></label><b id="valPhotoInstancing">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseFollow" checked><span>MOUSE FOLLOW (FACE CURSOR)</span></label><b id="valPhotoCardMouseFollow">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE FOLLOW STRENGTH</span><b id="valPhotoCardMouseFollowStrength">0.35</b></div><input id="slPhotoCardMouseFollowStrength" type="range" min="0" max="100" value="35" aria-label="MOUSE FOLLOW STRENGTH"></div>
 <div class="t-row"><div class="t-row-top"><span>PHOTO LAYERS PER HUB</span><b id="valPhotoCardLayers">1</b></div><input id="slPhotoCardLayers" type="range" min="1" max="4" value="1" step="1" aria-label="PHOTO LAYERS PER HUB"></div>
 <div class="t-row"><div class="t-row-top"><span>LAYER STACK SPREAD / FAN</span><b id="valPhotoCardLayerSpread">0.30</b></div><input id="slPhotoCardLayerSpread" type="range" min="0" max="100" value="30" aria-label="LAYER STACK SPREAD / FAN"></div>
 <div class="t-row"><div class="t-row-top"><span>CARD SIZE</span><b id="valPhotoCardSize">3.00</b></div><input id="slPhotoCardSize" type="range" min="30" max="500" value="300" aria-label="CARD SIZE"></div>
-<div class="t-row"><div class="t-row-top"><span>VISIBLE CARDS COUNT</span><b id="valPhotoCardCount">43</b></div><input id="slPhotoCardCount" type="range" min="1" max="43" value="43" step="1" aria-label="VISIBLE CARDS COUNT"></div>
+<div class="t-row"><div class="t-row-top"><span>PREVIEW TITLE FONT SIZE</span><b id="valPhotoCardTitleFontSize">24px</b></div><input id="slPhotoCardTitleFontSize" type="range" min="14" max="42" value="24" step="1" aria-label="PREVIEW TITLE FONT SIZE"></div>
+<div class="t-row"><div class="t-row-top"><span>BACKSIDE CARD DIMMING</span><b id="valPhotoCardBackDim">0.65</b></div><input id="slPhotoCardBackDim" type="range" min="0" max="100" value="65" step="1" aria-label="BACKSIDE CARD DIMMING"></div>
 <div class="t-row"><div class="t-row-top"><span>ASPECT RATIO (W/H)</span><b id="valPhotoCardAspect">0.62</b></div><input id="slPhotoCardAspect" type="range" min="30" max="180" value="62" aria-label="ASPECT RATIO (W/H)"></div>
 <div class="t-row"><div class="t-row-top"><span>WHITE MAT BORDER</span><b id="valPhotoCardFrameWidth">2px</b></div><input id="slPhotoCardFrameWidth" type="range" min="0" max="36" value="2" step="1" aria-label="WHITE MAT BORDER"></div>
 <div class="t-row"><div class="t-row-top"><span>CURVATURE FACING (0=FLAT · 1=SPHERE)</span><b id="valPhotoCardFacing">0.70</b></div><input id="slPhotoCardFacing" type="range" min="0" max="100" value="70" aria-label="CURVATURE FACING"></div>
@@ -2899,6 +2924,8 @@ let DEFAULTS = {
   "photoInstancing": true,
   "photoCardSize": 3.00,
   "photoCardCount": 43,
+  "photoCardTitleFontSize": 24,
+  "photoCardBackDim": 0.65,
   "photoCardAspect": 0.62,
   "photoCardFrameWidth": 2,
   "photoCardFacing": 0.70,
@@ -6321,6 +6348,15 @@ function bootSupernovaEngine() {
   let isStudioMode = !PUBLISHED_VIEWER_ONLY;
   let showDrafts = false;
   const PARAMS = { ...DEFAULTS };
+  try {
+    const savedPrevW = parseInt(localStorage.getItem("supernova_preview_width"), 10);
+    const savedPrevH = parseInt(localStorage.getItem("supernova_preview_height"), 10);
+    const savedMediaH = parseInt(localStorage.getItem("supernova_preview_media_h"), 10);
+    if (savedPrevW && savedPrevW >= 310) PARAMS.previewPanelWidth = savedPrevW;
+    if (savedPrevH && savedPrevH >= 300) PARAMS.previewPanelHeight = savedPrevH;
+    if (savedMediaH && savedMediaH >= 180) PARAMS.previewMediaHeight = savedMediaH;
+    else if (savedPrevH && savedPrevH >= 300) PARAMS.previewMediaHeight = Math.max(180, savedPrevH - 180);
+  } catch (err) {}
 
   const NODES = [];
   let EDGES = [];
@@ -7962,25 +7998,31 @@ function bootSupernovaEngine() {
 
         if (node.title) {
           ctx.save();
-          // Top semi-transparent banner for title visibility
-          const banH = 58;
+          const fontSz = Math.max(14, Math.min(48, Math.round(Number(PARAMS.photoCardTitleFontSize) || 24)));
+          const banH = Math.max(54, Math.round(fontSz * 2.3));
           const banGrad = ctx.createLinearGradient(photoX, photoY, photoX, photoY + banH);
-          banGrad.addColorStop(0, "rgba(2, 4, 8, 0.94)");
-          banGrad.addColorStop(0.70, "rgba(2, 4, 8, 0.72)");
+          banGrad.addColorStop(0, "rgba(2, 4, 8, 0.96)");
+          banGrad.addColorStop(0.70, "rgba(2, 4, 8, 0.75)");
           banGrad.addColorStop(1, "rgba(2, 4, 8, 0.0)");
           ctx.fillStyle = banGrad;
           ctx.fillRect(photoX, photoY, photoW, banH);
 
           ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 17px 'IBM Plex Mono', monospace";
+          ctx.font = `bold ${fontSz}px 'IBM Plex Mono', monospace`;
           ctx.textAlign = "left";
           ctx.textBaseline = "middle";
           ctx.shadowColor = "rgba(0, 0, 0, 0.95)";
-          ctx.shadowBlur = 6;
+          ctx.shadowBlur = 8;
 
           let titleStr = String(node.title).toUpperCase();
-          if (titleStr.length > 27) titleStr = titleStr.slice(0, 25) + "...";
-          ctx.fillText(titleStr, photoX + 14, photoY + 24);
+          const maxTextW = photoW - 28;
+          if (ctx.measureText(titleStr).width > maxTextW) {
+            while (titleStr.length > 3 && ctx.measureText(titleStr + "...").width > maxTextW) {
+              titleStr = titleStr.slice(0, -1);
+            }
+            titleStr = titleStr.trim() + "...";
+          }
+          ctx.fillText(titleStr, photoX + 14, photoY + Math.round(banH * 0.44));
           ctx.restore();
         }
       }
@@ -8174,6 +8216,8 @@ function bootSupernovaEngine() {
   const _qBase = new THREE.Quaternion();
   const _qMouseFollow = new THREE.Quaternion();
   const _vCardToCursor = new THREE.Vector3();
+  const _vCardToCam = new THREE.Vector3();
+  const _vCardNormal = new THREE.Vector3();
   const _lookTarget = new THREE.Vector3();
   const _vCardRight = new THREE.Vector3();
   const _vCardUp = new THREE.Vector3();
@@ -8322,6 +8366,34 @@ function bootSupernovaEngine() {
 
       let op = cardOpacity;
       if (focusId >= 0 && focusId !== n.id) op *= 0.35;
+
+      // Backside & Far-side card dimming (cards on opposite side of sphere or facing away from camera)
+      if (!isHovered) {
+        _vCardToCam.copy(camera.position).sub(mesh.position);
+        if (_vCardToCam.lengthSq() > 0.001) _vCardToCam.normalize();
+        else _vCardToCam.set(0, 0, 1);
+
+        // Dot between outward sphere normal and direction towards camera:
+        // > 0 = front hemisphere facing camera; < 0 = far/back hemisphere facing away from camera
+        const sphereFacingDot = _vSphereNorm.dot(_vCardToCam);
+
+        // Dot between card orientation surface normal and direction towards camera:
+        // > 0 = viewing card from front; < 0 = viewing card from behind
+        _vCardNormal.set(0, 0, 1).applyQuaternion(mesh.quaternion);
+        const cardFacingDot = _vCardNormal.dot(_vCardToCam);
+
+        // Back-side factor from sphere curvature: reaches 1.0 on far side of sphere
+        const sphereBackFactor = Math.max(0.0, Math.min(1.0, (0.25 - sphereFacingDot) / 0.85));
+        // Back-side factor from reverse angle: reaches 1.0 when viewed from behind
+        const reverseFacingFactor = Math.max(0.0, Math.min(1.0, (0.30 - cardFacingDot) / 0.70));
+
+        const totalBackFactor = Math.max(sphereBackFactor, reverseFacingFactor);
+        const backDimStrength = Math.max(0.0, Math.min(1.0, Number(PARAMS.photoCardBackDim !== undefined ? PARAMS.photoCardBackDim : 0.65)));
+
+        const dimMultiplier = Math.max(0.05, 1.0 - (backDimStrength * 0.90 * totalBackFactor));
+        op *= dimMultiplier;
+      }
+
       mesh.material.opacity = op;
 
       // In photo instancing mode, completely hide legacy star sprites and beacon pulse rings
@@ -9573,14 +9645,23 @@ function bootSupernovaEngine() {
       }
       popupEl.style.width = `${newW}px`; popupEl.style.height = `${newH}px`;
       popupEl.style.left = `${newL}px`; popupEl.style.top = `${newT}px`;
-      if (isStudioMode) {
-        PARAMS.previewPanelWidth = Math.round(newW);
-        PARAMS.previewPanelHeight = Math.round(newH);
-        if ($("slPreviewPanelWidth")) $("slPreviewPanelWidth").value = Math.round(newW);
-        if ($("valPreviewPanelWidth")) $("valPreviewPanelWidth").textContent = `${Math.round(newW)}px`;
-        if ($("slPreviewPanelHeight")) $("slPreviewPanelHeight").value = Math.round(newH);
-        if ($("valPreviewPanelHeight")) $("valPreviewPanelHeight").textContent = `${Math.round(newH)}px`;
-      }
+      PARAMS.previewPanelWidth = Math.round(newW);
+      PARAMS.previewPanelHeight = Math.round(newH);
+      const newMediaH = Math.max(180, Math.round(newH - 180));
+      PARAMS.previewMediaHeight = newMediaH;
+      const snVp = $("subnetViewport");
+      if (snVp) snVp.style.height = `${newMediaH}px`;
+      try {
+        localStorage.setItem("supernova_preview_width", String(Math.round(newW)));
+        localStorage.setItem("supernova_preview_height", String(Math.round(newH)));
+        localStorage.setItem("supernova_preview_media_h", String(newMediaH));
+      } catch (err) {}
+      if ($("slPreviewPanelWidth")) $("slPreviewPanelWidth").value = Math.round(newW);
+      if ($("valPreviewPanelWidth")) $("valPreviewPanelWidth").textContent = `${Math.round(newW)}px`;
+      if ($("slPreviewPanelHeight")) $("slPreviewPanelHeight").value = Math.round(newH);
+      if ($("valPreviewPanelHeight")) $("valPreviewPanelHeight").textContent = `${Math.round(newH)}px`;
+      if ($("slPreviewMediaHeight")) $("slPreviewMediaHeight").value = newMediaH;
+      if ($("valPreviewMediaHeight")) $("valPreviewMediaHeight").textContent = `${newMediaH}px`;
       if (selectedId >= 0 && activeMediaIdx < 0) fitPhotoSubNetwork();
     }
   });
@@ -10115,7 +10196,15 @@ function bootSupernovaEngine() {
   });
 
   bindSl("slPhotoCardSize", e => { PARAMS.photoCardSize = e.target.value / 100.0; $("valPhotoCardSize").textContent = PARAMS.photoCardSize.toFixed(2); });
-  bindSl("slPhotoCardCount", e => { PARAMS.photoCardCount = parseInt(e.target.value, 10); $("valPhotoCardCount").textContent = String(PARAMS.photoCardCount); });
+  bindSl("slPhotoCardTitleFontSize", e => {
+    PARAMS.photoCardTitleFontSize = parseInt(e.target.value, 10);
+    if ($("valPhotoCardTitleFontSize")) $("valPhotoCardTitleFontSize").textContent = `${PARAMS.photoCardTitleFontSize}px`;
+    refreshPhotoCardTextures();
+  });
+  bindSl("slPhotoCardBackDim", e => {
+    PARAMS.photoCardBackDim = e.target.value / 100.0;
+    if ($("valPhotoCardBackDim")) $("valPhotoCardBackDim").textContent = PARAMS.photoCardBackDim.toFixed(2);
+  });
   bindSl("slPhotoCardAspect", e => {
     PARAMS.photoCardAspect = e.target.value / 100.0;
     $("valPhotoCardAspect").textContent = PARAMS.photoCardAspect.toFixed(2);
@@ -10369,7 +10458,11 @@ function bootSupernovaEngine() {
       $("valPhotoCardBeaconDot").textContent = PARAMS.photoCardBeaconDot ? "ON" : "OFF";
     }
     s("slPhotoCardSize", "valPhotoCardSize", PARAMS.photoCardSize !== undefined ? PARAMS.photoCardSize : 3.00);
-    s("slPhotoCardCount", "valPhotoCardCount", PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : 43, 1, 0);
+    if ($("slPhotoCardTitleFontSize")) {
+      $("slPhotoCardTitleFontSize").value = PARAMS.photoCardTitleFontSize !== undefined ? PARAMS.photoCardTitleFontSize : 24;
+      if ($("valPhotoCardTitleFontSize")) $("valPhotoCardTitleFontSize").textContent = `${PARAMS.photoCardTitleFontSize !== undefined ? PARAMS.photoCardTitleFontSize : 24}px`;
+    }
+    s("slPhotoCardBackDim", "valPhotoCardBackDim", PARAMS.photoCardBackDim !== undefined ? PARAMS.photoCardBackDim : 0.65);
     s("slPhotoCardAspect", "valPhotoCardAspect", PARAMS.photoCardAspect !== undefined ? PARAMS.photoCardAspect : 0.62);
     if ($("slPhotoCardFrameWidth")) $("slPhotoCardFrameWidth").value = PARAMS.photoCardFrameWidth !== undefined ? PARAMS.photoCardFrameWidth : 2;
     if ($("valPhotoCardFrameWidth")) $("valPhotoCardFrameWidth").textContent = `${PARAMS.photoCardFrameWidth !== undefined ? PARAMS.photoCardFrameWidth : 2}px`;
@@ -10902,12 +10995,12 @@ function bootSupernovaEngine() {
     document.body.classList.add("popup-open");
 
     // Configured preview panel dimensions
-    const pWidth = Math.min(window.innerWidth - 16, Math.max(320, Number(PARAMS.previewPanelWidth) || 1040));
-    const pHeight = Math.min(window.innerHeight - 20, Math.max(300, Number(PARAMS.previewPanelHeight) || 780));
+    const pWidth = Math.min(window.innerWidth - 16, Math.max(320, Number(PARAMS.previewPanelWidth) || 960));
+    const pHeight = Math.min(window.innerHeight - 20, Math.max(300, Number(PARAMS.previewPanelHeight) || 740));
     popupEl.style.width = `${pWidth}px`;
     popupEl.style.height = `${pHeight}px`;
 
-    const mHeight = Math.min(pHeight - 170, Math.max(180, Number(PARAMS.previewMediaHeight) || 490));
+    const mHeight = Math.min(pHeight - 170, Math.max(180, Number(PARAMS.previewMediaHeight) || (pHeight - 180)));
     const snVp = $("subnetViewport");
     if (snVp) snVp.style.height = `${mHeight}px`;
 
@@ -10917,6 +11010,13 @@ function bootSupernovaEngine() {
       popupEl.style.left = `${left}px`;
       popupEl.style.top = `${top}px`;
       popupEl.style.transform = "none";
+    } else {
+      const curL = parseFloat(popupEl.style.left) || 8;
+      const curT = parseFloat(popupEl.style.top) || 8;
+      const clampL = Math.max(8, Math.min(window.innerWidth - pWidth - 8, curL));
+      const clampT = Math.max(8, Math.min(window.innerHeight - pHeight - 8, curT));
+      popupEl.style.left = `${clampL}px`;
+      popupEl.style.top = `${clampT}px`;
     }
 
     $("dTitle").textContent = node.title;
@@ -11258,13 +11358,26 @@ function bootSupernovaEngine() {
 
   if ($("btnModeStudio")) {
     $("btnModeStudio").onclick = () => {
+      document.body.classList.remove("studio-previewing");
       setStudioMode(true);
     };
   }
-  if ($("btnModeViewer")) $("btnModeViewer").onclick = () => setStudioMode(false);
+  if ($("btnModeViewer")) {
+    $("btnModeViewer").onclick = () => {
+      document.body.classList.add("studio-previewing");
+      setStudioMode(false);
+    };
+  }
+  if ($("btnExitStudioPreview")) {
+    $("btnExitStudioPreview").onclick = () => {
+      document.body.classList.remove("studio-previewing");
+      setStudioMode(true);
+    };
+  }
 
   if ($("btnStudioLock")) {
     $("btnStudioLock").onclick = () => {
+      document.body.classList.remove("studio-previewing");
       sessionStorage.removeItem("supernova_studio_auth");
       localStorage.removeItem("supernova_studio_auth");
       setStudioMode(false);
