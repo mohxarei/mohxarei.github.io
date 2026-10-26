@@ -2407,6 +2407,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="morph-faded-box mono">
   <div class="morph-bottom-row">
     <button type="button" class="auto-pill reset-pill" id="btnResetView" title="Reset view and camera" aria-label="Reset view and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="auto-pill on" id="btnVisitorAuto" title="Toggle Auto-Rotation" aria-label="Toggle Auto-Rotation"><i></i>AUTO</button>
     <div class="line-particle-track"><span class="line-particle-label">LINE</span><span class="line-particle-label">PARTICLES</span><span class="line-particle-midpoint" aria-hidden="true">|</span><input id="bottomLineParticleMix" type="range" min="0" max="100" value="50" step="1" aria-label="Line–particles visibility balance" title="Left: lines · Middle: both · Right: particles"></div>
   </div>
 </div>
@@ -2484,7 +2485,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>SPHERE GENTLE ROTATION</span><b id="val_sphereSpin">0.06</b></div><input id="sl_sphereSpin" type="range" min="0" max="30" value="6" aria-label="SPHERE GENTLE ROTATION"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE SHELL THICKNESS</span><b id="val_sphereThickness">2.40</b></div><input id="sl_sphereThickness" type="range" min="0" max="1000" value="240" aria-label="SPHERE SHELL THICKNESS"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE RETURN TENSION</span><b id="val_sphereTension">0.55</b></div><input id="sl_sphereTension" type="range" min="0" max="100" value="55" aria-label="SPHERE RETURN TENSION"></div>
-<div class="t-row"><div class="t-row-top"><span>NEBULA SCALE / EXPANSION</span><b id="valBlast">1.43</b></div><input id="slBlast" type="range" min="40" max="280" value="143" aria-label="NEBULA SCALE / EXPANSION"></div>
+
 <div class="t-row"><div class="t-row-top"><span>3D DEPTH STRETCH</span><b id="valDepth">3.24</b></div><input id="slDepth" type="range" min="50" max="500" value="324" aria-label="3D DEPTH STRETCH"></div>
 </div></section>
   <section class="t-group" data-tuner-group="hubs"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-hubs">Hubs, movement & pulses<span class="t-group-count">12</span></button><div class="t-group-body" id="t-group-hubs" hidden>
@@ -2853,7 +2854,7 @@ let DEFAULTS = {
   "morphState": 2.892448500000009,
   "morphSpeed": 0.007,
   "deformAmt": 1,
-  "blastScale": 1.43,
+  "blastScale": 1.00,
   "partVis": 0.53,
   "partSpread": 1.27,
   "partGrav": 0.38,
@@ -2909,9 +2910,9 @@ let DEFAULTS = {
   "photoCardMouseFollowStrength": 0.35,
   "photoCardLayers": 1,
   "photoCardLayerSpread": 0.30,
-  "previewPanelWidth": 960,
-  "previewPanelHeight": 740,
-  "previewMediaHeight": 440,
+  "previewPanelWidth": 1040,
+  "previewPanelHeight": 780,
+  "previewMediaHeight": 490,
   "autoMorph": false,
   "morphState": 0,
   "themeHue": 145,
@@ -3083,7 +3084,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Vector & Poster Series",
     "d": "2016-04",
-    "status": "slot",
+    "status": "active",
     "g": [
       "vector",
       "poster",
@@ -3157,7 +3158,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "B.Sc. Electronics Capstone",
     "d": "2018-06",
-    "status": "slot",
+    "status": "active",
     "g": [
       "electronics",
       "microcontroller",
@@ -3232,7 +3233,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "IoT Systems Architecture",
     "d": "2019-09",
-    "status": "slot",
+    "status": "active",
     "g": [
       "iot",
       "electronics",
@@ -3307,7 +3308,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Blender Shader & Mesh Studies",
     "d": "2020-11",
-    "status": "slot",
+    "status": "active",
     "g": [
       "blender",
       "3d",
@@ -3382,7 +3383,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Persian Calligraphy Series",
     "d": "2021-02",
-    "status": "slot",
+    "status": "active",
     "g": [
       "calligraphy",
       "persian",
@@ -3457,7 +3458,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Urban Graffiti & Letterforms",
     "d": "2021-07",
-    "status": "slot",
+    "status": "active",
     "g": [
       "calligraphy",
       "graffiti",
@@ -3531,7 +3532,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Kinect & MediaPipe Tracking",
     "d": "2022-10",
-    "status": "slot",
+    "status": "active",
     "g": [
       "computer-vision",
       "python",
@@ -3606,7 +3607,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Live Audio-Reactive VJ Set",
     "d": "2023-04",
-    "status": "slot",
+    "status": "active",
     "g": [
       "vjing",
       "touchdesigner",
@@ -3681,7 +3682,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "WS2812B Addressable LED Matrix",
     "d": "2023-06",
-    "status": "slot",
+    "status": "active",
     "g": [
       "electronics",
       "esp32",
@@ -3757,7 +3758,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Ultrasonic & PIR Reactive Room",
     "d": "2023-11",
-    "status": "slot",
+    "status": "active",
     "g": [
       "installation",
       "microcontroller",
@@ -3832,7 +3833,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Projection Mapping Workflow",
     "d": "2024-05",
-    "status": "slot",
+    "status": "active",
     "g": [
       "projection-mapping",
       "touchdesigner",
@@ -3906,7 +3907,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Textile & Palette Generator",
     "d": "2025-05",
-    "status": "slot",
+    "status": "active",
     "g": [
       "touchdesigner",
       "generative",
@@ -3980,7 +3981,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "PoliTeK Visual & Interactive",
     "d": "2025-11",
-    "status": "slot",
+    "status": "active",
     "g": [
       "leadership",
       "touchdesigner",
@@ -4055,7 +4056,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Kinetic Persian Calligraphy",
     "d": "2026-03",
-    "status": "slot",
+    "status": "active",
     "g": [
       "calligraphy",
       "persian",
@@ -4131,7 +4132,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Bright Festival // Florence",
     "d": "2026-04",
-    "status": "slot",
+    "status": "active",
     "g": [
       "festival",
       "installation",
@@ -4206,7 +4207,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "M5StickC Plus2 IMU to Web/TD",
     "d": "2026-06",
-    "status": "slot",
+    "status": "active",
     "g": [
       "microcontroller",
       "esp32",
@@ -4283,7 +4284,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "Ars Electronica // Linz",
     "d": "2026-09",
-    "status": "slot",
+    "status": "active",
     "g": [
       "festival",
       "installation",
@@ -4358,7 +4359,7 @@ let INITIAL_PROJECTS = [
   {
     "t": "XEN OS for Embedded TFT",
     "d": "2026-10",
-    "status": "slot",
+    "status": "active",
     "g": [
       "microcontroller",
       "esp32",
@@ -10022,7 +10023,13 @@ function bootSupernovaEngine() {
     if (btnVisitorAuto) btnVisitorAuto.classList.toggle("on", Boolean(on));
   }
   if (chkAuto) chkAuto.onchange = e => { pushUndoState(); setAutoMorphState(e.target.checked); };
-  if (btnVisitorAuto) btnVisitorAuto.onclick = () => setAutoMorphState(!PARAMS.autoMorph);
+  let isAutoRotateEnabled = true;
+  if ($("btnVisitorAuto")) {
+    $("btnVisitorAuto").onclick = () => {
+      isAutoRotateEnabled = !isAutoRotateEnabled;
+      $("btnVisitorAuto").classList.toggle("on", isAutoRotateEnabled);
+    };
+  }
 
   [mSlider, topMSlider].filter(Boolean).forEach(sl => {
     sl.addEventListener("pointerdown", () => { isDraggingMorphSlider = true; pushUndoState(); });
@@ -10851,12 +10858,12 @@ function bootSupernovaEngine() {
     document.body.classList.add("popup-open");
 
     // Configured preview panel dimensions
-    const pWidth = Math.min(window.innerWidth - 16, Math.max(320, Number(PARAMS.previewPanelWidth) || 960));
-    const pHeight = Math.min(window.innerHeight - 20, Math.max(300, Number(PARAMS.previewPanelHeight) || 740));
+    const pWidth = Math.min(window.innerWidth - 16, Math.max(320, Number(PARAMS.previewPanelWidth) || 1040));
+    const pHeight = Math.min(window.innerHeight - 20, Math.max(300, Number(PARAMS.previewPanelHeight) || 780));
     popupEl.style.width = `${pWidth}px`;
     popupEl.style.height = `${pHeight}px`;
 
-    const mHeight = Math.min(pHeight - 160, Math.max(180, Number(PARAMS.previewMediaHeight) || 440));
+    const mHeight = Math.min(pHeight - 170, Math.max(180, Number(PARAMS.previewMediaHeight) || 490));
     const snVp = $("subnetViewport");
     if (snVp) snVp.style.height = `${mHeight}px`;
 
@@ -12070,7 +12077,7 @@ function bootSupernovaEngine() {
       isReticlePhotoHovered ||
       reticleGraceTimer > 0
     );
-    if (!isPointerDown && !isPreviewActive) camYaw += 0.0012 * PARAMS.autoSpeed;
+    if (!isPointerDown && !isPreviewActive && (typeof isAutoRotateEnabled === "undefined" || isAutoRotateEnabled)) camYaw += 0.0012 * PARAMS.autoSpeed;
     const desiredCam = desiredCameraWork.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist).add(camTarget);
     camera.position.lerp(desiredCam, 0.09); camLook.lerp(camTarget, 0.11); camera.lookAt(camLook);
     camera.getWorldDirection(bgUniforms.uCamDir.value); bgUniforms.uCamRight.value.setFromMatrixColumn(camera.matrixWorld, 0); bgUniforms.uCamUp.value.setFromMatrixColumn(camera.matrixWorld, 1);
@@ -12083,7 +12090,7 @@ function bootSupernovaEngine() {
     uPartVis.value = PARAMS.partVis * rBr; bgUniforms.uBgVis.value = PARAMS.bgVis * rBr;
     t3Mat.opacity = Math.min(1.0, 0.55 * PARAMS.fakeVis) * rBr * particleVisibility; t3Mat.size = 1.05 * rPx;
     particleSystem.material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2) * rPx;
-    if (!isProjectOpen) {
+    if (!isProjectOpen && !isPreviewActive) {
       sphereTime += dt * PARAMS.sphereFlow * PSYS.driftSpeed;
     }
     updateParticles(dt);
