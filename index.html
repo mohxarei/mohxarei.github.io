@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Mohsen Zarei — Supernova Portfolio & Studio v5.9</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap">
   <style>
@@ -41,10 +44,29 @@ canvas#webgl { position: fixed; inset: 0; width: 100%; height: 100%; display: bl
 .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .03em; }
 button, input, textarea, select { font: inherit; color: inherit; background: none; border: none; }
 button { cursor: pointer; }
-body:not(.studio-mode) .studio-bar { display: none !important; }
-body:not(.studio-mode) .studio-only { display: none !important; }
+body:not(.studio-mode) .studio-bar,
+body:not(.studio-mode) .studio-only,
+body:not(.studio-mode) #tuner,
+body:not(.studio-mode) #barTab,
+body.viewer-mode .studio-bar,
+body.viewer-mode .studio-only,
+body.viewer-mode #tuner,
+body.viewer-mode #barTab,
+body.viewer-mode #modalSecretKey,
+body.viewer-mode #modalPublishGithub,
+body.viewer-mode #btnAdminKeyTrigger,
+body.published-lock .studio-bar,
+body.published-lock .studio-only,
+body.published-lock #tuner,
+body.published-lock #barTab,
+body.published-lock #modalSecretKey,
+body.published-lock #modalPublishGithub,
+body.published-lock #btnAdminKeyTrigger {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
 body.studio-mode .viewer-only { display: none !important; }
-body.published-lock .studio-bar, body.published-lock .studio-only { display: none !important; }
 
 /* Studio Master Bar */
 .studio-bar {
@@ -2225,6 +2247,21 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 <canvas id="webgl"></canvas>
 
+<!-- Top Studio & Publish Master Bar -->
+<div class="studio-bar mono studio-only" id="studioBar">
+  <button class="st-pill active" id="btnModeStudio">⚙ STUDIO EDITOR</button>
+  <button class="st-pill" id="btnModeViewer">👁 VIEWER PREVIEW</button>
+  <span style="color:var(--dim)" class="studio-only">|</span>
+  <button class="btn-act studio-only" id="btnUndo" title="Undo (Ctrl + Z)" disabled>↶ Undo</button>
+  <button class="btn-act studio-only" id="btnRedo" title="Redo (Ctrl + Y or Ctrl + Shift + Z)" disabled>↷ Redo</button>
+  <button class="btn-publish studio-only" id="btnGithubPublish" title="One-Click publish directly to GitHub repository">🚀 1-Click Publish to GitHub</button>
+  <button class="btn-act studio-only" id="btnSaveStudio" title="Downloads app.js backup with all changes">💾 Save app.js</button>
+  <button class="btn-act studio-only" id="btnPublishViewer" title="Downloads standalone index.html">📥 Export HTML</button>
+  <button class="btn-act studio-only" id="btnChangeKey" title="Change Secret Key for Studio">🔑 Key</button>
+  <button class="btn-act studio-only" id="btnStudioLock" title="Lock Studio and return to Viewer Mode" style="color:#fca5a5">🔒 Lock</button>
+  <button type="button" class="bar-tab" id="barTab" title="Show / hide this bar"></button>
+</div>
+
 <header>
   <div class="brand">
     <div class="brand-row">
@@ -2335,6 +2372,155 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <div class="contact-orbit" id="contactOrbit"></div>
   <div class="contact-btn" id="btnContact" role="button" tabindex="0" title="Contact" aria-label="Contact"><span class="contact-glyph" aria-hidden="true">*</span></div>
   <button type="button" class="star-edit-btn studio-only" id="btnEditContacts" title="Edit Contact Links">✎</button>
+</div>
+
+<!-- Studio Mode Tuner Panel -->
+<div id="tuner" class="mono studio-only collapsed">
+  <div class="tuner-head">
+    <span>SUPERNOVA TUNER</span>
+    <div style="display:flex;gap:5px">
+      <button class="btn-act" id="btnSetSaveSliders" title="Save current slider adjustments as your default preset">Set / Save</button>
+      <button class="btn-act" id="btnCopyParams" title="Copy all current slider values to clipboard">Copy Values</button>
+      <button class="btn-act" id="btnToggleTuner">+</button>
+    </div>
+  </div>
+
+  <div class="tuner-hub-bar">
+    <button type="button" class="btn-add-hub mono" id="btnAddNewHub">+ Add New Hub</button>
+    <span class="hub-vdiv"></span>
+    <label class="draft-toggle-wrap" title="Show or hide drafted hubs in the 3D network">
+      <input type="checkbox" id="chkShowDrafts">
+      <span class="draft-dot"></span>
+      <span>Show Drafts <b id="draftCountBadge">[0]</b></span>
+    </label>
+  </div>
+
+  <div class="tuner-tabs">
+    <button type="button" class="t-tab active" id="btnTabSliders">SLIDERS &amp; CONTROLS</button>
+    <button type="button" class="t-tab" id="btnTabHubs">HUB LIST <span id="hubListCountBadge">[0]</span></button>
+  </div>
+
+<div class="tuner-body" id="tunerSlidersTab">
+  <div class="tuner-search"><input type="search" id="tunerSearch" placeholder="Find a control…" aria-label="Find a tuner control" autocomplete="off"><span id="tunerMatchCount" class="mono" aria-live="polite"></span></div>
+  <section class="t-group" data-tuner-group="layout"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-layout">Screen UI Layout (X, #, *)<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-layout" hidden>
+    <div style="font-size:9.5px;color:var(--mid);margin-bottom:8px;line-height:1.4">
+      In Studio Mode, drag the <b>⠿ Move</b> buttons on screen to reposition Name, # Hashtags, or * Contacts anywhere. Double-click any Move button or use buttons below to reset.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+      <button type="button" class="btn-act" id="btnResetNamePos">Reset Name (X)</button>
+      <button type="button" class="btn-act" id="btnResetHashPos">Reset # Position</button>
+      <button type="button" class="btn-act" id="btnResetContactPos">Reset * Position</button>
+      <button type="button" class="btn-act" id="btnResetAllPos" style="color:#fca5a5">Reset All UI</button>
+    </div>
+  </div></section>
+  <section class="t-group" data-tuner-group="brand"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-brand">Brand X Photo / GIF<span class="t-group-count">3</span></button><div class="t-group-body" id="t-group-brand" hidden>
+    <div class="form-row">
+      <label class="mono" style="font-size:9.5px;color:var(--text)">X POPUP PHOTO / GIF / VIDEO</label>
+      <div style="display:flex;gap:5px;margin-bottom:6px">
+        <input type="text" id="inBrandAvatarUrl" placeholder="Image/GIF URL or media/*.gif" class="mono" style="font-size:11px">
+        <label class="btn-act" style="display:inline-grid;place-items:center;cursor:pointer;white-space:nowrap">📁 Upload<input type="file" id="fiBrandAvatar" accept="image/*,video/*" style="display:none"></label>
+      </div>
+    </div>
+    <div class="t-row">
+      <div class="t-row-top"><span>AVATAR CARD SIZE</span><b id="valBrandAvatarSize">180px</b></div>
+      <input id="slBrandAvatarSize" type="range" min="80" max="360" value="180" step="5" aria-label="AVATAR CARD SIZE">
+    </div>
+    <div style="display:flex;gap:6px;margin-top:6px">
+      <button type="button" class="btn-act" id="btnTestBrandAvatar" style="flex:1">Toggle X Avatar Preview</button>
+      <button type="button" class="btn-act" id="btnResetAvatarPos" style="flex:1">Reset Position</button>
+    </div>
+  </div></section>
+  <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere & motion<span class="t-group-count">13</span></button><div class="t-group-body" id="t-group-sphere" hidden>
+<div class="t-row"><div class="t-row-top"><span>SPHERE RADIUS</span><b id="val_sphereRadius">32</b></div><input id="sl_sphereRadius" type="range" min="15" max="50" value="32" aria-label="SPHERE RADIUS"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE DEFORMATION / WAVES</span><b id="val_sphereDeform">0.52</b></div><input id="sl_sphereDeform" type="range" min="0" max="150" value="52" aria-label="SPHERE DEFORMATION / WAVES"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE VERTICAL STRETCH</span><b id="val_sphereStretch">1.00</b></div><input id="sl_sphereStretch" type="range" min="40" max="220" value="100" aria-label="SPHERE VERTICAL STRETCH"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE TWIST</span><b id="val_sphereTwist">0.12</b></div><input id="sl_sphereTwist" type="range" min="-150" max="150" value="12" aria-label="SPHERE TWIST"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE FLUID SPEED</span><b id="val_sphereFlow">0.65</b></div><input id="sl_sphereFlow" type="range" min="0" max="250" value="65" aria-label="SPHERE FLUID SPEED"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE GENTLE ROTATION</span><b id="val_sphereSpin">0.06</b></div><input id="sl_sphereSpin" type="range" min="0" max="30" value="6" aria-label="SPHERE GENTLE ROTATION"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE SHELL THICKNESS</span><b id="val_sphereThickness">2.40</b></div><input id="sl_sphereThickness" type="range" min="0" max="1000" value="240" aria-label="SPHERE SHELL THICKNESS"></div>
+<div class="t-row"><div class="t-row-top"><span>SPHERE RETURN TENSION</span><b id="val_sphereTension">0.55</b></div><input id="sl_sphereTension" type="range" min="0" max="100" value="55" aria-label="SPHERE RETURN TENSION"></div>
+<div class="t-row"><div class="t-row-top"><span>NEBULA SCALE / EXPANSION</span><b id="valBlast">1.43</b></div><input id="slBlast" type="range" min="40" max="280" value="143" aria-label="NEBULA SCALE / EXPANSION"></div>
+<div class="t-row"><div class="t-row-top"><span>3D DEPTH STRETCH</span><b id="valDepth">3.24</b></div><input id="slDepth" type="range" min="50" max="500" value="324" aria-label="3D DEPTH STRETCH"></div>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkAuto" checked><span>AUTO-MORPH 4 SHAPES</span></label><b id="valAutoMorph">true</b></div></div>
+<div class="t-row"><div class="t-row-top"><span>MORPH SHAPE (0=SHELL · 1=SPIRAL · 2=HOURGLASS · 3=VEIL)</span><b id="valMorphState">1.03</b></div><input id="morphSlider" type="range" min="0" max="300" value="103" aria-label="MORPH SHAPE (0=SHELL · 1=SPIRAL · 2=HOURGLASS · 3=VEIL)"></div>
+<div class="t-row"><div class="t-row-top"><span>AUTO-MORPH SPEED</span><b id="valMorphSpeed">0.007</b></div><input id="slMorphSpeed" type="range" min="0" max="40" value="7" aria-label="AUTO-MORPH SPEED"></div>
+</div></section>
+<section class="t-group" data-tuner-group="hubs"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-hubs">Hub layout & movement<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-hubs" hidden>
+<div class="t-row"><div class="t-row-top"><span>HUB SCATTER SEED</span><b id="val_hubSeed">6955</b></div><input id="sl_hubSeed" type="range" min="0" max="9999" value="6955" aria-label="HUB SCATTER SEED"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB RELOCATION LIMIT</span><b id="val_dragLimit">14</b></div><input id="sl_dragLimit" type="range" min="0" max="60" value="14" aria-label="HUB RELOCATION LIMIT"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB PARTICLE FOLLOW STRENGTH</span><b id="val_hubFollowStrength">1.25</b></div><input id="sl_hubFollowStrength" type="range" min="0" max="300" value="125" aria-label="HUB PARTICLE FOLLOW STRENGTH"></div>
+<div class="t-row"><div class="t-row-top"><span>PULL RADIUS (AROUND DRAGGED HUB)</span><b id="valP_hubRadius">15</b></div><input id="slP_hubRadius" type="range" min="15" max="140" value="15" aria-label="PULL RADIUS (AROUND DRAGGED HUB)"></div>
+<div class="t-row"><div class="t-row-top"><span>DRAFTING INERTIA (SMOOTH CURVE LAG)</span><b id="valP_follow">0.52</b></div><input id="slP_follow" type="range" min="10" max="95" value="52" aria-label="DRAFTING INERTIA (SMOOTH CURVE LAG)"></div>
+<div class="t-row"><div class="t-row-top"><span>NEIGHBOR HUB FOLLOW COUPLING</span><b id="valP_elastic">0.64</b></div><input id="slP_elastic" type="range" min="0" max="90" value="64" aria-label="NEIGHBOR HUB FOLLOW COUPLING"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB SIZE</span><b id="valP_hubSize">1.44</b></div><input id="slP_hubSize" type="range" min="30" max="250" value="144" aria-label="HUB SIZE"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB SHININESS &amp; GLOW</span><b id="valHubBright">0.61</b></div><input id="slHubBright" type="range" min="10" max="250" value="61" aria-label="HUB SHININESS & GLOW"></div>
+</div></section>
+<section class="t-group" data-tuner-group="pulse"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-pulse">Hub pulses<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-pulse" hidden>
+<div class="t-row"><div class="t-row-top"><span>PULSING HUBS COUNT</span><b id="valPulseHubCount">2</b></div><input id="slPulseHubCount" type="range" min="0" max="19" value="2" step="1" aria-label="PULSING HUBS COUNT"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB PULSE SPEED</span><b id="valPulseSpeed">0.12</b></div><input id="slPulseSpeed" type="range" min="5" max="250" value="12" aria-label="HUB PULSE SPEED"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB PULSE STRENGTH</span><b id="valPulseStrength">1.14</b></div><input id="slPulseStrength" type="range" min="0" max="300" value="114" aria-label="HUB PULSE STRENGTH"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB PULSE MAX SIZE</span><b id="valPulseSize">1.61</b></div><input id="slPulseSize" type="range" min="100" max="700" value="161" aria-label="HUB PULSE MAX SIZE"></div>
+</div></section>
+<section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">16</span></button><div class="t-group-body" id="t-group-photos" hidden>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoInstancing" checked><span>PHOTO INSTANCING ON SPHERE</span></label><b id="valPhotoInstancing">ON</b></div></div>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseFollow" checked><span>MOUSE FOLLOW (FACE CURSOR)</span></label><b id="valPhotoCardMouseFollow">ON</b></div></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE FOLLOW STRENGTH</span><b id="valPhotoCardMouseFollowStrength">0.35</b></div><input id="slPhotoCardMouseFollowStrength" type="range" min="0" max="100" value="35" aria-label="MOUSE FOLLOW STRENGTH"></div>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseAttract" checked><span>PHOTO CARD MOUSE ATTRACTION</span></label><b id="valPhotoCardMouseAttract">ON</b></div></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE ATTRACTION STRENGTH</span><b id="valPhotoCardMouseAttractStrength">0.45</b></div><input id="slPhotoCardMouseAttractStrength" type="range" min="0" max="100" value="45" aria-label="MOUSE ATTRACTION STRENGTH"></div>
+<div class="t-row"><div class="t-row-top"><span>PHOTO LAYERS PER HUB</span><b id="valPhotoCardLayers">1</b></div><input id="slPhotoCardLayers" type="range" min="1" max="4" value="1" step="1" aria-label="PHOTO LAYERS PER HUB"></div>
+<div class="t-row"><div class="t-row-top"><span>LAYER STACK SPREAD / FAN</span><b id="valPhotoCardLayerSpread">0.30</b></div><input id="slPhotoCardLayerSpread" type="range" min="0" max="100" value="30" aria-label="LAYER STACK SPREAD / FAN"></div>
+<div class="t-row"><div class="t-row-top"><span>CARD SIZE</span><b id="valPhotoCardSize">3.00</b></div><input id="slPhotoCardSize" type="range" min="30" max="500" value="300" aria-label="CARD SIZE"></div>
+<div class="t-row"><div class="t-row-top"><span>VISIBLE CARDS COUNT</span><b id="valPhotoCardCount">43</b></div><input id="slPhotoCardCount" type="range" min="1" max="43" value="43" step="1" aria-label="VISIBLE CARDS COUNT"></div>
+<div class="t-row"><div class="t-row-top"><span>ASPECT RATIO (W/H)</span><b id="valPhotoCardAspect">0.62</b></div><input id="slPhotoCardAspect" type="range" min="30" max="180" value="62" aria-label="ASPECT RATIO (W/H)"></div>
+<div class="t-row"><div class="t-row-top"><span>WHITE MAT BORDER</span><b id="valPhotoCardFrameWidth">2px</b></div><input id="slPhotoCardFrameWidth" type="range" min="0" max="36" value="2" step="1" aria-label="WHITE MAT BORDER"></div>
+<div class="t-row"><div class="t-row-top"><span>CURVATURE FACING (0=FLAT · 1=SPHERE)</span><b id="valPhotoCardFacing">0.70</b></div><input id="slPhotoCardFacing" type="range" min="0" max="100" value="70" aria-label="CURVATURE FACING"></div>
+<div class="t-row"><div class="t-row-top"><span>CARD BRIGHTNESS / OPACITY</span><b id="valPhotoCardOpacity">0.94</b></div><input id="slPhotoCardOpacity" type="range" min="20" max="100" value="94" aria-label="CARD BRIGHTNESS / OPACITY"></div>
+<div class="t-row"><div class="t-row-top"><span>HOVER ZOOM SCALE</span><b id="valPhotoCardHoverScale">1.41</b></div><input id="slPhotoCardHoverScale" type="range" min="100" max="250" value="141" aria-label="HOVER ZOOM SCALE"></div>
+<div class="t-row"><div class="t-row-top"><span>SURFACE ELEVATION OFFSET</span><b id="valPhotoCardOffset">0.00</b></div><input id="slPhotoCardOffset" type="range" min="0" max="600" value="0" aria-label="SURFACE ELEVATION OFFSET"></div>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardBeaconDot"><span>CENTER BEACON DOT</span></label><b id="valPhotoCardBeaconDot">OFF</b></div></div>
+</div></section>
+<section class="t-group" data-tuner-group="particles"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-particles">Particles & flow<span class="t-group-count">12</span></button><div class="t-group-body" id="t-group-particles" hidden>
+<div class="t-row"><div class="t-row-top"><span>PARTICLE AMOUNT</span><b id="valP_amount">0.94</b></div><input id="slP_amount" type="range" min="10" max="100" value="94" aria-label="PARTICLE AMOUNT"></div>
+<div class="t-row"><div class="t-row-top"><span>PARTICLE SIZE</span><b id="valP_size">0.39</b></div><input id="slP_size" type="range" min="20" max="300" value="39" aria-label="PARTICLE SIZE"></div>
+<div class="t-row"><div class="t-row-top"><span>PARTICLE BRIGHTNESS</span><b id="valPartVis">0.49</b></div><input id="slPartVis" type="range" min="10" max="180" value="49" aria-label="PARTICLE BRIGHTNESS"></div>
+<div class="t-row"><div class="t-row-top"><span>FORMLESS CLOUD SPREAD (DISSOLVE CLUMPS)</span><b id="valP_formless">0.65</b></div><input id="slP_formless" type="range" min="0" max="300" value="65" aria-label="FORMLESS CLOUD SPREAD (DISSOLVE CLUMPS)"></div>
+<div class="t-row"><div class="t-row-top"><span>PARTICLE SPREAD (AROUND HUBS)</span><b id="valPartSpread">0.85</b></div><input id="slPartSpread" type="range" min="10" max="400" value="85" aria-label="PARTICLE SPREAD (AROUND HUBS)"></div>
+<div class="t-row"><div class="t-row-top"><span>PARTICLE BRIDGE SPREAD (STREAM WIDTH)</span><b id="valP_bridgeSpread">3.49</b></div><input id="slP_bridgeSpread" type="range" min="10" max="350" value="349" aria-label="PARTICLE BRIDGE SPREAD (STREAM WIDTH)"></div>
+<div class="t-row"><div class="t-row-top"><span>PARTICLE OUTER HALO SPREAD</span><b id="valP_haloSpread">2.04</b></div><input id="slP_haloSpread" type="range" min="10" max="400" value="204" aria-label="PARTICLE OUTER HALO SPREAD"></div>
+<div class="t-row"><div class="t-row-top"><span>LINE ATTRACTION (PULL TO LINES)</span><b id="valP_lineAttract">1.35</b></div><input id="slP_lineAttract" type="range" min="0" max="200" value="135" aria-label="LINE ATTRACTION (PULL TO LINES)"></div>
+<div class="t-row"><div class="t-row-top"><span>LINE ATTRACTION SPEED (TRANSITION)</span><b id="valP_lineAttractSpeed">0.20</b></div><input id="slP_lineAttractSpeed" type="range" min="5" max="250" value="20" aria-label="LINE ATTRACTION SPEED (TRANSITION)"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB GRAVITY (CONCENTRATION TO HUBS)</span><b id="valPartGrav">0.35</b></div><input id="slPartGrav" type="range" min="0" max="100" value="35" aria-label="HUB GRAVITY (CONCENTRATION TO HUBS)"></div>
+<div class="t-row"><div class="t-row-top"><span>DRIFT WAVE AMOUNT</span><b id="valPartFlow">2.61</b></div><input id="slPartFlow" type="range" min="0" max="400" value="261" aria-label="DRIFT WAVE AMOUNT"></div>
+<div class="t-row"><div class="t-row-top"><span>DRIFT WAVE SPEED</span><b id="valP_driftSpeed">1.60</b></div><input id="slP_driftSpeed" type="range" min="0" max="300" value="160" aria-label="DRIFT WAVE SPEED"></div>
+</div></section>
+<section class="t-group" data-tuner-group="mouse"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-mouse">Mouse interaction<span class="t-group-count">6</span></button><div class="t-group-body" id="t-group-mouse" hidden>
+<div class="t-row"><div class="t-row-top"><span>MOUSE EFFECT STRENGTH (0 = OFF)</span><b id="val_mouseEffectStrength">1.94</b></div><input id="sl_mouseEffectStrength" type="range" min="0" max="300" value="194" aria-label="MOUSE EFFECT STRENGTH (0 = OFF)"></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE ATTRACTION (NEG = REPEL)</span><b id="valP_mouseStr">1.15</b></div><input id="slP_mouseStr" type="range" min="-250" max="300" value="115" aria-label="MOUSE ATTRACTION (NEG = REPEL)"></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE FIELD RADIUS</span><b id="valP_mouseR">36</b></div><input id="slP_mouseR" type="range" min="5" max="120" value="36" aria-label="MOUSE FIELD RADIUS"></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE SWIRL / VORTEX</span><b id="valP_mouseSwirl">0.55</b></div><input id="slP_mouseSwirl" type="range" min="0" max="250" value="55" aria-label="MOUSE SWIRL / VORTEX"></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE SMOOTHNESS (TRAIL LAG)</span><b id="valP_mouseSmooth">0.72</b></div><input id="slP_mouseSmooth" type="range" min="5" max="98" value="72" aria-label="MOUSE SMOOTHNESS (TRAIL LAG)"></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE GLOW &amp; SIZE BOOST</span><b id="valP_mouseGlow">0.65</b></div><input id="slP_mouseGlow" type="range" min="0" max="200" value="65" aria-label="MOUSE GLOW & SIZE BOOST"></div>
+</div></section>
+<section class="t-group" data-tuner-group="network"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-network">Lines & background<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-network" hidden>
+<div class="t-row"><div class="t-row-top"><span>LINE DENSITY / VISIBILITY</span><b id="valDensity">0.62</b></div><input id="slDensity" type="range" min="0" max="100" value="62" aria-label="LINE DENSITY / VISIBILITY"></div>
+<div class="t-row"><div class="t-row-top"><span>LINE THICKNESS</span><b id="valLineThick">0.92</b></div><input id="slLineThick" type="range" min="10" max="200" value="92" aria-label="LINE THICKNESS"></div>
+<div class="t-row"><div class="t-row-top"><span>MAX LINE THICKNESS LIMIT</span><b id="valP_maxLineThick">4.10</b></div><input id="slP_maxLineThick" type="range" min="80" max="500" value="410" aria-label="MAX LINE THICKNESS LIMIT"></div>
+<div class="t-row"><div class="t-row-top"><span>LINE SHININESS</span><b id="valShine">0.64</b></div><input id="slShine" type="range" min="0" max="160" value="64" aria-label="LINE SHININESS"></div>
+<div class="t-row"><div class="t-row-top"><span>SUB-THREAD AMOUNT</span><b id="valFakeAmt">0.42</b></div><input id="slFakeAmt" type="range" min="0" max="100" value="42" aria-label="SUB-THREAD AMOUNT"></div>
+<div class="t-row"><div class="t-row-top"><span>SUB-THREAD OPACITY</span><b id="valFakeVis">1.15</b></div><input id="slFakeVis" type="range" min="0" max="200" value="115" aria-label="SUB-THREAD OPACITY"></div>
+<div class="t-row"><div class="t-row-top"><span>SUB-THREAD THICKNESS</span><b id="valFakeWidth">1.10</b></div><input id="slFakeWidth" type="range" min="20" max="300" value="110" aria-label="SUB-THREAD THICKNESS"></div>
+<div class="t-row"><div class="t-row-top"><span>BACKGROUND OPACITY</span><b id="valBgVis">0.84</b></div><input id="slBgVis" type="range" min="0" max="160" value="84" aria-label="BACKGROUND OPACITY"></div>
+</div></section>
+<section class="t-group" data-tuner-group="theme"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-theme">UI Theme &amp; Palette<span class="t-group-count">5</span></button><div class="t-group-body" id="t-group-theme" hidden>
+<div class="t-row"><div class="t-row-top"><span>UI COLOR HUE (0°–360°)</span><b id="valThemeHue">145°</b></div><input id="slThemeHue" type="range" min="0" max="360" value="145" aria-label="UI COLOR HUE (0°–360°)"></div>
+<div class="t-row"><div class="t-row-top"><span>COLOR SATURATION / VIBRANCY</span><b id="valThemeSat">42%</b></div><input id="slThemeSat" type="range" min="0" max="100" value="42" aria-label="COLOR SATURATION / VIBRANCY"></div>
+<div class="t-row"><div class="t-row-top"><span>PANEL DARKNESS (BLACK LEVEL)</span><b id="valThemeDarkness">90</b></div><input id="slThemeDarkness" type="range" min="50" max="100" value="90" aria-label="PANEL DARKNESS (BLACK LEVEL)"></div>
+<div class="t-row"><div class="t-row-top"><span>BORDER &amp; ACCENT CONTRAST</span><b id="valThemeBorderContrast">35</b></div><input id="slThemeBorderContrast" type="range" min="10" max="100" value="35" aria-label="BORDER &amp; ACCENT CONTRAST"></div>
+<div class="t-row"><div class="t-row-top"><span>CORNER SHARPNESS (0=SHARP · 12=ROUND)</span><b id="valThemeCornerRadius">1px</b></div><input id="slThemeCornerRadius" type="range" min="0" max="12" step="1" value="1" aria-label="CORNER SHARPNESS (0=SHARP · 12=ROUND)"></div>
+</div></section>
+  <p id="tunerNoMatches" class="mono" hidden>No matching controls.</p>
+</div>
+<div class="tuner-body" id="tunerHubListTab" style="display:none"><div id="tunerHubListWrap"></div></div>
 </div>
 
 <!-- Floating Hub Photo Popups Overlay -->
@@ -3276,23 +3462,26 @@ function bootSupernovaEngine() {
 
   function setBrandOpen(open) {
     const h = $("btnHomeReset"), name = $("brandName"), description = $("brandDesc");
+    if (!h || !name || !description) return;
     const wasOpen = h.getAttribute("aria-expanded") === "true";
     if (!open || !wasOpen) {
-      if (name.dataset.editing === "true") SITE_HEADER.name = name.textContent.trim() || SITE_HEADER.name;
-      if (description.dataset.editing === "true") SITE_HEADER.desc = description.textContent.trim() || SITE_HEADER.desc;
+      if (name.dataset && name.dataset.editing === "true") SITE_HEADER.name = name.textContent.trim() || SITE_HEADER.name;
+      if (description.dataset && description.dataset.editing === "true") SITE_HEADER.desc = description.textContent.trim() || SITE_HEADER.desc;
       if (document.activeElement === name || document.activeElement === description) document.activeElement.blur();
-      delete name.dataset.editing; delete description.dataset.editing;
+      if (name.dataset) delete name.dataset.editing;
+      if (description.dataset) delete description.dataset.editing;
     }
+    const brandEl = h.closest(".brand");
     if (!open) {
       stopBrandEntrance(name); stopBrandEntrance(description);
-      h.closest(".brand").classList.remove("desc-entering", "name-entering");
+      if (brandEl) brandEl.classList.remove("desc-entering", "name-entering");
     }
     h.setAttribute("aria-expanded", String(open));
     name.setAttribute("aria-hidden", String(!open));
     description.setAttribute("aria-hidden", String(!open));
     name.tabIndex = description.tabIndex = open ? 0 : -1;
-    h.parentElement.classList.toggle("name-open", open);
-    h.closest('.brand').classList.toggle("brand-open", open);
+    if (h.parentElement) h.parentElement.classList.toggle("name-open", open);
+    if (brandEl) brandEl.classList.toggle("brand-open", open);
     description.classList.toggle("open", open);
     name.contentEditable = description.contentEditable = open && isStudioMode ? "true" : "false";
 
@@ -3746,17 +3935,19 @@ function bootSupernovaEngine() {
     });
   }
 
-  $("btnContact").addEventListener("click", e => {
-    if (e.target && e.target.closest && e.target.closest("#btnEditContacts")) return;
-    setStarOpen(!starCorner.classList.contains("open"));
-  });
-  $("btnContact").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setStarOpen(!starCorner.classList.contains("open")); } });
-  starCorner.addEventListener("pointerdown", e => e.stopPropagation());
-  document.addEventListener("pointerdown", e => { if (starCorner.classList.contains("open") && !starCorner.contains(e.target)) setStarOpen(false); }, true);
+  if ($("btnContact")) {
+    $("btnContact").addEventListener("click", e => {
+      if (e.target && e.target.closest && e.target.closest("#btnEditContacts")) return;
+      setStarOpen(!starCorner.classList.contains("open"));
+    });
+    $("btnContact").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setStarOpen(!starCorner.classList.contains("open")); } });
+  }
+  if (starCorner) starCorner.addEventListener("pointerdown", e => e.stopPropagation());
+  document.addEventListener("pointerdown", e => { if (starCorner && starCorner.classList.contains("open") && !starCorner.contains(e.target)) setStarOpen(false); }, true);
   document.addEventListener("keydown", e => { if (e.key === "Escape") setStarOpen(false); });
 
-  $("btnHashToggleR").onclick = e => { e.stopPropagation(); $("btnHashToggle").click(); };
-  ["btnHashToggle", "btnHashToggleR"].forEach(id => $(id).addEventListener("pointerdown", e => e.stopPropagation()));
+  if ($("btnHashToggleR")) $("btnHashToggleR").onclick = e => { e.stopPropagation(); if ($("btnHashToggle")) $("btnHashToggle").click(); };
+  ["btnHashToggle", "btnHashToggleR"].forEach(id => { if ($(id)) $(id).addEventListener("pointerdown", e => e.stopPropagation()); });
   document.addEventListener("pointerdown", e => {
     const cf = $("cornerFilter");
     if (cf.classList.contains("collapsed") || cf.contains(e.target) || isTagDeleteMode || e.target.closest("#confirmModal")) return;
@@ -3849,7 +4040,8 @@ function bootSupernovaEngine() {
       p.append(span);
       if (i < words.length - 1) p.append(document.createTextNode(" "));
     });
-    p.closest('.brand').classList.toggle('desc-entering', animate);
+    const bEl = p.closest('.brand');
+    if (bEl) bEl.classList.toggle('desc-entering', animate);
     if (animate) playBrandEntrance(p, false);
   }
 
@@ -3910,15 +4102,17 @@ function bootSupernovaEngine() {
     $("confirmModal").classList.add("open");
   }
   function closeConfirmModal() {
-    $("confirmModal").classList.remove("open");
+    if ($("confirmModal")) $("confirmModal").classList.remove("open");
     pendingConfirmFn = null;
   }
-  $("btnConfirmYes").onclick = () => {
-    const fn = pendingConfirmFn;
-    closeConfirmModal();
-    if (fn) fn();
-  };
-  $("btnConfirmNo").onclick = closeConfirmModal;
+  if ($("btnConfirmYes")) {
+    $("btnConfirmYes").onclick = () => {
+      const fn = pendingConfirmFn;
+      closeConfirmModal();
+      if (fn) fn();
+    };
+  }
+  if ($("btnConfirmNo")) $("btnConfirmNo").onclick = closeConfirmModal;
 
   /* UNDO & REDO */
   function captureCurrentSnapshot() {
@@ -4936,6 +5130,7 @@ function bootSupernovaEngine() {
   }
 
   function renderTunerHubList() {
+    if (!isStudioMode) return;
     const wrap = $("tunerHubListWrap");
     if (!wrap) return;
     wrap.innerHTML = "";
@@ -4958,46 +5153,55 @@ function bootSupernovaEngine() {
     `;
     wrap.appendChild(tb);
 
-    tb.querySelector("#btnHubDeactivateAll").onclick = (e) => {
-      e.stopPropagation();
-      askConfirmation(
-        "DEACTIVATE ALL PROJECTS?",
-        "Set all projects to deactivated placeholder templates? You can then activate or draft your real projects individually.",
-        () => {
-          pushUndoState();
-          hubs.forEach(n => {
-            if (!n.isOrigin) setNodeStatus(n, "slot");
-          });
-          buildEdges();
-          refreshPhotoCardTextures();
-          renderTunerHubList();
-        }
-      );
-    };
+    const btnDeact = tb.querySelector("#btnHubDeactivateAll");
+    if (btnDeact) {
+      btnDeact.onclick = (e) => {
+        e.stopPropagation();
+        askConfirmation(
+          "DEACTIVATE ALL PROJECTS?",
+          "Set all projects to deactivated placeholder templates? You can then activate or draft your real projects individually.",
+          () => {
+            pushUndoState();
+            hubs.forEach(n => {
+              if (!n.isOrigin) setNodeStatus(n, "slot");
+            });
+            buildEdges();
+            refreshPhotoCardTextures();
+            renderTunerHubList();
+          }
+        );
+      };
+    }
 
-    tb.querySelector("#btnHubDraftAll").onclick = (e) => {
-      e.stopPropagation();
-      pushUndoState();
-      showDrafts = true;
-      if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
-      hubs.forEach(n => {
-        if (!n.isOrigin) setNodeStatus(n, "draft");
-      });
-      buildEdges();
-      refreshPhotoCardTextures();
-      renderTunerHubList();
-    };
+    const btnDraft = tb.querySelector("#btnHubDraftAll");
+    if (btnDraft) {
+      btnDraft.onclick = (e) => {
+        e.stopPropagation();
+        pushUndoState();
+        showDrafts = true;
+        if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
+        hubs.forEach(n => {
+          if (!n.isOrigin) setNodeStatus(n, "draft");
+        });
+        buildEdges();
+        refreshPhotoCardTextures();
+        renderTunerHubList();
+      };
+    }
 
-    tb.querySelector("#btnHubActivateAll").onclick = (e) => {
-      e.stopPropagation();
-      pushUndoState();
-      hubs.forEach(n => {
-        setNodeStatus(n, "active");
-      });
-      buildEdges();
-      refreshPhotoCardTextures();
-      renderTunerHubList();
-    };
+    const btnAct = tb.querySelector("#btnHubActivateAll");
+    if (btnAct) {
+      btnAct.onclick = (e) => {
+        e.stopPropagation();
+        pushUndoState();
+        hubs.forEach(n => {
+          setNodeStatus(n, "active");
+        });
+        buildEdges();
+        refreshPhotoCardTextures();
+        renderTunerHubList();
+      };
+    }
 
     const header = document.createElement("div");
     header.className = "hub-list-group-title";
@@ -5220,15 +5424,19 @@ function bootSupernovaEngine() {
     if (selectedId >= 0) openPopup(selectedId, false);
   }
 
-  $("chkSelectAll").onchange = e => toggleAllVisibleTags(e.target.checked);
-  $("cfSelectAllRow").addEventListener("pointerdown", e => e.stopPropagation());
-  $("cfSelectAllRow").addEventListener("click", e => {
-    e.preventDefault();
-    e.stopPropagation();
-    const checkbox = $("chkSelectAll");
-    checkbox.checked = !checkbox.checked;
-    checkbox.dispatchEvent(new Event("change", { bubbles: true }));
-  });
+  if ($("chkSelectAll")) $("chkSelectAll").onchange = e => toggleAllVisibleTags(e.target.checked);
+  if ($("cfSelectAllRow")) {
+    $("cfSelectAllRow").addEventListener("pointerdown", e => e.stopPropagation());
+    $("cfSelectAllRow").addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const checkbox = $("chkSelectAll");
+      if (checkbox) {
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
+  }
 
   function enterTagDeleteMode() {
     isTagDeleteMode = true;
@@ -5273,18 +5481,22 @@ function bootSupernovaEngine() {
       }
     }
   }
-  $("btnHashToggle").onclick = e => {
-    e.stopPropagation();
-    const cf = $("cornerFilter");
-    setHashtagOpen(cf.classList.contains("collapsed"));
-    if (cf.classList.contains("collapsed") && isTagDeleteMode) exitTagDeleteMode();
-  };
+  if ($("btnHashToggle")) {
+    $("btnHashToggle").onclick = e => {
+      e.stopPropagation();
+      const cf = $("cornerFilter");
+      if (cf) setHashtagOpen(cf.classList.contains("collapsed"));
+      if (cf && cf.classList.contains("collapsed") && isTagDeleteMode) exitTagDeleteMode();
+    };
+  }
 
-  $("btnEditTagMode").onclick = e => {
-    e.stopPropagation();
-    if (isTagDeleteMode) exitTagDeleteMode();
-    else enterTagDeleteMode();
-  };
+  if ($("btnEditTagMode")) {
+    $("btnEditTagMode").onclick = e => {
+      e.stopPropagation();
+      if (isTagDeleteMode) exitTagDeleteMode();
+      else enterTagDeleteMode();
+    };
+  }
 
   if ($("btnDeleteCurrentList")) {
     $("btnDeleteCurrentList").onclick = () => {
@@ -5315,28 +5527,30 @@ function bootSupernovaEngine() {
     };
   }
 
-  $("btnConfirmDeleteTags").onclick = () => {
-    if (tagsToDeleteSet.size === 0) return;
-    const listStr = [...tagsToDeleteSet].map(t => `#${t}`).join(", ");
-    askConfirmation(
-      "DELETE SELECTED HASHTAGS?",
-      `Are you sure you want to permanently delete ${listStr} from your pool and all projects?`,
-      () => {
-        pushUndoState();
-        TAG_POOL = TAG_POOL.filter(t => !tagsToDeleteSet.has(t));
-        tagsToDeleteSet.forEach(t => {
-          checkedTags.delete(t);
-          editingTagsSet.delete(t);
-        });
-        NODES.forEach(n => {
-          if (n.tags) n.tags = n.tags.filter(t => !tagsToDeleteSet.has(t));
-        });
-        exitTagDeleteMode();
-        buildEdges();
-        if (selectedId >= 0) renderStudioTagPool();
-      }
-    );
-  };
+  if ($("btnConfirmDeleteTags")) {
+    $("btnConfirmDeleteTags").onclick = () => {
+      if (tagsToDeleteSet.size === 0) return;
+      const listStr = [...tagsToDeleteSet].map(t => `#${t}`).join(", ");
+      askConfirmation(
+        "DELETE SELECTED HASHTAGS?",
+        `Are you sure you want to permanently delete ${listStr} from your pool and all projects?`,
+        () => {
+          pushUndoState();
+          TAG_POOL = TAG_POOL.filter(t => !tagsToDeleteSet.has(t));
+          tagsToDeleteSet.forEach(t => {
+            checkedTags.delete(t);
+            editingTagsSet.delete(t);
+          });
+          NODES.forEach(n => {
+            if (n.tags) n.tags = n.tags.filter(t => !tagsToDeleteSet.has(t));
+          });
+          exitTagDeleteMode();
+          buildEdges();
+          if (selectedId >= 0) renderStudioTagPool();
+        }
+      );
+    };
+  }
 
   function buildEdges() {
     EDGES = [];
@@ -5979,7 +6193,7 @@ function bootSupernovaEngine() {
   });
   syncPsSliders();
 
-  $("tuner").addEventListener("click", e => {
+  if ($("tuner")) $("tuner").addEventListener("click", e => {
     const b = e.target.closest(".t-row-top b");
     if (!b || b.isContentEditable) return;
     const row = b.closest(".t-row"), sl = row && row.querySelector('input[type="range"]');
@@ -6009,36 +6223,47 @@ function bootSupernovaEngine() {
     b.onblur = () => finish(true);
   });
 
-  const tunerGroups=Array.from(document.querySelectorAll('#tuner .t-group')).map(group=>({
-    group,button:group.querySelector('.t-sec'),body:group.querySelector('.t-group-body'),
-    folded:group.querySelector('.t-sec').getAttribute('aria-expanded')!=='true',
-    rows:Array.from(group.querySelectorAll('.t-row')).map(row=>({row,text:row.textContent.toLowerCase()}))
+  const tunerGroups = Array.from(document.querySelectorAll('#tuner .t-group')).map(group => ({
+    group,
+    button: group.querySelector('.t-sec'),
+    body: group.querySelector('.t-group-body'),
+    folded: group.querySelector('.t-sec') ? group.querySelector('.t-sec').getAttribute('aria-expanded') !== 'true' : true,
+    rows: Array.from(group.querySelectorAll('.t-row')).map(row => ({ row, text: row.textContent.toLowerCase() }))
   }));
-  function filterTuner() {
-    const query=$('tunerSearch').value.trim().toLowerCase();let matches=0;
-    tunerGroups.forEach(item=>{
-      const groupMatch=item.button.textContent.toLowerCase().includes(query);
-      let found=0;
-      item.rows.forEach(({row,text})=>{const match=!query||groupMatch||text.includes(query);row.hidden=!match;if(match)found++;});
-      matches+=found;item.group.hidden=found===0;
-      const folded=query?false:item.folded;
-      item.body.hidden=folded;item.button.classList.toggle('folded',folded);
-      item.button.setAttribute('aria-expanded',String(!folded));
-    });
-    $('tunerMatchCount').textContent=query?String(matches):'';
-    $('tunerNoMatches').hidden=matches!==0;
-  }
-  tunerGroups.forEach(item=>item.button.addEventListener('click',()=>{item.folded=!item.folded;filterTuner();}));
-  $('tunerSearch').addEventListener('input',filterTuner);
-  $('tunerSearch').addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();$('tunerSearch').value='';filterTuner();}});
-  filterTuner();
 
+  function filterTuner() {
+    const sInput = $('tunerSearch');
+    if (!sInput) return;
+    const query = sInput.value.trim().toLowerCase();
+    let matches = 0;
+    tunerGroups.forEach(item => {
+      if (!item.button || !item.group || !item.body) return;
+      const groupMatch = item.button.textContent.toLowerCase().includes(query);
+      let found = 0;
+      item.rows.forEach(({ row, text }) => { const match = !query || groupMatch || text.includes(query); row.hidden = !match; if (match) found++; });
+      matches += found; item.group.hidden = found === 0;
+      const folded = query ? false : item.folded;
+      item.body.hidden = folded; item.button.classList.toggle('folded', folded);
+      item.button.setAttribute('aria-expanded', String(!folded));
+    });
+    if ($('tunerMatchCount')) $('tunerMatchCount').textContent = query ? String(matches) : '';
+    if ($('tunerNoMatches')) $('tunerNoMatches').hidden = matches !== 0;
+  }
+
+  tunerGroups.forEach(item => {
+    if (item.button) item.button.addEventListener('click', () => { item.folded = !item.folded; filterTuner(); });
+  });
+  if ($('tunerSearch')) {
+    $('tunerSearch').addEventListener('input', filterTuner);
+    $('tunerSearch').addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); $('tunerSearch').value = ''; filterTuner(); } });
+    filterTuner();
+  }
 
   /* POP-UP DRAG / RESIZE & PHOTO SUB-NETWORK */
   const popupEl = $("projectPopup");
   let isDraggingPopup = false, resizeDir = null, popStart = { x: 0, y: 0, left: 0, top: 0, w: 0, h: 0 };
 
-  $("popupDragBar").addEventListener("pointerdown", e => {
+  if ($("popupDragBar")) $("popupDragBar").addEventListener("pointerdown", e => {
     if (e.target.closest("button")) return;
     if (isStudioMode && e.target.closest(".editable-field")) return;
     isDraggingPopup = true;
@@ -6416,9 +6641,9 @@ function bootSupernovaEngine() {
       wrap.querySelectorAll("video").forEach(v => { try { v.pause(); v.src = ""; } catch (e) {} });
       wrap.querySelectorAll("iframe").forEach(f => { try { f.src = ""; } catch (e) {} });
     }
-    $("lightbox").classList.remove("open");
+    if ($("lightbox")) $("lightbox").classList.remove("open");
   }
-  $("btnCloseLightbox").onclick = closeLightbox;
+  if ($("btnCloseLightbox")) $("btnCloseLightbox").onclick = closeLightbox;
 
   /* MORPH SLIDER & TUNER BINDINGS */
   const mSlider = $("morphSlider"), topMSlider = $("topMorphSlider"), chkAuto = $("chkAuto"), btnVisitorAuto = $("btnVisitorAuto");
@@ -6770,40 +6995,49 @@ function bootSupernovaEngine() {
   }
 
   // Tuner Sub-Tabs switching ("SLIDERS & CONTROLS" vs. "HUB LIST")
-  $("btnTabSliders").onclick = () => {
-    $("btnTabSliders").classList.add("active");
-    $("btnTabHubs").classList.remove("active");
-    $("tunerSlidersTab").style.display = "";
-    $("tunerHubListTab").style.display = "none";
-  };
-  $("btnTabHubs").onclick = () => {
-    $("btnTabHubs").classList.add("active");
-    $("btnTabSliders").classList.remove("active");
-    $("tunerSlidersTab").style.display = "none";
-    $("tunerHubListTab").style.display = "";
-    renderTunerHubList();
-  };
+  if ($("btnTabSliders")) {
+    $("btnTabSliders").onclick = () => {
+      $("btnTabSliders").classList.add("active");
+      if ($("btnTabHubs")) $("btnTabHubs").classList.remove("active");
+      if ($("tunerSlidersTab")) $("tunerSlidersTab").style.display = "";
+      if ($("tunerHubListTab")) $("tunerHubListTab").style.display = "none";
+    };
+  }
+  if ($("btnTabHubs")) {
+    $("btnTabHubs").onclick = () => {
+      $("btnTabHubs").classList.add("active");
+      if ($("btnTabSliders")) $("btnTabSliders").classList.remove("active");
+      if ($("tunerSlidersTab")) $("tunerSlidersTab").style.display = "none";
+      if ($("tunerHubListTab")) $("tunerHubListTab").style.display = "";
+      renderTunerHubList();
+    };
+  }
 
   // Set / Save button commits current slider adjustments as the default preset
-  $("btnSetSaveSliders").onclick = () => {
-    Object.assign(DEFAULTS, PARAMS);
-    Object.assign(PSYS_DEFAULTS, PSYS);
-    const serialized = JSON.stringify({ ver: PRESET_VER, DEFAULTS, PSYS_DEFAULTS });
-    try {
-      localStorage.setItem("SPHARE_SUPERNOVA_SAVED_PARAMS", serialized);
-    } catch (err) {}
-    try {
-      window.name = "SPHARE_SUPERNOVA_PRESET:" + serialized;
-    } catch (err) {}
-    $("btnSetSaveSliders").textContent = "Saved ✓";
-    setTimeout(() => { $("btnSetSaveSliders").textContent = "Set / Save"; }, 1400);
-  };
+  if ($("btnSetSaveSliders")) {
+    $("btnSetSaveSliders").onclick = () => {
+      Object.assign(DEFAULTS, PARAMS);
+      Object.assign(PSYS_DEFAULTS, PSYS);
+      const serialized = JSON.stringify({ ver: PRESET_VER, DEFAULTS, PSYS_DEFAULTS });
+      try {
+        localStorage.setItem("SPHARE_SUPERNOVA_SAVED_PARAMS", serialized);
+      } catch (err) {}
+      try {
+        window.name = "SPHARE_SUPERNOVA_PRESET:" + serialized;
+      } catch (err) {}
+      $("btnSetSaveSliders").textContent = "Saved ✓";
+      setTimeout(() => { if ($("btnSetSaveSliders")) $("btnSetSaveSliders").textContent = "Set / Save"; }, 1400);
+    };
+  }
 
-  $("btnToggleTuner").onclick = () => {
-    const t = $("tuner");
-    t.classList.toggle("collapsed");
-    $("btnToggleTuner").textContent = t.classList.contains("collapsed") ? "+" : "−";
-  };
+  if ($("btnToggleTuner")) {
+    $("btnToggleTuner").onclick = () => {
+      const t = $("tuner");
+      if (!t) return;
+      t.classList.toggle("collapsed");
+      $("btnToggleTuner").textContent = t.classList.contains("collapsed") ? "+" : "−";
+    };
+  }
 
   // Reliable clipboard copy (works in iframe and browser)
   function copyTextToClipboard(text) {
@@ -6821,21 +7055,26 @@ function bootSupernovaEngine() {
     }
   }
 
-  $("btnCopyParams").onclick = () => {
-    const payload = JSON.stringify({ PARAMS, PSYS }, null, 2);
-    copyTextToClipboard(payload);
-    $("btnCopyParams").textContent = "Copied!";
-    setTimeout(() => { $("btnCopyParams").textContent = "Copy Values"; }, 1600);
-  };
+  if ($("btnCopyParams")) {
+    $("btnCopyParams").onclick = () => {
+      const payload = JSON.stringify({ PARAMS, PSYS }, null, 2);
+      copyTextToClipboard(payload);
+      $("btnCopyParams").textContent = "Copied!";
+      setTimeout(() => { if ($("btnCopyParams")) $("btnCopyParams").textContent = "Copy Values"; }, 1600);
+    };
+  }
 
-  $("chkShowDrafts").onchange = e => {
-    showDrafts = e.target.checked;
-    renderCornerFilterMatrix();
-    if (typeof syncParticlesToActiveLines === "function") syncParticlesToActiveLines();
-  };
+  if ($("chkShowDrafts")) {
+    $("chkShowDrafts").onchange = e => {
+      showDrafts = e.target.checked;
+      renderCornerFilterMatrix();
+      if (typeof syncParticlesToActiveLines === "function") syncParticlesToActiveLines();
+    };
+  }
 
   // Wakes up one dormant big dust placeholder into a living Project Hub
-  $("btnAddNewHub").onclick = () => {
+  if ($("btnAddNewHub")) {
+    $("btnAddNewHub").onclick = () => {
     pushUndoState();
     let targetNode = NODES.find(n => n.tier <= 2 && n.status === "slot") || NODES.find(n => n.tier <= 2 && n.status === "draft");
     if (!targetNode) return;
@@ -6861,6 +7100,7 @@ function bootSupernovaEngine() {
     focusCameraOnNode(targetNode);
     openPopup(targetNode.id, true);
   };
+  }
 
   function renderStudioTagPool() {
     const poolWrap = $("edTagPool");
@@ -6891,14 +7131,16 @@ function bootSupernovaEngine() {
       registerTagsIntoPool([t]);
       checkedTags.add(t);
     });
-    $("edNewTagInput").value = "";
+    if ($("edNewTagInput")) $("edNewTagInput").value = "";
     renderStudioTagPool();
     renderCornerFilterMatrix();
   }
-  $("btnAddCustomTag").onclick = addCustomTagFromInput;
-  $("edNewTagInput").addEventListener("keydown", e => {
-    if (e.key === "Enter") { e.preventDefault(); addCustomTagFromInput(); }
-  });
+  if ($("btnAddCustomTag")) $("btnAddCustomTag").onclick = addCustomTagFromInput;
+  if ($("edNewTagInput")) {
+    $("edNewTagInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") { e.preventDefault(); addCustomTagFromInput(); }
+    });
+  }
 
   async function handleVideoUpload(file, cb) {
     const token = localStorage.getItem("supernova_gh_token");
@@ -7030,21 +7272,27 @@ function bootSupernovaEngine() {
     });
   }
 
-  $("btnAddPhotoNode").onclick = () => {
-    if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-    node.media.push({ type: "photo", title: `PHOTO 0${idx + 1}`, note: "Hover description...", x: 150 + (idx * 120) % 320, y: 90 + (idx * 70) % 160, w: 170, h: 110, style: idx % 4, img: "" });
-    renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
-  };
-  $("btnAddVideoNode").onclick = () => {
-    if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-    node.media.push({ type: "video", title: `VIDEO 0${idx + 1}`, note: "Video details...", x: 160 + (idx * 110) % 320, y: 85 + (idx * 65) % 150, w: 190, h: 125, style: idx % 4, img: "" });
-    renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
-  };
-  $("btnAddTextNode").onclick = () => {
-    if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-    node.media.push({ type: "note", title: `NOTE 0${idx + 1}`, note: "Write sub-network note...", x: 220 + (idx * 95) % 280, y: 130 + (idx * 55) % 140, w: 175, h: 80, style: 0, img: "" });
-    renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
-  };
+  if ($("btnAddPhotoNode")) {
+    $("btnAddPhotoNode").onclick = () => {
+      if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
+      node.media.push({ type: "photo", title: `PHOTO 0${idx + 1}`, note: "Hover description...", x: 150 + (idx * 120) % 320, y: 90 + (idx * 70) % 160, w: 170, h: 110, style: idx % 4, img: "" });
+      renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
+    };
+  }
+  if ($("btnAddVideoNode")) {
+    $("btnAddVideoNode").onclick = () => {
+      if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
+      node.media.push({ type: "video", title: `VIDEO 0${idx + 1}`, note: "Video details...", x: 160 + (idx * 110) % 320, y: 85 + (idx * 65) % 150, w: 190, h: 125, style: idx % 4, img: "" });
+      renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
+    };
+  }
+  if ($("btnAddTextNode")) {
+    $("btnAddTextNode").onclick = () => {
+      if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
+      node.media.push({ type: "note", title: `NOTE 0${idx + 1}`, note: "Write sub-network note...", x: 220 + (idx * 95) % 280, y: 130 + (idx * 55) % 140, w: 175, h: 80, style: 0, img: "" });
+      renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
+    };
+  }
 
   function openPopup(id, refitGraph = true) {
     selectedId = id; const node = NODES[id]; if (!node) return;
@@ -7127,76 +7375,86 @@ function bootSupernovaEngine() {
     if ($("relatedHubsDropdown")) $("relatedHubsDropdown").open = false;
     renderTunerHubList();
   }
-  $("btnClosePopup").onclick = closePopup;
+  if ($("btnClosePopup")) $("btnClosePopup").onclick = closePopup;
 
   function applyPopupEditsToNode(n) {
-    n.title = $("dTitle").textContent.trim() || n.title;
-    n.date = $("dDate").textContent.trim() || n.date;
-    n.desc = $("dDesc").textContent.trim();
+    if ($("dTitle")) n.title = $("dTitle").textContent.trim() || n.title;
+    if ($("dDate")) n.date = $("dDate").textContent.trim() || n.date;
+    if ($("dDesc")) n.desc = $("dDesc").textContent.trim();
     n.tags = [...editingTagsSet];
     registerTagsIntoPool(n.tags);
     n.tags.forEach(t => checkedTags.add(t));
 
-    [...$("edMediaList").querySelectorAll(".media-ed-item")].forEach((row, idx) => {
-      if (n.media[idx]) {
-        n.media[idx].title = row.querySelector(".m-title").value.trim();
-        const imIn = row.querySelector(".m-img");
-        if (imIn) {
-          n.media[idx].img = imIn.value.trim();
-          if (isVideoMedia(n.media[idx])) n.media[idx].type = "video";
+    if ($("edMediaList")) {
+      [...$("edMediaList").querySelectorAll(".media-ed-item")].forEach((row, idx) => {
+        if (n.media[idx]) {
+          const titIn = row.querySelector(".m-title");
+          if (titIn) n.media[idx].title = titIn.value.trim();
+          const imIn = row.querySelector(".m-img");
+          if (imIn) {
+            n.media[idx].img = imIn.value.trim();
+            if (isVideoMedia(n.media[idx])) n.media[idx].type = "video";
+          }
+          const noteIn = row.querySelector(".m-note");
+          if (noteIn) n.media[idx].note = noteIn.value.trim();
         }
-        n.media[idx].note = row.querySelector(".m-note").value.trim();
-      }
-    });
+      });
+    }
   }
 
-  $("btnSaveNode").onclick = () => {
-    if (selectedId < 0) return;
-    pushUndoState();
-    const n = NODES[selectedId];
-    if (n.isNewlyAdded) delete n.isNewlyAdded;
-    applyPopupEditsToNode(n);
-    setNodeStatus(n, "active");
-    refreshPhotoCardTexture(n.id);
-    buildEdges();
-    renderTunerHubList();
-    closePopup();
-  };
+  if ($("btnSaveNode")) {
+    $("btnSaveNode").onclick = () => {
+      if (selectedId < 0) return;
+      pushUndoState();
+      const n = NODES[selectedId];
+      if (n.isNewlyAdded) delete n.isNewlyAdded;
+      applyPopupEditsToNode(n);
+      setNodeStatus(n, "active");
+      refreshPhotoCardTexture(n.id);
+      buildEdges();
+      renderTunerHubList();
+      closePopup();
+    };
+  }
 
-  $("btnSaveDraft").onclick = () => {
-    if (selectedId < 0) return;
-    pushUndoState();
-    const n = NODES[selectedId];
-    if (n.isNewlyAdded) delete n.isNewlyAdded;
-    applyPopupEditsToNode(n);
-    setNodeStatus(n, "draft");
-    showDrafts = true;
-    if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
-    refreshPhotoCardTexture(n.id);
-    buildEdges();
-    renderTunerHubList();
-    closePopup();
-  };
+  if ($("btnSaveDraft")) {
+    $("btnSaveDraft").onclick = () => {
+      if (selectedId < 0) return;
+      pushUndoState();
+      const n = NODES[selectedId];
+      if (n.isNewlyAdded) delete n.isNewlyAdded;
+      applyPopupEditsToNode(n);
+      setNodeStatus(n, "draft");
+      showDrafts = true;
+      if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
+      refreshPhotoCardTexture(n.id);
+      buildEdges();
+      renderTunerHubList();
+      closePopup();
+    };
+  }
 
-  $("btnDeleteNode").onclick = () => {
-    if (selectedId < 0) return;
-    const n = NODES[selectedId];
-    if (n.isOrigin) return;
-    askConfirmation(
-      "DISCARD / DELETE HUB?",
-      `Are you sure you want to delete "${n.title}" and return it to a dormant dust placeholder?`,
-      () => {
-        pushUndoState();
-        n.title = `Untitled Hub #${String(n.id).padStart(2, "0")}`;
-        n.tags = [];
-        setNodeStatus(n, "slot");
-        refreshPhotoCardTexture(n.id);
-        buildEdges();
-        renderTunerHubList();
-        closePopup();
-      }
-    );
-  };
+  if ($("btnDeleteNode")) {
+    $("btnDeleteNode").onclick = () => {
+      if (selectedId < 0) return;
+      const n = NODES[selectedId];
+      if (n.isOrigin) return;
+      askConfirmation(
+        "DISCARD / DELETE HUB?",
+        `Are you sure you want to delete "${n.title}" and return it to a dormant dust placeholder?`,
+        () => {
+          pushUndoState();
+          n.title = `Untitled Hub #${String(n.id).padStart(2, "0")}`;
+          n.tags = [];
+          setNodeStatus(n, "slot");
+          refreshPhotoCardTexture(n.id);
+          buildEdges();
+          renderTunerHubList();
+          closePopup();
+        }
+      );
+    };
+  }
 
   /* STUDIO SECRET KEY & AUTHENTICATION */
   function getStudioSecretKey() {
@@ -7301,33 +7559,41 @@ function bootSupernovaEngine() {
 
   // Triple-click on 𝗫 triggers secret key modal
   let xClickCount = 0, xClickTimer = null;
-  $("btnHomeReset").addEventListener("click", () => {
-    xClickCount++;
-    clearTimeout(xClickTimer);
-    xClickTimer = setTimeout(() => { xClickCount = 0; }, 500);
-    if (xClickCount >= 3) {
-      xClickCount = 0;
-      openSecretKeyModal();
-    }
-  });
+  if ($("btnHomeReset")) {
+    $("btnHomeReset").addEventListener("click", () => {
+      if (PUBLISHED_VIEWER_ONLY) return;
+      xClickCount++;
+      clearTimeout(xClickTimer);
+      xClickTimer = setTimeout(() => { xClickCount = 0; }, 500);
+      if (xClickCount >= 3) {
+        xClickCount = 0;
+        openSecretKeyModal();
+      }
+    });
+  }
 
   // Check URL path /studio or hash #admin/#studio at boot
-  if (window.location.pathname.includes("studio") || window.location.hash === "#admin" || window.location.hash === "#studio") {
-    if (isStudioAuthorized()) {
-      setStudioMode(true);
-    } else {
-      setTimeout(openSecretKeyModal, 300);
-    }
-  }
+  const isStudioRoute = window.location.pathname.toLowerCase().includes("studio") || 
+                        window.location.hash.toLowerCase().includes("studio") || 
+                        window.location.hash.toLowerCase().includes("admin");
 
   /* STUDIO vs. VIEWER MODE SWITCH */
   function setStudioMode(on) {
+    if (PUBLISHED_VIEWER_ONLY) on = false;
     isStudioMode = Boolean(on);
-    document.body.classList.remove("published-lock");
-    document.body.classList.toggle("studio-mode", isStudioMode);
-    document.body.classList.remove("bar-hidden");
-    $("btnModeStudio").classList.toggle("active", isStudioMode);
-    $("btnModeViewer").classList.toggle("active", !isStudioMode);
+    if (PUBLISHED_VIEWER_ONLY) {
+      document.body.classList.add("viewer-mode", "published-lock");
+      document.body.classList.remove("studio-mode");
+    } else {
+      document.body.classList.toggle("studio-mode", isStudioMode);
+      document.body.classList.toggle("viewer-mode", !isStudioMode);
+      if (isStudioMode) document.body.classList.remove("published-lock");
+    }
+    if (isStudioMode) {
+      document.body.classList.remove("bar-hidden");
+    }
+    if ($("btnModeStudio")) $("btnModeStudio").classList.toggle("active", isStudioMode);
+    if ($("btnModeViewer")) $("btnModeViewer").classList.toggle("active", !isStudioMode);
     syncEditableFields();
     if (!isStudioMode && isTagDeleteMode) exitTagDeleteMode();
     renderCornerFilterMatrix();
@@ -7347,23 +7613,29 @@ function bootSupernovaEngine() {
     window.location.href.includes("preview.html") ||
     window.location.href.includes("live_preview.html")
   );
-  const isStudioRoute = window.location.pathname.includes("studio") || window.location.hash.includes("studio") || window.location.hash.includes("admin");
 
   if (PUBLISHED_VIEWER_ONLY) {
     setStudioMode(false);
-    document.body.classList.add("published-lock");
+    document.body.classList.add("viewer-mode", "published-lock");
     document.body.classList.remove("studio-mode");
   } else if (isStudioRoute || (isLocalOrIde && isStudioAuthorized())) {
-    setStudioMode(true);
-    document.body.classList.remove("bar-hidden");
+    if (isStudioAuthorized()) {
+      setStudioMode(true);
+      document.body.classList.remove("bar-hidden");
+    } else {
+      setStudioMode(false);
+      if (isStudioRoute) setTimeout(openSecretKeyModal, 300);
+    }
   } else {
     setStudioMode(false);
   }
 
-  $("btnModeStudio").onclick = () => {
-    setStudioMode(true);
-  };
-  $("btnModeViewer").onclick = () => setStudioMode(false);
+  if ($("btnModeStudio")) {
+    $("btnModeStudio").onclick = () => {
+      setStudioMode(true);
+    };
+  }
+  if ($("btnModeViewer")) $("btnModeViewer").onclick = () => setStudioMode(false);
 
   if ($("btnStudioLock")) {
     $("btnStudioLock").onclick = () => {
@@ -7387,7 +7659,7 @@ function bootSupernovaEngine() {
 
   window.addEventListener("keydown", e => {
     const typing = ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable;
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "S" || e.key === "s") && !typing) {
+    if (!PUBLISHED_VIEWER_ONLY && (e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "S" || e.key === "s") && !typing) {
       e.preventDefault();
       if (isStudioAuthorized()) {
         setStudioMode(!isStudioMode);
@@ -7411,13 +7683,13 @@ function bootSupernovaEngine() {
       return;
     }
     if (!PUBLISHED_VIEWER_ONLY && isStudioMode && !typing && (e.key === "Delete" || e.key === "Backspace") && selectedId >= 0 && !$("confirmModal").classList.contains("open") && !$("lightbox").classList.contains("open")) {
-      e.preventDefault(); $("btnDeleteNode").click(); return;
+      e.preventDefault(); if ($("btnDeleteNode")) $("btnDeleteNode").click(); return;
     }
     if (e.key === "Escape") {
       if ($("secretKeyModal") && $("secretKeyModal").classList.contains("open")) closeSecretKeyModal();
       else if ($("githubPublishModal") && $("githubPublishModal").classList.contains("open")) closeGhModal();
-      else if ($("confirmModal").classList.contains("open")) closeConfirmModal();
-      else if ($("lightbox").classList.contains("open")) closeLightbox();
+      else if ($("confirmModal") && $("confirmModal").classList.contains("open")) closeConfirmModal();
+      else if ($("lightbox") && $("lightbox").classList.contains("open")) closeLightbox();
       else closePopup();
     }
   });
@@ -7469,9 +7741,9 @@ function bootSupernovaEngine() {
     downloadText(buildFullHTML(true), "index.html", "text/html;charset=utf-8");
   }
 
-  $("barTab").onclick = () => document.body.classList.toggle("bar-hidden");
-  $("btnSaveStudio").onclick = () => downloadText(buildAppJS(false), "app.js", "application/javascript;charset=utf-8");
-  $("btnPublishViewer").onclick = () => exportViewerHTML();
+  if ($("barTab")) $("barTab").onclick = () => document.body.classList.toggle("bar-hidden");
+  if ($("btnSaveStudio")) $("btnSaveStudio").onclick = () => downloadText(buildAppJS(false), "app.js", "application/javascript;charset=utf-8");
+  if ($("btnPublishViewer")) $("btnPublishViewer").onclick = () => exportViewerHTML();
 
   /* 1-CLICK GITHUB PUBLISH ENGINE */
   function openGhModal() {
@@ -7635,37 +7907,41 @@ function bootSupernovaEngine() {
     if (camTarget.length() > MAX_PAN_RADIUS) camTarget.setLength(MAX_PAN_RADIUS);
   }
 
-  $("btnHomeReset").onclick = e => {
-    e.stopPropagation();
-    setBrandOpen($("btnHomeReset").getAttribute("aria-expanded") !== "true");
-  };
+  if ($("btnHomeReset")) {
+    $("btnHomeReset").onclick = e => {
+      e.stopPropagation();
+      setBrandOpen($("btnHomeReset").getAttribute("aria-expanded") !== "true");
+    };
+  }
 
   const initialView = { morph: DEFAULTS.morphState, yaw: .55, pitch: .25, distance: PARAMS.defaultZoom };
-  $("btnResetView").onclick = e => {
-    e.stopPropagation();
-    if (isStudioMode) pushUndoState();
-    closePopup();
-    morphTarget = PARAMS.morphState = initialView.morph;
-    uMorph.value = bgUniforms.uMorph.value = morphTarget; morphDir = 1;
-    updateShapeButtonsUI(morphTarget);
-    camYaw = initialView.yaw; camPitch = initialView.pitch; camDist = getResponsiveCamDist();
-    camTarget.set(0, 0, 0); camLook.set(0, 0, 0); bgUniforms.uPanOffset.value.set(0, 0);
-    camera.position.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist);
-    camera.lookAt(camLook);
-    // Reset Line // Particles mix slider to exact middle (50%)
-    const mixSlider = $("bottomLineParticleMix");
-    if (mixSlider) {
-      mixSlider.value = "50";
-      mixSlider.dispatchEvent(new Event("input"));
-    }
-    NODES.forEach((node, i) => {
-      if (node.tier > 2) return;
-      node.userOffset.set(0, 0, 0); node.elasticOffset.set(0, 0, 0);
-      node.pos.copy(getBaseNodePos(node, morphTarget));
-      hubBasePosArray[i].copy(node.pos);
-      hubDispLeadArray[i].set(0, 0, 0); hubDispMidArray[i].set(0, 0, 0); hubDispTrailArray[i].set(0, 0, 0);
-    });
-  };
+  if ($("btnResetView")) {
+    $("btnResetView").onclick = e => {
+      e.stopPropagation();
+      if (isStudioMode) pushUndoState();
+      closePopup();
+      morphTarget = PARAMS.morphState = initialView.morph;
+      uMorph.value = bgUniforms.uMorph.value = morphTarget; morphDir = 1;
+      updateShapeButtonsUI(morphTarget);
+      camYaw = initialView.yaw; camPitch = initialView.pitch; camDist = getResponsiveCamDist();
+      camTarget.set(0, 0, 0); camLook.set(0, 0, 0); bgUniforms.uPanOffset.value.set(0, 0);
+      camera.position.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist);
+      camera.lookAt(camLook);
+      // Reset Line // Particles mix slider to exact middle (50%)
+      const mixSlider = $("bottomLineParticleMix");
+      if (mixSlider) {
+        mixSlider.value = "50";
+        mixSlider.dispatchEvent(new Event("input"));
+      }
+      NODES.forEach((node, i) => {
+        if (node.tier > 2) return;
+        node.userOffset.set(0, 0, 0); node.elasticOffset.set(0, 0, 0);
+        node.pos.copy(getBaseNodePos(node, morphTarget));
+        hubBasePosArray[i].copy(node.pos);
+        hubDispLeadArray[i].set(0, 0, 0); hubDispMidArray[i].set(0, 0, 0); hubDispTrailArray[i].set(0, 0, 0);
+      });
+    };
+  }
 
   const raycaster = new THREE.Raycaster(), mouseNDC = new THREE.Vector2(-99, -99), dragPlane = new THREE.Plane(), hoverPlane = new THREE.Plane(), dragIntersect = new THREE.Vector3(), hoverIntersect = new THREE.Vector3();
   let draggedNode = null, isPointerDown = false, pointerAction = "none", totalDragMoved = 0, prevX = 0, prevY = 0;
@@ -7934,10 +8210,12 @@ function bootSupernovaEngine() {
         }
       };
 
-      photoBox.addEventListener("mouseenter", () => { slot.isHovered = true; });
-      photoBox.addEventListener("mouseleave", () => { slot.isHovered = false; });
-      photoBox.addEventListener("pointerdown", e => { e.stopPropagation(); });
-      photoBox.addEventListener("click", handleOpen);
+      if (photoBox) {
+        photoBox.addEventListener("mouseenter", () => { slot.isHovered = true; });
+        photoBox.addEventListener("mouseleave", () => { slot.isHovered = false; });
+        photoBox.addEventListener("pointerdown", e => { e.stopPropagation(); });
+        photoBox.addEventListener("click", handleOpen);
+      }
 
       photoCardSlots.push(slot);
     }
