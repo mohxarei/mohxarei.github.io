@@ -5361,6 +5361,51 @@ function bootSupernovaEngine() {
     if (e.key === "Enter") { e.preventDefault(); addCustomTagFromInput(); }
   });
 
+  async function handleVideoUpload(file, cb) {
+    const token = localStorage.getItem("supernova_gh_token");
+    const repo = localStorage.getItem("supernova_gh_repo") || "mohxarei/mohxarei.github.io";
+    const cleanName = Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const ghPath = `assets/videos/${cleanName}`;
+
+    if (token) {
+      try {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          try {
+            const b64 = e.target.result.split(",")[1];
+            const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${ghPath}`, {
+              method: "PUT",
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/vnd.github.v3+json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                message: `Upload video: ${file.name} to assets/videos/ on GitHub`,
+                content: b64,
+                branch: "main"
+              })
+            });
+            if (putRes.ok) {
+              console.log(`Video committed directly to GitHub repo: ${ghPath}`);
+              cb(ghPath, "video");
+              return;
+            }
+          } catch(err){ console.warn("API upload error:", err); }
+          cb(e.target.result, "video");
+        };
+        reader.readAsDataURL(file);
+        return;
+      } catch (err) {
+        console.warn("Direct GitHub video upload error:", err);
+      }
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => cb(e.target.result, "video");
+    reader.readAsDataURL(file);
+  }
+
   function compressImageFile(file, cb) {
     if (file.type === "image/gif" || file.name.toLowerCase().endsWith(".gif")) {
       const reader = new FileReader();
@@ -5369,9 +5414,7 @@ function bootSupernovaEngine() {
       return;
     }
     if (file.type.startsWith("video/") || /\.(mp4|webm|ogg|mov)$/i.test(file.name)) {
-      const reader = new FileReader();
-      reader.onload = e => cb(e.target.result, "video");
-      reader.readAsDataURL(file);
+      handleVideoUpload(file, cb);
       return;
     }
     const reader = new FileReader();
@@ -5598,17 +5641,32 @@ function bootSupernovaEngine() {
     }
   }
   function isStudioAuthorized() {
-    // 1. Local execution (offline file: or localhost) is always authorized
-    if (window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    // 1. Antigravity preview, IDE webview, offline file:, localhost, 127.0.0.1 is ALWAYS authorized
+    const proto = window.location.protocol;
+    const host = window.location.hostname;
+    const href = window.location.href;
+    const isLocalOrIde = (
+      proto === "file:" ||
+      proto === "vscode-webview:" ||
+      proto.includes("extension") ||
+      host === "localhost" ||
+      host === "127.0.0.1" ||
+      !host ||
+      window.origin === "null" ||
+      href.includes("antigravity") ||
+      href.includes("preview.html") ||
+      href.includes("live_preview.html")
+    );
+    if (isLocalOrIde) {
       return true;
     }
     // 2. Check session or local storage
     if (sessionStorage.getItem("supernova_studio_auth") === "true") return true;
     if (localStorage.getItem("supernova_studio_auth") === "true") return true;
-    // 3. Check URL query parameters: ?key=... or ?admin=... or ?secret=...
+    // 3. Check URL query parameters: ?key=... or ?admin=... or ?secret=... or ?token=...
     try {
       const params = new URLSearchParams(window.location.search);
-      const k = (params.get("key") || params.get("admin") || params.get("secret") || "").trim();
+      const k = (params.get("key") || params.get("admin") || params.get("secret") || params.get("token") || "").trim();
       if (k && (k === getStudioSecretKey() || k.startsWith("ghp_") || k.startsWith("github_pat_"))) {
         sessionStorage.setItem("supernova_studio_auth", "true");
         if (k.startsWith("ghp_") || k.startsWith("github_pat_")) {
@@ -5692,6 +5750,9 @@ function bootSupernovaEngine() {
     }
     isStudioMode = on;
     document.body.classList.toggle("studio-mode", isStudioMode);
+    if (isStudioMode) {
+      document.body.classList.remove("bar-hidden");
+    }
     $("btnModeStudio").classList.toggle("active", isStudioMode);
     $("btnModeViewer").classList.toggle("active", !isStudioMode);
     syncEditableFields();
@@ -5707,8 +5768,9 @@ function bootSupernovaEngine() {
 
   // Initial Studio Mode determination based on secret key authorization
   const initiallyAuthed = isStudioAuthorized();
-  if (initiallyAuthed) {
+  if (initiallyAuthed && !PUBLISHED_VIEWER_ONLY) {
     setStudioMode(true);
+    document.body.classList.remove("bar-hidden");
   } else {
     setStudioMode(false);
   }
