@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
+  <base href="../">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Mohsen Zarei — Supernova Portfolio &amp; Studio v5.9</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap">
+  <title>Mohsen Zarei — Supernova Portfolio & Studio v5.9</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap">
   <style>
 :root {
   --bg: #040705;
@@ -2242,7 +2244,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 </style>
 </head>
-<body class="bar-hidden">
+<body class="studio-mode">
 
 <canvas id="webgl"></canvas>
 
@@ -2251,8 +2253,8 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <button class="st-pill active" id="btnModeStudio">⚙ STUDIO EDITOR</button>
   <button class="st-pill" id="btnModeViewer">👁 VIEWER PREVIEW</button>
   <span style="color:var(--dim)" class="studio-only">|</span>
-  <button class="btn-act studio-only" id="btnUndo" title="Undo (Ctrl + Z)" disabled="">↶ Undo</button>
-  <button class="btn-act studio-only" id="btnRedo" title="Redo (Ctrl + Y or Ctrl + Shift + Z)" disabled="">↷ Redo</button>
+  <button class="btn-act studio-only" id="btnUndo" title="Undo (Ctrl + Z)" disabled>↶ Undo</button>
+  <button class="btn-act studio-only" id="btnRedo" title="Redo (Ctrl + Y or Ctrl + Shift + Z)" disabled>↷ Redo</button>
   <button class="btn-publish studio-only" id="btnGithubPublish" title="One-Click publish directly to GitHub repository">🚀 1-Click Publish to GitHub</button>
   <button class="btn-act studio-only" id="btnSaveStudio" title="Downloads app.js backup with all changes">💾 Save app.js</button>
   <button class="btn-act studio-only" id="btnPublishViewer" title="Downloads standalone index.html">📥 Export HTML</button>
@@ -2331,7 +2333,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
             <span class="cat-pill-prefix">CTGY //</span>
             <span class="cat-current-label" id="currentCategoryLabel">ALL</span>
             <svg class="cat-dropdown-icon" width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true">
-              <path d="M1 1.25L4 4.25L7 1.25" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M1 1.25L4 4.25L7 1.25" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <select id="tagCategory" aria-label="Hashtag category" autocomplete="off" tabindex="-1" style="display:none"></select>
@@ -2340,14 +2342,14 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
         <div class="cf-divider"></div>
         <div class="cf-select-row" id="cfSelectAllRow">
           <label class="cf-chk-label">
-            <input type="checkbox" id="chkSelectAll" checked="">
+            <input type="checkbox" id="chkSelectAll" checked>
             <span id="selectAllLabel">[DE/SELECT ALL]</span>
           </label>
           <span id="selectedCountBadge" style="color:var(--text);font-size:9.5px;font-weight:600">[0/0]</span>
         </div>
         <div class="cf-divider"></div>
         <div class="cf-delete-bar" id="cfDeleteBar" style="display:none">
-          <button type="button" class="btn-del-confirm mono" id="btnConfirmDeleteTags" disabled="">Delete Selected (0)</button>
+          <button type="button" class="btn-del-confirm mono" id="btnConfirmDeleteTags" disabled>Delete Selected (0)</button>
           <button type="button" class="btn-del-list mono" id="btnDeleteCurrentList">Delete List</button>
         </div>
         <div class="cf-tag-cloud" id="cfTagCloud"></div>
@@ -2360,9 +2362,9 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <!-- Bottom-Center Integrated Morph Line -->
 <div class="morph-faded-box mono">
   <div class="morph-bottom-row">
-    <button type="button" class="auto-pill reset-pill" id="btnResetView" title="Reset shape and camera" aria-label="Reset shape and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    <button type="button" class="auto-pill reset-pill" id="btnResetView" title="Reset shape and camera" aria-label="Reset shape and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div class="line-particle-track"><span class="line-particle-label">LINE</span><span class="line-particle-label">PARTICLES</span><span class="line-particle-midpoint" aria-hidden="true">|</span><input id="bottomLineParticleMix" type="range" min="0" max="100" value="50" step="1" aria-label="Line–particles visibility balance" title="Left: lines · Middle: both · Right: particles"></div>
-    <button class="auto-pill on" id="btnVisitorAuto" title="Live auto-morph: click to turn on/off"><i></i><span id="topMorphVal" hidden="">1.03</span></button>
+    <button class="auto-pill on" id="btnVisitorAuto" title="Live auto-morph: click to turn on/off"><i></i><span id="topMorphVal" hidden>1.03</span></button>
   </div>
 </div>
 
@@ -2401,7 +2403,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 <div class="tuner-body" id="tunerSlidersTab">
   <div class="tuner-search"><input type="search" id="tunerSearch" placeholder="Find a control…" aria-label="Find a tuner control" autocomplete="off"><span id="tunerMatchCount" class="mono" aria-live="polite"></span></div>
-  <section class="t-group" data-tuner-group="layout"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-layout">Screen UI Layout (X, #, *)<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-layout" hidden="">
+  <section class="t-group" data-tuner-group="layout"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-layout">Screen UI Layout (X, #, *)<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-layout" hidden>
     <div style="font-size:9.5px;color:var(--mid);margin-bottom:8px;line-height:1.4">
       In Studio Mode, drag the <b>⠿ Move</b> buttons on screen to reposition Name, # Hashtags, or * Contacts anywhere. Double-click any Move button or use buttons below to reset.
     </div>
@@ -2412,7 +2414,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
       <button type="button" class="btn-act" id="btnResetAllPos" style="color:#fca5a5">Reset All UI</button>
     </div>
   </div></section>
-  <section class="t-group" data-tuner-group="brand"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-brand">Brand X Photo / GIF<span class="t-group-count">3</span></button><div class="t-group-body" id="t-group-brand" hidden="">
+  <section class="t-group" data-tuner-group="brand"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-brand">Brand X Photo / GIF<span class="t-group-count">3</span></button><div class="t-group-body" id="t-group-brand" hidden>
     <div class="form-row">
       <label class="mono" style="font-size:9.5px;color:var(--text)">X POPUP PHOTO / GIF / VIDEO</label>
       <div style="display:flex;gap:5px;margin-bottom:6px">
@@ -2429,7 +2431,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
       <button type="button" class="btn-act" id="btnResetAvatarPos" style="flex:1">Reset Position</button>
     </div>
   </div></section>
-  <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere &amp; motion<span class="t-group-count">13</span></button><div class="t-group-body" id="t-group-sphere" hidden="">
+  <section class="t-group" data-tuner-group="sphere"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-sphere">Sphere & motion<span class="t-group-count">13</span></button><div class="t-group-body" id="t-group-sphere" hidden>
 <div class="t-row"><div class="t-row-top"><span>SPHERE RADIUS</span><b id="val_sphereRadius">32</b></div><input id="sl_sphereRadius" type="range" min="15" max="50" value="32" aria-label="SPHERE RADIUS"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE DEFORMATION / WAVES</span><b id="val_sphereDeform">0.52</b></div><input id="sl_sphereDeform" type="range" min="0" max="150" value="52" aria-label="SPHERE DEFORMATION / WAVES"></div>
 <div class="t-row"><div class="t-row-top"><span>SPHERE VERTICAL STRETCH</span><b id="val_sphereStretch">1.00</b></div><input id="sl_sphereStretch" type="range" min="40" max="220" value="100" aria-label="SPHERE VERTICAL STRETCH"></div>
@@ -2440,11 +2442,11 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>SPHERE RETURN TENSION</span><b id="val_sphereTension">0.55</b></div><input id="sl_sphereTension" type="range" min="0" max="100" value="55" aria-label="SPHERE RETURN TENSION"></div>
 <div class="t-row"><div class="t-row-top"><span>NEBULA SCALE / EXPANSION</span><b id="valBlast">1.43</b></div><input id="slBlast" type="range" min="40" max="280" value="143" aria-label="NEBULA SCALE / EXPANSION"></div>
 <div class="t-row"><div class="t-row-top"><span>3D DEPTH STRETCH</span><b id="valDepth">3.24</b></div><input id="slDepth" type="range" min="50" max="500" value="324" aria-label="3D DEPTH STRETCH"></div>
-<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkAuto" checked=""><span>AUTO-MORPH 4 SHAPES</span></label><b id="valAutoMorph">true</b></div></div>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkAuto" checked><span>AUTO-MORPH 4 SHAPES</span></label><b id="valAutoMorph">true</b></div></div>
 <div class="t-row"><div class="t-row-top"><span>MORPH SHAPE (0=SHELL · 1=SPIRAL · 2=HOURGLASS · 3=VEIL)</span><b id="valMorphState">1.03</b></div><input id="morphSlider" type="range" min="0" max="300" value="103" aria-label="MORPH SHAPE (0=SHELL · 1=SPIRAL · 2=HOURGLASS · 3=VEIL)"></div>
 <div class="t-row"><div class="t-row-top"><span>AUTO-MORPH SPEED</span><b id="valMorphSpeed">0.007</b></div><input id="slMorphSpeed" type="range" min="0" max="40" value="7" aria-label="AUTO-MORPH SPEED"></div>
 </div></section>
-<section class="t-group" data-tuner-group="hubs"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-hubs">Hub layout &amp; movement<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-hubs" hidden="">
+<section class="t-group" data-tuner-group="hubs"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-hubs">Hub layout & movement<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-hubs" hidden>
 <div class="t-row"><div class="t-row-top"><span>HUB SCATTER SEED</span><b id="val_hubSeed">6955</b></div><input id="sl_hubSeed" type="range" min="0" max="9999" value="6955" aria-label="HUB SCATTER SEED"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB RELOCATION LIMIT</span><b id="val_dragLimit">14</b></div><input id="sl_dragLimit" type="range" min="0" max="60" value="14" aria-label="HUB RELOCATION LIMIT"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PARTICLE FOLLOW STRENGTH</span><b id="val_hubFollowStrength">1.25</b></div><input id="sl_hubFollowStrength" type="range" min="0" max="300" value="125" aria-label="HUB PARTICLE FOLLOW STRENGTH"></div>
@@ -2452,19 +2454,19 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>DRAFTING INERTIA (SMOOTH CURVE LAG)</span><b id="valP_follow">0.52</b></div><input id="slP_follow" type="range" min="10" max="95" value="52" aria-label="DRAFTING INERTIA (SMOOTH CURVE LAG)"></div>
 <div class="t-row"><div class="t-row-top"><span>NEIGHBOR HUB FOLLOW COUPLING</span><b id="valP_elastic">0.64</b></div><input id="slP_elastic" type="range" min="0" max="90" value="64" aria-label="NEIGHBOR HUB FOLLOW COUPLING"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB SIZE</span><b id="valP_hubSize">1.44</b></div><input id="slP_hubSize" type="range" min="30" max="250" value="144" aria-label="HUB SIZE"></div>
-<div class="t-row"><div class="t-row-top"><span>HUB SHININESS &amp; GLOW</span><b id="valHubBright">0.61</b></div><input id="slHubBright" type="range" min="10" max="250" value="61" aria-label="HUB SHININESS &amp; GLOW"></div>
+<div class="t-row"><div class="t-row-top"><span>HUB SHININESS &amp; GLOW</span><b id="valHubBright">0.61</b></div><input id="slHubBright" type="range" min="10" max="250" value="61" aria-label="HUB SHININESS & GLOW"></div>
 </div></section>
-<section class="t-group" data-tuner-group="pulse"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-pulse">Hub pulses<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-pulse" hidden="">
+<section class="t-group" data-tuner-group="pulse"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-pulse">Hub pulses<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-pulse" hidden>
 <div class="t-row"><div class="t-row-top"><span>PULSING HUBS COUNT</span><b id="valPulseHubCount">2</b></div><input id="slPulseHubCount" type="range" min="0" max="19" value="2" step="1" aria-label="PULSING HUBS COUNT"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PULSE SPEED</span><b id="valPulseSpeed">0.12</b></div><input id="slPulseSpeed" type="range" min="5" max="250" value="12" aria-label="HUB PULSE SPEED"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PULSE STRENGTH</span><b id="valPulseStrength">1.14</b></div><input id="slPulseStrength" type="range" min="0" max="300" value="114" aria-label="HUB PULSE STRENGTH"></div>
 <div class="t-row"><div class="t-row-top"><span>HUB PULSE MAX SIZE</span><b id="valPulseSize">1.61</b></div><input id="slPulseSize" type="range" min="100" max="700" value="161" aria-label="HUB PULSE MAX SIZE"></div>
 </div></section>
-<section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">16</span></button><div class="t-group-body" id="t-group-photos" hidden="">
-<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoInstancing" checked=""><span>PHOTO INSTANCING ON SPHERE</span></label><b id="valPhotoInstancing">ON</b></div></div>
-<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseFollow" checked=""><span>MOUSE FOLLOW (FACE CURSOR)</span></label><b id="valPhotoCardMouseFollow">ON</b></div></div>
+<section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">16</span></button><div class="t-group-body" id="t-group-photos" hidden>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoInstancing" checked><span>PHOTO INSTANCING ON SPHERE</span></label><b id="valPhotoInstancing">ON</b></div></div>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseFollow" checked><span>MOUSE FOLLOW (FACE CURSOR)</span></label><b id="valPhotoCardMouseFollow">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE FOLLOW STRENGTH</span><b id="valPhotoCardMouseFollowStrength">0.35</b></div><input id="slPhotoCardMouseFollowStrength" type="range" min="0" max="100" value="35" aria-label="MOUSE FOLLOW STRENGTH"></div>
-<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseAttract" checked=""><span>PHOTO CARD MOUSE ATTRACTION</span></label><b id="valPhotoCardMouseAttract">ON</b></div></div>
+<div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseAttract" checked><span>PHOTO CARD MOUSE ATTRACTION</span></label><b id="valPhotoCardMouseAttract">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE ATTRACTION STRENGTH</span><b id="valPhotoCardMouseAttractStrength">0.45</b></div><input id="slPhotoCardMouseAttractStrength" type="range" min="0" max="100" value="45" aria-label="MOUSE ATTRACTION STRENGTH"></div>
 <div class="t-row"><div class="t-row-top"><span>PHOTO LAYERS PER HUB</span><b id="valPhotoCardLayers">1</b></div><input id="slPhotoCardLayers" type="range" min="1" max="4" value="1" step="1" aria-label="PHOTO LAYERS PER HUB"></div>
 <div class="t-row"><div class="t-row-top"><span>LAYER STACK SPREAD / FAN</span><b id="valPhotoCardLayerSpread">0.30</b></div><input id="slPhotoCardLayerSpread" type="range" min="0" max="100" value="30" aria-label="LAYER STACK SPREAD / FAN"></div>
@@ -2478,7 +2480,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>SURFACE ELEVATION OFFSET</span><b id="valPhotoCardOffset">0.00</b></div><input id="slPhotoCardOffset" type="range" min="0" max="600" value="0" aria-label="SURFACE ELEVATION OFFSET"></div>
 <div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardBeaconDot"><span>CENTER BEACON DOT</span></label><b id="valPhotoCardBeaconDot">OFF</b></div></div>
 </div></section>
-<section class="t-group" data-tuner-group="particles"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-particles">Particles &amp; flow<span class="t-group-count">12</span></button><div class="t-group-body" id="t-group-particles" hidden="">
+<section class="t-group" data-tuner-group="particles"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-particles">Particles & flow<span class="t-group-count">12</span></button><div class="t-group-body" id="t-group-particles" hidden>
 <div class="t-row"><div class="t-row-top"><span>PARTICLE AMOUNT</span><b id="valP_amount">0.94</b></div><input id="slP_amount" type="range" min="10" max="100" value="94" aria-label="PARTICLE AMOUNT"></div>
 <div class="t-row"><div class="t-row-top"><span>PARTICLE SIZE</span><b id="valP_size">0.39</b></div><input id="slP_size" type="range" min="20" max="300" value="39" aria-label="PARTICLE SIZE"></div>
 <div class="t-row"><div class="t-row-top"><span>PARTICLE BRIGHTNESS</span><b id="valPartVis">0.49</b></div><input id="slPartVis" type="range" min="10" max="180" value="49" aria-label="PARTICLE BRIGHTNESS"></div>
@@ -2492,15 +2494,15 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>DRIFT WAVE AMOUNT</span><b id="valPartFlow">2.61</b></div><input id="slPartFlow" type="range" min="0" max="400" value="261" aria-label="DRIFT WAVE AMOUNT"></div>
 <div class="t-row"><div class="t-row-top"><span>DRIFT WAVE SPEED</span><b id="valP_driftSpeed">1.60</b></div><input id="slP_driftSpeed" type="range" min="0" max="300" value="160" aria-label="DRIFT WAVE SPEED"></div>
 </div></section>
-<section class="t-group" data-tuner-group="mouse"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-mouse">Mouse interaction<span class="t-group-count">6</span></button><div class="t-group-body" id="t-group-mouse" hidden="">
+<section class="t-group" data-tuner-group="mouse"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-mouse">Mouse interaction<span class="t-group-count">6</span></button><div class="t-group-body" id="t-group-mouse" hidden>
 <div class="t-row"><div class="t-row-top"><span>MOUSE EFFECT STRENGTH (0 = OFF)</span><b id="val_mouseEffectStrength">1.94</b></div><input id="sl_mouseEffectStrength" type="range" min="0" max="300" value="194" aria-label="MOUSE EFFECT STRENGTH (0 = OFF)"></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE ATTRACTION (NEG = REPEL)</span><b id="valP_mouseStr">1.15</b></div><input id="slP_mouseStr" type="range" min="-250" max="300" value="115" aria-label="MOUSE ATTRACTION (NEG = REPEL)"></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE FIELD RADIUS</span><b id="valP_mouseR">36</b></div><input id="slP_mouseR" type="range" min="5" max="120" value="36" aria-label="MOUSE FIELD RADIUS"></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE SWIRL / VORTEX</span><b id="valP_mouseSwirl">0.55</b></div><input id="slP_mouseSwirl" type="range" min="0" max="250" value="55" aria-label="MOUSE SWIRL / VORTEX"></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE SMOOTHNESS (TRAIL LAG)</span><b id="valP_mouseSmooth">0.72</b></div><input id="slP_mouseSmooth" type="range" min="5" max="98" value="72" aria-label="MOUSE SMOOTHNESS (TRAIL LAG)"></div>
-<div class="t-row"><div class="t-row-top"><span>MOUSE GLOW &amp; SIZE BOOST</span><b id="valP_mouseGlow">0.65</b></div><input id="slP_mouseGlow" type="range" min="0" max="200" value="65" aria-label="MOUSE GLOW &amp; SIZE BOOST"></div>
+<div class="t-row"><div class="t-row-top"><span>MOUSE GLOW &amp; SIZE BOOST</span><b id="valP_mouseGlow">0.65</b></div><input id="slP_mouseGlow" type="range" min="0" max="200" value="65" aria-label="MOUSE GLOW & SIZE BOOST"></div>
 </div></section>
-<section class="t-group" data-tuner-group="network"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-network">Lines &amp; background<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-network" hidden="">
+<section class="t-group" data-tuner-group="network"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-network">Lines & background<span class="t-group-count">8</span></button><div class="t-group-body" id="t-group-network" hidden>
 <div class="t-row"><div class="t-row-top"><span>LINE DENSITY / VISIBILITY</span><b id="valDensity">0.62</b></div><input id="slDensity" type="range" min="0" max="100" value="62" aria-label="LINE DENSITY / VISIBILITY"></div>
 <div class="t-row"><div class="t-row-top"><span>LINE THICKNESS</span><b id="valLineThick">0.92</b></div><input id="slLineThick" type="range" min="10" max="200" value="92" aria-label="LINE THICKNESS"></div>
 <div class="t-row"><div class="t-row-top"><span>MAX LINE THICKNESS LIMIT</span><b id="valP_maxLineThick">4.10</b></div><input id="slP_maxLineThick" type="range" min="80" max="500" value="410" aria-label="MAX LINE THICKNESS LIMIT"></div>
@@ -2510,14 +2512,14 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>SUB-THREAD THICKNESS</span><b id="valFakeWidth">1.10</b></div><input id="slFakeWidth" type="range" min="20" max="300" value="110" aria-label="SUB-THREAD THICKNESS"></div>
 <div class="t-row"><div class="t-row-top"><span>BACKGROUND OPACITY</span><b id="valBgVis">0.84</b></div><input id="slBgVis" type="range" min="0" max="160" value="84" aria-label="BACKGROUND OPACITY"></div>
 </div></section>
-<section class="t-group" data-tuner-group="theme"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-theme">UI Theme &amp; Palette<span class="t-group-count">5</span></button><div class="t-group-body" id="t-group-theme" hidden="">
+<section class="t-group" data-tuner-group="theme"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-theme">UI Theme &amp; Palette<span class="t-group-count">5</span></button><div class="t-group-body" id="t-group-theme" hidden>
 <div class="t-row"><div class="t-row-top"><span>UI COLOR HUE (0°–360°)</span><b id="valThemeHue">145°</b></div><input id="slThemeHue" type="range" min="0" max="360" value="145" aria-label="UI COLOR HUE (0°–360°)"></div>
 <div class="t-row"><div class="t-row-top"><span>COLOR SATURATION / VIBRANCY</span><b id="valThemeSat">42%</b></div><input id="slThemeSat" type="range" min="0" max="100" value="42" aria-label="COLOR SATURATION / VIBRANCY"></div>
 <div class="t-row"><div class="t-row-top"><span>PANEL DARKNESS (BLACK LEVEL)</span><b id="valThemeDarkness">90</b></div><input id="slThemeDarkness" type="range" min="50" max="100" value="90" aria-label="PANEL DARKNESS (BLACK LEVEL)"></div>
 <div class="t-row"><div class="t-row-top"><span>BORDER &amp; ACCENT CONTRAST</span><b id="valThemeBorderContrast">35</b></div><input id="slThemeBorderContrast" type="range" min="10" max="100" value="35" aria-label="BORDER &amp; ACCENT CONTRAST"></div>
 <div class="t-row"><div class="t-row-top"><span>CORNER SHARPNESS (0=SHARP · 12=ROUND)</span><b id="valThemeCornerRadius">1px</b></div><input id="slThemeCornerRadius" type="range" min="0" max="12" step="1" value="1" aria-label="CORNER SHARPNESS (0=SHARP · 12=ROUND)"></div>
 </div></section>
-  <p id="tunerNoMatches" class="mono" hidden="">No matching controls.</p>
+  <p id="tunerNoMatches" class="mono" hidden>No matching controls.</p>
 </div>
 <div class="tuner-body" id="tunerHubListTab" style="display:none"><div id="tunerHubListWrap"></div></div>
 </div>
@@ -2553,7 +2555,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
       <span class="popup-date mono editable-field" id="dDate" spellcheck="false" title="Click to edit Year (YYYY-MM)">2026-09</span>
       <span class="draft-pill mono" id="dDraftBadge" style="display:none">DRAFT</span>
     </div>
-    <button class="close-btn" id="btnClosePopup" aria-label="Close">×</button>
+    <button class="close-btn" id="btnClosePopup" aria-label="Close">&times;</button>
   </div>
 
   <div class="popup-body">
@@ -2655,7 +2657,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     </div>
     <div id="authErrMsg" style="display:none;color:#f87171;font-size:10px;margin-bottom:8px">Invalid GitHub token. Please verify token permissions.</div>
     <label style="font-size:9.5px;color:var(--dim);display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="chkRememberAuth" checked="">
+      <input type="checkbox" id="chkRememberAuth" checked>
       <span>Remember on this browser</span>
     </label>
   </div>
@@ -2677,7 +2679,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
           <button type="button" class="btn-act" id="btnToggleTokenVis">👁</button>
         </div>
         <small style="font-size:9.5px;color:var(--dim);margin-top:3px;display:block">
-          Need a token? <a href="https://github.com/settings/tokens/new?scopes=repo&amp;description=Supernova+Studio+Publish" target="_blank" rel="noopener" style="color:#60a5fa;text-decoration:underline">Click here to generate one</a> with <b>repo / contents</b> permission. (Saved securely ONLY on your local browser).
+          Need a token? <a href="https://github.com/settings/tokens/new?scopes=repo&description=Supernova+Studio+Publish" target="_blank" rel="noopener" style="color:#60a5fa;text-decoration:underline">Click here to generate one</a> with <b>repo / contents</b> permission. (Saved securely ONLY on your local browser).
         </small>
       </div>
 
@@ -2716,65 +2718,43 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 </script>
 <!-- three.min.js: embedded offline library -->
 <script>
-/* MOHSEN ZAREI — SUPERNOVA PORTFOLIO & STUDIO ENGINE v5.8 (app.js) */
+/* Global Error Safety Catch */
+window.addEventListener('error', e => {
+  console.error("Global Error Caught:", e.error || e.message);
+  try {
+    let b = document.getElementById('debugErrorBanner');
+    if (!b && document.body) {
+      b = document.createElement('div');
+      b.id = 'debugErrorBanner';
+      b.style.cssText = 'position:fixed;top:40px;left:50%;transform:translateX(-50%);background:rgba(220,38,38,0.95);color:#fff;padding:8px 16px;border-radius:6px;font-family:monospace;font-size:12px;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,0.8);max-width:90vw;display:flex;align-items:center;gap:12px;';
+      b.innerHTML = '<span id="debugErrorText"></span><button style="color:#fff;background:rgba(0,0,0,0.3);border:none;padding:2px 8px;border-radius:4px;cursor:pointer;" onclick="this.parentElement.remove()">✕</button>';
+      document.body.appendChild(b);
+    }
+    const t = document.getElementById('debugErrorText');
+    if (t) t.textContent = '⚠️ ' + (e.message || (e.error && e.error.message) || 'Script Error');
+  } catch(err){}
+});
+/* ============================================================================
+   MOHSEN ZAREI — SUPERNOVA PORTFOLIO & STUDIO ENGINE v5.8
+   ============================================================================ */
 
 let PUBLISHED_VIEWER_ONLY = false;
-
 let STUDIO_SECRET_KEY = "mohsen";
 
 let SITE_HEADER = {
-  "name": "MOHSEN ZAREI",
-  "desc": "Interactive art, embedded systems, kinetic calligraphy & 3D shaders. Click any star hub to explore its project space.",
-  "descPinned": true,
-  "x": null,
-  "y": null
+  name: "MOHSEN ZAREI",
+  desc: "Interactive art, embedded systems, kinetic calligraphy & 3D shaders. Click any star hub to explore its project space.",
+  descPinned: true,
+  x: null,
+  y: null
 };
 
 let BRAND_AVATAR = {
-  "url": "",
-  "x": 32,
-  "y": 118,
-  "w": 180,
-  "h": 180
-};
-
-let CONTACTS = [
-  {
-    "label": "Instagram",
-    "url": "https://instagram.com/"
-  },
-  {
-    "label": "LinkedIn",
-    "url": "https://linkedin.com/in/"
-  },
-  {
-    "label": "GitHub",
-    "url": "https://github.com/mohxarei"
-  },
-  {
-    "label": "Email",
-    "url": "mailto:you@example.com"
-  },
-  {
-    "label": "Phone",
-    "url": "tel:+390000000000"
-  }
-];
-
-let UI_PARAMS = {
-  "descSpeed": 0.7,
-  "descSpread": 1.1,
-  "descStagger": 0.35,
-  "hashDur": 0.7,
-  "hashW": 300,
-  "starDur": 0.6,
-  "starR": 130,
-  "starA0": 185,
-  "starA1": 265,
-  "hashX": null,
-  "hashY": null,
-  "contactX": null,
-  "contactY": null
+  url: "",
+  x: 32,
+  y: 118,
+  w: 180,
+  h: 180
 };
 
 let PSYS = {
@@ -2812,12 +2792,27 @@ let PSYS = {
   "mouseSmooth": 0.29,
   "mouseGlow": 0.58
 };
-
 const PSYS_DEFAULTS = { ...PSYS };
+
+let UI_PARAMS = {
+  descSpeed: 0.7, descSpread: 1.1, descStagger: 0.35,
+  hashDur: 0.7, hashW: 300,
+  starDur: 0.6, starR: 130, starA0: 185, starA1: 265,
+  hashX: null, hashY: null,
+  contactX: null, contactY: null
+};
+
+let CONTACTS = [
+  { label: "Instagram", url: "https://instagram.com/" },
+  { label: "LinkedIn", url: "https://linkedin.com/in/" },
+  { label: "GitHub", url: "https://github.com/mohxarei" },
+  { label: "Email", url: "mailto:you@example.com" },
+  { label: "Phone", url: "tel:+390000000000" }
+];
 
 let DEFAULTS = {
   "autoMorph": true,
-  "morphState": 2.353639600000054,
+  "morphState": 2.892448500000009,
   "morphSpeed": 0.007,
   "deformAmt": 1,
   "blastScale": 1.43,
@@ -2848,7 +2843,7 @@ let DEFAULTS = {
   "dragLimit": 14,
   "bgVis": 1.17,
   "responsiveDim": 1,
-  "sphereRadius": 21,
+  "sphereRadius": 28,
   "sphereDeform": 0.52,
   "sphereStretch": 1,
   "sphereTwist": 0.12,
@@ -2863,21 +2858,21 @@ let DEFAULTS = {
   "previewStayTime": 2.9,
   "lineParticleMix": 0.5,
   "photoInstancing": true,
-  "photoCardSize": 3.65,
+  "photoCardSize": 3.00,
   "photoCardCount": 43,
   "photoCardAspect": 0.62,
   "photoCardFrameWidth": 2,
-  "photoCardFacing": 0.7,
+  "photoCardFacing": 0.70,
   "photoCardOpacity": 0.94,
   "photoCardHoverScale": 1.41,
-  "photoCardOffset": 0,
+  "photoCardOffset": 0.00,
   "photoCardBeaconDot": false,
   "photoCardMouseFollow": true,
   "photoCardMouseFollowStrength": 0.35,
   "photoCardMouseAttract": true,
   "photoCardMouseAttractStrength": 0.45,
-  "photoCardLayers": 3,
-  "photoCardLayerSpread": 0.51,
+  "photoCardLayers": 1,
+  "photoCardLayerSpread": 0.30,
   "themeHue": 145,
   "themeSat": 42,
   "themeDarkness": 90,
@@ -2886,46 +2881,13 @@ let DEFAULTS = {
 };
 
 let TAG_POOL = [
-  "touchdesigner",
-  "installation",
-  "projection-mapping",
-  "computer-vision",
-  "mediapipe",
-  "python",
-  "generative",
-  "shaders",
-  "sensors",
-  "calligraphy",
-  "persian",
-  "typography",
-  "electronics",
-  "esp32",
-  "microcontroller",
-  "pcb",
-  "fastled",
-  "wled",
-  "udp",
-  "osc",
-  "ui",
-  "software",
-  "blender",
-  "3d",
-  "procedural",
-  "vector",
-  "poster",
-  "ink",
-  "graffiti",
-  "vjing",
-  "audio-reactive",
-  "festival",
-  "iot",
-  "mqtt",
-  "web",
-  "about",
-  "leadership",
-  "turin",
-  "art",
-  "research"
+  "touchdesigner", "installation", "projection-mapping", "computer-vision",
+  "mediapipe", "python", "generative", "shaders", "sensors", "calligraphy",
+  "persian", "typography", "electronics", "esp32", "microcontroller", "pcb",
+  "fastled", "wled", "udp", "osc", "ui", "software", "blender", "3d",
+  "procedural", "vector", "poster", "ink", "graffiti", "vjing",
+  "audio-reactive", "festival", "iot", "mqtt", "web", "about",
+  "leadership", "turin", "art", "research"
 ];
 
 let INITIAL_PROJECTS = [
@@ -7607,7 +7569,7 @@ function bootSupernovaEngine() {
     const s1 = isOrigin ? new THREE.Vector3(0,0,0) : getShape1_Spiral(lobeIdx, norm, 0.85);
     const s2 = isOrigin ? new THREE.Vector3(0,0,0) : getShape2_Hourglass(lobeIdx, norm, 0.85);
     const s3 = isOrigin ? new THREE.Vector3(-22,18,0) : getShape3_Veil(lobeIdx, norm, 0.82);
-    const st = isOrigin ? "active" : (p.status === "active" ? "slot" : (p.status || "slot"));
+    const st = p.status || (isOrigin ? "active" : "slot");
     const node = {
       id: NODES.length, status: st, tier: st === "active" ? 1 : 2, isOrigin, isInitial: true,
       title: p.t, date: p.d, tags: [...p.g], desc: p.x,
@@ -10914,7 +10876,7 @@ function bootSupernovaEngine() {
     let html = "<!DOCTYPE html>" + NL + PAGE_HTML_AT_BOOT;
     const k = html.indexOf("three.min.js"), i = html.indexOf("<script>", k), j = html.indexOf(CLOSE, i);
     if (k >= 0 && i > k && j > i) html = html.slice(0, i) + block + html.slice(j + CLOSE.length);
-    html = html.replace(/<body[^>]*>/i, '<body class="bar-hidden">');
+    html = html.replace(/<body[^>]*>/i, publishViewerOnly ? '<body class="viewer-mode published-lock">' : '<body class="studio-mode">');
     return html;
   }
 
@@ -11957,4 +11919,93 @@ function bootSupernovaEngine() {
 }
 
 bootSupernovaEngine();
-</script></body></html>
+</script>
+
+<script id="temporary-ui-arranger">
+(() => {
+  if (!document.body.classList.contains('studio-mode') || document.body.classList.contains('published-lock')) return;
+  const bar=document.getElementById('studioBar'); if(!bar) return;
+  const launch=document.createElement('button'); launch.type='button'; launch.className='btn-act studio-only'; launch.textContent='Arrange UI';
+  bar.insertBefore(launch,document.getElementById('btnSaveStudio'));
+  const style=document.createElement('style');
+  style.textContent=`
+    #uiArrangeTools { position:fixed; top:52px; left:50%; transform:translateX(-50%); z-index:10002; max-width:95vw; display:none; flex-wrap:wrap; justify-content:center; align-items:center; gap:6px; padding:8px; background:rgba(8,10,15,.96); border:1px solid #717986; border-radius:6px; font:11px "IBM Plex Mono",monospace; }
+    #uiArrangeTools button, #uiArrangeTools select, #uiArrangeTools input { padding:5px 7px; border:1px solid #707782; border-radius:4px; background:#101620; }
+    #uiArrangeTools input { width:66px; }
+    #uiArrangeTools small { width:100%; text-align:center; color:#b7beca; }
+    #uiArrangeTools label { display:flex; align-items:center; gap:4px; }
+    .ui-arrange-box { position:fixed; outline:1px dashed #91c8ff; z-index:10000; pointer-events:none; }
+    .ui-arrange-box.selected { outline:2px solid #91c8ff; }
+    .ui-arrange-label,.ui-arrange-size,.ui-arrange-rotate { position:absolute; pointer-events:auto; touch-action:none; background:#182637; color:#e6f1ff; border:1px solid #8fcaff; font:10px "IBM Plex Mono",monospace; }
+    .ui-arrange-label { left:0; top:0; transform:translateY(-100%); white-space:nowrap; padding:3px 5px; cursor:move; }
+    .ui-arrange-size { right:-5px; bottom:-5px; width:14px; height:14px; padding:0; cursor:nwse-resize; }
+    .ui-arrange-rotate { right:-6px; top:-26px; width:22px; height:22px; padding:0; border-radius:50%; cursor:grab; }
+    body.ui-arrange-freeze .contact-glyph { animation-play-state:running; }
+    body.ui-arranging .studio-bar { z-index:10003; }
+    body:not(.studio-mode) #uiArrangeTools,body:not(.studio-mode) #uiArrangeOverlay { display:none !important; }
+  `;
+  document.head.append(style);
+  const tools=document.createElement('div'); tools.id='uiArrangeTools'; tools.className='studio-only';
+  tools.innerHTML='<select aria-label="Choose UI element" data-control="element"></select><label>Size <input aria-label="Size percent" data-control="size" type="number" min="20" max="400" step="1">%</label><label>Rotate <input aria-label="Rotation degrees" data-control="angle" type="number" step="1">°</label><button type="button" data-action="front">Forward</button><button type="button" data-action="back">Backward</button><button type="button" data-action="guides">Hide guides / screenshot</button><button type="button" data-action="reset">Reset</button><button type="button" data-action="done">Done</button><small>Drag labels to move · square corner to resize · round ↻ handle to rotate · Shift snaps to 5° · temporary until reload</small>';
+  document.body.append(tools);
+  const layer=document.createElement('div'); layer.id='uiArrangeOverlay'; layer.className='studio-only'; document.body.append(layer);
+  const choose=tools.querySelector('[data-control="element"]'), sizeInput=tools.querySelector('[data-control="size"]'), angleInput=tools.querySelector('[data-control="angle"]');
+  const entries=new Map(), roots=new Map(); let nextId=0,active=false,guides=true,drag=null,frame=0,selected=null,front=30;
+  const selectors=[['#btnHomeReset','X icon'],['#brandName','Name'],['#brandDesc','Description'],['#brandAvatarCard','X Avatar Card'],['#btnHashToggle','# icon'],['.cf-slot','Hashtag list'],['#btnEditTagMode','Tag edit'],['#btnContact','* icon'],['#btnEditContacts','* edit'],['.morph-faded-box','Morph controls'],['#btnResetView','Reset icon'],['#btnVisitorAuto','Live icon'],['#tuner','Editor panel'],['#projectPopup','Project window']];
+  function parts(value) { const result=[];let depth=0,token='';for(const char of value){if(char==='(')depth++;if(char===')')depth--;if(char===' '&&!depth){if(token)result.push(token);token='';}else token+=char;}if(token)result.push(token);return result; }
+  function angle(value){const token=String(value).split(' ').pop();const n=parseFloat(token)||0;return token.endsWith('rad')?n*180/Math.PI:token.endsWith('turn')?n*360:n;}
+  function select(entry){selected=entry;choose.value=entry.id;syncControls();}
+  function syncControls(){if(!selected)return;sizeInput.value=Math.round(selected.size/selected.baseScale*100);angleInput.value=Math.round(selected.rotation===null?angle(getComputedStyle(selected.el).rotate):selected.rotation);}
+  function add(el,label){
+    if(entries.has(el))return;
+    const box=document.createElement('div');box.className='ui-arrange-box';
+    const handle=document.createElement('button');handle.type='button';handle.className='ui-arrange-label';handle.textContent=label;
+    const resize=document.createElement('button');resize.type='button';resize.className='ui-arrange-size';resize.setAttribute('aria-label','Resize '+label);
+    const rotate=document.createElement('button');rotate.type='button';rotate.className='ui-arrange-rotate';rotate.textContent='↻';rotate.setAttribute('aria-label','Rotate '+label);
+    box.append(handle,resize,rotate);layer.append(box);
+    const computed=getComputedStyle(el), translation=parts(computed.translate==='none'?'0px 0px':computed.translate), baseScale=parseFloat(computed.scale)||1;
+    const entry={id:String(++nextId),el,box,handle,resize,rotate,x:0,y:0,size:baseScale,baseScale,rotation:null,baseX:translation[0]||'0px',baseY:translation[1]||'0px',original:{translate:el.style.translate,scale:el.style.scale,rotate:el.style.rotate,zIndex:el.style.zIndex,position:el.style.position}};
+    entries.set(el,entry);const option=document.createElement('option');option.value=entry.id;option.textContent=label;choose.append(option);
+    if(!selected)select(entry);
+  }
+  function discover(){selectors.forEach(([selector,label])=>document.querySelectorAll(selector).forEach(el=>add(el,label)));document.querySelectorAll('#contactOrbit .rad-item').forEach(el=>add(el,el.textContent));for(const [el,e]of entries)if(!el.isConnected){e.box.remove();for(const option of [...choose.options])if(option.value===e.id)option.remove();entries.delete(el);if(selected===e)selected=null;}if(!selected&&entries.size)select(entries.values().next().value);}
+  function paint(){
+    if(!active)return;if(!document.body.classList.contains('studio-mode')){finish();return;}discover();
+    for(const e of entries.values()){
+      const r=e.el.getBoundingClientRect(),c=getComputedStyle(e.el),visible=guides&&r.width>2&&r.height>2&&c.display!=='none'&&c.visibility!=='hidden'&&Number(c.opacity)>.05&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth;
+      e.box.style.display=visible?'block':'none';e.box.classList.toggle('selected',selected===e);
+      if(visible){Object.assign(e.box.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});e.handle.style.top=r.top<24?Math.max(0,-r.top+4)+'px':'0';e.handle.style.transform=r.top<24?'none':'translateY(-100%)';e.rotate.style.top=Math.max(-26,-r.top+4)+'px';}
+    }
+    frame=requestAnimationFrame(paint);
+  }
+  function apply(e){e.el.style.translate='calc('+e.baseX+' + '+e.x+'px) calc('+e.baseY+' + '+e.y+'px)';e.el.style.scale=e.size;if(e.rotation!==null)e.el.style.rotate=e.rotation+'deg';}
+  function reset(){for(const e of entries.values()){Object.assign(e.el.style,e.original);e.x=0;e.y=0;e.size=e.baseScale;e.rotation=null;}for(const [root,z]of roots)root.style.zIndex=z;roots.clear();document.body.classList.remove('ui-arrange-freeze');if(active)document.body.classList.add('ui-arrange-freeze');syncControls();}
+  function finish(){active=false;drag=null;cancelAnimationFrame(frame);layer.style.display='none';tools.style.display='none';document.body.classList.remove('ui-arranging');launch.textContent='Arrange UI';}
+  launch.onclick=()=>{if(active){finish();return;}active=true;guides=true;document.body.classList.add('ui-arranging','ui-arrange-freeze');layer.style.display='block';tools.style.display='flex';launch.textContent='Finish arranging';tools.querySelector('[data-action="guides"]').textContent='Hide guides / screenshot';paint();syncControls();};
+  choose.onchange=()=>{for(const e of entries.values())if(e.id===choose.value)select(e);};
+  sizeInput.oninput=()=>{if(!selected||!Number.isFinite(sizeInput.valueAsNumber))return;selected.size=selected.baseScale*Math.max(.2,Math.min(4,sizeInput.valueAsNumber/100));apply(selected);};
+  angleInput.oninput=()=>{if(!selected||!Number.isFinite(angleInput.valueAsNumber))return;selected.rotation=angleInput.valueAsNumber;apply(selected);};
+  tools.addEventListener('click',event=>{
+    const action=event.target.dataset.action;if(action==='reset')reset();if(action==='done')finish();if(action==='guides'){guides=!guides;event.target.textContent=guides?'Hide guides / screenshot':'Show guides';}
+    if((action==='front'||action==='back')&&selected){const el=selected.el,root=el.closest('.corner-filter,.contact-corner,header,.morph-faded-box,#tuner,#projectPopup')||el;if(!roots.has(root))roots.set(root,root.style.zIndex);if(getComputedStyle(el).position==='static')el.style.position='relative';el.style.zIndex=action==='front'?++front:2;root.style.zIndex=el.style.zIndex;}
+  });
+  window.addEventListener('pointerdown',event=>{
+    if(!active)return;if(tools.contains(event.target)){event.stopPropagation();return;}
+    const e=[...entries.values()].find(e=>event.target===e.handle||event.target===e.resize||event.target===e.rotate);if(!e)return;
+    event.preventDefault();event.stopImmediatePropagation();select(e);
+    const r=e.el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    drag={entry:e,mode:event.target===e.resize?'size':event.target===e.rotate?'rotate':'move',startX:event.clientX,startY:event.clientY,x:e.x,y:e.y,size:e.size,extent:Math.max(40,r.width),cx,cy,startAngle:Math.atan2(event.clientY-cy,event.clientX-cx)*180/Math.PI,rotation:e.rotation===null?angle(getComputedStyle(e.el).rotate):e.rotation};event.target.setPointerCapture(event.pointerId);
+  },true);
+  window.addEventListener('pointermove',event=>{
+    if(!drag)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
+    if(drag.mode==='size')drag.entry.size=Math.max(drag.entry.baseScale*.2,Math.min(drag.entry.baseScale*4,drag.size*(1+(dx+dy)/drag.extent)));
+    else if(drag.mode==='rotate'){let delta=Math.atan2(event.clientY-drag.cy,event.clientX-drag.cx)*180/Math.PI-drag.startAngle;delta=((delta+540)%360)-180;const value=drag.rotation+delta;drag.entry.rotation=event.shiftKey?Math.round(value/5)*5:value;}
+    else{drag.entry.x=drag.x+dx;drag.entry.y=drag.y+dy;}apply(drag.entry);syncControls();
+  },true);
+  const stop=event=>{if(drag){drag=null;event.stopImmediatePropagation();}};window.addEventListener('pointerup',stop,true);window.addEventListener('pointercancel',stop,true);
+  window.addEventListener('click',event=>{if(layer.contains(event.target)){event.preventDefault();event.stopImmediatePropagation();}},true);
+  window.addEventListener('keydown',event=>{if(active&&event.key==='Escape'){finish();event.stopImmediatePropagation();}},true);
+})();
+</script>
+</body>
+</html>
