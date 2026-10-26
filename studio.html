@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Mohsen Zarei — Supernova Portfolio & Studio v5.9</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap">
   <style>
@@ -41,10 +44,29 @@ canvas#webgl { position: fixed; inset: 0; width: 100%; height: 100%; display: bl
 .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .03em; }
 button, input, textarea, select { font: inherit; color: inherit; background: none; border: none; }
 button { cursor: pointer; }
-body:not(.studio-mode) .studio-bar { display: none !important; }
-body:not(.studio-mode) .studio-only { display: none !important; }
+body:not(.studio-mode) .studio-bar,
+body:not(.studio-mode) .studio-only,
+body:not(.studio-mode) #tuner,
+body:not(.studio-mode) #barTab,
+body.viewer-mode .studio-bar,
+body.viewer-mode .studio-only,
+body.viewer-mode #tuner,
+body.viewer-mode #barTab,
+body.viewer-mode #modalSecretKey,
+body.viewer-mode #modalPublishGithub,
+body.viewer-mode #btnAdminKeyTrigger,
+body.published-lock .studio-bar,
+body.published-lock .studio-only,
+body.published-lock #tuner,
+body.published-lock #barTab,
+body.published-lock #modalSecretKey,
+body.published-lock #modalPublishGithub,
+body.published-lock #btnAdminKeyTrigger {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
 body.studio-mode .viewer-only { display: none !important; }
-body.published-lock .studio-bar, body.published-lock .studio-only { display: none !important; }
 
 /* Studio Master Bar */
 .studio-bar {
@@ -2221,7 +2243,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 </style>
 </head>
-<body class="viewer-mode">
+<body class="studio-mode">
 
 <canvas id="webgl"></canvas>
 
@@ -3440,23 +3462,26 @@ function bootSupernovaEngine() {
 
   function setBrandOpen(open) {
     const h = $("btnHomeReset"), name = $("brandName"), description = $("brandDesc");
+    if (!h || !name || !description) return;
     const wasOpen = h.getAttribute("aria-expanded") === "true";
     if (!open || !wasOpen) {
-      if (name.dataset.editing === "true") SITE_HEADER.name = name.textContent.trim() || SITE_HEADER.name;
-      if (description.dataset.editing === "true") SITE_HEADER.desc = description.textContent.trim() || SITE_HEADER.desc;
+      if (name.dataset && name.dataset.editing === "true") SITE_HEADER.name = name.textContent.trim() || SITE_HEADER.name;
+      if (description.dataset && description.dataset.editing === "true") SITE_HEADER.desc = description.textContent.trim() || SITE_HEADER.desc;
       if (document.activeElement === name || document.activeElement === description) document.activeElement.blur();
-      delete name.dataset.editing; delete description.dataset.editing;
+      if (name.dataset) delete name.dataset.editing;
+      if (description.dataset) delete description.dataset.editing;
     }
+    const brandEl = h.closest(".brand");
     if (!open) {
       stopBrandEntrance(name); stopBrandEntrance(description);
-      h.closest(".brand").classList.remove("desc-entering", "name-entering");
+      if (brandEl) brandEl.classList.remove("desc-entering", "name-entering");
     }
     h.setAttribute("aria-expanded", String(open));
     name.setAttribute("aria-hidden", String(!open));
     description.setAttribute("aria-hidden", String(!open));
     name.tabIndex = description.tabIndex = open ? 0 : -1;
-    h.parentElement.classList.toggle("name-open", open);
-    h.closest('.brand').classList.toggle("brand-open", open);
+    if (h.parentElement) h.parentElement.classList.toggle("name-open", open);
+    if (brandEl) brandEl.classList.toggle("brand-open", open);
     description.classList.toggle("open", open);
     name.contentEditable = description.contentEditable = open && isStudioMode ? "true" : "false";
 
@@ -3910,17 +3935,19 @@ function bootSupernovaEngine() {
     });
   }
 
-  $("btnContact").addEventListener("click", e => {
-    if (e.target && e.target.closest && e.target.closest("#btnEditContacts")) return;
-    setStarOpen(!starCorner.classList.contains("open"));
-  });
-  $("btnContact").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setStarOpen(!starCorner.classList.contains("open")); } });
-  starCorner.addEventListener("pointerdown", e => e.stopPropagation());
-  document.addEventListener("pointerdown", e => { if (starCorner.classList.contains("open") && !starCorner.contains(e.target)) setStarOpen(false); }, true);
+  if ($("btnContact")) {
+    $("btnContact").addEventListener("click", e => {
+      if (e.target && e.target.closest && e.target.closest("#btnEditContacts")) return;
+      setStarOpen(!starCorner.classList.contains("open"));
+    });
+    $("btnContact").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setStarOpen(!starCorner.classList.contains("open")); } });
+  }
+  if (starCorner) starCorner.addEventListener("pointerdown", e => e.stopPropagation());
+  document.addEventListener("pointerdown", e => { if (starCorner && starCorner.classList.contains("open") && !starCorner.contains(e.target)) setStarOpen(false); }, true);
   document.addEventListener("keydown", e => { if (e.key === "Escape") setStarOpen(false); });
 
-  $("btnHashToggleR").onclick = e => { e.stopPropagation(); $("btnHashToggle").click(); };
-  ["btnHashToggle", "btnHashToggleR"].forEach(id => $(id).addEventListener("pointerdown", e => e.stopPropagation()));
+  if ($("btnHashToggleR")) $("btnHashToggleR").onclick = e => { e.stopPropagation(); if ($("btnHashToggle")) $("btnHashToggle").click(); };
+  ["btnHashToggle", "btnHashToggleR"].forEach(id => { if ($(id)) $(id).addEventListener("pointerdown", e => e.stopPropagation()); });
   document.addEventListener("pointerdown", e => {
     const cf = $("cornerFilter");
     if (cf.classList.contains("collapsed") || cf.contains(e.target) || isTagDeleteMode || e.target.closest("#confirmModal")) return;
@@ -4013,7 +4040,8 @@ function bootSupernovaEngine() {
       p.append(span);
       if (i < words.length - 1) p.append(document.createTextNode(" "));
     });
-    p.closest('.brand').classList.toggle('desc-entering', animate);
+    const bEl = p.closest('.brand');
+    if (bEl) bEl.classList.toggle('desc-entering', animate);
     if (animate) playBrandEntrance(p, false);
   }
 
@@ -4074,15 +4102,17 @@ function bootSupernovaEngine() {
     $("confirmModal").classList.add("open");
   }
   function closeConfirmModal() {
-    $("confirmModal").classList.remove("open");
+    if ($("confirmModal")) $("confirmModal").classList.remove("open");
     pendingConfirmFn = null;
   }
-  $("btnConfirmYes").onclick = () => {
-    const fn = pendingConfirmFn;
-    closeConfirmModal();
-    if (fn) fn();
-  };
-  $("btnConfirmNo").onclick = closeConfirmModal;
+  if ($("btnConfirmYes")) {
+    $("btnConfirmYes").onclick = () => {
+      const fn = pendingConfirmFn;
+      closeConfirmModal();
+      if (fn) fn();
+    };
+  }
+  if ($("btnConfirmNo")) $("btnConfirmNo").onclick = closeConfirmModal;
 
   /* UNDO & REDO */
   function captureCurrentSnapshot() {
@@ -5100,6 +5130,7 @@ function bootSupernovaEngine() {
   }
 
   function renderTunerHubList() {
+    if (!isStudioMode) return;
     const wrap = $("tunerHubListWrap");
     if (!wrap) return;
     wrap.innerHTML = "";
@@ -5122,46 +5153,55 @@ function bootSupernovaEngine() {
     `;
     wrap.appendChild(tb);
 
-    tb.querySelector("#btnHubDeactivateAll").onclick = (e) => {
-      e.stopPropagation();
-      askConfirmation(
-        "DEACTIVATE ALL PROJECTS?",
-        "Set all projects to deactivated placeholder templates? You can then activate or draft your real projects individually.",
-        () => {
-          pushUndoState();
-          hubs.forEach(n => {
-            if (!n.isOrigin) setNodeStatus(n, "slot");
-          });
-          buildEdges();
-          refreshPhotoCardTextures();
-          renderTunerHubList();
-        }
-      );
-    };
+    const btnDeact = tb.querySelector("#btnHubDeactivateAll");
+    if (btnDeact) {
+      btnDeact.onclick = (e) => {
+        e.stopPropagation();
+        askConfirmation(
+          "DEACTIVATE ALL PROJECTS?",
+          "Set all projects to deactivated placeholder templates? You can then activate or draft your real projects individually.",
+          () => {
+            pushUndoState();
+            hubs.forEach(n => {
+              if (!n.isOrigin) setNodeStatus(n, "slot");
+            });
+            buildEdges();
+            refreshPhotoCardTextures();
+            renderTunerHubList();
+          }
+        );
+      };
+    }
 
-    tb.querySelector("#btnHubDraftAll").onclick = (e) => {
-      e.stopPropagation();
-      pushUndoState();
-      showDrafts = true;
-      if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
-      hubs.forEach(n => {
-        if (!n.isOrigin) setNodeStatus(n, "draft");
-      });
-      buildEdges();
-      refreshPhotoCardTextures();
-      renderTunerHubList();
-    };
+    const btnDraft = tb.querySelector("#btnHubDraftAll");
+    if (btnDraft) {
+      btnDraft.onclick = (e) => {
+        e.stopPropagation();
+        pushUndoState();
+        showDrafts = true;
+        if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
+        hubs.forEach(n => {
+          if (!n.isOrigin) setNodeStatus(n, "draft");
+        });
+        buildEdges();
+        refreshPhotoCardTextures();
+        renderTunerHubList();
+      };
+    }
 
-    tb.querySelector("#btnHubActivateAll").onclick = (e) => {
-      e.stopPropagation();
-      pushUndoState();
-      hubs.forEach(n => {
-        setNodeStatus(n, "active");
-      });
-      buildEdges();
-      refreshPhotoCardTextures();
-      renderTunerHubList();
-    };
+    const btnAct = tb.querySelector("#btnHubActivateAll");
+    if (btnAct) {
+      btnAct.onclick = (e) => {
+        e.stopPropagation();
+        pushUndoState();
+        hubs.forEach(n => {
+          setNodeStatus(n, "active");
+        });
+        buildEdges();
+        refreshPhotoCardTextures();
+        renderTunerHubList();
+      };
+    }
 
     const header = document.createElement("div");
     header.className = "hub-list-group-title";
@@ -5384,15 +5424,19 @@ function bootSupernovaEngine() {
     if (selectedId >= 0) openPopup(selectedId, false);
   }
 
-  $("chkSelectAll").onchange = e => toggleAllVisibleTags(e.target.checked);
-  $("cfSelectAllRow").addEventListener("pointerdown", e => e.stopPropagation());
-  $("cfSelectAllRow").addEventListener("click", e => {
-    e.preventDefault();
-    e.stopPropagation();
-    const checkbox = $("chkSelectAll");
-    checkbox.checked = !checkbox.checked;
-    checkbox.dispatchEvent(new Event("change", { bubbles: true }));
-  });
+  if ($("chkSelectAll")) $("chkSelectAll").onchange = e => toggleAllVisibleTags(e.target.checked);
+  if ($("cfSelectAllRow")) {
+    $("cfSelectAllRow").addEventListener("pointerdown", e => e.stopPropagation());
+    $("cfSelectAllRow").addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const checkbox = $("chkSelectAll");
+      if (checkbox) {
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
+  }
 
   function enterTagDeleteMode() {
     isTagDeleteMode = true;
@@ -5437,18 +5481,22 @@ function bootSupernovaEngine() {
       }
     }
   }
-  $("btnHashToggle").onclick = e => {
-    e.stopPropagation();
-    const cf = $("cornerFilter");
-    setHashtagOpen(cf.classList.contains("collapsed"));
-    if (cf.classList.contains("collapsed") && isTagDeleteMode) exitTagDeleteMode();
-  };
+  if ($("btnHashToggle")) {
+    $("btnHashToggle").onclick = e => {
+      e.stopPropagation();
+      const cf = $("cornerFilter");
+      if (cf) setHashtagOpen(cf.classList.contains("collapsed"));
+      if (cf && cf.classList.contains("collapsed") && isTagDeleteMode) exitTagDeleteMode();
+    };
+  }
 
-  $("btnEditTagMode").onclick = e => {
-    e.stopPropagation();
-    if (isTagDeleteMode) exitTagDeleteMode();
-    else enterTagDeleteMode();
-  };
+  if ($("btnEditTagMode")) {
+    $("btnEditTagMode").onclick = e => {
+      e.stopPropagation();
+      if (isTagDeleteMode) exitTagDeleteMode();
+      else enterTagDeleteMode();
+    };
+  }
 
   if ($("btnDeleteCurrentList")) {
     $("btnDeleteCurrentList").onclick = () => {
@@ -5479,28 +5527,30 @@ function bootSupernovaEngine() {
     };
   }
 
-  $("btnConfirmDeleteTags").onclick = () => {
-    if (tagsToDeleteSet.size === 0) return;
-    const listStr = [...tagsToDeleteSet].map(t => `#${t}`).join(", ");
-    askConfirmation(
-      "DELETE SELECTED HASHTAGS?",
-      `Are you sure you want to permanently delete ${listStr} from your pool and all projects?`,
-      () => {
-        pushUndoState();
-        TAG_POOL = TAG_POOL.filter(t => !tagsToDeleteSet.has(t));
-        tagsToDeleteSet.forEach(t => {
-          checkedTags.delete(t);
-          editingTagsSet.delete(t);
-        });
-        NODES.forEach(n => {
-          if (n.tags) n.tags = n.tags.filter(t => !tagsToDeleteSet.has(t));
-        });
-        exitTagDeleteMode();
-        buildEdges();
-        if (selectedId >= 0) renderStudioTagPool();
-      }
-    );
-  };
+  if ($("btnConfirmDeleteTags")) {
+    $("btnConfirmDeleteTags").onclick = () => {
+      if (tagsToDeleteSet.size === 0) return;
+      const listStr = [...tagsToDeleteSet].map(t => `#${t}`).join(", ");
+      askConfirmation(
+        "DELETE SELECTED HASHTAGS?",
+        `Are you sure you want to permanently delete ${listStr} from your pool and all projects?`,
+        () => {
+          pushUndoState();
+          TAG_POOL = TAG_POOL.filter(t => !tagsToDeleteSet.has(t));
+          tagsToDeleteSet.forEach(t => {
+            checkedTags.delete(t);
+            editingTagsSet.delete(t);
+          });
+          NODES.forEach(n => {
+            if (n.tags) n.tags = n.tags.filter(t => !tagsToDeleteSet.has(t));
+          });
+          exitTagDeleteMode();
+          buildEdges();
+          if (selectedId >= 0) renderStudioTagPool();
+        }
+      );
+    };
+  }
 
   function buildEdges() {
     EDGES = [];
@@ -6143,7 +6193,7 @@ function bootSupernovaEngine() {
   });
   syncPsSliders();
 
-  $("tuner").addEventListener("click", e => {
+  if ($("tuner")) $("tuner").addEventListener("click", e => {
     const b = e.target.closest(".t-row-top b");
     if (!b || b.isContentEditable) return;
     const row = b.closest(".t-row"), sl = row && row.querySelector('input[type="range"]');
@@ -6173,36 +6223,47 @@ function bootSupernovaEngine() {
     b.onblur = () => finish(true);
   });
 
-  const tunerGroups=Array.from(document.querySelectorAll('#tuner .t-group')).map(group=>({
-    group,button:group.querySelector('.t-sec'),body:group.querySelector('.t-group-body'),
-    folded:group.querySelector('.t-sec').getAttribute('aria-expanded')!=='true',
-    rows:Array.from(group.querySelectorAll('.t-row')).map(row=>({row,text:row.textContent.toLowerCase()}))
+  const tunerGroups = Array.from(document.querySelectorAll('#tuner .t-group')).map(group => ({
+    group,
+    button: group.querySelector('.t-sec'),
+    body: group.querySelector('.t-group-body'),
+    folded: group.querySelector('.t-sec') ? group.querySelector('.t-sec').getAttribute('aria-expanded') !== 'true' : true,
+    rows: Array.from(group.querySelectorAll('.t-row')).map(row => ({ row, text: row.textContent.toLowerCase() }))
   }));
-  function filterTuner() {
-    const query=$('tunerSearch').value.trim().toLowerCase();let matches=0;
-    tunerGroups.forEach(item=>{
-      const groupMatch=item.button.textContent.toLowerCase().includes(query);
-      let found=0;
-      item.rows.forEach(({row,text})=>{const match=!query||groupMatch||text.includes(query);row.hidden=!match;if(match)found++;});
-      matches+=found;item.group.hidden=found===0;
-      const folded=query?false:item.folded;
-      item.body.hidden=folded;item.button.classList.toggle('folded',folded);
-      item.button.setAttribute('aria-expanded',String(!folded));
-    });
-    $('tunerMatchCount').textContent=query?String(matches):'';
-    $('tunerNoMatches').hidden=matches!==0;
-  }
-  tunerGroups.forEach(item=>item.button.addEventListener('click',()=>{item.folded=!item.folded;filterTuner();}));
-  $('tunerSearch').addEventListener('input',filterTuner);
-  $('tunerSearch').addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();$('tunerSearch').value='';filterTuner();}});
-  filterTuner();
 
+  function filterTuner() {
+    const sInput = $('tunerSearch');
+    if (!sInput) return;
+    const query = sInput.value.trim().toLowerCase();
+    let matches = 0;
+    tunerGroups.forEach(item => {
+      if (!item.button || !item.group || !item.body) return;
+      const groupMatch = item.button.textContent.toLowerCase().includes(query);
+      let found = 0;
+      item.rows.forEach(({ row, text }) => { const match = !query || groupMatch || text.includes(query); row.hidden = !match; if (match) found++; });
+      matches += found; item.group.hidden = found === 0;
+      const folded = query ? false : item.folded;
+      item.body.hidden = folded; item.button.classList.toggle('folded', folded);
+      item.button.setAttribute('aria-expanded', String(!folded));
+    });
+    if ($('tunerMatchCount')) $('tunerMatchCount').textContent = query ? String(matches) : '';
+    if ($('tunerNoMatches')) $('tunerNoMatches').hidden = matches !== 0;
+  }
+
+  tunerGroups.forEach(item => {
+    if (item.button) item.button.addEventListener('click', () => { item.folded = !item.folded; filterTuner(); });
+  });
+  if ($('tunerSearch')) {
+    $('tunerSearch').addEventListener('input', filterTuner);
+    $('tunerSearch').addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); $('tunerSearch').value = ''; filterTuner(); } });
+    filterTuner();
+  }
 
   /* POP-UP DRAG / RESIZE & PHOTO SUB-NETWORK */
   const popupEl = $("projectPopup");
   let isDraggingPopup = false, resizeDir = null, popStart = { x: 0, y: 0, left: 0, top: 0, w: 0, h: 0 };
 
-  $("popupDragBar").addEventListener("pointerdown", e => {
+  if ($("popupDragBar")) $("popupDragBar").addEventListener("pointerdown", e => {
     if (e.target.closest("button")) return;
     if (isStudioMode && e.target.closest(".editable-field")) return;
     isDraggingPopup = true;
@@ -6580,9 +6641,9 @@ function bootSupernovaEngine() {
       wrap.querySelectorAll("video").forEach(v => { try { v.pause(); v.src = ""; } catch (e) {} });
       wrap.querySelectorAll("iframe").forEach(f => { try { f.src = ""; } catch (e) {} });
     }
-    $("lightbox").classList.remove("open");
+    if ($("lightbox")) $("lightbox").classList.remove("open");
   }
-  $("btnCloseLightbox").onclick = closeLightbox;
+  if ($("btnCloseLightbox")) $("btnCloseLightbox").onclick = closeLightbox;
 
   /* MORPH SLIDER & TUNER BINDINGS */
   const mSlider = $("morphSlider"), topMSlider = $("topMorphSlider"), chkAuto = $("chkAuto"), btnVisitorAuto = $("btnVisitorAuto");
@@ -6934,40 +6995,49 @@ function bootSupernovaEngine() {
   }
 
   // Tuner Sub-Tabs switching ("SLIDERS & CONTROLS" vs. "HUB LIST")
-  $("btnTabSliders").onclick = () => {
-    $("btnTabSliders").classList.add("active");
-    $("btnTabHubs").classList.remove("active");
-    $("tunerSlidersTab").style.display = "";
-    $("tunerHubListTab").style.display = "none";
-  };
-  $("btnTabHubs").onclick = () => {
-    $("btnTabHubs").classList.add("active");
-    $("btnTabSliders").classList.remove("active");
-    $("tunerSlidersTab").style.display = "none";
-    $("tunerHubListTab").style.display = "";
-    renderTunerHubList();
-  };
+  if ($("btnTabSliders")) {
+    $("btnTabSliders").onclick = () => {
+      $("btnTabSliders").classList.add("active");
+      if ($("btnTabHubs")) $("btnTabHubs").classList.remove("active");
+      if ($("tunerSlidersTab")) $("tunerSlidersTab").style.display = "";
+      if ($("tunerHubListTab")) $("tunerHubListTab").style.display = "none";
+    };
+  }
+  if ($("btnTabHubs")) {
+    $("btnTabHubs").onclick = () => {
+      $("btnTabHubs").classList.add("active");
+      if ($("btnTabSliders")) $("btnTabSliders").classList.remove("active");
+      if ($("tunerSlidersTab")) $("tunerSlidersTab").style.display = "none";
+      if ($("tunerHubListTab")) $("tunerHubListTab").style.display = "";
+      renderTunerHubList();
+    };
+  }
 
   // Set / Save button commits current slider adjustments as the default preset
-  $("btnSetSaveSliders").onclick = () => {
-    Object.assign(DEFAULTS, PARAMS);
-    Object.assign(PSYS_DEFAULTS, PSYS);
-    const serialized = JSON.stringify({ ver: PRESET_VER, DEFAULTS, PSYS_DEFAULTS });
-    try {
-      localStorage.setItem("SPHARE_SUPERNOVA_SAVED_PARAMS", serialized);
-    } catch (err) {}
-    try {
-      window.name = "SPHARE_SUPERNOVA_PRESET:" + serialized;
-    } catch (err) {}
-    $("btnSetSaveSliders").textContent = "Saved ✓";
-    setTimeout(() => { $("btnSetSaveSliders").textContent = "Set / Save"; }, 1400);
-  };
+  if ($("btnSetSaveSliders")) {
+    $("btnSetSaveSliders").onclick = () => {
+      Object.assign(DEFAULTS, PARAMS);
+      Object.assign(PSYS_DEFAULTS, PSYS);
+      const serialized = JSON.stringify({ ver: PRESET_VER, DEFAULTS, PSYS_DEFAULTS });
+      try {
+        localStorage.setItem("SPHARE_SUPERNOVA_SAVED_PARAMS", serialized);
+      } catch (err) {}
+      try {
+        window.name = "SPHARE_SUPERNOVA_PRESET:" + serialized;
+      } catch (err) {}
+      $("btnSetSaveSliders").textContent = "Saved ✓";
+      setTimeout(() => { if ($("btnSetSaveSliders")) $("btnSetSaveSliders").textContent = "Set / Save"; }, 1400);
+    };
+  }
 
-  $("btnToggleTuner").onclick = () => {
-    const t = $("tuner");
-    t.classList.toggle("collapsed");
-    $("btnToggleTuner").textContent = t.classList.contains("collapsed") ? "+" : "−";
-  };
+  if ($("btnToggleTuner")) {
+    $("btnToggleTuner").onclick = () => {
+      const t = $("tuner");
+      if (!t) return;
+      t.classList.toggle("collapsed");
+      $("btnToggleTuner").textContent = t.classList.contains("collapsed") ? "+" : "−";
+    };
+  }
 
   // Reliable clipboard copy (works in iframe and browser)
   function copyTextToClipboard(text) {
@@ -6985,21 +7055,26 @@ function bootSupernovaEngine() {
     }
   }
 
-  $("btnCopyParams").onclick = () => {
-    const payload = JSON.stringify({ PARAMS, PSYS }, null, 2);
-    copyTextToClipboard(payload);
-    $("btnCopyParams").textContent = "Copied!";
-    setTimeout(() => { $("btnCopyParams").textContent = "Copy Values"; }, 1600);
-  };
+  if ($("btnCopyParams")) {
+    $("btnCopyParams").onclick = () => {
+      const payload = JSON.stringify({ PARAMS, PSYS }, null, 2);
+      copyTextToClipboard(payload);
+      $("btnCopyParams").textContent = "Copied!";
+      setTimeout(() => { if ($("btnCopyParams")) $("btnCopyParams").textContent = "Copy Values"; }, 1600);
+    };
+  }
 
-  $("chkShowDrafts").onchange = e => {
-    showDrafts = e.target.checked;
-    renderCornerFilterMatrix();
-    if (typeof syncParticlesToActiveLines === "function") syncParticlesToActiveLines();
-  };
+  if ($("chkShowDrafts")) {
+    $("chkShowDrafts").onchange = e => {
+      showDrafts = e.target.checked;
+      renderCornerFilterMatrix();
+      if (typeof syncParticlesToActiveLines === "function") syncParticlesToActiveLines();
+    };
+  }
 
   // Wakes up one dormant big dust placeholder into a living Project Hub
-  $("btnAddNewHub").onclick = () => {
+  if ($("btnAddNewHub")) {
+    $("btnAddNewHub").onclick = () => {
     pushUndoState();
     let targetNode = NODES.find(n => n.tier <= 2 && n.status === "slot") || NODES.find(n => n.tier <= 2 && n.status === "draft");
     if (!targetNode) return;
@@ -7025,6 +7100,7 @@ function bootSupernovaEngine() {
     focusCameraOnNode(targetNode);
     openPopup(targetNode.id, true);
   };
+  }
 
   function renderStudioTagPool() {
     const poolWrap = $("edTagPool");
@@ -7055,14 +7131,16 @@ function bootSupernovaEngine() {
       registerTagsIntoPool([t]);
       checkedTags.add(t);
     });
-    $("edNewTagInput").value = "";
+    if ($("edNewTagInput")) $("edNewTagInput").value = "";
     renderStudioTagPool();
     renderCornerFilterMatrix();
   }
-  $("btnAddCustomTag").onclick = addCustomTagFromInput;
-  $("edNewTagInput").addEventListener("keydown", e => {
-    if (e.key === "Enter") { e.preventDefault(); addCustomTagFromInput(); }
-  });
+  if ($("btnAddCustomTag")) $("btnAddCustomTag").onclick = addCustomTagFromInput;
+  if ($("edNewTagInput")) {
+    $("edNewTagInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") { e.preventDefault(); addCustomTagFromInput(); }
+    });
+  }
 
   async function handleVideoUpload(file, cb) {
     const token = localStorage.getItem("supernova_gh_token");
@@ -7194,21 +7272,27 @@ function bootSupernovaEngine() {
     });
   }
 
-  $("btnAddPhotoNode").onclick = () => {
-    if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-    node.media.push({ type: "photo", title: `PHOTO 0${idx + 1}`, note: "Hover description...", x: 150 + (idx * 120) % 320, y: 90 + (idx * 70) % 160, w: 170, h: 110, style: idx % 4, img: "" });
-    renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
-  };
-  $("btnAddVideoNode").onclick = () => {
-    if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-    node.media.push({ type: "video", title: `VIDEO 0${idx + 1}`, note: "Video details...", x: 160 + (idx * 110) % 320, y: 85 + (idx * 65) % 150, w: 190, h: 125, style: idx % 4, img: "" });
-    renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
-  };
-  $("btnAddTextNode").onclick = () => {
-    if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-    node.media.push({ type: "note", title: `NOTE 0${idx + 1}`, note: "Write sub-network note...", x: 220 + (idx * 95) % 280, y: 130 + (idx * 55) % 140, w: 175, h: 80, style: 0, img: "" });
-    renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
-  };
+  if ($("btnAddPhotoNode")) {
+    $("btnAddPhotoNode").onclick = () => {
+      if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
+      node.media.push({ type: "photo", title: `PHOTO 0${idx + 1}`, note: "Hover description...", x: 150 + (idx * 120) % 320, y: 90 + (idx * 70) % 160, w: 170, h: 110, style: idx % 4, img: "" });
+      renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
+    };
+  }
+  if ($("btnAddVideoNode")) {
+    $("btnAddVideoNode").onclick = () => {
+      if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
+      node.media.push({ type: "video", title: `VIDEO 0${idx + 1}`, note: "Video details...", x: 160 + (idx * 110) % 320, y: 85 + (idx * 65) % 150, w: 190, h: 125, style: idx % 4, img: "" });
+      renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
+    };
+  }
+  if ($("btnAddTextNode")) {
+    $("btnAddTextNode").onclick = () => {
+      if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
+      node.media.push({ type: "note", title: `NOTE 0${idx + 1}`, note: "Write sub-network note...", x: 220 + (idx * 95) % 280, y: 130 + (idx * 55) % 140, w: 175, h: 80, style: 0, img: "" });
+      renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
+    };
+  }
 
   function openPopup(id, refitGraph = true) {
     selectedId = id; const node = NODES[id]; if (!node) return;
@@ -7291,76 +7375,86 @@ function bootSupernovaEngine() {
     if ($("relatedHubsDropdown")) $("relatedHubsDropdown").open = false;
     renderTunerHubList();
   }
-  $("btnClosePopup").onclick = closePopup;
+  if ($("btnClosePopup")) $("btnClosePopup").onclick = closePopup;
 
   function applyPopupEditsToNode(n) {
-    n.title = $("dTitle").textContent.trim() || n.title;
-    n.date = $("dDate").textContent.trim() || n.date;
-    n.desc = $("dDesc").textContent.trim();
+    if ($("dTitle")) n.title = $("dTitle").textContent.trim() || n.title;
+    if ($("dDate")) n.date = $("dDate").textContent.trim() || n.date;
+    if ($("dDesc")) n.desc = $("dDesc").textContent.trim();
     n.tags = [...editingTagsSet];
     registerTagsIntoPool(n.tags);
     n.tags.forEach(t => checkedTags.add(t));
 
-    [...$("edMediaList").querySelectorAll(".media-ed-item")].forEach((row, idx) => {
-      if (n.media[idx]) {
-        n.media[idx].title = row.querySelector(".m-title").value.trim();
-        const imIn = row.querySelector(".m-img");
-        if (imIn) {
-          n.media[idx].img = imIn.value.trim();
-          if (isVideoMedia(n.media[idx])) n.media[idx].type = "video";
+    if ($("edMediaList")) {
+      [...$("edMediaList").querySelectorAll(".media-ed-item")].forEach((row, idx) => {
+        if (n.media[idx]) {
+          const titIn = row.querySelector(".m-title");
+          if (titIn) n.media[idx].title = titIn.value.trim();
+          const imIn = row.querySelector(".m-img");
+          if (imIn) {
+            n.media[idx].img = imIn.value.trim();
+            if (isVideoMedia(n.media[idx])) n.media[idx].type = "video";
+          }
+          const noteIn = row.querySelector(".m-note");
+          if (noteIn) n.media[idx].note = noteIn.value.trim();
         }
-        n.media[idx].note = row.querySelector(".m-note").value.trim();
-      }
-    });
+      });
+    }
   }
 
-  $("btnSaveNode").onclick = () => {
-    if (selectedId < 0) return;
-    pushUndoState();
-    const n = NODES[selectedId];
-    if (n.isNewlyAdded) delete n.isNewlyAdded;
-    applyPopupEditsToNode(n);
-    setNodeStatus(n, "active");
-    refreshPhotoCardTexture(n.id);
-    buildEdges();
-    renderTunerHubList();
-    closePopup();
-  };
+  if ($("btnSaveNode")) {
+    $("btnSaveNode").onclick = () => {
+      if (selectedId < 0) return;
+      pushUndoState();
+      const n = NODES[selectedId];
+      if (n.isNewlyAdded) delete n.isNewlyAdded;
+      applyPopupEditsToNode(n);
+      setNodeStatus(n, "active");
+      refreshPhotoCardTexture(n.id);
+      buildEdges();
+      renderTunerHubList();
+      closePopup();
+    };
+  }
 
-  $("btnSaveDraft").onclick = () => {
-    if (selectedId < 0) return;
-    pushUndoState();
-    const n = NODES[selectedId];
-    if (n.isNewlyAdded) delete n.isNewlyAdded;
-    applyPopupEditsToNode(n);
-    setNodeStatus(n, "draft");
-    showDrafts = true;
-    if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
-    refreshPhotoCardTexture(n.id);
-    buildEdges();
-    renderTunerHubList();
-    closePopup();
-  };
+  if ($("btnSaveDraft")) {
+    $("btnSaveDraft").onclick = () => {
+      if (selectedId < 0) return;
+      pushUndoState();
+      const n = NODES[selectedId];
+      if (n.isNewlyAdded) delete n.isNewlyAdded;
+      applyPopupEditsToNode(n);
+      setNodeStatus(n, "draft");
+      showDrafts = true;
+      if ($("chkShowDrafts")) $("chkShowDrafts").checked = true;
+      refreshPhotoCardTexture(n.id);
+      buildEdges();
+      renderTunerHubList();
+      closePopup();
+    };
+  }
 
-  $("btnDeleteNode").onclick = () => {
-    if (selectedId < 0) return;
-    const n = NODES[selectedId];
-    if (n.isOrigin) return;
-    askConfirmation(
-      "DISCARD / DELETE HUB?",
-      `Are you sure you want to delete "${n.title}" and return it to a dormant dust placeholder?`,
-      () => {
-        pushUndoState();
-        n.title = `Untitled Hub #${String(n.id).padStart(2, "0")}`;
-        n.tags = [];
-        setNodeStatus(n, "slot");
-        refreshPhotoCardTexture(n.id);
-        buildEdges();
-        renderTunerHubList();
-        closePopup();
-      }
-    );
-  };
+  if ($("btnDeleteNode")) {
+    $("btnDeleteNode").onclick = () => {
+      if (selectedId < 0) return;
+      const n = NODES[selectedId];
+      if (n.isOrigin) return;
+      askConfirmation(
+        "DISCARD / DELETE HUB?",
+        `Are you sure you want to delete "${n.title}" and return it to a dormant dust placeholder?`,
+        () => {
+          pushUndoState();
+          n.title = `Untitled Hub #${String(n.id).padStart(2, "0")}`;
+          n.tags = [];
+          setNodeStatus(n, "slot");
+          refreshPhotoCardTexture(n.id);
+          buildEdges();
+          renderTunerHubList();
+          closePopup();
+        }
+      );
+    };
+  }
 
   /* STUDIO SECRET KEY & AUTHENTICATION */
   function getStudioSecretKey() {
@@ -7465,33 +7559,41 @@ function bootSupernovaEngine() {
 
   // Triple-click on 𝗫 triggers secret key modal
   let xClickCount = 0, xClickTimer = null;
-  $("btnHomeReset").addEventListener("click", () => {
-    xClickCount++;
-    clearTimeout(xClickTimer);
-    xClickTimer = setTimeout(() => { xClickCount = 0; }, 500);
-    if (xClickCount >= 3) {
-      xClickCount = 0;
-      openSecretKeyModal();
-    }
-  });
+  if ($("btnHomeReset")) {
+    $("btnHomeReset").addEventListener("click", () => {
+      if (PUBLISHED_VIEWER_ONLY) return;
+      xClickCount++;
+      clearTimeout(xClickTimer);
+      xClickTimer = setTimeout(() => { xClickCount = 0; }, 500);
+      if (xClickCount >= 3) {
+        xClickCount = 0;
+        openSecretKeyModal();
+      }
+    });
+  }
 
   // Check URL path /studio or hash #admin/#studio at boot
-  if (window.location.pathname.includes("studio") || window.location.hash === "#admin" || window.location.hash === "#studio") {
-    if (isStudioAuthorized()) {
-      setStudioMode(true);
-    } else {
-      setTimeout(openSecretKeyModal, 300);
-    }
-  }
+  const isStudioRoute = window.location.pathname.toLowerCase().includes("studio") || 
+                        window.location.hash.toLowerCase().includes("studio") || 
+                        window.location.hash.toLowerCase().includes("admin");
 
   /* STUDIO vs. VIEWER MODE SWITCH */
   function setStudioMode(on) {
+    if (PUBLISHED_VIEWER_ONLY) on = false;
     isStudioMode = Boolean(on);
-    document.body.classList.remove("published-lock");
-    document.body.classList.toggle("studio-mode", isStudioMode);
-    document.body.classList.remove("bar-hidden");
-    $("btnModeStudio").classList.toggle("active", isStudioMode);
-    $("btnModeViewer").classList.toggle("active", !isStudioMode);
+    if (PUBLISHED_VIEWER_ONLY) {
+      document.body.classList.add("viewer-mode", "published-lock");
+      document.body.classList.remove("studio-mode");
+    } else {
+      document.body.classList.toggle("studio-mode", isStudioMode);
+      document.body.classList.toggle("viewer-mode", !isStudioMode);
+      if (isStudioMode) document.body.classList.remove("published-lock");
+    }
+    if (isStudioMode) {
+      document.body.classList.remove("bar-hidden");
+    }
+    if ($("btnModeStudio")) $("btnModeStudio").classList.toggle("active", isStudioMode);
+    if ($("btnModeViewer")) $("btnModeViewer").classList.toggle("active", !isStudioMode);
     syncEditableFields();
     if (!isStudioMode && isTagDeleteMode) exitTagDeleteMode();
     renderCornerFilterMatrix();
@@ -7511,23 +7613,29 @@ function bootSupernovaEngine() {
     window.location.href.includes("preview.html") ||
     window.location.href.includes("live_preview.html")
   );
-  const isStudioRoute = window.location.pathname.includes("studio") || window.location.hash.includes("studio") || window.location.hash.includes("admin");
 
   if (PUBLISHED_VIEWER_ONLY) {
     setStudioMode(false);
-    document.body.classList.add("published-lock");
+    document.body.classList.add("viewer-mode", "published-lock");
     document.body.classList.remove("studio-mode");
   } else if (isStudioRoute || (isLocalOrIde && isStudioAuthorized())) {
-    setStudioMode(true);
-    document.body.classList.remove("bar-hidden");
+    if (isStudioAuthorized()) {
+      setStudioMode(true);
+      document.body.classList.remove("bar-hidden");
+    } else {
+      setStudioMode(false);
+      if (isStudioRoute) setTimeout(openSecretKeyModal, 300);
+    }
   } else {
     setStudioMode(false);
   }
 
-  $("btnModeStudio").onclick = () => {
-    setStudioMode(true);
-  };
-  $("btnModeViewer").onclick = () => setStudioMode(false);
+  if ($("btnModeStudio")) {
+    $("btnModeStudio").onclick = () => {
+      setStudioMode(true);
+    };
+  }
+  if ($("btnModeViewer")) $("btnModeViewer").onclick = () => setStudioMode(false);
 
   if ($("btnStudioLock")) {
     $("btnStudioLock").onclick = () => {
@@ -7551,7 +7659,7 @@ function bootSupernovaEngine() {
 
   window.addEventListener("keydown", e => {
     const typing = ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable;
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "S" || e.key === "s") && !typing) {
+    if (!PUBLISHED_VIEWER_ONLY && (e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "S" || e.key === "s") && !typing) {
       e.preventDefault();
       if (isStudioAuthorized()) {
         setStudioMode(!isStudioMode);
@@ -7575,13 +7683,13 @@ function bootSupernovaEngine() {
       return;
     }
     if (!PUBLISHED_VIEWER_ONLY && isStudioMode && !typing && (e.key === "Delete" || e.key === "Backspace") && selectedId >= 0 && !$("confirmModal").classList.contains("open") && !$("lightbox").classList.contains("open")) {
-      e.preventDefault(); $("btnDeleteNode").click(); return;
+      e.preventDefault(); if ($("btnDeleteNode")) $("btnDeleteNode").click(); return;
     }
     if (e.key === "Escape") {
       if ($("secretKeyModal") && $("secretKeyModal").classList.contains("open")) closeSecretKeyModal();
       else if ($("githubPublishModal") && $("githubPublishModal").classList.contains("open")) closeGhModal();
-      else if ($("confirmModal").classList.contains("open")) closeConfirmModal();
-      else if ($("lightbox").classList.contains("open")) closeLightbox();
+      else if ($("confirmModal") && $("confirmModal").classList.contains("open")) closeConfirmModal();
+      else if ($("lightbox") && $("lightbox").classList.contains("open")) closeLightbox();
       else closePopup();
     }
   });
@@ -7633,9 +7741,9 @@ function bootSupernovaEngine() {
     downloadText(buildFullHTML(true), "index.html", "text/html;charset=utf-8");
   }
 
-  $("barTab").onclick = () => document.body.classList.toggle("bar-hidden");
-  $("btnSaveStudio").onclick = () => downloadText(buildAppJS(false), "app.js", "application/javascript;charset=utf-8");
-  $("btnPublishViewer").onclick = () => exportViewerHTML();
+  if ($("barTab")) $("barTab").onclick = () => document.body.classList.toggle("bar-hidden");
+  if ($("btnSaveStudio")) $("btnSaveStudio").onclick = () => downloadText(buildAppJS(false), "app.js", "application/javascript;charset=utf-8");
+  if ($("btnPublishViewer")) $("btnPublishViewer").onclick = () => exportViewerHTML();
 
   /* 1-CLICK GITHUB PUBLISH ENGINE */
   function openGhModal() {
@@ -7799,37 +7907,41 @@ function bootSupernovaEngine() {
     if (camTarget.length() > MAX_PAN_RADIUS) camTarget.setLength(MAX_PAN_RADIUS);
   }
 
-  $("btnHomeReset").onclick = e => {
-    e.stopPropagation();
-    setBrandOpen($("btnHomeReset").getAttribute("aria-expanded") !== "true");
-  };
+  if ($("btnHomeReset")) {
+    $("btnHomeReset").onclick = e => {
+      e.stopPropagation();
+      setBrandOpen($("btnHomeReset").getAttribute("aria-expanded") !== "true");
+    };
+  }
 
   const initialView = { morph: DEFAULTS.morphState, yaw: .55, pitch: .25, distance: PARAMS.defaultZoom };
-  $("btnResetView").onclick = e => {
-    e.stopPropagation();
-    if (isStudioMode) pushUndoState();
-    closePopup();
-    morphTarget = PARAMS.morphState = initialView.morph;
-    uMorph.value = bgUniforms.uMorph.value = morphTarget; morphDir = 1;
-    updateShapeButtonsUI(morphTarget);
-    camYaw = initialView.yaw; camPitch = initialView.pitch; camDist = getResponsiveCamDist();
-    camTarget.set(0, 0, 0); camLook.set(0, 0, 0); bgUniforms.uPanOffset.value.set(0, 0);
-    camera.position.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist);
-    camera.lookAt(camLook);
-    // Reset Line // Particles mix slider to exact middle (50%)
-    const mixSlider = $("bottomLineParticleMix");
-    if (mixSlider) {
-      mixSlider.value = "50";
-      mixSlider.dispatchEvent(new Event("input"));
-    }
-    NODES.forEach((node, i) => {
-      if (node.tier > 2) return;
-      node.userOffset.set(0, 0, 0); node.elasticOffset.set(0, 0, 0);
-      node.pos.copy(getBaseNodePos(node, morphTarget));
-      hubBasePosArray[i].copy(node.pos);
-      hubDispLeadArray[i].set(0, 0, 0); hubDispMidArray[i].set(0, 0, 0); hubDispTrailArray[i].set(0, 0, 0);
-    });
-  };
+  if ($("btnResetView")) {
+    $("btnResetView").onclick = e => {
+      e.stopPropagation();
+      if (isStudioMode) pushUndoState();
+      closePopup();
+      morphTarget = PARAMS.morphState = initialView.morph;
+      uMorph.value = bgUniforms.uMorph.value = morphTarget; morphDir = 1;
+      updateShapeButtonsUI(morphTarget);
+      camYaw = initialView.yaw; camPitch = initialView.pitch; camDist = getResponsiveCamDist();
+      camTarget.set(0, 0, 0); camLook.set(0, 0, 0); bgUniforms.uPanOffset.value.set(0, 0);
+      camera.position.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist);
+      camera.lookAt(camLook);
+      // Reset Line // Particles mix slider to exact middle (50%)
+      const mixSlider = $("bottomLineParticleMix");
+      if (mixSlider) {
+        mixSlider.value = "50";
+        mixSlider.dispatchEvent(new Event("input"));
+      }
+      NODES.forEach((node, i) => {
+        if (node.tier > 2) return;
+        node.userOffset.set(0, 0, 0); node.elasticOffset.set(0, 0, 0);
+        node.pos.copy(getBaseNodePos(node, morphTarget));
+        hubBasePosArray[i].copy(node.pos);
+        hubDispLeadArray[i].set(0, 0, 0); hubDispMidArray[i].set(0, 0, 0); hubDispTrailArray[i].set(0, 0, 0);
+      });
+    };
+  }
 
   const raycaster = new THREE.Raycaster(), mouseNDC = new THREE.Vector2(-99, -99), dragPlane = new THREE.Plane(), hoverPlane = new THREE.Plane(), dragIntersect = new THREE.Vector3(), hoverIntersect = new THREE.Vector3();
   let draggedNode = null, isPointerDown = false, pointerAction = "none", totalDragMoved = 0, prevX = 0, prevY = 0;
@@ -8098,10 +8210,12 @@ function bootSupernovaEngine() {
         }
       };
 
-      photoBox.addEventListener("mouseenter", () => { slot.isHovered = true; });
-      photoBox.addEventListener("mouseleave", () => { slot.isHovered = false; });
-      photoBox.addEventListener("pointerdown", e => { e.stopPropagation(); });
-      photoBox.addEventListener("click", handleOpen);
+      if (photoBox) {
+        photoBox.addEventListener("mouseenter", () => { slot.isHovered = true; });
+        photoBox.addEventListener("mouseleave", () => { slot.isHovered = false; });
+        photoBox.addEventListener("pointerdown", e => { e.stopPropagation(); });
+        photoBox.addEventListener("click", handleOpen);
+      }
 
       photoCardSlots.push(slot);
     }
