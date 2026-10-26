@@ -1090,6 +1090,84 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transform: scale(1.1);
 }
 
+/* Drag & Relocate Buttons for '#' and '*' in Studio Mode */
+.hash-drag-btn {
+  position: absolute;
+  left: calc(var(--hash-icon-size) * .50 + 32px);
+  bottom: calc(var(--hash-icon-size) * .42);
+  z-index: 25;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: rgba(8, 12, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px dashed rgba(165, 180, 252, 0.5);
+  color: #a5b4fc;
+  cursor: grab;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.85);
+  transition: all .18s ease;
+  white-space: nowrap;
+  pointer-events: auto !important;
+}
+.hash-drag-btn:hover {
+  background: rgba(22, 28, 42, 0.98);
+  border-color: #c7d2fe;
+  color: #fff;
+  transform: scale(1.05);
+}
+.hash-drag-btn:active {
+  cursor: grabbing;
+}
+
+.star-drag-btn {
+  position: absolute;
+  left: -90px;
+  top: 10px;
+  z-index: 30;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: rgba(8, 12, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px dashed rgba(165, 180, 252, 0.5);
+  color: #a5b4fc;
+  cursor: grab;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85);
+  transition: all .16s ease;
+  white-space: nowrap;
+  pointer-events: auto !important;
+}
+.star-drag-btn:hover {
+  background: rgba(22, 28, 42, 0.98);
+  border-color: #c7d2fe;
+  color: #fff;
+  transform: scale(1.05);
+}
+.star-drag-btn:active {
+  cursor: grabbing;
+}
+
+.corner-filter.corner-dragging,
+.contact-corner.corner-dragging {
+  cursor: grabbing !important;
+  user-select: none;
+  opacity: 0.85;
+}
+
 /* Brand X Avatar / Photo / GIF Floating Card - Borderless & Sharp Edge */
 .brand-avatar-card {
   position: fixed;
@@ -1980,7 +2058,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   }
 
   /* 5. Bottom Controls: Hashtags (#) and Contacts (*) */
-  .corner-filter {
+  .corner-filter:not(.corner-custom-pos) {
     left: 10px !important;
     bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
   }
@@ -1997,6 +2075,12 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     font-size: 9px !important;
     padding: 2px 5px !important;
   }
+  .hash-drag-btn {
+    left: 32px !important;
+    bottom: 54px !important;
+    font-size: 9px !important;
+    padding: 2px 5px !important;
+  }
   .cf-slot {
     margin-left: 0 !important;
     width: min(300px, calc(100vw - 24px)) !important;
@@ -2009,17 +2093,21 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     min-width: 190px;
     max-height: 180px;
   }
-  .contact-corner {
+  .contact-corner:not(.corner-custom-pos) {
     right: 12px !important;
     bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
-    font-size: 58px !important;
-    line-height: 50px !important;
   }
   .contact-corner.open .contact-btn {
     transform: translateX(18px) rotate(150deg) !important;
   }
   .star-edit-btn {
     left: -18px !important;
+    top: 6px !important;
+    font-size: 9px !important;
+    padding: 2px 5px !important;
+  }
+  .star-drag-btn {
+    left: -76px !important;
     top: 6px !important;
     font-size: 9px !important;
     padding: 2px 5px !important;
@@ -2172,6 +2260,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <div class="hash-stage">
     <button type="button" class="hash-half hh-l" id="btnHashToggle" title="Click to open/close #hashtags" aria-expanded="false" aria-controls="cfBody"><span>#</span></button>
     <button type="button" class="hash-edit-btn studio-only" id="btnEditTagMode" title="Toggle Hashtag Delete Mode">✎</button>
+    <button type="button" class="hash-drag-btn studio-only mono" id="btnDragHashCorner" title="Drag to relocate # Hashtags anywhere (Double-click to reset)">⠿ Move #</button>
     <div class="cf-slot">
       <div class="cf-body" id="cfBody">
         <div class="cf-cat-header" id="cfCatHeader">
@@ -2219,6 +2308,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <div class="contact-orbit" id="contactOrbit"></div>
   <div class="contact-btn" id="btnContact" role="button" tabindex="0" title="Contact" aria-label="Contact"><span class="contact-glyph" aria-hidden="true">*</span></div>
   <button type="button" class="star-edit-btn studio-only" id="btnEditContacts" title="Edit Contact Links">✎</button>
+  <button type="button" class="star-drag-btn studio-only mono" id="btnDragContactCorner" title="Drag to relocate * Contacts anywhere (Double-click to reset)">⠿ Move *</button>
 </div>
 
 <!-- Studio Mode Tuner Panel -->
@@ -2249,6 +2339,17 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 <div class="tuner-body" id="tunerSlidersTab">
   <div class="tuner-search"><input type="search" id="tunerSearch" placeholder="Find a control…" aria-label="Find a tuner control" autocomplete="off"><span id="tunerMatchCount" class="mono" aria-live="polite"></span></div>
+  <section class="t-group" data-tuner-group="layout"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-layout">Screen UI Layout (X, #, *)<span class="t-group-count">4</span></button><div class="t-group-body" id="t-group-layout" hidden>
+    <div style="font-size:9.5px;color:var(--mid);margin-bottom:8px;line-height:1.4">
+      In Studio Mode, drag the <b>⠿ Move</b> buttons on screen to reposition Name, # Hashtags, or * Contacts anywhere. Double-click any Move button or use buttons below to reset.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+      <button type="button" class="btn-act" id="btnResetNamePos">Reset Name (X)</button>
+      <button type="button" class="btn-act" id="btnResetHashPos">Reset # Position</button>
+      <button type="button" class="btn-act" id="btnResetContactPos">Reset * Position</button>
+      <button type="button" class="btn-act" id="btnResetAllPos" style="color:#fca5a5">Reset All UI</button>
+    </div>
+  </div></section>
   <section class="t-group" data-tuner-group="brand"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-brand">Brand X Photo / GIF<span class="t-group-count">3</span></button><div class="t-group-body" id="t-group-brand" hidden>
     <div class="form-row">
       <label class="mono" style="font-size:9.5px;color:var(--text)">X POPUP PHOTO / GIF / VIDEO</label>
@@ -2597,7 +2698,9 @@ const PSYS_DEFAULTS = { ...PSYS };
 let UI_PARAMS = {
   descSpeed: 0.7, descSpread: 1.1, descStagger: 0.35,
   hashDur: 0.7, hashW: 300,
-  starDur: 0.6, starR: 130, starA0: 185, starA1: 265
+  starDur: 0.6, starR: 130, starA0: 185, starA1: 265,
+  hashX: null, hashY: null,
+  contactX: null, contactY: null
 };
 
 let CONTACTS = [
@@ -2735,6 +2838,16 @@ function bootSupernovaEngine() {
     }
   } catch (err) {}
 
+  try {
+    const savedUi = JSON.parse(localStorage.getItem("supernova_ui_params") || "null");
+    if (savedUi) {
+      if (savedUi.hashX !== undefined) UI_PARAMS.hashX = savedUi.hashX;
+      if (savedUi.hashY !== undefined) UI_PARAMS.hashY = savedUi.hashY;
+      if (savedUi.contactX !== undefined) UI_PARAMS.contactX = savedUi.contactX;
+      if (savedUi.contactY !== undefined) UI_PARAMS.contactY = savedUi.contactY;
+    }
+  } catch (err) {}
+
   const applyBrandPosition = () => {
     const textHolder = document.getElementById("brandTextHolder");
     if (!textHolder) return;
@@ -2748,9 +2861,58 @@ function bootSupernovaEngine() {
       textHolder.style.position = "";
       textHolder.style.left = "";
       textHolder.style.top = "";
+      textHolder.style.right = "";
+      textHolder.style.zIndex = "";
     }
   };
+
+  const applyHashCornerPosition = () => {
+    const el = document.getElementById("cornerFilter");
+    if (!el) return;
+    if (UI_PARAMS.hashX != null && UI_PARAMS.hashY != null) {
+      el.classList.add("corner-custom-pos");
+      el.style.position = "fixed";
+      el.style.left = UI_PARAMS.hashX + "px";
+      el.style.top = UI_PARAMS.hashY + "px";
+      el.style.bottom = "auto";
+      el.style.right = "auto";
+      el.style.zIndex = "25";
+    } else {
+      el.classList.remove("corner-custom-pos");
+      el.style.position = "";
+      el.style.left = "";
+      el.style.top = "";
+      el.style.bottom = "";
+      el.style.right = "";
+      el.style.zIndex = "";
+    }
+  };
+
+  const applyContactCornerPosition = () => {
+    const el = document.getElementById("contactCorner");
+    if (!el) return;
+    if (UI_PARAMS.contactX != null && UI_PARAMS.contactY != null) {
+      el.classList.add("corner-custom-pos");
+      el.style.position = "fixed";
+      el.style.left = UI_PARAMS.contactX + "px";
+      el.style.top = UI_PARAMS.contactY + "px";
+      el.style.bottom = "auto";
+      el.style.right = "auto";
+      el.style.zIndex = "25";
+    } else {
+      el.classList.remove("corner-custom-pos");
+      el.style.position = "";
+      el.style.left = "";
+      el.style.top = "";
+      el.style.bottom = "";
+      el.style.right = "";
+      el.style.zIndex = "";
+    }
+  };
+
   applyBrandPosition();
+  applyHashCornerPosition();
+  applyContactCornerPosition();
 
   const getResponsiveCamDist = () => {
     const base = PARAMS.defaultZoom || 145;
@@ -3003,6 +3165,180 @@ function bootSupernovaEngine() {
     dragBtn.addEventListener("pointermove", moveBrandDrag);
     dragBtn.addEventListener("pointerup", stopBrandDrag);
     dragBtn.addEventListener("pointercancel", stopBrandDrag);
+    dragBtn.addEventListener("dblclick", e => {
+      e.stopPropagation();
+      SITE_HEADER.x = null;
+      SITE_HEADER.y = null;
+      applyBrandPosition();
+      localStorage.setItem("supernova_site_header", JSON.stringify(SITE_HEADER));
+      pushUndoState();
+    });
+  })();
+
+  // Corner Controls Relocation (Studio Mode - Drag to relocate # and * anywhere on screen)
+  (() => {
+    // 1. Hashtags Corner (#)
+    const hashEl = document.getElementById("cornerFilter");
+    const hashDragBtn = document.getElementById("btnDragHashCorner");
+    if (hashEl && hashDragBtn) {
+      let isDraggingHash = false;
+      let hashDragOrigin = { x: 0, y: 0 };
+      let initialHashPos = { x: 0, y: 0 };
+
+      function startHashDrag(e) {
+        if (!isStudioMode) return;
+        isDraggingHash = true;
+        const rect = hashEl.getBoundingClientRect();
+        hashDragOrigin = { x: e.clientX, y: e.clientY };
+        initialHashPos = { x: rect.left, y: rect.top };
+        hashEl.classList.add("corner-dragging");
+        try { hashDragBtn.setPointerCapture(e.pointerId); } catch(err){}
+        e.stopPropagation();
+        e.preventDefault();
+      }
+
+      function moveHashDrag(e) {
+        if (!isDraggingHash) return;
+        const dx = e.clientX - hashDragOrigin.x;
+        const dy = e.clientY - hashDragOrigin.y;
+        const newX = Math.round(initialHashPos.x + dx);
+        const newY = Math.round(initialHashPos.y + dy);
+        hashEl.style.position = "fixed";
+        hashEl.style.left = newX + "px";
+        hashEl.style.top = newY + "px";
+        hashEl.style.bottom = "auto";
+        hashEl.style.right = "auto";
+        hashEl.style.zIndex = "25";
+        UI_PARAMS.hashX = newX;
+        UI_PARAMS.hashY = newY;
+      }
+
+      function stopHashDrag(e) {
+        if (!isDraggingHash) return;
+        isDraggingHash = false;
+        hashEl.classList.remove("corner-dragging");
+        try { hashDragBtn.releasePointerCapture(e.pointerId); } catch(err){}
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      }
+
+      hashDragBtn.addEventListener("pointerdown", startHashDrag);
+      hashDragBtn.addEventListener("pointermove", moveHashDrag);
+      hashDragBtn.addEventListener("pointerup", stopHashDrag);
+      hashDragBtn.addEventListener("pointercancel", stopHashDrag);
+      hashDragBtn.addEventListener("dblclick", e => {
+        e.stopPropagation();
+        UI_PARAMS.hashX = null;
+        UI_PARAMS.hashY = null;
+        applyHashCornerPosition();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      });
+    }
+
+    // 2. Contacts Star Corner (*)
+    const contactEl = document.getElementById("contactCorner");
+    const contactDragBtn = document.getElementById("btnDragContactCorner");
+    if (contactEl && contactDragBtn) {
+      let isDraggingContact = false;
+      let contactDragOrigin = { x: 0, y: 0 };
+      let initialContactPos = { x: 0, y: 0 };
+
+      function startContactDrag(e) {
+        if (!isStudioMode) return;
+        isDraggingContact = true;
+        const rect = contactEl.getBoundingClientRect();
+        contactDragOrigin = { x: e.clientX, y: e.clientY };
+        initialContactPos = { x: rect.left, y: rect.top };
+        contactEl.classList.add("corner-dragging");
+        try { contactDragBtn.setPointerCapture(e.pointerId); } catch(err){}
+        e.stopPropagation();
+        e.preventDefault();
+      }
+
+      function moveContactDrag(e) {
+        if (!isDraggingContact) return;
+        const dx = e.clientX - contactDragOrigin.x;
+        const dy = e.clientY - contactDragOrigin.y;
+        const newX = Math.round(initialContactPos.x + dx);
+        const newY = Math.round(initialContactPos.y + dy);
+        contactEl.style.position = "fixed";
+        contactEl.style.left = newX + "px";
+        contactEl.style.top = newY + "px";
+        contactEl.style.bottom = "auto";
+        contactEl.style.right = "auto";
+        contactEl.style.zIndex = "25";
+        UI_PARAMS.contactX = newX;
+        UI_PARAMS.contactY = newY;
+      }
+
+      function stopContactDrag(e) {
+        if (!isDraggingContact) return;
+        isDraggingContact = false;
+        contactEl.classList.remove("corner-dragging");
+        try { contactDragBtn.releasePointerCapture(e.pointerId); } catch(err){}
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      }
+
+      contactDragBtn.addEventListener("pointerdown", startContactDrag);
+      contactDragBtn.addEventListener("pointermove", moveContactDrag);
+      contactDragBtn.addEventListener("pointerup", stopContactDrag);
+      contactDragBtn.addEventListener("pointercancel", stopContactDrag);
+      contactDragBtn.addEventListener("dblclick", e => {
+        e.stopPropagation();
+        UI_PARAMS.contactX = null;
+        UI_PARAMS.contactY = null;
+        applyContactCornerPosition();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      });
+    }
+
+    // 3. Tuner Layout Reset Buttons
+    if ($("btnResetNamePos")) {
+      $("btnResetNamePos").onclick = () => {
+        SITE_HEADER.x = null;
+        SITE_HEADER.y = null;
+        applyBrandPosition();
+        localStorage.setItem("supernova_site_header", JSON.stringify(SITE_HEADER));
+        pushUndoState();
+      };
+    }
+    if ($("btnResetHashPos")) {
+      $("btnResetHashPos").onclick = () => {
+        UI_PARAMS.hashX = null;
+        UI_PARAMS.hashY = null;
+        applyHashCornerPosition();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      };
+    }
+    if ($("btnResetContactPos")) {
+      $("btnResetContactPos").onclick = () => {
+        UI_PARAMS.contactX = null;
+        UI_PARAMS.contactY = null;
+        applyContactCornerPosition();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      };
+    }
+    if ($("btnResetAllPos")) {
+      $("btnResetAllPos").onclick = () => {
+        SITE_HEADER.x = null;
+        SITE_HEADER.y = null;
+        UI_PARAMS.hashX = null;
+        UI_PARAMS.hashY = null;
+        UI_PARAMS.contactX = null;
+        UI_PARAMS.contactY = null;
+        applyBrandPosition();
+        applyHashCornerPosition();
+        applyContactCornerPosition();
+        localStorage.setItem("supernova_site_header", JSON.stringify(SITE_HEADER));
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      };
+    }
   })();
 
   function setBrandOpen(open) {
@@ -3660,6 +3996,8 @@ function bootSupernovaEngine() {
       checkedTags: [...checkedTags],
       contacts: JSON.parse(JSON.stringify(CONTACTS)),
       avatar: { ...BRAND_AVATAR },
+      siteHeader: { ...SITE_HEADER },
+      uiParams: { ...UI_PARAMS },
       nodes: NODES.filter(n => n.tier <= 2).map(n => ({
         id: n.id, status: n.status, tier: n.tier, title: n.title, date: n.date,
         tags: [...(n.tags || [])], desc: n.desc,
@@ -3674,6 +4012,15 @@ function bootSupernovaEngine() {
     if (snap.psys) Object.assign(PSYS, snap.psys);
     TAG_POOL = [...snap.tagPool];
     checkedTags = new Set(snap.checkedTags);
+    if (snap.siteHeader) {
+      Object.assign(SITE_HEADER, snap.siteHeader);
+      applyBrandPosition();
+    }
+    if (snap.uiParams) {
+      Object.assign(UI_PARAMS, snap.uiParams);
+      applyHashCornerPosition();
+      applyContactCornerPosition();
+    }
     if (snap.contacts) {
       CONTACTS = JSON.parse(JSON.stringify(snap.contacts));
       renderContacts();
