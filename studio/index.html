@@ -9708,8 +9708,23 @@ function bootSupernovaEngine() {
           vid.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;";
           imgWrap.prepend(vid);
 
-          const togglePlay = (ev) => {
+          const zoomAndTogglePlay = (ev) => {
             if (ev) { ev.stopPropagation(); ev.preventDefault(); }
+            // 1. Zoom into video and bring to front
+            activeMediaIdx = idx;
+            const vp = $("subnetViewport");
+            if (vp) {
+              snTargetZoom = 1.75;
+              snTargetPanX = vp.clientWidth * 0.5 - m.x * snTargetZoom;
+              snTargetPanY = vp.clientHeight * 0.5 - m.y * snTargetZoom;
+            }
+            if (card && card.parentElement) {
+              card.parentElement.querySelectorAll(".subnet-node").forEach(c => c.classList.remove("active", "active-front"));
+              card.classList.add("active", "active-front");
+            }
+            updateSubnetWires(node);
+
+            // 2. Play or Pause video
             if (vid.paused) {
               pauseAllVideos();
               vid.play().then(() => {
@@ -9725,12 +9740,17 @@ function bootSupernovaEngine() {
                 playBtn.classList.remove("is-playing");
               }
             }
+            if (typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
           };
 
           if (playBtn) {
             playBtn.addEventListener("pointerdown", e => e.stopPropagation());
-            playBtn.addEventListener("click", togglePlay);
+            playBtn.addEventListener("click", zoomAndTogglePlay);
           }
+          imgWrap.addEventListener("click", e => {
+            if (e.target.closest(".sn-resize-handle")) return;
+            zoomAndTogglePlay(e);
+          });
 
           vid.addEventListener("play", () => {
             if (playBtn) {
@@ -9785,7 +9805,7 @@ function bootSupernovaEngine() {
         if (e.target.closest(".sn-resize-handle")) return;
         if (e.target.closest(".sn-play-btn")) return;
         e.stopPropagation();
-        snDragStart = { x: e.clientX, y: e.clientY, origX: m.x, origY: m.y };
+        snDragStart = { x: e.clientX, y: e.clientY, origX: m.x, origY: m.y, startMoved: 0 };
         if (isStudioMode) {
           draggedMediaNodeIdx = idx;
           card.classList.add("is-dragging-card");
@@ -12077,7 +12097,10 @@ function bootSupernovaEngine() {
       isReticlePhotoHovered ||
       reticleGraceTimer > 0
     );
-    if (!isPointerDown && !isPreviewActive && (typeof isAutoRotateEnabled === "undefined" || isAutoRotateEnabled)) camYaw += 0.0012 * PARAMS.autoSpeed;
+    // Allow sphere to keep rotating naturally during hover ("let sphere bounce and rotate as it is")
+    if (!isPointerDown && !isProjectOpen && (typeof isAutoRotateEnabled === "undefined" || isAutoRotateEnabled)) {
+      camYaw += 0.0012 * PARAMS.autoSpeed;
+    }
     const desiredCam = desiredCameraWork.set(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch)).multiplyScalar(camDist).add(camTarget);
     camera.position.lerp(desiredCam, 0.09); camLook.lerp(camTarget, 0.11); camera.lookAt(camLook);
     camera.getWorldDirection(bgUniforms.uCamDir.value); bgUniforms.uCamRight.value.setFromMatrixColumn(camera.matrixWorld, 0); bgUniforms.uCamUp.value.setFromMatrixColumn(camera.matrixWorld, 1);
@@ -12090,7 +12113,7 @@ function bootSupernovaEngine() {
     uPartVis.value = PARAMS.partVis * rBr; bgUniforms.uBgVis.value = PARAMS.bgVis * rBr;
     t3Mat.opacity = Math.min(1.0, 0.55 * PARAMS.fakeVis) * rBr * particleVisibility; t3Mat.size = 1.05 * rPx;
     particleSystem.material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2) * rPx;
-    if (!isProjectOpen && !isPreviewActive) {
+    if (!isProjectOpen) {
       sphereTime += dt * PARAMS.sphereFlow * PSYS.driftSpeed;
     }
     updateParticles(dt);
@@ -12127,7 +12150,23 @@ function bootSupernovaEngine() {
         const baseP = getBaseNodePos(n, m, basePositionWork);
         hubBasePosArray[idx].copy(baseP);
 
+        // Elastic hover stretch: stretches outward up to tuner stretch limit (PARAMS.dragLimit) then bounces and releases
+        const isThisHovered = (idx === hoveredId || idx === currentReticleNodeId);
+        const stretchLimit = Math.max(10, Math.min(80, Number(PARAMS.dragLimit) || 36));
+        const targetHoverStretch = isThisHovered ? stretchLimit * 0.88 : 0.0;
+        const springK = 22.0, dampK = 0.74;
+        n.hoverStretchVel = (n.hoverStretchVel || 0) + (targetHoverStretch - (n.hoverStretch || 0)) * springK * dt;
+        n.hoverStretchVel *= Math.pow(dampK, dt * 60);
+        n.hoverStretch = (n.hoverStretch || 0) + n.hoverStretchVel * dt;
+
         n.pos.copy(baseP).add(n.userOffset).add(n.elasticOffset);
+        if (Math.abs(n.hoverStretch) > 0.05) {
+          _vSphereNorm.copy(baseP);
+          if (_vSphereNorm.lengthSq() > 0.001) _vSphereNorm.normalize();
+          else _vSphereNorm.set(0, 1, 0);
+          n.pos.addScaledVector(_vSphereNorm, n.hoverStretch);
+        }
+
         if (n !== draggedNode && floatAmp > 0.005) {
           n.pos.x += Math.cos(t * 0.38 + idx * 1.7) * 0.45 * floatAmp;
           n.pos.y += Math.sin(t * 0.45 + idx * 1.1) * 0.55 * floatAmp;
