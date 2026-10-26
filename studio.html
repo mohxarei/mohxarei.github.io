@@ -488,7 +488,10 @@ canvas#subnetBgCanvas { position: absolute; inset: 0; width: 100%; height: 100%;
 .vp-prev { left: 10px; }
 .vp-next { right: 10px; }
 
-.subnet-node { position: absolute; transform: translate(-50%,-50%); background: transparent; border: none; border-radius: var(--ui-radius, 1px); overflow: visible; cursor: pointer; transition: transform .28s cubic-bezier(0.16,1,0.3,1), box-shadow .25s, filter .2s; z-index: 10; }
+.subnet-node { position: absolute; transform: translate(-50%,-50%); background: transparent; border: none; border-radius: var(--ui-radius, 1px); overflow: visible; cursor: pointer; transition: transform .28s cubic-bezier(0.16,1,0.3,1), box-shadow .25s, filter .2s; z-index: 10; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; touch-action: none; }
+.subnet-node img, .subnet-node video, .sn-img-wrap { user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
+.subnet-node.is-dragging-card { opacity: 0.92; z-index: 100 !important; cursor: grabbing !important; }
+.subnet-node.note-node.empty-note { border: 1px dashed rgba(255,255,255,0.35); background: rgba(255,255,255,0.03); min-width: 140px; min-height: 60px; }
 .subnet-node:hover { z-index: 25; }
 .subnet-node.active, .subnet-node.active-front { z-index: 60 !important; transform: translate(-50%, -50%) scale(1.36) !important; filter: drop-shadow(0 20px 48px rgba(0, 0, 0, 0.98)); }
 .subnet-node.active-front .sn-img-wrap { border: 2px solid #ffffff !important; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.98), 0 0 24px rgba(255, 255, 255, 0.38) !important; }
@@ -9621,12 +9624,12 @@ function bootSupernovaEngine() {
     } catch(err) {}
   }
 
-  function renderPhotoSubNetwork(node) {
-    const wrap = $("subnetNodesWrap"), svg = $("subnetSvg");
-    wrap.innerHTML = ""; svg.innerHTML = "";
+  function updateSubnetWires(node) {
+    const svg = $("subnetSvg");
+    if (!svg) return;
+    svg.innerHTML = "";
     const mediaList = node.media || [];
     if (!mediaList.length) return;
-
     const edges = [];
     for (let i = 0; i < mediaList.length; i++) {
       if (i + 1 < mediaList.length) edges.push([i, i + 1, true]);
@@ -9636,6 +9639,7 @@ function bootSupernovaEngine() {
 
     edges.forEach(([aIdx, bIdx, isPrimary]) => {
       const A = mediaList[aIdx], B = mediaList[bIdx];
+      if (!A || !B) return;
       const isCon = (aIdx === activeMediaIdx || bIdx === activeMediaIdx);
       const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
       line.setAttribute("x1", A.x + 1000); line.setAttribute("y1", A.y + 1000);
@@ -9646,20 +9650,30 @@ function bootSupernovaEngine() {
       else if (!isPrimary) line.setAttribute("stroke-dasharray", "3 5");
       svg.appendChild(line);
     });
+  }
+
+  function renderPhotoSubNetwork(node) {
+    const wrap = $("subnetNodesWrap");
+    wrap.innerHTML = "";
+    updateSubnetWires(node);
+    const mediaList = node.media || [];
+    if (!mediaList.length) return;
 
     mediaList.forEach((m, idx) => {
       const isNote = m.type === "note";
       const isVideo = isVideoMedia(m);
       const isActive = (idx === activeMediaIdx);
+      const hasTitle = Boolean(m.title && m.title.trim());
+      const hasNote = Boolean(m.note && m.note.trim());
       const card = document.createElement("div");
-      card.className = "subnet-node" + (isNote ? " note-node" : "") + (isVideo ? " video-node" : "") + (isActive ? " active active-front" : "");
+      card.className = "subnet-node" + (isNote ? " note-node" : "") + (isVideo ? " video-node" : "") + (isActive ? " active active-front" : "") + (isNote && !hasTitle && !hasNote ? " empty-note" : "");
       card.style.left = `${m.x}px`; card.style.top = `${m.y}px`;
       card.style.width = `${m.w || (isVideo ? 190 : 170)}px`; card.style.height = `${m.h || (isNote ? 80 : (isVideo ? 125 : 110))}px`;
 
       if (isNote) {
         card.innerHTML = `
-          <div class="sn-on-title">${m.title || ""}</div>
-          <div class="sn-note-body">${m.note || ""}</div>
+          ${hasTitle ? `<div class="sn-on-title">${m.title}</div>` : ""}
+          ${hasNote ? `<div class="sn-note-body">${m.note}</div>` : ""}
           <div class="sn-resize-handle studio-only" title="Drag to resize note"></div>
         `;
       } else if (isVideo) {
@@ -9670,8 +9684,8 @@ function bootSupernovaEngine() {
             <button type="button" class="sn-play-btn" aria-label="Play/Pause Video" title="Play Video">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
-            <div class="sn-on-title">${m.title || ""}</div>
-            ${m.note ? `<div class="sn-hover-desc">${m.note}</div>` : ""}
+            ${hasTitle ? `<div class="sn-on-title">${m.title}</div>` : ""}
+            ${hasNote ? `<div class="sn-hover-desc">${m.note}</div>` : ""}
           </div>
           <div class="sn-resize-handle studio-only" title="Drag to resize video"></div>
         `;
@@ -9685,9 +9699,11 @@ function bootSupernovaEngine() {
           vid.muted = true;
           vid.playsInline = true;
           vid.preload = "metadata";
+          vid.draggable = false;
+          vid.setAttribute("draggable", "false");
           vid.setAttribute("playsinline", "");
           vid.setAttribute("webkit-playsinline", "");
-          vid.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;";
+          vid.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;";
           imgWrap.prepend(vid);
 
           const togglePlay = (ev) => {
@@ -9733,14 +9749,20 @@ function bootSupernovaEngine() {
       } else {
         card.innerHTML = `
           <div class="sn-img-wrap">
-            <div class="sn-on-title">${m.title || ""}</div>
-            ${m.note ? `<div class="sn-hover-desc">${m.note}</div>` : ""}
+            ${hasTitle ? `<div class="sn-on-title">${m.title}</div>` : ""}
+            ${hasNote ? `<div class="sn-hover-desc">${m.note}</div>` : ""}
           </div>
           <div class="sn-resize-handle studio-only" title="Drag to resize photo"></div>
         `;
         const imgWrap = card.querySelector(".sn-img-wrap");
         if (m.img && m.img.trim() !== "") {
-          const im = document.createElement("img"); im.src = m.img; im.alt = m.title || ""; imgWrap.prepend(im);
+          const im = document.createElement("img");
+          im.src = m.img;
+          im.alt = m.title || "";
+          im.draggable = false;
+          im.setAttribute("draggable", "false");
+          im.style.cssText = "user-select:none;-webkit-user-drag:none;pointer-events:none;";
+          imgWrap.prepend(im);
         } else {
           const cv = document.createElement("canvas"); cv.width = 320; cv.height = 200;
           drawProceduralPhotoCanvas(cv, node, idx, m); imgWrap.prepend(cv);
@@ -9753,6 +9775,7 @@ function bootSupernovaEngine() {
           e.stopPropagation();
           resizedMediaNodeIdx = idx;
           snDragStart = { x: e.clientX, y: e.clientY, origW: m.w || 170, origH: m.h || 110 };
+          try { resHandle.setPointerCapture(e.pointerId); } catch (_) {}
         });
       }
 
@@ -9763,9 +9786,16 @@ function bootSupernovaEngine() {
         snDragStart = { x: e.clientX, y: e.clientY, origX: m.x, origY: m.y };
         if (isStudioMode) {
           draggedMediaNodeIdx = idx;
+          card.classList.add("is-dragging-card");
+          try { card.setPointerCapture(e.pointerId); } catch (_) {}
         } else {
           selectPhotoNode(idx, true);
         }
+      });
+
+      card.addEventListener("pointerup", e => {
+        try { card.releasePointerCapture(e.pointerId); } catch (_) {}
+        card.classList.remove("is-dragging-card");
       });
 
       card.addEventListener("dblclick", e => { e.stopPropagation(); openLightbox(idx); });
@@ -9830,10 +9860,16 @@ function bootSupernovaEngine() {
       return;
     }
     if (draggedMediaNodeIdx >= 0 && selectedId >= 0 && isStudioMode) {
-      const m = NODES[selectedId].media[draggedMediaNodeIdx];
+      const node = NODES[selectedId];
+      const m = node.media[draggedMediaNodeIdx];
       m.x = Math.round(snDragStart.origX + (e.clientX - snDragStart.x) / snZoom);
       m.y = Math.round(snDragStart.origY + (e.clientY - snDragStart.y) / snZoom);
-      renderPhotoSubNetwork(NODES[selectedId]);
+      const cardEl = $("subnetNodesWrap") ? $("subnetNodesWrap").children[draggedMediaNodeIdx] : null;
+      if (cardEl) {
+        cardEl.style.left = `${m.x}px`;
+        cardEl.style.top = `${m.y}px`;
+      }
+      updateSubnetWires(node);
       return;
     }
     if (!isDraggingSubnet) return;
@@ -9841,7 +9877,16 @@ function bootSupernovaEngine() {
     snTargetPanY = e.clientY - snDragStart.y;
   });
   window.addEventListener("pointerup", () => {
-    isDraggingSubnet = false; draggedMediaNodeIdx = -1; resizedMediaNodeIdx = -1;
+    isDraggingSubnet = false;
+    if (draggedMediaNodeIdx >= 0) {
+      const cardEl = $("subnetNodesWrap") ? $("subnetNodesWrap").children[draggedMediaNodeIdx] : null;
+      if (cardEl) cardEl.classList.remove("is-dragging-card");
+      draggedMediaNodeIdx = -1;
+      if (selectedId >= 0 && typeof refreshPhotoCardTexture === "function") {
+        refreshPhotoCardTexture(selectedId);
+      }
+    }
+    resizedMediaNodeIdx = -1;
   });
   snVp.addEventListener("wheel", e => {
     e.preventDefault(); e.stopPropagation();
@@ -10420,8 +10465,8 @@ function bootSupernovaEngine() {
     targetNode.tags = ["touchdesigner", "art"];
     targetNode.tags.forEach(t => checkedTags.add(t));
     targetNode.media = [
-      { type: "photo", title: "01 // MAIN CAPTURE", note: "Hover description...", x: 150, y: 95, w: 175, h: 115, style: 0, img: "" },
-      { type: "note",  title: "KEY NOTE", note: "Add project notes or specifications...", x: 355, y: 115, w: 175, h: 85, style: 1, img: "" }
+      { type: "photo", title: "", note: "", x: 150, y: 95, w: 175, h: 115, style: 0, img: "" },
+      { type: "note",  title: "", note: "", x: 355, y: 115, w: 175, h: 85, style: 1, img: "" }
     ];
     targetNode.isNewlyAdded = true;
     setNodeStatus(targetNode, "draft");
@@ -10672,11 +10717,11 @@ function bootSupernovaEngine() {
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr ${isNote ? "auto" : "1fr auto"};gap:5px;margin-bottom:5px">
-          <input type="text" class="m-title" value="${(m.title || "").replace(/"/g, "&quot;")}" placeholder="Title / Caption">
+          <input type="text" class="m-title" value="${(m.title || "").replace(/"/g, "&quot;")}" placeholder="Title (optional)">
           ${isNote ? "" : `<input type="text" class="m-img" value="${(m.img || m.video || "").replace(/"/g, "&quot;")}" placeholder="${isVideo ? 'media/*.mp4 or Video URL' : 'Image / GIF path or URL'}">`}
           ${isNote ? "" : `<label class="btn-act" style="display:inline-grid;place-items:center;cursor:pointer">📁 Upload<input type="file" accept="${isVideo ? 'video/*,video/mp4,video/webm' : 'image/*,image/gif'}" class="m-file" style="display:none"></label>`}
         </div>
-        <textarea class="m-note" rows="2" placeholder="Hover description / details...">${m.note || ""}</textarea>
+        <textarea class="m-note" rows="2" placeholder="Description / note (optional)">${m.note || ""}</textarea>
       `;
       row.querySelector(`[data-del="${idx}"]`).onclick = () => {
         node.media.splice(idx, 1);
@@ -10714,21 +10759,21 @@ function bootSupernovaEngine() {
   if ($("btnAddPhotoNode")) {
     $("btnAddPhotoNode").onclick = () => {
       if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-      node.media.push({ type: "photo", title: `PHOTO 0${idx + 1}`, note: "Hover description...", x: 150 + (idx * 120) % 320, y: 90 + (idx * 70) % 160, w: 170, h: 110, style: idx % 4, img: "" });
+      node.media.push({ type: "photo", title: "", note: "", x: 150 + (idx * 120) % 320, y: 90 + (idx * 70) % 160, w: 170, h: 110, style: idx % 4, img: "" });
       renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
     };
   }
   if ($("btnAddVideoNode")) {
     $("btnAddVideoNode").onclick = () => {
       if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-      node.media.push({ type: "video", title: `VIDEO 0${idx + 1}`, note: "Video details...", x: 160 + (idx * 110) % 320, y: 85 + (idx * 65) % 150, w: 190, h: 125, style: idx % 4, img: "" });
+      node.media.push({ type: "video", title: "", note: "", x: 160 + (idx * 110) % 320, y: 85 + (idx * 65) % 150, w: 190, h: 125, style: idx % 4, img: "" });
       renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
     };
   }
   if ($("btnAddTextNode")) {
     $("btnAddTextNode").onclick = () => {
       if (selectedId < 0) return; const node = NODES[selectedId], idx = node.media.length;
-      node.media.push({ type: "note", title: `NOTE 0${idx + 1}`, note: "Write sub-network note...", x: 220 + (idx * 95) % 280, y: 130 + (idx * 55) % 140, w: 175, h: 80, style: 0, img: "" });
+      node.media.push({ type: "note", title: "", note: "", x: 220 + (idx * 95) % 280, y: 130 + (idx * 55) % 140, w: 175, h: 80, style: 0, img: "" });
       renderAdminMediaEditor(node); renderPhotoSubNetwork(node);
     };
   }
@@ -10758,10 +10803,16 @@ function bootSupernovaEngine() {
       target.addEventListener("drop", e => {
         e.preventDefault(); e.stopPropagation();
         target.classList.remove("media-drop-zone-active");
+        // SAFEGUARD: If user is dragging an existing card to relocate it, do NOT treat as a new file upload!
+        if (draggedMediaNodeIdx >= 0 || resizedMediaNodeIdx >= 0) return;
         if (selectedId < 0) return;
         const node = NODES[selectedId];
         if (!node) return;
-        const files = e.dataTransfer && e.dataTransfer.files;
+        const dt = e.dataTransfer;
+        if (!dt) return;
+        const types = dt.types ? Array.from(dt.types) : [];
+        if (!types.includes("Files")) return; // Only process actual external OS files
+        const files = dt.files;
         if (!files || !files.length) return;
         Array.from(files).forEach(file => {
           const isVideo = file.type.startsWith("video/") || file.name.endsWith(".mp4") || file.name.endsWith(".webm");
@@ -10772,7 +10823,7 @@ function bootSupernovaEngine() {
             const finalType = (detectedType === "video" || isVideo) ? "video" : "photo";
             node.media.push({
               type: finalType,
-              title: file.name.replace(/\.[^/.]+$/, "").toUpperCase(),
+              title: "",
               note: "",
               x: 140 + (idx * 55) % 300,
               y: 80 + (idx * 45) % 180,
@@ -11502,12 +11553,12 @@ function bootSupernovaEngine() {
       return isHubVisibleInScene(n) || (isStudioMode && PSYS.slotVis > 0.08 && n.status === "slot");
     });
     const cardTargets = (PARAMS.photoInstancing && photoCardMeshes) ? photoCardMeshes.filter(m => m.visible) : [];
-    const targets = cardTargets.length > 0 ? cardTargets : spriteTargets;
+    const targets = [...cardTargets, ...spriteTargets];
     const hits = raycaster.intersectObjects(targets);
     if (hits.length > 0) {
       hoveredId = hits[0].object.userData.nodeId;
       currentReticleNodeId = hoveredId;
-      reticleGraceTimer = 0.35;
+      reticleGraceTimer = 1.0;
     } else if (isReticlePhotoHovered && currentReticleNodeId >= 0) {
       hoveredId = currentReticleNodeId;
     } else if (reticleGraceTimer > 0 && currentReticleNodeId >= 0) {
@@ -11575,8 +11626,9 @@ function bootSupernovaEngine() {
     if (e.pointerType !== "touch") {
       previewPointerX = e.clientX;
       previewPointerY = e.clientY;
-      previewPointerActive = true;
-      previewPointerOnCanvas = (e.target === canvas);
+      const overUiCheck = Boolean(e.target && e.target.closest && e.target.closest("#tuner, #projectPopup, .corner-filter, .contact-corner, .studio-bar, .morph-faded-box, #confirmModal, #lightbox, #uiArrangeTools"));
+      previewPointerActive = !overUiCheck;
+      previewPointerOnCanvas = !overUiCheck;
     }
     if (activePointers.has(e.pointerId)) activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (activePointers.size === 2) {
@@ -11994,8 +12046,11 @@ function bootSupernovaEngine() {
 
     previewPulseClock += dt * Math.max(0, Number(PARAMS.previewPulseSpeed) || 0);
     reticleGraceTimer = Math.max(0, reticleGraceTimer - dt);
-    if (!isPointerDown && previewPointerActive && previewPointerOnCanvas && !isTouchDevice) updateHoverRaycast(previewPointerX, previewPointerY);
-    else if (!isPointerDown && !isReticlePhotoHovered && reticleGraceTimer <= 0) { hoveredId = -1; currentReticleNodeId = -1; }
+    if (!isPointerDown && previewPointerActive && !isTouchDevice) {
+      updateHoverRaycast(previewPointerX, previewPointerY);
+    } else if (!isPointerDown && !isReticlePhotoHovered && reticleGraceTimer <= 0) {
+      hoveredId = -1; currentReticleNodeId = -1;
+    }
     uTime.value = t; bgUniforms.uTime.value = t;
 
     if (selectedId >= 0) {
