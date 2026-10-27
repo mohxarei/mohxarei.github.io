@@ -517,18 +517,29 @@ canvas#subnetBgCanvas { position: absolute; inset: 0; width: 100%; height: 100%;
 body.studio-mode .subnet-node { cursor: move; }
 .subnet-node.note-node { padding: 22px 10px 8px; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(ellipse at center, rgba(12,15,22,0.72) 0%, transparent 85%); }
 .subnet-node.link-node {
-  padding: 12px 14px; background: rgba(8, 14, 26, 0.92); border: 1.5px solid rgba(96, 165, 250, 0.55);
+  padding: 10px 14px; background: rgba(8, 14, 26, 0.92); border: 1.5px solid rgba(96, 165, 250, 0.55);
   border-radius: var(--ui-radius, 1px); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85); transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
+body.studio-mode .subnet-node.link-node { cursor: move; }
 .subnet-node.link-node:hover {
   border-color: #93c5fd; background: rgba(15, 30, 58, 0.96);
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.95), 0 0 18px rgba(96, 165, 250, 0.45);
 }
-.sn-link-badge { font-size: 8.5px; letter-spacing: 0.08em; font-family: 'IBM Plex Mono', monospace; font-weight: 700; color: #93c5fd; margin-bottom: 4px; display: inline-flex; align-items: center; gap: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
-.sn-link-title { font-size: 13px; font-weight: 700; color: #ffffff; line-height: 1.25; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9); margin-bottom: 2px; }
-.sn-link-url { font-size: 10px; color: #93c5fd; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; opacity: 0.9; }
+.sn-link-row { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 8px; margin-bottom: 3px; }
+.sn-link-title { font-size: 13px; font-weight: 700; color: #ffffff; line-height: 1.25; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sn-link-arrow { font-size: 14px; font-weight: 700; color: #93c5fd; line-height: 1; text-shadow: 0 0 8px rgba(96, 165, 250, 0.7); flex-shrink: 0; transition: transform 0.15s ease; cursor: pointer; }
+.subnet-node.link-node:hover .sn-link-arrow { transform: translate(2px, -2px); color: #ffffff; }
+.sn-link-url { font-size: 10px; color: #93c5fd; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; opacity: 0.85; }
+.subnet-vp-resize-handle {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 9px; cursor: ns-resize; z-index: 28;
+  background: linear-gradient(to bottom, transparent, rgba(96, 165, 250, 0.22)); border-bottom: 2px solid rgba(96, 165, 250, 0.5);
+  display: flex; align-items: center; justify-content: center; touch-action: none; transition: background 0.15s, border-color 0.15s;
+}
+.subnet-vp-resize-handle:hover { background: rgba(96, 165, 250, 0.4); border-bottom-color: #ffffff; }
+.subnet-vp-resize-handle::after { content: ""; width: 36px; height: 3px; background: rgba(255, 255, 255, 0.85); border-radius: 2px; }
 .sn-img-wrap { width: 100%; height: 100%; position: relative; border-radius: var(--ui-radius, 1px); overflow: hidden; box-shadow: 0 12px 32px rgba(0,0,0,0.75); }
 .sn-img-wrap img, .sn-img-wrap canvas, .sn-img-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sn-media-badge { display: none !important; }
@@ -2649,6 +2660,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
       </div>
       <button type="button" class="vp-nav-btn vp-prev" id="btnVpPrevMedia" title="Previous Photo">‹</button>
       <button type="button" class="vp-nav-btn vp-next" id="btnVpNextMedia" title="Next Photo">›</button>
+      <div id="subnetVpResizeHandle" class="subnet-vp-resize-handle studio-only" title="Drag to resize Media Container Height"></div>
     </div>
 
     <div class="viewer-only">
@@ -2671,9 +2683,9 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
         <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">
           <div class="align-btn-group" style="display:flex;gap:2px;align-items:center;margin-right:6px">
             <span style="font-size:9px;color:var(--mid);margin-right:2px">TEXT:</span>
-            <button type="button" class="btn-act btn-align-text" data-align="left" title="Left Align">⫷ Left</button>
-            <button type="button" class="btn-act btn-align-text" data-align="center" title="Center Align">⫸⫷ Center</button>
-            <button type="button" class="btn-act btn-align-text" data-align="right" title="Right Align">⫸ Right</button>
+            <button type="button" class="btn-act btn-align-text" data-align="left" title="Left Align">&lt;</button>
+            <button type="button" class="btn-act btn-align-text" data-align="center" title="Center Align">=</button>
+            <button type="button" class="btn-act btn-align-text" data-align="right" title="Right Align">&gt;</button>
           </div>
           <button type="button" class="btn-act" id="btnAddPhotoNode">+ Photo / GIF</button>
           <button type="button" class="btn-act" id="btnAddVideoNode">+ Video (.mp4)</button>
@@ -3116,6 +3128,18 @@ let INITIAL_PROJECTS = [
         "h": 197,
         "style": 0,
         "img": ""
+      },
+      {
+        "type": "link",
+        "title": "Project Link",
+        "note": "",
+        "url": "https://google.com",
+        "x": 623,
+        "y": 443,
+        "w": 180,
+        "h": 80,
+        "style": 0,
+        "img": "https://google.com"
       }
     ]
   },
@@ -7747,7 +7771,7 @@ function bootSupernovaEngine() {
     const st = p.status || (isOrigin ? "active" : "slot");
     const node = {
       id: NODES.length, status: st, tier: st === "active" ? 1 : 2, isOrigin, isInitial: true,
-      title: p.t, date: p.d, tags: [...p.g], desc: p.x,
+      title: p.t, date: p.d, tags: [...p.g], desc: p.x, textAlign: p.textAlign || "left",
       media: p.media.map(m => ({ ...m })), shapes: [s0, s1, s2, s3], p0: s0,
       userOffset: p.uo ? new THREE.Vector3(p.uo[0], p.uo[1], p.uo[2]) : new THREE.Vector3(),
       elasticOffset: new THREE.Vector3(),
@@ -9674,9 +9698,40 @@ function bootSupernovaEngine() {
       if ($("slPreviewMediaHeight")) $("slPreviewMediaHeight").value = newMediaH;
       if ($("valPreviewMediaHeight")) $("valPreviewMediaHeight").textContent = `${newMediaH}px`;
       if (selectedId >= 0 && activeMediaIdx < 0) fitPhotoSubNetwork();
+    } else if (isResizingVp) {
+      const dy = e.clientY - vpStartY;
+      const snVp = $("subnetViewport");
+      const pHeight = popupEl ? popupEl.clientHeight : 740;
+      const maxAllowedH = Math.max(200, pHeight - 160);
+      const newH = Math.max(160, Math.min(maxAllowedH, Math.round(vpStartH + dy)));
+      if (snVp) snVp.style.height = `${newH}px`;
+      PARAMS.previewMediaHeight = newH;
+      try { localStorage.setItem("supernova_preview_media_h", String(newH)); } catch (_) {}
+      if ($("slPreviewMediaHeight")) $("slPreviewMediaHeight").value = newH;
+      if ($("valPreviewMediaHeight")) $("valPreviewMediaHeight").textContent = `${newH}px`;
+      if (selectedId >= 0 && activeMediaIdx < 0) fitPhotoSubNetwork();
     }
   });
-  window.addEventListener("pointerup", () => { isDraggingPopup = false; resizeDir = null; });
+
+  let isResizingVp = false, vpStartY = 0, vpStartH = 0;
+  const vpHandle = $("subnetVpResizeHandle");
+  if (vpHandle) {
+    vpHandle.addEventListener("pointerdown", e => {
+      e.stopPropagation();
+      e.preventDefault();
+      isResizingVp = true;
+      vpStartY = e.clientY;
+      const snVp = $("subnetViewport");
+      vpStartH = snVp ? snVp.clientHeight : (PARAMS.previewMediaHeight || 440);
+      try { vpHandle.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+  }
+
+  window.addEventListener("pointerup", () => {
+    isDraggingPopup = false;
+    resizeDir = null;
+    isResizingVp = false;
+  });
 
   function drawSubnetNebulaBackground(node) {
     const cv = $("subnetBgCanvas");
@@ -9804,16 +9859,29 @@ function bootSupernovaEngine() {
         `;
       } else if (isLink) {
         const linkUrl = (m.url || m.img || "").trim();
+        const displayUrl = linkUrl.replace(/^https?:\/\//i, "").replace(/\/$/, "");
         card.innerHTML = `
-          <div class="sn-link-badge">↗ WEB LINK</div>
-          <div class="sn-link-title">${m.title || "External Link"}</div>
-          <div class="sn-link-url">${linkUrl.replace(/^https?:\/\//, "")}</div>
+          <div class="sn-link-row">
+            <div class="sn-link-title">${m.title || "External Link"}</div>
+            <div class="sn-link-arrow" title="Open Link ↗">↗</div>
+          </div>
+          <div class="sn-link-url">${displayUrl}</div>
           ${hasNote ? `<div class="sn-hover-desc" style="opacity:0.95">${linkifyText(m.note)}</div>` : ""}
           <div class="sn-resize-handle studio-only" title="Drag to resize link card"></div>
         `;
         card.title = linkUrl ? `Click to open link:\n${linkUrl}` : "Link";
+        const arrowEl = card.querySelector(".sn-link-arrow");
+        if (arrowEl) {
+          arrowEl.addEventListener("pointerdown", ev => ev.stopPropagation());
+          arrowEl.addEventListener("click", ev => {
+            ev.stopPropagation();
+            if (linkUrl) window.open(linkUrl, "_blank", "noopener,noreferrer");
+          });
+        }
         card.addEventListener("click", ev => {
-          if (isStudioMode && (draggedMediaNodeIdx >= 0 || resizedMediaNodeIdx >= 0)) return;
+          if (isStudioMode) return;
+          if (snDragStart && snDragStart.moved) return;
+          ev.stopPropagation();
           if (linkUrl) window.open(linkUrl, "_blank", "noopener,noreferrer");
         });
       } else if (isVideo) {
@@ -9942,13 +10010,14 @@ function bootSupernovaEngine() {
       card.addEventListener("pointerdown", e => {
         if (e.target.closest(".sn-resize-handle")) return;
         if (e.target.closest(".sn-play-btn")) return;
+        if (e.target.closest(".sn-link-arrow")) return;
         e.stopPropagation();
-        snDragStart = { x: e.clientX, y: e.clientY, origX: m.x, origY: m.y, startMoved: 0 };
+        snDragStart = { x: e.clientX, y: e.clientY, origX: m.x, origY: m.y, moved: false };
         if (isStudioMode) {
           draggedMediaNodeIdx = idx;
           card.classList.add("is-dragging-card");
           try { card.setPointerCapture(e.pointerId); } catch (_) {}
-        } else {
+        } else if (!isLink) {
           selectPhotoNode(idx, true);
         }
       });
@@ -10020,6 +10089,7 @@ function bootSupernovaEngine() {
       return;
     }
     if (draggedMediaNodeIdx >= 0 && selectedId >= 0 && isStudioMode) {
+      if (Math.hypot(e.clientX - snDragStart.x, e.clientY - snDragStart.y) > 3) snDragStart.moved = true;
       const node = NODES[selectedId];
       const m = node.media[draggedMediaNodeIdx];
       m.x = Math.round(snDragStart.origX + (e.clientX - snDragStart.x) / snZoom);
@@ -11508,6 +11578,7 @@ function bootSupernovaEngine() {
   function buildAppJS(publishViewerOnly) {
     const savedProjects = NODES.filter(n => n.tier <= 2).map(n => ({
       t: n.title, d: n.date, status: n.status, g: n.tags, x: n.desc, tier: n.tier,
+      textAlign: n.textAlign || "left",
       uo: [+(n.userOffset.x.toFixed(2)), +(n.userOffset.y.toFixed(2)), +(n.userOffset.z.toFixed(2))],
       media: n.media
     }));
