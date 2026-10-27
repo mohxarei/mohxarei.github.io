@@ -1,12 +1,12 @@
 # 🌌 Notion & Supernova 3D Sphere Sync Tracker
 
-*Last synchronized on: **2026-10-27 17:15:34 UTC***  
+*Last synchronized on: **2026-10-27 19:24:56 UTC****2026-10-27 17:15:34 UTC***  
 *Notion Database:* [XFOLIO All Projects](https://app.notion.com/p/mohxen/1a28e9ad444f83069d16012695f75e21?v=be08e9ad444f82fda3d388d15670d444)  
-*Total Synced Projects:* **15 / 26** (112 photos, 74 videos)  
+*Total Synced Projects:* **29 / 40** (206 photos, 139 videos) (112 photos, 74 videos)  
 
 ---
 
-## 🚀 Active Synchronized Projects (Batch 1 & 2: 15 Projects)
+## 🚀 Active Synchronized Projects (Batch 1, 2 & 3: 29 Projects)
 
 | # | Project Title | Date | Tags | Photos | Videos | Local Asset Path | Notion Page ID | Status |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- | :---: |
@@ -25,6 +25,20 @@
 | 13 | **Envelop Live Set: Interactive Audiovisual Poster & Visual Identity** | `2025-11` | `interactive-poster, envelop, poster-design, audiovisual, graphic-design` | 8 | 2 | `assets/projects/202511_envelop_interactive_poster/` | `4068e9ad-444f-81cb-9af6-c47206ad5b36` | ✅ Synced |
 | 14 | **Dora Night: Realtime Camera Tracking & Generative Visual Performance in TouchDesigner** | `2025-11` | `camera-tracking, realtime, touchdesigner, dora-night, live-performance` | 4 | 3 | `assets/projects/202511_dora_night_camera_tracking/` | `4068e9ad-444f-8183-9615-e30b6813ff0f` | ✅ Synced |
 | 15 | **Particle Dissolve Visual Effects with Kinect Depth Sensing in TouchDesigner** | `2025-11` | `kinect, pointcloud, dissolve, touchdesigner, creative-coding` | 1 | 6 | `assets/projects/202511_dissolve_kinect_touchdesigner/` | `4068e9ad-444f-81e3-acdb-d1e128d8fce2` | ✅ Synced |
+| 16 | **Natural Vibes Festival: Stage Lighting, Laser Mapping & Kinect Particles** | `2026-06` | `Natural Vibes, Stage Design, Laser Mapping, Video Mapping, Kinect, VJing` | 7 | 2 | `assets/projects/202606_natural_vibes_festival_stage_laser/` | `4068e9ad-444f-81b5-aed2-e14a8ecdf101` | ✅ Synced |
+| 17 | **Interactive LED Data Flowers: Ultrasonic Distance & ESP32 Microcontrollers** | `2026-06` | `Interactive, ESP32, Arduino, LED, Ultrasonic, Web UI, Natural Vibes` | 10 | 3 | `assets/projects/202606_interactive_led_data_flowers/` | `4068e9ad-444f-8156-81b9-f7036e3249d4` | ✅ Synced |
+| 18 | **Gyroscope Stage & Laser Controller: Experimental Handheld IMU Instrument** | `2026-06` | `Gyroscope, Sensors, Natural Vibes, Stage Lighting, Laser, Interactive` | 4 | 7 | `assets/projects/202606_gyroscope_sensor_stage_controller/` | `4068e9ad-444f-810e-8721-e94d9658be03` | ✅ Synced |
+| 19 | **Robotic Laser Hand in Infinite Mirror: 4-Arm Motor & Joystick Controller** | `2026-06` | `Robotics, Infinity Mirror, Laser, Hardware, Interactive Installation, Sensors` | 12 | 4 | `assets/projects/202606_robotic_laser_hand_infinite_mirror/` | `4068e9ad-444f-818a-b52b-c059f3fe034d` | ✅ Synced |
+| 20 | **ESP32 S2 Mini Pixel Matrix: Standalone Embedded Microcontroller Display** | `2026-06` | `ESP32, S2 Mini, Microcontroller, Pixel Art, Embedded, Display` | 3 | 3 | `assets/projects/202606_s2_mini_esp32_pixel_display/` | `4068e9ad-444f-8170-b06c-edef2aefb6bb` | ✅ Synced |
+| 21 | **TouchDesigner to S2 Mini Video Stream: Embedded Hardware Streaming Device** | `2026-06` | `ESP32, S2 Mini, TouchDesigner, Embedded, Microcontroller, Hardware` | 3 | 2 | `assets/projects/202606_s2_mini_touchdesigner_video_stream/` | `4068e9ad-444f-81d8-b87c-c1609e2ed51f` | ✅ Synced |
+| 22 | **Low-Latency Video Stream & Bash Controls: Raspberry Pi x TouchDesigner** | `2026-05` | `Raspberry Pi, Bash, Video Streaming, Linux, Creative Engineering` | 7 | 2 | `assets/projects/202605_rpi_camera_bash_touchdesigner/` | `4068e9ad-444f-81aa-8b12-f3c9d186e2db` | ✅ Synced |
+| 23 | **Project X Festival: Backstage Technical Control, Lasers & Video Mapping** | `2026-05` | `Project X Festival, Stage Lighting, Laser Mapping, Video Mapping, VJing` | 3 | 15 | `assets/projects/202605_project_x_festival_stage_control/` | `4068e9ad-444f-8103-94e9-eb4bf955e7ba` | ✅ Synced |
+| 24 | **Architectural Video Mapping & Laser Synthesis: DMX Creative Interference** | `2026-05` | `Laser Mapping, DMX, TouchDesigner, Architectural, Projection Mapping` | 1 | 4 | `assets/projects/202605_building_laser_project_mapping/` | `4068e9ad-444f-8198-9d17-d99f416b571b` | ✅ Synced |
+| 25 | **Bright Festival Florence: Backstage Operations & TouchDesigner Workshop** | `2026-04` | `Bright Festival, Florence, TouchDesigner, Stage Setup, Production` | 14 | 2 | `assets/projects/202604_bright_festival_florence_touchdesigner/` | `4068e9ad-444f-8144-a7b0-d950988586ce` | ✅ Synced |
+| 26 | **The Great Mau Secrets: Interactive Installation for Cats at Aprile Festival** | `2026-04` | `Interactive, Installation, Gamification, Aprile Festival, Creative Tech` | 16 | 7 | `assets/projects/202604_the_great_mau_secrets_cat_installation/` | `4068e9ad-444f-81b5-ba9a-c8d0751045c8` | ✅ Synced |
+| 27 | **Echoes of Eco: Immersive Botanical Instrument Performance x Politek** | `2026-04` | `Politek, Bio-Art, Interactive, Plant Music, Audiovisual, Aprile Festival` | 6 | 9 | `assets/projects/202604_echoes_of_eco_botanical_experience/` | `4068e9ad-444f-8127-b955-e7c54537be42` | ✅ Synced |
+| 28 | **Abyss of Peace: Visual Art, Silence & Dissolution at Aprile Festival** | `2026-04` | `Aprile Festival, Visual Art, Audiovisual, Scenography, Installation` | 6 | 0 | `assets/projects/202604_abyss_of_peace_visual_art/` | `4068e9ad-444f-8126-87cf-fad2d04a2a7e` | ✅ Synced |
+| 29 | **2D to 3D Neural Spatialization: Depth Maps & Gaussian Splatting in TouchDesigner** | `2026-04` | `TouchDesigner, Gaussian Splatting, Depth Map, Generative 3D, Machine Learning` | 2 | 5 | `assets/projects/202604_touchdesigner_depth_gaussian_splatting/` | `4068e9ad-444f-8169-a435-fbdee2d83d80` | ✅ Synced |
 
 ---
 
