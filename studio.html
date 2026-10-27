@@ -936,16 +936,16 @@ body.studio-mode .studio-key-pill {
   box-shadow: 0 0 14px rgba(16, 185, 129, 0.5);
 }
 
-#lightbox { position: fixed; inset: 0; z-index: 40; background: rgba(3,6,4,0.95); backdrop-filter: blur(18px); display: none; place-items: center; padding: 24px; }
+#lightbox { position: fixed; inset: 0; z-index: 10000; background: rgba(3,6,4,0.96); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); display: none; place-items: center; padding: 24px; }
 #lightbox.open { display: grid; }
-.lb-card { max-width: min(1040px, 94vw); max-height: 90vh; border: 1px solid var(--line-bright); border-radius: var(--ui-radius, 1px); background: var(--panel-solid); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.95); }
+.lb-card { max-width: min(1040px, 94vw); max-height: 90vh; border: 1px solid var(--line-bright); border-radius: var(--ui-radius, 1px); background: var(--panel-solid); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 32px 80px rgba(0,0,0,0.95); position: relative; z-index: 10001; }
 .lb-media { position: relative; width: min(920px, 88vw); aspect-ratio: 16/10; background: #030604; border: 1px solid var(--line); border-radius: var(--ui-radius, 1px); overflow: hidden; display: grid; place-items: center; }
 .lb-media img, .lb-media canvas, .lb-media video { width: 100%; height: 100%; object-fit: contain; display: block; }
 .lb-nav-btn {
   position: fixed; top: 50%; transform: translateY(-50%); width: 50px; height: 74px;
   background: rgba(10, 16, 13, 0.85); border: 1px solid var(--line); border-radius: var(--ui-radius, 1px);
   color: #ffffff; font-size: 34px; line-height: 1; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all .15s; z-index: 45; user-select: none;
+  cursor: pointer; transition: all .15s; z-index: 10005; user-select: none;
 }
 .lb-nav-btn:hover { background: rgba(20, 32, 25, 0.98); border-color: #fff; color: var(--accent-green, #4ade80); transform: translateY(-50%) scale(1.06); }
 .lb-prev { left: 20px; }
@@ -3265,7 +3265,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "IMG 20260328 180257",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/IMG_20260328_180257.jpg",
         "img": "assets/projects/202603_dorafaus_synth_jam/IMG_20260328_180257.jpg",
@@ -3278,7 +3278,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260329 001834",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/IMG_20260329_001834.jpg",
         "img": "assets/projects/202603_dorafaus_synth_jam/IMG_20260329_001834.jpg",
@@ -3291,7 +3291,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260329 032333",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/IMG_20260329_032333.jpg",
         "img": "assets/projects/202603_dorafaus_synth_jam/IMG_20260329_032333.jpg",
@@ -3304,7 +3304,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260329 033457",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/IMG_20260329_033457.jpg",
         "img": "assets/projects/202603_dorafaus_synth_jam/IMG_20260329_033457.jpg",
@@ -3317,7 +3317,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "Screenshot 2026-10-27 160729",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/Screenshot_2026-10-27_160729.png",
         "img": "assets/projects/202603_dorafaus_synth_jam/Screenshot_2026-10-27_160729.png",
@@ -3330,7 +3330,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 4810 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/IMG_4810_web.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/IMG_4810_web.mp4",
@@ -3343,7 +3343,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 4817 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/IMG_4817_web.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/IMG_4817_web.mp4",
@@ -3356,7 +3356,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 4818 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/IMG_4818_web.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/IMG_4818_web.mp4",
@@ -3369,7 +3369,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "lv 0 20260329193239",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/lv_0_20260329193239.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/lv_0_20260329193239.mp4",
@@ -3382,7 +3382,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "lv 0 20260329194157",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/lv_0_20260329194157.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/lv_0_20260329194157.mp4",
@@ -3395,7 +3395,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260328 194329 1",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_194329_1.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_194329_1.mp4",
@@ -3408,7 +3408,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260328 214445",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_214445.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_214445.mp4",
@@ -3421,7 +3421,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260328 221354",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_221354.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_221354.mp4",
@@ -3434,7 +3434,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260328 223342 1",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_223342_1.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260328_223342_1.mp4",
@@ -3447,7 +3447,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260329 002121",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_002121.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_002121.mp4",
@@ -3460,7 +3460,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260329 005026",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_005026.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_005026.mp4",
@@ -3473,7 +3473,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260329 005316 1",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_005316_1.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_005316_1.mp4",
@@ -3486,7 +3486,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260329 030059",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_030059.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_030059.mp4",
@@ -3499,7 +3499,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260329 031345",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_031345.mp4",
         "img": "assets/projects/202603_dorafaus_synth_jam/VID_20260329_031345.mp4",
@@ -3529,7 +3529,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "IMG 20260315 004738",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_004738.jpg",
         "img": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_004738.jpg",
@@ -3542,7 +3542,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260315 030247",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_030247.jpg",
         "img": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_030247.jpg",
@@ -3555,7 +3555,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260315 052018",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_052018.jpg",
         "img": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_052018.jpg",
@@ -3568,7 +3568,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260315 052019",
+        "title": "",
         "note": "",
         "url": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_052019.jpg",
         "img": "assets/projects/202603_bunker_turin_arabic_vj/IMG_20260315_052019.jpg",
@@ -3689,7 +3689,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260222 202242",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/IMG_20260222_202242.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/IMG_20260222_202242.jpg",
@@ -3702,7 +3702,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260222 210229",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/IMG_20260222_210229.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/IMG_20260222_210229.jpg",
@@ -3715,7 +3715,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953172 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953172_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953172_y.jpg",
@@ -3728,7 +3728,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953173 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953173_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953173_y.jpg",
@@ -3741,7 +3741,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953174 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953174_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953174_y.jpg",
@@ -3754,7 +3754,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953177 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953177_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953177_y.jpg",
@@ -3767,7 +3767,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953203 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953203_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953203_y.jpg",
@@ -3780,7 +3780,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953204 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953204_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953204_y.jpg",
@@ -3793,7 +3793,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953207 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953207_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953207_y.jpg",
@@ -3806,7 +3806,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953208 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953208_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953208_y.jpg",
@@ -3819,7 +3819,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5846098734024953209 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953209_y.jpg",
         "img": "assets/projects/202602_listening_party_vol6_politek/photo_5846098734024953209_y.jpg",
@@ -3832,7 +3832,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 0596 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/IMG_0596_web.mp4",
         "img": "assets/projects/202602_listening_party_vol6_politek/IMG_0596_web.mp4",
@@ -3845,7 +3845,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260222 205808",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/VID_20260222_205808.mp4",
         "img": "assets/projects/202602_listening_party_vol6_politek/VID_20260222_205808.mp4",
@@ -3858,7 +3858,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260222 210237",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_listening_party_vol6_politek/VID_20260222_210237.mp4",
         "img": "assets/projects/202602_listening_party_vol6_politek/VID_20260222_210237.mp4",
@@ -3940,7 +3940,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260204 200912",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/IMG_20260204_200912.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/IMG_20260204_200912.jpg",
@@ -3953,7 +3953,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260204 230645",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/IMG_20260204_230645.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/IMG_20260204_230645.jpg",
@@ -3966,7 +3966,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260205 075153",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/IMG_20260205_075153.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/IMG_20260205_075153.jpg",
@@ -3979,7 +3979,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260212 054341",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/IMG_20260212_054341.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/IMG_20260212_054341.jpg",
@@ -3992,7 +3992,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5769562670213303625 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_5769562670213303625_y.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_5769562670213303625_y.jpg",
@@ -4005,7 +4005,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5773673344757599523 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_5773673344757599523_y.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_5773673344757599523_y.jpg",
@@ -4018,7 +4018,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5773691297720896677 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_5773691297720896677_y.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_5773691297720896677_y.jpg",
@@ -4031,7 +4031,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5794277200524676905 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_5794277200524676905_y.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_5794277200524676905_y.jpg",
@@ -4044,7 +4044,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 6041979483587284381 w",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_6041979483587284381_w.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_6041979483587284381_w.jpg",
@@ -4057,7 +4057,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 6046281851111935710 w",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_6046281851111935710_w.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_6046281851111935710_w.jpg",
@@ -4070,7 +4070,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 6046281851111935723 w",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_6046281851111935723_w.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_6046281851111935723_w.jpg",
@@ -4083,7 +4083,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 6046281851111935724 w",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_6046281851111935724_w.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_6046281851111935724_w.jpg",
@@ -4096,7 +4096,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 6048533650925620379 w",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/photo_6048533650925620379_w.jpg",
         "img": "assets/projects/202602_poulehouse_cg_blender/photo_6048533650925620379_w.jpg",
@@ -4109,7 +4109,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "render1",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/render1.png",
         "img": "assets/projects/202602_poulehouse_cg_blender/render1.png",
@@ -4122,7 +4122,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "render2",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/render2.png",
         "img": "assets/projects/202602_poulehouse_cg_blender/render2.png",
@@ -4135,7 +4135,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "render3",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/render3.png",
         "img": "assets/projects/202602_poulehouse_cg_blender/render3.png",
@@ -4148,7 +4148,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "Screenshot 2026-02-03 013821",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/Screenshot_2026-02-03_013821.png",
         "img": "assets/projects/202602_poulehouse_cg_blender/Screenshot_2026-02-03_013821.png",
@@ -4161,7 +4161,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "Screenshot 2026-02-11 135830",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/Screenshot_2026-02-11_135830.png",
         "img": "assets/projects/202602_poulehouse_cg_blender/Screenshot_2026-02-11_135830.png",
@@ -4174,7 +4174,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "Screenshot 2026-02-12 041611",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/Screenshot_2026-02-12_041611.png",
         "img": "assets/projects/202602_poulehouse_cg_blender/Screenshot_2026-02-12_041611.png",
@@ -4226,7 +4226,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "document 5796326243062258260",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/document_5796326243062258260.mp4",
         "img": "assets/projects/202602_poulehouse_cg_blender/document_5796326243062258260.mp4",
@@ -4239,7 +4239,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "document 5796417262009196362",
+        "title": "",
         "note": "",
         "url": "assets/projects/202602_poulehouse_cg_blender/document_5796417262009196362.mp4",
         "img": "assets/projects/202602_poulehouse_cg_blender/document_5796417262009196362.mp4",
@@ -4283,7 +4283,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "2026IEEEVR B",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/2026IEEEVR_B.png",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/2026IEEEVR_B.png",
@@ -4296,7 +4296,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5796326243522251974 x",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5796326243522251974_x.jpg",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5796326243522251974_x.jpg",
@@ -4309,7 +4309,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5951721239783082851 w",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5951721239783082851_w.jpg",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5951721239783082851_w.jpg",
@@ -4322,7 +4322,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5960962785338395716 x",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5960962785338395716_x.jpg",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5960962785338395716_x.jpg",
@@ -4335,7 +4335,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5960962785338395717 x",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5960962785338395717_x.jpg",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5960962785338395717_x.jpg",
@@ -4348,7 +4348,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5996817692016446637 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5996817692016446637_y.jpg",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5996817692016446637_y.jpg",
@@ -4361,7 +4361,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5996817692016446638 x",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5996817692016446638_x.jpg",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/photo_5996817692016446638_x.jpg",
@@ -4374,7 +4374,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 6019307364843981642 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/photo_6019307364843981642_y.jpg",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/photo_6019307364843981642_y.jpg",
@@ -4387,7 +4387,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "document 5906658201935289208",
+        "title": "",
         "note": "",
         "url": "assets/projects/202601_ieee_3dui_xr_presentation/document_5906658201935289208.mp4",
         "img": "assets/projects/202601_ieee_3dui_xr_presentation/document_5906658201935289208.mp4",
@@ -4417,7 +4417,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "image",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_namerea_jam_colab/image.png",
         "img": "assets/projects/202512_namerea_jam_colab/image.png",
@@ -4443,7 +4443,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "Rec 00011",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_namerea_jam_colab/Rec_00011.mp4",
         "img": "assets/projects/202512_namerea_jam_colab/Rec_00011.mp4",
@@ -4456,7 +4456,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251222 194640",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_namerea_jam_colab/VID_20251222_194640.mp4",
         "img": "assets/projects/202512_namerea_jam_colab/VID_20251222_194640.mp4",
@@ -4469,7 +4469,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251222 194923",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_namerea_jam_colab/VID_20251222_194923.mp4",
         "img": "assets/projects/202512_namerea_jam_colab/VID_20251222_194923.mp4",
@@ -4482,7 +4482,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251222 223726",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_namerea_jam_colab/VID_20251222_223726.mp4",
         "img": "assets/projects/202512_namerea_jam_colab/VID_20251222_223726.mp4",
@@ -4512,7 +4512,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "IMG 20251220 210130",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251220_210130.jpg",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251220_210130.jpg",
@@ -4525,7 +4525,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251220 210503",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251220_210503.jpg",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251220_210503.jpg",
@@ -4538,7 +4538,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251221 011312",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251221_011312.jpg",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251221_011312.jpg",
@@ -4551,7 +4551,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251221 013212",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251221_013212.jpg",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20251221_013212.jpg",
@@ -4564,7 +4564,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20260226 041209 229",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20260226_041209_229.jpg",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/IMG_20260226_041209_229.jpg",
@@ -4590,7 +4590,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "FZGX8835 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/FZGX8835_web.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/FZGX8835_web.mp4",
@@ -4603,7 +4603,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "SFNB1781 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/SFNB1781_web.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/SFNB1781_web.mp4",
@@ -4616,7 +4616,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251220 232341",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251220_232341.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251220_232341.mp4",
@@ -4629,7 +4629,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251220 235746",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251220_235746.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251220_235746.mp4",
@@ -4642,7 +4642,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251221 001842",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_001842.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_001842.mp4",
@@ -4655,7 +4655,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251221 011011",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_011011.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_011011.mp4",
@@ -4668,7 +4668,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251221 013219",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_013219.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_013219.mp4",
@@ -4681,7 +4681,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251221 025808",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_025808.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20251221_025808.mp4",
@@ -4694,7 +4694,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260225 191128 362",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20260225_191128_362.mp4",
         "img": "assets/projects/202512_bunker_turin_sintetica_joystick/VID_20260225_191128_362.mp4",
@@ -4724,7 +4724,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "photo 5902246948859743326 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_muslimgauze_carpet_visuals/photo_5902246948859743326_y.jpg",
         "img": "assets/projects/202512_muslimgauze_carpet_visuals/photo_5902246948859743326_y.jpg",
@@ -4737,7 +4737,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5902246948859743327 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_muslimgauze_carpet_visuals/photo_5902246948859743327_y.jpg",
         "img": "assets/projects/202512_muslimgauze_carpet_visuals/photo_5902246948859743327_y.jpg",
@@ -4750,7 +4750,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 7097 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7097_web.mp4",
         "img": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7097_web.mp4",
@@ -4763,7 +4763,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 7098 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7098_web.mp4",
         "img": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7098_web.mp4",
@@ -4776,7 +4776,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 7099 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7099_web.mp4",
         "img": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7099_web.mp4",
@@ -4789,7 +4789,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 7100 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7100_web.mp4",
         "img": "assets/projects/202512_muslimgauze_carpet_visuals/IMG_7100_web.mp4",
@@ -4802,7 +4802,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251212 214103",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_muslimgauze_carpet_visuals/VID_20251212_214103.mp4",
         "img": "assets/projects/202512_muslimgauze_carpet_visuals/VID_20251212_214103.mp4",
@@ -5027,7 +5027,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251205 202704",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_politek_eurorack_hardware_review/IMG_20251205_202704.jpg",
         "img": "assets/projects/202512_politek_eurorack_hardware_review/IMG_20251205_202704.jpg",
@@ -5040,7 +5040,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251205 191456",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_politek_eurorack_hardware_review/VID_20251205_191456.mp4",
         "img": "assets/projects/202512_politek_eurorack_hardware_review/VID_20251205_191456.mp4",
@@ -5053,7 +5053,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251205 191849",
+        "title": "",
         "note": "",
         "url": "assets/projects/202512_politek_eurorack_hardware_review/VID_20251205_191849.mp4",
         "img": "assets/projects/202512_politek_eurorack_hardware_review/VID_20251205_191849.mp4",
@@ -5083,7 +5083,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "IMG 20251130 203810",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/IMG_20251130_203810.jpg",
         "img": "assets/projects/202511_listening_party_vol5_politek/IMG_20251130_203810.jpg",
@@ -5096,7 +5096,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251130 203823",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/IMG_20251130_203823.jpg",
         "img": "assets/projects/202511_listening_party_vol5_politek/IMG_20251130_203823.jpg",
@@ -5109,7 +5109,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251130 203000 1",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_203000_1.mp4",
         "img": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_203000_1.mp4",
@@ -5122,7 +5122,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251130 203357",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_203357.mp4",
         "img": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_203357.mp4",
@@ -5135,7 +5135,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251130 204714",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_204714.mp4",
         "img": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_204714.mp4",
@@ -5148,7 +5148,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251130 204723",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_204723.mp4",
         "img": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_204723.mp4",
@@ -5161,7 +5161,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251130 214506",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_214506.mp4",
         "img": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_214506.mp4",
@@ -5174,7 +5174,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251130 214741",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_214741.mp4",
         "img": "assets/projects/202511_listening_party_vol5_politek/VID_20251130_214741.mp4",
@@ -5204,7 +5204,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "Screenshot 2026-10-27 135521",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_oscilloscope_art_vector/Screenshot_2026-10-27_135521.png",
         "img": "assets/projects/202511_oscilloscope_art_vector/Screenshot_2026-10-27_135521.png",
@@ -5217,7 +5217,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "Screenshot 2026-10-27 135606",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_oscilloscope_art_vector/Screenshot_2026-10-27_135606.png",
         "img": "assets/projects/202511_oscilloscope_art_vector/Screenshot_2026-10-27_135606.png",
@@ -5230,7 +5230,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "lv 0 20251129033809",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_oscilloscope_art_vector/lv_0_20251129033809.mp4",
         "img": "assets/projects/202511_oscilloscope_art_vector/lv_0_20251129033809.mp4",
@@ -5243,7 +5243,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251129 030358",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_030358.mp4",
         "img": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_030358.mp4",
@@ -5256,7 +5256,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251129 032651",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_032651.mp4",
         "img": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_032651.mp4",
@@ -5269,7 +5269,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251129 033009",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_033009.mp4",
         "img": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_033009.mp4",
@@ -5282,7 +5282,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251129 033250",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_033250.mp4",
         "img": "assets/projects/202511_oscilloscope_art_vector/VID_20251129_033250.mp4",
@@ -5312,7 +5312,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "photo 5902488295957007384 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007384_y.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007384_y.jpg",
@@ -5325,7 +5325,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251120 164702",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/IMG_20251120_164702.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/IMG_20251120_164702.jpg",
@@ -5338,7 +5338,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251122 161613",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/IMG_20251122_161613.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/IMG_20251122_161613.jpg",
@@ -5351,7 +5351,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251122 193602",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/IMG_20251122_193602.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/IMG_20251122_193602.jpg",
@@ -5364,7 +5364,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251122 210738",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/IMG_20251122_210738.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/IMG_20251122_210738.jpg",
@@ -5377,7 +5377,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251122 234057",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/IMG_20251122_234057.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/IMG_20251122_234057.jpg",
@@ -5390,7 +5390,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251123 023518",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/IMG_20251123_023518.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/IMG_20251123_023518.jpg",
@@ -5403,7 +5403,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5836902281331280906 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/photo_5836902281331280906_y.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/photo_5836902281331280906_y.jpg",
@@ -5416,7 +5416,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5902488295957007310 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007310_y.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007310_y.jpg",
@@ -5429,7 +5429,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5902488295957007314 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007314_y.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007314_y.jpg",
@@ -5442,7 +5442,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5902488295957007369 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007369_y.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007369_y.jpg",
@@ -5455,7 +5455,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5902488295957007383 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007383_y.jpg",
         "img": "assets/projects/202511_envelop_live_set_av/photo_5902488295957007383_y.jpg",
@@ -5468,7 +5468,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251122 220928",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251122_220928.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251122_220928.mp4",
@@ -5481,7 +5481,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251122 234106",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251122_234106.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251122_234106.mp4",
@@ -5494,7 +5494,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251123 002127",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251123_002127.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251123_002127.mp4",
@@ -5507,7 +5507,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251123 005856",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251123_005856.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251123_005856.mp4",
@@ -5520,7 +5520,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251123 023528",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251123_023528.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251123_023528.mp4",
@@ -5533,7 +5533,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251123 023809",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251123_023809.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251123_023809.mp4",
@@ -5546,7 +5546,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251123 031607",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251123_031607.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251123_031607.mp4",
@@ -5559,7 +5559,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251123 063325",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_live_set_av/VID_20251123_063325.mp4",
         "img": "assets/projects/202511_envelop_live_set_av/VID_20251123_063325.mp4",
@@ -5602,7 +5602,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "1",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/1.jpg",
         "img": "assets/projects/202511_envelop_interactive_poster/1.jpg",
@@ -5615,7 +5615,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "2",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/2.jpg",
         "img": "assets/projects/202511_envelop_interactive_poster/2.jpg",
@@ -5628,7 +5628,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "3",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/3.jpg",
         "img": "assets/projects/202511_envelop_interactive_poster/3.jpg",
@@ -5641,7 +5641,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "4",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/4.jpg",
         "img": "assets/projects/202511_envelop_interactive_poster/4.jpg",
@@ -5654,7 +5654,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "5",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/5.jpg",
         "img": "assets/projects/202511_envelop_interactive_poster/5.jpg",
@@ -5667,7 +5667,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "6",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/6.jpg",
         "img": "assets/projects/202511_envelop_interactive_poster/6.jpg",
@@ -5680,7 +5680,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251120 145425 302",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/IMG_20251120_145425_302.webp",
         "img": "assets/projects/202511_envelop_interactive_poster/IMG_20251120_145425_302.webp",
@@ -5693,7 +5693,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "lv 0 20251118085200",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/lv_0_20251118085200.mp4",
         "img": "assets/projects/202511_envelop_interactive_poster/lv_0_20251118085200.mp4",
@@ -5706,7 +5706,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "lv 0 20251118235924",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_envelop_interactive_poster/lv_0_20251118235924.mp4",
         "img": "assets/projects/202511_envelop_interactive_poster/lv_0_20251118235924.mp4",
@@ -5736,7 +5736,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "IMG 20251116 033248",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dora_night_camera_tracking/IMG_20251116_033248.jpg",
         "img": "assets/projects/202511_dora_night_camera_tracking/IMG_20251116_033248.jpg",
@@ -5749,7 +5749,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "IMG 20251116 040302",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dora_night_camera_tracking/IMG_20251116_040302.jpg",
         "img": "assets/projects/202511_dora_night_camera_tracking/IMG_20251116_040302.jpg",
@@ -5762,7 +5762,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5823302357582810051 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dora_night_camera_tracking/photo_5823302357582810051_y.jpg",
         "img": "assets/projects/202511_dora_night_camera_tracking/photo_5823302357582810051_y.jpg",
@@ -5775,7 +5775,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "photo 5823302357582810055 y",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dora_night_camera_tracking/photo_5823302357582810055_y.jpg",
         "img": "assets/projects/202511_dora_night_camera_tracking/photo_5823302357582810055_y.jpg",
@@ -5788,7 +5788,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "IMG 5733 web",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dora_night_camera_tracking/IMG_5733_web.mp4",
         "img": "assets/projects/202511_dora_night_camera_tracking/IMG_5733_web.mp4",
@@ -5801,7 +5801,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251116 015703",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dora_night_camera_tracking/VID_20251116_015703.mp4",
         "img": "assets/projects/202511_dora_night_camera_tracking/VID_20251116_015703.mp4",
@@ -5814,7 +5814,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251116 033252",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dora_night_camera_tracking/VID_20251116_033252.mp4",
         "img": "assets/projects/202511_dora_night_camera_tracking/VID_20251116_033252.mp4",
@@ -5844,7 +5844,7 @@ let INITIAL_PROJECTS = [
     "media": [
       {
         "type": "photo",
-        "title": "image",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dissolve_kinect_touchdesigner/image.png",
         "img": "assets/projects/202511_dissolve_kinect_touchdesigner/image.png",
@@ -5857,7 +5857,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "document 5812243245832346635",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dissolve_kinect_touchdesigner/document_5812243245832346635.mp4",
         "img": "assets/projects/202511_dissolve_kinect_touchdesigner/document_5812243245832346635.mp4",
@@ -5870,7 +5870,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251113 031819",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_031819.mp4",
         "img": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_031819.mp4",
@@ -5883,7 +5883,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251113 033930",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_033930.mp4",
         "img": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_033930.mp4",
@@ -5896,7 +5896,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251113 034056",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_034056.mp4",
         "img": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_034056.mp4",
@@ -5909,7 +5909,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20251113 034821",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_034821.mp4",
         "img": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20251113_034821.mp4",
@@ -5922,7 +5922,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "video",
-        "title": "VID 20260225 191245 264",
+        "title": "",
         "note": "",
         "url": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20260225_191245_264.mp4",
         "img": "assets/projects/202511_dissolve_kinect_touchdesigner/VID_20260225_191245_264.mp4",
@@ -6013,7 +6013,7 @@ let INITIAL_PROJECTS = [
       },
       {
         "type": "photo",
-        "title": "PHOTO 06",
+        "title": "",
         "note": "Hover description...",
         "x": 487,
         "y": 219,
@@ -12072,7 +12072,6 @@ function bootSupernovaEngine() {
           <div class="grid-play-icon">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
-          ${hasTitle ? `<div class="grid-media-title mono">${m.title}</div>` : ""}
         `;
         const vid = itemEl.querySelector("video");
         if (vid) {
@@ -12091,19 +12090,12 @@ function bootSupernovaEngine() {
         if (src) {
           itemEl.innerHTML = `
             <img src="${src}" alt="${m.title || ''}" loading="lazy">
-            ${hasTitle ? `<div class="grid-media-title mono">${m.title}</div>` : ""}
           `;
         } else {
           const cv = document.createElement("canvas");
           cv.width = 360; cv.height = 225;
           drawProceduralPhotoCanvas(cv, node, idx, m);
           itemEl.appendChild(cv);
-          if (hasTitle) {
-            const tEl = document.createElement("div");
-            tEl.className = "grid-media-title mono";
-            tEl.textContent = m.title;
-            itemEl.appendChild(tEl);
-          }
         }
         itemEl.onclick = () => openLightbox(idx);
       }
@@ -12178,7 +12170,8 @@ function bootSupernovaEngine() {
     currentLightboxIdx = ((idx % mediaList.length) + mediaList.length) % mediaList.length;
     const m = mediaList[currentLightboxIdx];
     if (!m) return;
-    $("lbTitle").textContent = `${node.title} — ${m.title || ""}`;
+    const hasCustomTitle = Boolean(m.title && m.title.trim());
+    $("lbTitle").textContent = hasCustomTitle ? `${node.title} — ${m.title.trim()}` : node.title;
     if ($("lbCounter")) $("lbCounter").textContent = `${currentLightboxIdx + 1} / ${mediaList.length}`;
     $("lbNote").textContent = m.note || "";
     const wrap = $("lbMediaWrap"); wrap.innerHTML = "";
@@ -12277,6 +12270,11 @@ function bootSupernovaEngine() {
     if ($("lightbox")) $("lightbox").classList.remove("open");
   }
   if ($("btnCloseLightbox")) $("btnCloseLightbox").onclick = closeLightbox;
+  if ($("lightbox")) {
+    $("lightbox").addEventListener("click", e => {
+      if (e.target === $("lightbox")) closeLightbox();
+    });
+  }
 
   /* MORPH SLIDER & TUNER BINDINGS */
   const mSlider = $("morphSlider"), topMSlider = $("topMorphSlider"), chkAuto = $("chkAuto"), btnVisitorAuto = $("btnVisitorAuto");
