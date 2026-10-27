@@ -455,7 +455,21 @@ body.desc-unpinned .brand p:not(.open) { pointer-events: none; }
 #projectPopup.has-dragged { transform: none !important; }
 #projectPopup.open { opacity: 1; pointer-events: auto; }
 body.popup-open { overflow: hidden !important; }
-.popup-drag-bar { padding: 14px 18px 4px; display: flex; justify-content: space-between; align-items: baseline; cursor: move; flex-shrink: 0; user-select: none; }
+.popup-drag-bar {
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(8, 12, 16, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+  user-select: none;
+}
 body.studio-mode .popup-drag-bar { cursor: move; }
 .media-editor-sticky-bar {
   position: sticky; top: 0; z-index: 20;
@@ -476,8 +490,194 @@ body.studio-mode .popup-drag-bar { cursor: move; }
 .close-btn { width: 28px; height: 28px; border-radius: var(--ui-radius, 1px); border: 1px solid transparent; display: grid; place-items: center; color: var(--mid); font-size: 18px; transition: all .15s; flex-shrink: 0; }
 .close-btn:hover { color: #ffffff; border-color: rgba(255,255,255,0.4); }
 
-.popup-body { padding: 4px 18px 18px; overflow-y: auto; flex: 1; user-select: text; }
-.desc { color: #d8dde6; font-size: 13.5px; line-height: 1.6; margin: 0 0 12px; white-space: pre-line; outline: none; }
+.popup-body {
+  padding: 16px 20px 28px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  user-select: text;
+  scroll-behavior: smooth;
+}
+.desc { color: #d8dde6; font-size: 13.5px; line-height: 1.6; margin: 0 0 14px; white-space: pre-line; outline: none; }
+
+/* 3-Column Photo & Media Grid */
+.project-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 14px 0 20px 0;
+  width: 100%;
+}
+@media (max-width: 640px) {
+  .project-media-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+@media (max-width: 420px) {
+  .project-media-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+.grid-media-item {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--ui-radius, 2px);
+  overflow: hidden;
+  background: #04070a;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.22s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.grid-media-item:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.85), 0 0 16px rgba(255, 255, 255, 0.12);
+  z-index: 2;
+}
+.grid-media-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.grid-media-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.grid-media-item .grid-media-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px 8px 6px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+  font-size: 10px;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0.95;
+}
+.grid-media-item .grid-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all 0.2s;
+  pointer-events: none;
+}
+.grid-media-item:hover .grid-play-icon {
+  background: rgba(255, 255, 255, 0.92);
+  color: #000;
+  transform: translate(-50%, -50%) scale(1.12);
+}
+.grid-media-item.grid-link-item {
+  background: rgba(14, 24, 42, 0.85);
+  border: 1.5px solid rgba(96, 165, 250, 0.45);
+  padding: 14px;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.grid-media-item.grid-link-item:hover {
+  border-color: #60a5fa;
+  background: rgba(22, 38, 68, 0.96);
+}
+.grid-media-item.grid-note-item {
+  background: rgba(15, 20, 26, 0.85);
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+  padding: 12px;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Studio drag & reorder styling */
+.media-ed-item {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.18s ease;
+}
+.media-ed-item.is-cover-item {
+  border-color: rgba(234, 179, 8, 0.55);
+  background: rgba(234, 179, 8, 0.03);
+}
+.media-ed-item.is-dragging {
+  opacity: 0.35;
+  border-color: #eab308;
+}
+.media-ed-item.drag-over {
+  border-color: #60a5fa !important;
+  background: rgba(96, 165, 250, 0.12) !important;
+  transform: scale(1.01);
+}
+.m-drag-handle {
+  cursor: grab;
+  padding: 2px 6px;
+  color: var(--mid);
+  font-size: 14px;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+}
+.m-drag-handle:active {
+  cursor: grabbing;
+}
+.m-ed-thumb {
+  width: 34px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  vertical-align: middle;
+  margin: 0 4px;
+}
+.m-ed-thumb-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 24px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 0 4px;
+}
+.cover-photo-badge {
+  background: #eab308;
+  color: #000;
+  font-weight: 700;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+}
 
 body.studio-mode .editable-field {
   cursor: text; border-radius: var(--ui-radius, 1px); padding: 1px 4px; margin-left: -4px;
@@ -2652,30 +2852,20 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <div class="popup-body">
     <p class="desc editable-field" id="dDesc" spellcheck="false" title="Click to edit Project Story / Explanation"></p>
 
-    <div class="subnet-viewport" id="subnetViewport">
-      <canvas id="subnetBgCanvas" width="520" height="235"></canvas>
-      <div class="subnet-stage" id="subnetStage">
-        <svg class="subnet-svg" id="subnetSvg"></svg>
-        <div id="subnetNodesWrap"></div>
-      </div>
-      <button type="button" class="vp-nav-btn vp-prev" id="btnVpPrevMedia" title="Previous Photo">‹</button>
-      <button type="button" class="vp-nav-btn vp-next" id="btnVpNextMedia" title="Next Photo">›</button>
-      <div id="subnetVpResizeHandle" class="subnet-vp-resize-handle studio-only" title="Drag to resize Media Container Height"></div>
-    </div>
+    <!-- 3-Column Photo & Media Grid -->
+    <div class="project-media-grid" id="projectMediaGrid"></div>
 
-    <div class="viewer-only">
-      <!-- Plain typed hashtags just under photos (no divider line) -->
-      <div class="popup-plain-tags mono" id="dTags"></div>
+    <!-- Plain typed hashtags just under photos (no divider line) -->
+    <div class="popup-plain-tags mono" id="dTags"></div>
 
-      <!-- Related Hubs under the hashtags -->
-      <details class="related-hubs-dropdown" id="relatedHubsDropdown">
-        <summary class="minimal-label mono">
-          <span class="dropdown-arrow">▸</span>
-          <span>Related Hubs (<span id="dConnCount">0</span>)</span>
-        </summary>
-        <div class="conn-list" id="dConnList"></div>
-      </details>
-    </div>
+    <!-- Related Hubs under the hashtags -->
+    <details class="related-hubs-dropdown" id="relatedHubsDropdown">
+      <summary class="minimal-label mono">
+        <span class="dropdown-arrow">▸</span>
+        <span>Related Hubs (<span id="dConnCount">0</span>)</span>
+      </summary>
+      <div class="conn-list" id="dConnList"></div>
+    </details>
 
     <div class="admin-editor-block studio-only">
       <div class="media-editor-sticky-bar mono">
@@ -9898,7 +10088,7 @@ function bootSupernovaEngine() {
     let currentMedia = null;
     if (mediaList.length > 0) {
       if (layerIndex === 0) {
-        currentMedia = mediaList.find(m => m && (m.img || m.url)) || mediaList[0];
+        currentMedia = (mediaList[0] && (mediaList[0].img || mediaList[0].url)) ? mediaList[0] : (mediaList.find(m => m && (m.img || m.url)) || mediaList[0]);
       } else {
         currentMedia = mediaList[layerIndex % mediaList.length];
       }
@@ -11828,202 +12018,97 @@ function bootSupernovaEngine() {
   }
 
   function renderPhotoSubNetwork(node) {
-    const wrap = $("subnetNodesWrap");
-    wrap.innerHTML = "";
-    updateSubnetWires(node);
+    renderProjectMediaGrid(node);
+  }
+
+  function renderProjectMediaGrid(node) {
+    const grid = $("projectMediaGrid");
+    if (!grid) return;
+    grid.innerHTML = "";
     const mediaList = node.media || [];
-    if (!mediaList.length) return;
+    if (!mediaList.length) {
+      grid.innerHTML = '<div class="mono" style="grid-column: 1 / -1; padding: 22px; text-align: center; color: var(--mid); font-size: 11px; border: 1px dashed rgba(255,255,255,0.12); border-radius: 3px;">No media files added yet.</div>';
+      return;
+    }
 
     mediaList.forEach((m, idx) => {
       const isNote = m.type === "note";
       const isLink = m.type === "link";
       const isVideo = isVideoMedia(m);
-      const isActive = (idx === activeMediaIdx);
       const hasTitle = Boolean(m.title && m.title.trim());
       const hasNote = Boolean(m.note && m.note.trim());
-      const card = document.createElement("div");
-      card.className = "subnet-node" + (isNote ? " note-node" : "") + (isLink ? " link-node" : "") + (isVideo ? " video-node" : "") + (isActive ? " active active-front" : "") + (isNote && !hasTitle && !hasNote ? " empty-note" : "");
-      card.style.left = `${m.x}px`; card.style.top = `${m.y}px`;
-      card.style.width = `${m.w || (isVideo ? 190 : 170)}px`; card.style.height = `${m.h || (isNote || isLink ? 80 : (isVideo ? 125 : 110))}px`;
+      const itemEl = document.createElement("div");
+      itemEl.className = "grid-media-item" + (isLink ? " grid-link-item" : (isNote ? " grid-note-item" : (isVideo ? " grid-video-item" : " grid-photo-item")));
+      itemEl.dataset.idx = idx;
 
       if (isNote) {
-        card.innerHTML = `
-          ${hasTitle ? `<div class="sn-on-title">${m.title}</div>` : ""}
-          ${hasNote ? `<div class="sn-note-body">${linkifyText(m.note)}</div>` : ""}
-          <div class="sn-resize-handle studio-only" title="Drag to resize note"></div>
+        itemEl.innerHTML = `
+          <div class="mono" style="font-size:9px;color:var(--mid);margin-bottom:4px;letter-spacing:0.04em">NOTE</div>
+          ${hasTitle ? `<div style="font-weight:600;font-size:12px;color:#fff;margin-bottom:4px;line-height:1.3">${m.title}</div>` : ""}
+          <div style="font-size:11.5px;color:#cbd5e1;line-height:1.45;white-space:pre-line">${linkifyText(m.note || "")}</div>
         `;
+        itemEl.onclick = () => openLightbox(idx);
       } else if (isLink) {
         const linkUrl = (m.url || m.img || "").trim();
         const displayUrl = linkUrl.replace(/^https?:\/\//i, "").replace(/\/$/, "");
-        card.innerHTML = `
-          <div class="sn-link-row">
-            <div class="sn-link-title">${m.title || "External Link"}</div>
-            <div class="sn-link-arrow" title="Open Link ↗">↗</div>
+        itemEl.innerHTML = `
+          <div style="display:flex;justify-content:space-between;width:100%;align-items:flex-start">
+            <span class="mono" style="font-size:9.5px;color:#93c5fd;font-weight:600;letter-spacing:0.04em">LINK ↗</span>
+            <span style="font-size:13px;color:#60a5fa;line-height:1">↗</span>
           </div>
-          <div class="sn-link-url">${displayUrl}</div>
-          ${hasNote ? `<div class="sn-hover-desc" style="opacity:0.95">${linkifyText(m.note)}</div>` : ""}
-          <div class="sn-resize-handle studio-only" title="Drag to resize link card"></div>
+          <div style="font-weight:600;font-size:12.5px;color:#fff;margin:6px 0 2px;line-height:1.3">${m.title || "External Link"}</div>
+          <div class="mono" style="font-size:9.5px;color:rgba(255,255,255,0.6);word-break:break-all">${displayUrl}</div>
+          ${hasNote ? `<div style="font-size:11px;color:#cbd5e1;margin-top:6px;line-height:1.35">${linkifyText(m.note)}</div>` : ""}
         `;
-        card.title = linkUrl ? `Click to open link:\n${linkUrl}` : "Link";
-        const arrowEl = card.querySelector(".sn-link-arrow");
-        if (arrowEl) {
-          arrowEl.addEventListener("pointerdown", ev => ev.stopPropagation());
-          arrowEl.addEventListener("click", ev => {
-            ev.stopPropagation();
-            if (linkUrl) window.open(linkUrl, "_blank", "noopener,noreferrer");
-          });
-        }
-        card.addEventListener("click", ev => {
-          if (isStudioMode) return;
-          if (snDragStart && snDragStart.moved) return;
-          ev.stopPropagation();
+        itemEl.title = linkUrl ? `Click to open link:\n${linkUrl}` : "Link";
+        itemEl.onclick = (e) => {
+          e.stopPropagation();
           if (linkUrl) window.open(linkUrl, "_blank", "noopener,noreferrer");
-        });
+        };
       } else if (isVideo) {
         const src = (m.img || m.video || m.url || "").trim();
-        card.innerHTML = `
-          <div class="sn-img-wrap sn-video-wrap">
-            
-            <button type="button" class="sn-play-btn" aria-label="Play/Pause Video" title="Play Video">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            ${hasTitle ? `<div class="sn-on-title">${m.title}</div>` : ""}
-            ${hasNote ? `<div class="sn-hover-desc">${m.note}</div>` : ""}
+        itemEl.innerHTML = `
+          <video src="${src}" preload="metadata" muted playsinline loop></video>
+          <div class="grid-play-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
-          <div class="sn-resize-handle studio-only" title="Drag to resize video"></div>
+          ${hasTitle ? `<div class="grid-media-title mono">${m.title}</div>` : ""}
         `;
-        const imgWrap = card.querySelector(".sn-img-wrap");
-        const playBtn = card.querySelector(".sn-play-btn");
-        if (src) {
-          const vid = document.createElement("video");
-          vid.src = src;
-          vid.autoplay = false;
-          vid.loop = true;
-          vid.muted = true;
-          vid.playsInline = true;
-          vid.preload = "metadata";
-          vid.draggable = false;
-          vid.setAttribute("draggable", "false");
-          vid.setAttribute("playsinline", "");
-          vid.setAttribute("webkit-playsinline", "");
-          vid.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;";
-          imgWrap.prepend(vid);
-
-          const zoomAndTogglePlay = (ev) => {
-            if (ev) { ev.stopPropagation(); ev.preventDefault(); }
-            // 1. Zoom into video and bring to front
-            activeMediaIdx = idx;
-            const vp = $("subnetViewport");
-            if (vp) {
-              snTargetZoom = 1.75;
-              snTargetPanX = vp.clientWidth * 0.5 - m.x * snTargetZoom;
-              snTargetPanY = vp.clientHeight * 0.5 - m.y * snTargetZoom;
-            }
-            if (card && card.parentElement) {
-              card.parentElement.querySelectorAll(".subnet-node").forEach(c => c.classList.remove("active", "active-front"));
-              card.classList.add("active", "active-front");
-            }
-            updateSubnetWires(node);
-
-            // 2. Play or Pause video
-            if (vid.paused) {
-              pauseAllVideos();
-              vid.play().then(() => {
-                if (playBtn) {
-                  playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
-                  playBtn.classList.add("is-playing");
-                }
-              }).catch(err => console.warn(err));
-            } else {
-              vid.pause();
-              if (playBtn) {
-                playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
-                playBtn.classList.remove("is-playing");
-              }
-            }
-            if (typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
-          };
-
-          if (playBtn) {
-            playBtn.addEventListener("pointerdown", e => e.stopPropagation());
-            playBtn.addEventListener("click", zoomAndTogglePlay);
-          }
-          imgWrap.addEventListener("click", e => {
-            if (e.target.closest(".sn-resize-handle")) return;
-            zoomAndTogglePlay(e);
+        const vid = itemEl.querySelector("video");
+        if (vid) {
+          itemEl.addEventListener("mouseenter", () => {
+            vid.play().catch(() => {});
           });
-
-          vid.addEventListener("play", () => {
-            if (playBtn) {
-              playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
-              playBtn.classList.add("is-playing");
-            }
+          itemEl.addEventListener("mouseleave", () => {
+            vid.pause();
+            vid.currentTime = 0;
           });
-          vid.addEventListener("pause", () => {
-            if (playBtn) {
-              playBtn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
-              playBtn.classList.remove("is-playing");
-            }
-          });
-        } else {
-          const cv = document.createElement("canvas"); cv.width = 320; cv.height = 200;
-          drawProceduralPhotoCanvas(cv, node, idx, m); imgWrap.prepend(cv);
         }
+        itemEl.onclick = () => openLightbox(idx);
       } else {
-        card.innerHTML = `
-          <div class="sn-img-wrap">
-            ${hasTitle ? `<div class="sn-on-title">${m.title}</div>` : ""}
-            ${hasNote ? `<div class="sn-hover-desc">${m.note}</div>` : ""}
-          </div>
-          <div class="sn-resize-handle studio-only" title="Drag to resize photo"></div>
-        `;
-        const imgWrap = card.querySelector(".sn-img-wrap");
-        if (m.img && m.img.trim() !== "") {
-          const im = document.createElement("img");
-          im.src = m.img;
-          im.alt = m.title || "";
-          im.draggable = false;
-          im.setAttribute("draggable", "false");
-          im.style.cssText = "user-select:none;-webkit-user-drag:none;pointer-events:none;";
-          imgWrap.prepend(im);
+        // Photo / GIF
+        const src = (m.img || m.url || "").trim();
+        if (src) {
+          itemEl.innerHTML = `
+            <img src="${src}" alt="${m.title || ''}" loading="lazy">
+            ${hasTitle ? `<div class="grid-media-title mono">${m.title}</div>` : ""}
+          `;
         } else {
-          const cv = document.createElement("canvas"); cv.width = 320; cv.height = 200;
-          drawProceduralPhotoCanvas(cv, node, idx, m); imgWrap.prepend(cv);
+          const cv = document.createElement("canvas");
+          cv.width = 360; cv.height = 225;
+          drawProceduralPhotoCanvas(cv, node, idx, m);
+          itemEl.appendChild(cv);
+          if (hasTitle) {
+            const tEl = document.createElement("div");
+            tEl.className = "grid-media-title mono";
+            tEl.textContent = m.title;
+            itemEl.appendChild(tEl);
+          }
         }
+        itemEl.onclick = () => openLightbox(idx);
       }
 
-      const resHandle = card.querySelector(".sn-resize-handle");
-      if (resHandle) {
-        resHandle.addEventListener("pointerdown", e => {
-          e.stopPropagation();
-          resizedMediaNodeIdx = idx;
-          snDragStart = { x: e.clientX, y: e.clientY, origW: m.w || 170, origH: m.h || 110 };
-          try { resHandle.setPointerCapture(e.pointerId); } catch (_) {}
-        });
-      }
-
-      card.addEventListener("pointerdown", e => {
-        if (e.target.closest(".sn-resize-handle")) return;
-        if (e.target.closest(".sn-play-btn")) return;
-        if (e.target.closest(".sn-link-arrow")) return;
-        e.stopPropagation();
-        snDragStart = { x: e.clientX, y: e.clientY, origX: m.x, origY: m.y, moved: false };
-        if (isStudioMode) {
-          draggedMediaNodeIdx = idx;
-          card.classList.add("is-dragging-card");
-          try { card.setPointerCapture(e.pointerId); } catch (_) {}
-        } else if (!isLink) {
-          selectPhotoNode(idx, true);
-        }
-      });
-
-      card.addEventListener("pointerup", e => {
-        try { card.releasePointerCapture(e.pointerId); } catch (_) {}
-        card.classList.remove("is-dragging-card");
-      });
-
-      card.addEventListener("dblclick", e => { e.stopPropagation(); openLightbox(idx); });
-      wrap.appendChild(card);
+      grid.appendChild(itemEl);
     });
   }
 
@@ -12061,65 +12146,29 @@ function bootSupernovaEngine() {
   }
 
   const snVp = $("subnetViewport");
-  snVp.addEventListener("pointerdown", e => {
-    if (e.target === snVp || e.target.id === "subnetBgCanvas" || e.target.id === "subnetStage" || e.target.id === "subnetSvg") {
-      pauseAllVideos();
-      if (!isStudioMode && activeMediaIdx >= 0) {
-        activeMediaIdx = -1;
-        renderPhotoSubNetwork(NODES[selectedId]);
-        fitPhotoSubNetwork();
+  if (snVp) {
+    snVp.addEventListener("pointerdown", e => {
+      if (e.target === snVp || e.target.id === "subnetBgCanvas" || e.target.id === "subnetStage" || e.target.id === "subnetSvg") {
+        pauseAllVideos();
+        if (!isStudioMode && activeMediaIdx >= 0) {
+          activeMediaIdx = -1;
+          renderPhotoSubNetwork(NODES[selectedId]);
+          fitPhotoSubNetwork();
+        }
       }
-    }
-    if (isStudioMode) {
-      isDraggingSubnet = true;
-      snDragStart = { x: e.clientX - snTargetPanX, y: e.clientY - snTargetPanY, rawX: e.clientX, rawY: e.clientY };
-    }
-  });
-  window.addEventListener("pointermove", e => {
-    if (resizedMediaNodeIdx >= 0 && selectedId >= 0 && isStudioMode) {
-      const m = NODES[selectedId].media[resizedMediaNodeIdx];
-      m.w = Math.max(90, Math.round(snDragStart.origW + (e.clientX - snDragStart.x) / snZoom));
-      m.h = Math.max(55, Math.round(snDragStart.origH + (e.clientY - snDragStart.y) / snZoom));
-      renderPhotoSubNetwork(NODES[selectedId]);
-      return;
-    }
-    if (draggedMediaNodeIdx >= 0 && selectedId >= 0 && isStudioMode) {
-      if (Math.hypot(e.clientX - snDragStart.x, e.clientY - snDragStart.y) > 3) snDragStart.moved = true;
-      const node = NODES[selectedId];
-      const m = node.media[draggedMediaNodeIdx];
-      m.x = Math.round(snDragStart.origX + (e.clientX - snDragStart.x) / snZoom);
-      m.y = Math.round(snDragStart.origY + (e.clientY - snDragStart.y) / snZoom);
-      const cardEl = $("subnetNodesWrap") ? $("subnetNodesWrap").children[draggedMediaNodeIdx] : null;
-      if (cardEl) {
-        cardEl.style.left = `${m.x}px`;
-        cardEl.style.top = `${m.y}px`;
+      if (isStudioMode) {
+        isDraggingSubnet = true;
+        snDragStart = { x: e.clientX - snTargetPanX, y: e.clientY - snTargetPanY, rawX: e.clientX, rawY: e.clientY };
       }
-      updateSubnetWires(node);
-      return;
-    }
-    if (!isDraggingSubnet) return;
-    snTargetPanX = e.clientX - snDragStart.x;
-    snTargetPanY = e.clientY - snDragStart.y;
-  });
-  window.addEventListener("pointerup", () => {
-    isDraggingSubnet = false;
-    if (draggedMediaNodeIdx >= 0) {
-      const cardEl = $("subnetNodesWrap") ? $("subnetNodesWrap").children[draggedMediaNodeIdx] : null;
-      if (cardEl) cardEl.classList.remove("is-dragging-card");
-      draggedMediaNodeIdx = -1;
-      if (selectedId >= 0 && typeof refreshPhotoCardTexture === "function") {
-        refreshPhotoCardTexture(selectedId);
-      }
-    }
-    resizedMediaNodeIdx = -1;
-  });
-  snVp.addEventListener("wheel", e => {
-    e.preventDefault(); e.stopPropagation();
-    const rect = snVp.getBoundingClientRect(), mx = e.clientX - rect.left, my = e.clientY - rect.top, oldZ = snTargetZoom;
-    snTargetZoom = Math.max(0.35, Math.min(2.8, snTargetZoom * (e.deltaY < 0 ? 1.12 : 0.89)));
-    snTargetPanX = mx - (mx - snTargetPanX) * (snTargetZoom / oldZ);
-    snTargetPanY = my - (my - snTargetPanY) * (snTargetZoom / oldZ);
-  }, { passive: false });
+    });
+    snVp.addEventListener("wheel", e => {
+      e.preventDefault(); e.stopPropagation();
+      const rect = snVp.getBoundingClientRect(), mx = e.clientX - rect.left, my = e.clientY - rect.top, oldZ = snTargetZoom;
+      snTargetZoom = Math.max(0.35, Math.min(2.8, snTargetZoom * (e.deltaY < 0 ? 1.12 : 0.89)));
+      snTargetPanX = mx - (mx - snTargetPanX) * (snTargetZoom / oldZ);
+      snTargetPanY = my - (my - snTargetPanY) * (snTargetZoom / oldZ);
+    }, { passive: false });
+  }
 
   let currentLightboxIdx = 0;
   function openLightbox(idx) {
@@ -12939,17 +12988,50 @@ function bootSupernovaEngine() {
   }
 
   function renderAdminMediaEditor(node) {
-    const wrap = $("edMediaList"); wrap.innerHTML = "";
-    (node.media || []).forEach((m, idx) => {
+    const wrap = $("edMediaList");
+    if (!wrap) return;
+    wrap.innerHTML = "";
+    const mediaList = node.media || [];
+
+    mediaList.forEach((m, idx) => {
       const isNote = m.type === "note";
       const isLink = m.type === "link";
       const isVideo = isVideoMedia(m);
       const row = document.createElement("div");
-      row.className = "media-ed-item mono";
-      const labelType = isNote ? "📝 NOTE" : (isLink ? "🔗 LINK" : (isVideo ? "🎬 VIDEO" : "🖼 PHOTO / GIF"));
+      row.className = "media-ed-item mono" + (idx === 0 ? " is-cover-item" : "");
+      row.setAttribute("draggable", "true");
+      row.dataset.idx = idx;
+
+      const labelType = isNote ? "NOTE" : (isLink ? "LINK" : (isVideo ? "VIDEO" : "PHOTO / GIF"));
+      const isFirst = (idx === 0);
+      const isLast = (idx === mediaList.length - 1);
+
+      // Thumbnail preview
+      let thumbHtml = '';
+      if (isNote) {
+        thumbHtml = '<span class="m-ed-thumb-icon" title="Note item">📝</span>';
+      } else if (isLink) {
+        thumbHtml = '<span class="m-ed-thumb-icon" title="Link item">🔗</span>';
+      } else if (isVideo) {
+        const vSrc = (m.img || m.video || m.url || "").trim();
+        thumbHtml = `<video src="${vSrc}" class="m-ed-thumb" muted preload="metadata"></video>`;
+      } else {
+        const iSrc = (m.img || m.url || "").trim();
+        thumbHtml = iSrc ? `<img src="${iSrc}" class="m-ed-thumb" alt="thumb">` : '<span class="m-ed-thumb-icon">🖼</span>';
+      }
+
       row.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
-          <b style="color:var(--text)">${labelType} #${idx + 1} (${m.w || (isVideo ? 190 : (isLink ? 180 : 170))}×${m.h || (isNote || isLink ? 80 : (isVideo ? 125 : 110))}px)</b>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:6px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:4px">
+            <span class="m-drag-handle" title="Click & drag to reorder">⋮⋮</span>
+            <div style="display:inline-flex;gap:1px;margin-right:4px">
+              <button type="button" class="btn-act btn-move-up" data-idx="${idx}" title="Move Up" ${isFirst ? 'disabled style="opacity:0.25;cursor:default"' : ''} style="padding:1px 5px;font-size:9px">▲</button>
+              <button type="button" class="btn-act btn-move-down" data-idx="${idx}" title="Move Down" ${isLast ? 'disabled style="opacity:0.25;cursor:default"' : ''} style="padding:1px 5px;font-size:9px">▼</button>
+            </div>
+            ${thumbHtml}
+            <b style="color:var(--text);font-size:10.5px">#${idx + 1} ${labelType}</b>
+            ${isFirst ? '<span class="cover-photo-badge mono" title="This top photo is automatically displayed as the 3D Sphere Preview Cover!">★ PREVIEW COVER (TOP)</span>' : ''}
+          </div>
           <div style="display:flex;gap:5px;align-items:center">
             ${isNote ? "" : `
               <select class="m-type-select mono" style="font-size:10px;padding:2px 4px;background:#06080c;color:var(--text);border:1px solid rgba(255,255,255,.18);border-radius:3px">
@@ -12958,21 +13040,79 @@ function bootSupernovaEngine() {
                 <option value="link"${isLink ? " selected" : ""}>Link ↗</option>
               </select>
             `}
-            <button type="button" class="btn-act" data-del="${idx}" style="padding:1px 6px">Remove</button>
+            <button type="button" class="btn-act" data-del="${idx}" style="padding:1px 6px;color:#f87171" title="Delete this media item">Remove</button>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr ${isNote ? "auto" : "1fr auto"};gap:5px;margin-bottom:5px">
           <input type="text" class="m-title" value="${(m.title || "").replace(/"/g, "&quot;")}" placeholder="Title (optional)">
-          ${isNote ? "" : `<input type="text" class="m-img" value="${(m.url || m.img || m.video || "").replace(/"/g, "&quot;")}" placeholder="${isLink ? 'https://... (Web / Project Link)' : (isVideo ? 'media/*.mp4 or Video URL' : 'Image / GIF path or URL')}">`}
+          ${isNote ? "" : `<input type="text" class="m-img" value="${(m.url || m.img || m.video || "").replace(/"/g, "&quot;")}" placeholder="${isLink ? 'https://... (Web / Project Link)' : (isVideo ? 'assets/projects/... or Video URL' : 'Image / GIF path or URL')}">`}
           ${isNote || isLink ? "" : `<label class="btn-act" style="display:inline-grid;place-items:center;cursor:pointer">📁 Upload<input type="file" accept="${isVideo ? 'video/*,video/mp4,video/webm' : 'image/*,image/gif'}" class="m-file" style="display:none"></label>`}
         </div>
         <textarea class="m-note" rows="2" placeholder="Description / note (optional)">${m.note || ""}</textarea>
       `;
+
+      // Drag and drop event handlers
+      row.ondragstart = (e) => {
+        e.dataTransfer.setData("text/plain", String(idx));
+        row.classList.add("is-dragging");
+      };
+      row.ondragend = () => {
+        row.classList.remove("is-dragging");
+        wrap.querySelectorAll(".media-ed-item").forEach(el => el.classList.remove("drag-over"));
+      };
+      row.ondragover = (e) => {
+        e.preventDefault();
+        row.classList.add("drag-over");
+      };
+      row.ondragleave = () => {
+        row.classList.remove("drag-over");
+      };
+      row.ondrop = (e) => {
+        e.preventDefault();
+        row.classList.remove("drag-over");
+        const fromIdx = parseInt(e.dataTransfer.getData("text/plain"), 10);
+        const toIdx = idx;
+        if (!isNaN(fromIdx) && fromIdx !== toIdx && fromIdx >= 0 && fromIdx < node.media.length) {
+          const item = node.media.splice(fromIdx, 1)[0];
+          node.media.splice(toIdx, 0, item);
+          renderAdminMediaEditor(node);
+          renderPhotoSubNetwork(node);
+          if (typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
+        }
+      };
+
+      // Button move up / down
+      const btnUp = row.querySelector(".btn-move-up");
+      if (btnUp && !isFirst) {
+        btnUp.onclick = (e) => {
+          e.stopPropagation();
+          const item = node.media.splice(idx, 1)[0];
+          node.media.splice(idx - 1, 0, item);
+          renderAdminMediaEditor(node);
+          renderPhotoSubNetwork(node);
+          if (typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
+        };
+      }
+      const btnDown = row.querySelector(".btn-move-down");
+      if (btnDown && !isLast) {
+        btnDown.onclick = (e) => {
+          e.stopPropagation();
+          const item = node.media.splice(idx, 1)[0];
+          node.media.splice(idx + 1, 0, item);
+          renderAdminMediaEditor(node);
+          renderPhotoSubNetwork(node);
+          if (typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
+        };
+      }
+
+      // Delete item
       row.querySelector(`[data-del="${idx}"]`).onclick = () => {
         node.media.splice(idx, 1);
         renderAdminMediaEditor(node);
         renderPhotoSubNetwork(node);
+        if (typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
       };
+
       const titleInp = row.querySelector(".m-title");
       if (titleInp) {
         titleInp.oninput = e => {
@@ -12986,6 +13126,7 @@ function bootSupernovaEngine() {
           if (m.type === "link") m.url = e.target.value;
           else m.img = e.target.value;
           renderPhotoSubNetwork(node);
+          if (idx === 0 && typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
         };
       }
       const noteInp = row.querySelector(".m-note");
@@ -13001,6 +13142,7 @@ function bootSupernovaEngine() {
           m.type = e.target.value;
           renderAdminMediaEditor(node);
           renderPhotoSubNetwork(node);
+          if (idx === 0 && typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
         };
       }
       const fi = row.querySelector(".m-file");
@@ -13015,6 +13157,7 @@ function bootSupernovaEngine() {
               row.querySelector(".m-img").value = url;
               renderAdminMediaEditor(node);
               renderPhotoSubNetwork(node);
+              if (idx === 0 && typeof refreshPhotoCardTexture === "function") refreshPhotoCardTexture(node.id);
             });
           }
         };
@@ -13067,7 +13210,7 @@ function bootSupernovaEngine() {
   });
 
   function setupMediaDragAndDrop() {
-    const dropTargets = [popupEl, $("subnetViewport"), $("edMediaList")].filter(Boolean);
+    const dropTargets = [popupEl, $("projectMediaGrid"), $("edMediaList")].filter(Boolean);
     dropTargets.forEach(target => {
       target.addEventListener("dragover", e => {
         e.preventDefault(); e.stopPropagation();
@@ -14631,7 +14774,7 @@ function bootSupernovaEngine() {
             $("reticlePhotoTitle").textContent = n.title;
             const mediaEl = $("reticlePhotoMedia");
             mediaEl.innerHTML = "";
-            const mediaItem = (n.media && n.media.find(m => m.type === "photo" || m.type === "video" || m.img || m.video)) || (n.media && n.media[0]);
+            const mediaItem = (n.media && (n.media[0]?.img || n.media[0]?.video || n.media[0]?.url ? n.media[0] : (n.media.find(m => m.img || m.video) || n.media[0]))) || null;
             if (mediaItem && (mediaItem.img || mediaItem.video || mediaItem.url)) {
               if (isVideoMedia(mediaItem)) {
                 const vid = document.createElement("video");
