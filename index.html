@@ -2754,12 +2754,14 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 <div class="t-row"><div class="t-row-top"><span>PREVIEW PANEL HEIGHT</span><b id="valPreviewPanelHeight">740px</b></div><input id="slPreviewPanelHeight" type="range" min="320" max="960" value="740" step="10" aria-label="PREVIEW PANEL HEIGHT"></div>
 <div class="t-row"><div class="t-row-top"><span>MEDIA VIEWPORT HEIGHT</span><b id="valPreviewMediaHeight">440px</b></div><input id="slPreviewMediaHeight" type="range" min="200" max="700" value="440" step="10" aria-label="MEDIA VIEWPORT HEIGHT"></div>
 </div></section>
-  <section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">15</span></button><div class="t-group-body" id="t-group-photos" hidden>
+  <section class="t-group" data-tuner-group="photos"><button type="button" class="t-sec folded" aria-expanded="false" aria-controls="t-group-photos">Photo Instancing (oumahi.art)<span class="t-group-count">17</span></button><div class="t-group-body" id="t-group-photos" hidden>
 <div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoInstancing" checked><span>PHOTO INSTANCING ON SPHERE</span></label><b id="valPhotoInstancing">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><label class="chk-wrap"><input type="checkbox" id="chkPhotoCardMouseFollow" checked><span>MOUSE FOLLOW (FACE CURSOR)</span></label><b id="valPhotoCardMouseFollow">ON</b></div></div>
 <div class="t-row"><div class="t-row-top"><span>MOUSE FOLLOW STRENGTH</span><b id="valPhotoCardMouseFollowStrength">0.35</b></div><input id="slPhotoCardMouseFollowStrength" type="range" min="0" max="100" value="35" aria-label="MOUSE FOLLOW STRENGTH"></div>
 <div class="t-row"><div class="t-row-top"><span>PHOTO LAYERS PER HUB</span><b id="valPhotoCardLayers">1</b></div><input id="slPhotoCardLayers" type="range" min="1" max="4" value="1" step="1" aria-label="PHOTO LAYERS PER HUB"></div>
 <div class="t-row"><div class="t-row-top"><span>LAYER STACK SPREAD / FAN</span><b id="valPhotoCardLayerSpread">0.30</b></div><input id="slPhotoCardLayerSpread" type="range" min="0" max="100" value="30" aria-label="LAYER STACK SPREAD / FAN"></div>
+<div class="t-row"><div class="t-row-top"><span>FAUX 3D DEPTH LAYERS</span><b id="valPhotoCardFauxDepth">2</b></div><input id="slPhotoCardFauxDepth" type="range" min="0" max="4" value="2" step="1" aria-label="FAUX 3D DEPTH LAYERS"></div>
+<div class="t-row"><div class="t-row-top"><span>FAUX DEPTH SPREAD / OFFSET</span><b id="valPhotoCardFauxSpread">10px</b></div><input id="slPhotoCardFauxSpread" type="range" min="0" max="30" value="10" step="1" aria-label="FAUX DEPTH SPREAD / OFFSET"></div>
 <div class="t-row"><div class="t-row-top"><span>CARD SIZE</span><b id="valPhotoCardSize">3.00</b></div><input id="slPhotoCardSize" type="range" min="30" max="500" value="300" aria-label="CARD SIZE"></div>
 <div class="t-row"><div class="t-row-top"><span>PREVIEW TITLE FONT SIZE</span><b id="valPhotoCardTitleFontSize">24px</b></div><input id="slPhotoCardTitleFontSize" type="range" min="14" max="42" value="24" step="1" aria-label="PREVIEW TITLE FONT SIZE"></div>
 <div class="t-row"><div class="t-row-top"><span>BACKSIDE CARD DIMMING</span><b id="valPhotoCardBackDim">0.65</b></div><input id="slPhotoCardBackDim" type="range" min="0" max="100" value="65" step="1" aria-label="BACKSIDE CARD DIMMING"></div>
@@ -3151,6 +3153,8 @@ let DEFAULTS = {
   "photoCardMouseFollow": true,
   "photoCardMouseFollowStrength": 0.5,
   "photoCardLayers": 1,
+  "photoCardFauxDepth": 2,
+  "photoCardFauxSpread": 10,
   "photoCardLayerSpread": 0.4,
   "previewPanelWidth": 582,
   "previewPanelHeight": 514,
@@ -9615,7 +9619,7 @@ let INITIAL_PROJECTS = [
 function bootSupernovaEngine() {
   const $ = id => document.getElementById(id);
   const PAGE_HTML_AT_BOOT = document.documentElement.outerHTML;
-  const PRESET_VER = "v6.6-optimized-covers-2026-10-27";
+  const PRESET_VER = "v6.7-faux-depth-layers-2026-10-27";
 
   // Load any previously Set/Saved preset right at boot BEFORE initializing PARAMS & uniforms
   try {
@@ -11270,21 +11274,101 @@ function bootSupernovaEngine() {
 
     const isDraft = (node.status === "draft");
 
-    // 1. Outer mat border (Crisp white for active hubs, high-visibility bright yellow/amber for draft hubs)
-    if (isDraft) {
-      ctx.fillStyle = "#facc15";
-      ctx.fillRect(0, 0, canvasW, canvasH);
-    } else {
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvasW, canvasH);
+    // Faux 3D Depth Layers calculation
+    const fauxLayers = Math.max(0, Math.min(4, Math.round(node.fauxDepth !== undefined ? node.fauxDepth : (PARAMS.photoCardFauxDepth !== undefined ? PARAMS.photoCardFauxDepth : 2))));
+    const fauxSpread = Math.max(0, Math.min(32, Math.round(node.fauxSpread !== undefined ? node.fauxSpread : (PARAMS.photoCardFauxSpread !== undefined ? PARAMS.photoCardFauxSpread : 10))));
+
+    let insetX = 0, insetY = 0;
+    if (fauxLayers > 0 && fauxSpread > 0) {
+      insetX = Math.round(fauxLayers * fauxSpread * 0.90 + 6);
+      insetY = Math.round(fauxLayers * fauxSpread * 0.70 + 6);
+    }
+    const frontX = insetX;
+    const frontY = Math.round(insetY * 0.45);
+    const frontW = canvasW - insetX * 2;
+    const frontH = canvasH - Math.round(insetY * 1.5);
+
+    ctx.clearRect(0, 0, canvasW, canvasH);
+
+    // Render faux backing depth layers (from deepest to closest under front card)
+    if (fauxLayers > 0 && fauxSpread > 0) {
+      for (let l = fauxLayers; l >= 1; l--) {
+        const sign = (l % 2 === 1) ? 1 : -1;
+        const fanMult = isHover ? 1.38 : 1.0;
+        const offX = frontX + sign * (l * fauxSpread * 0.85) * fanMult;
+        const offY = frontY + (l * fauxSpread * 0.60) * fanMult;
+        const rollAngle = sign * (0.024 * l) * fanMult;
+
+        ctx.save();
+        const cX = offX + frontW * 0.5;
+        const cY = offY + frontH * 0.5;
+        ctx.translate(cX, cY);
+        ctx.rotate(rollAngle);
+        ctx.translate(-cX, -cY);
+
+        // Realistic drop shadow behind backing card
+        ctx.shadowColor = "rgba(0, 0, 0, 0.72)";
+        ctx.shadowBlur = 10 + l * 4;
+        ctx.shadowOffsetX = sign * (l * 3);
+        ctx.shadowOffsetY = l * 5;
+
+        // Sleek dark architectural card body
+        const cardGrad = ctx.createLinearGradient(offX, offY, offX + frontW, offY + frontH);
+        cardGrad.addColorStop(0, `rgba(18, 26, 42, ${0.95 - l * 0.08})`);
+        cardGrad.addColorStop(0.5, `rgba(10, 15, 24, ${0.96 - l * 0.06})`);
+        cardGrad.addColorStop(1, `rgba(5, 8, 14, ${0.98 - l * 0.04})`);
+        ctx.fillStyle = cardGrad;
+        ctx.fillRect(offX, offY, frontW, frontH);
+
+        ctx.shadowColor = "transparent";
+
+        // Subtle schematic grid/watermark inside backing card
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.14 / l})`;
+        ctx.lineWidth = 1.0;
+        ctx.strokeRect(offX + 4, offY + 4, frontW - 8, frontH - 8);
+
+        // Architectural edge tick marks
+        ctx.beginPath();
+        ctx.moveTo(offX + 8, offY + 8);
+        ctx.lineTo(offX + 24, offY + 8);
+        ctx.moveTo(offX + frontW - 24, offY + frontH - 8);
+        ctx.lineTo(offX + frontW - 8, offY + frontH - 8);
+        ctx.stroke();
+
+        // Crisp rim border stroke
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.75 - l * 0.16})`;
+        ctx.lineWidth = Math.max(1.5, 2.8 - l * 0.4);
+        ctx.strokeRect(offX + 0.75, offY + 0.75, frontW - 1.5, frontH - 1.5);
+
+        ctx.restore();
+      }
     }
 
+    // Cast realistic shadow from primary front card onto the faux layers below
+    ctx.save();
+    if (fauxLayers > 0) {
+      ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+      ctx.shadowBlur = 14;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 6;
+    }
+
+    // 1. Outer mat border (Crisp white for active hubs, bright yellow for draft hubs)
+    if (isDraft) {
+      ctx.fillStyle = "#facc15";
+      ctx.fillRect(frontX, frontY, frontW, frontH);
+    } else {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(frontX, frontY, frontW, frontH);
+    }
+    ctx.restore();
+
     const rawFrameW = frameW !== undefined ? frameW : (PARAMS.photoCardFrameWidth !== undefined ? PARAMS.photoCardFrameWidth : 2);
-    const pad = Math.max(isDraft ? 8 : 6, Math.round((isDraft ? rawFrameW + 3.0 : rawFrameW + 1.8) * (canvasW / 240)));
-    const photoX = pad;
-    const photoY = pad;
-    const photoW = Math.max(10, canvasW - pad * 2);
-    const photoH = Math.max(10, canvasH - pad * 2);
+    const pad = Math.max(isDraft ? 8 : 6, Math.round((isDraft ? rawFrameW + 3.0 : rawFrameW + 1.8) * (frontW / 240)));
+    const photoX = frontX + pad;
+    const photoY = frontY + pad;
+    const photoW = Math.max(10, frontW - pad * 2);
+    const photoH = Math.max(10, frontH - pad * 2);
 
     const mediaList = (node.media && node.media.length > 0) ? node.media : [];
     let currentMedia = null;
@@ -11358,8 +11442,6 @@ function bootSupernovaEngine() {
           ctx.stroke();
         }
       } else if (style === 3) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
-        ctx.lineWidth = 2.4;
         for (let a = 0; a < 16; a++) {
           const ang = (a / 16) * Math.PI * 2 + (node.id * 0.2 + layerIndex * 0.4);
           ctx.beginPath();
@@ -11480,7 +11562,7 @@ function bootSupernovaEngine() {
     if (showDot) {
       ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
       ctx.beginPath();
-      ctx.arc(canvasW * 0.5, canvasH * 0.5, 4.5, 0, Math.PI * 2);
+      ctx.arc(frontX + frontW * 0.5, frontY + frontH * 0.5, 4.5, 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = "rgba(15, 23, 42, 0.85)";
       ctx.lineWidth = 1.5;
@@ -11495,7 +11577,7 @@ function bootSupernovaEngine() {
 
     ctx.strokeStyle = isDraft ? "#eab308" : "rgba(255, 255, 255, 0.95)";
     ctx.lineWidth = isDraft ? 5.0 : 3.0;
-    ctx.strokeRect(1.5, 1.5, canvasW - 3, canvasH - 3);
+    ctx.strokeRect(frontX + 1.5, frontY + 1.5, frontW - 3, frontH - 3);
 
     return cv;
   }
@@ -13599,6 +13681,16 @@ function bootSupernovaEngine() {
     PARAMS.photoCardLayerSpread = e.target.value / 100.0;
     if ($("valPhotoCardLayerSpread")) $("valPhotoCardLayerSpread").textContent = PARAMS.photoCardLayerSpread.toFixed(2);
   });
+  bindSl("slPhotoCardFauxDepth", e => {
+    PARAMS.photoCardFauxDepth = parseInt(e.target.value, 10);
+    if ($("valPhotoCardFauxDepth")) $("valPhotoCardFauxDepth").textContent = String(PARAMS.photoCardFauxDepth);
+    refreshPhotoCardTextures();
+  });
+  bindSl("slPhotoCardFauxSpread", e => {
+    PARAMS.photoCardFauxSpread = parseInt(e.target.value, 10);
+    if ($("valPhotoCardFauxSpread")) $("valPhotoCardFauxSpread").textContent = `${PARAMS.photoCardFauxSpread}px`;
+    refreshPhotoCardTextures();
+  });
   bindSl("slThemeHue", e => {
     PARAMS.themeHue = parseInt(e.target.value, 10);
     if ($("valThemeHue")) $("valThemeHue").textContent = `${PARAMS.themeHue}°`;
@@ -13808,6 +13900,9 @@ function bootSupernovaEngine() {
     }
     s("slPhotoCardLayers", "valPhotoCardLayers", PARAMS.photoCardLayers !== undefined ? PARAMS.photoCardLayers : 1, 1, 0);
     s("slPhotoCardLayerSpread", "valPhotoCardLayerSpread", PARAMS.photoCardLayerSpread !== undefined ? PARAMS.photoCardLayerSpread : 0.30);
+    s("slPhotoCardFauxDepth", "valPhotoCardFauxDepth", PARAMS.photoCardFauxDepth !== undefined ? PARAMS.photoCardFauxDepth : 2, 1, 0);
+    if ($("slPhotoCardFauxSpread")) $("slPhotoCardFauxSpread").value = PARAMS.photoCardFauxSpread !== undefined ? PARAMS.photoCardFauxSpread : 10;
+    if ($("valPhotoCardFauxSpread")) $("valPhotoCardFauxSpread").textContent = `${PARAMS.photoCardFauxSpread !== undefined ? PARAMS.photoCardFauxSpread : 10}px`;
     if ($("chkPhotoCardBeaconDot")) {
       $("chkPhotoCardBeaconDot").checked = Boolean(PARAMS.photoCardBeaconDot);
       $("valPhotoCardBeaconDot").textContent = PARAMS.photoCardBeaconDot ? "ON" : "OFF";
