@@ -1,12 +1,12 @@
 # 🌌 Notion & Supernova 3D Sphere Sync Tracker
 
-*Last synchronized on: **2026-10-27 19:24:56 UTC****2026-10-27 17:15:34 UTC***  
+*Last synchronized on: **2026-10-27 19:53:26 UTC****2026-10-27 19:24:56 UTC****2026-10-27 17:15:34 UTC***  
 *Notion Database:* [XFOLIO All Projects](https://app.notion.com/p/mohxen/1a28e9ad444f83069d16012695f75e21?v=be08e9ad444f82fda3d388d15670d444)  
-*Total Synced Projects:* **29 / 40** (206 photos, 139 videos) (112 photos, 74 videos)  
+*Total Synced Projects:* **40 / 40 (100% COMPLETE)** (260 photos, 179 videos) (206 photos, 139 videos) (112 photos, 74 videos)  
 
 ---
 
-## 🚀 Active Synchronized Projects (Batch 1, 2 & 3: 29 Projects)
+## 🚀 Active Synchronized Projects (All 40 Notion Projects - 100% Synced)
 
 | # | Project Title | Date | Tags | Photos | Videos | Local Asset Path | Notion Page ID | Status |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- | :--- | :---: |
@@ -39,6 +39,17 @@
 | 27 | **Echoes of Eco: Immersive Botanical Instrument Performance x Politek** | `2026-04` | `Politek, Bio-Art, Interactive, Plant Music, Audiovisual, Aprile Festival` | 6 | 9 | `assets/projects/202604_echoes_of_eco_botanical_experience/` | `4068e9ad-444f-8127-b955-e7c54537be42` | ✅ Synced |
 | 28 | **Abyss of Peace: Visual Art, Silence & Dissolution at Aprile Festival** | `2026-04` | `Aprile Festival, Visual Art, Audiovisual, Scenography, Installation` | 6 | 0 | `assets/projects/202604_abyss_of_peace_visual_art/` | `4068e9ad-444f-8126-87cf-fad2d04a2a7e` | ✅ Synced |
 | 29 | **2D to 3D Neural Spatialization: Depth Maps & Gaussian Splatting in TouchDesigner** | `2026-04` | `TouchDesigner, Gaussian Splatting, Depth Map, Generative 3D, Machine Learning` | 2 | 5 | `assets/projects/202604_touchdesigner_depth_gaussian_splatting/` | `4068e9ad-444f-8169-a435-fbdee2d83d80` | ✅ Synced |
+| 30 | **Histories of Electronic Music: Listening Party Vol. 4 with Politek** | `2025-10` | `Politek, Audiovisual, Electronic Music, Stage Design, VJing` | 5 | 14 | `assets/projects/202510_listening_party_vol4_politek/` | `4068e9ad-444f-81f1-9d62-db81f7c7efae` | ✅ Synced |
+| 31 | **Synth Playground & Electronic Jam Session: Comala x Dorafaus x Politek** | `2025-06` | `Synthesizers, Politek, Hardware, Audiovisual, Live Performance` | 9 | 6 | `assets/projects/202506_synth_playground_comala_durafas/` | `4068e9ad-444f-8177-92dd-d2ee2f856345` | ✅ Synced |
+| 32 | **POULEHOUSE: 3D Computer Animation & Visual Spot in Blender** | `2025-05` | `Blender, 3D Animation, Computer Graphics, Creative Coding, CGI` | 6 | 4 | `assets/projects/202505_poulehouse_3d_animation_blender/` | `4068e9ad-444f-8139-b3d3-c0d1bfb1b62c` | ✅ Synced |
+| 33 | **Interactive Installation & Hardware Showcase: Sustainability Hub Lingotto** | `2025-05` | `Interactive, Hardware, Polito, Sustainability, Installation` | 5 | 3 | `assets/projects/202505_sustainability_hub_lingotto_polito/` | `4068e9ad-444f-818f-9c5d-fc12b933aebd` | ✅ Synced |
+| 34 | **RunPoliTO Interactive Systems & Hardware Integration x Politek** | `2025-05` | `Interactive, Politek, Polito, Creative Tech, Audiovisual` | 5 | 7 | `assets/projects/202505_runpolito_interactive_systems_politek/` | `4068e9ad-444f-8135-9c6a-ce9c716f2946` | ✅ Synced |
+| 35 | **StreamDiffusion in TouchDesigner: Realtime AI Generative Synthesis** | `2025-05` | `TouchDesigner, StreamDiffusion, Generative AI, Realtime AI, Creative Coding` | 1 | 2 | `assets/projects/202505_streamdiffusion_touchdesigner_realtime/` | `4068e9ad-444f-8150-b46c-f7f71d9bd384` | ✅ Synced |
+| 36 | **PSP & Politek Student Community: Electronic Hardware & Synth Lab** | `2025-02` | `Politek, Interactive, Creative Coding, Audiovisual, Electronics` | 1 | 1 | `assets/projects/202502_psp_politek_politecnico/` | `4068e9ad-444f-8180-a500-c8d52f76cb2c` | ✅ Synced |
+| 37 | **Pac-Man Arcade Game in Assembly & C on ARM Cortex Microcontroller** | `2024-12` | `ARM, Assembly, C, Microcontroller, Embedded, Gaming, Hardware` | 2 | 2 | `assets/projects/202412_pacman_arm_cortex_assembly/` | `4068e9ad-444f-81cd-a0bb-e879331f6ff5` | ✅ Synced |
+| 38 | **Digital Voltmeter: Embedded Systems & FPGA Hardware Implementation** | `2025-02` | `FPGA, Microcontroller, Electronics, Hardware, Sensors, TouchDesigner` | 2 | 1 | `assets/projects/202502_digital_voltmeter_embedded_fpga/` | `4068e9ad-444f-8068-880c-fba5e66a4d1a` | ✅ Synced |
+| 39 | **Custom Development Board for ATmega AVR Microcontrollers** | `2015-07` | `Microcontroller, Electronics, AVR, Hardware, Sensors` | 2 | 0 | `assets/projects/201507_atmega_avr_development_board/` | `4068e9ad-444f-80a4-9720-c5861032ca8b` | ✅ Synced |
+| 40 | **ARM Cortex-M3 LPC1768 Modular Educational Development Board** | `2016-07` | `Hardware, Embedded, Microcontroller, Sensors, iot` | 6 | 0 | `assets/projects/201607_lpc1768_arm_cortex_modular_board/` | `4058e9ad-444f-815a-9b79-f67e255f113b` | ✅ Synced |
 
 ---
 
