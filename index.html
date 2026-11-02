@@ -3267,7 +3267,7 @@ let DEFAULTS = {
   "lineParticleMix": 0.28,
   "photoInstancing": true,
   "photoCardSize": 6.53,
-  "photoCardCount": 40,
+  "photoCardCount": 49,
   "photoCardTitleFontSize": 29,
   "photoCardBackDim": 0.74,
   "photoCardAspect": 0.66,
@@ -3294,161 +3294,210 @@ let DEFAULTS = {
 };
 
 let TAG_POOL = [
-  "touchdesigner",
-  "generative",
-  "vjing",
-  "analog-synths",
-  "live",
-  "typography",
-  "bunker-turin",
-  "politek",
-  "kraftwerk",
-  "stage-design",
-  "audiovisual",
-  "poster",
-  "blender",
   "3d",
-  "computer-graphics",
-  "creative-coding",
-  "cgi",
-  "research",
-  "xr",
+  "3d-animation",
+  "3d-vision",
   "3dui",
-  "ieee",
-  "hci",
-  "vr",
-  "live-performance",
-  "namerea",
-  "joystick",
-  "muslimgauze",
-  "carpet-visuals",
-  "experimental",
-  "hardware",
-  "eurorack",
-  "plant-music",
-  "electronics",
-  "listening-party",
-  "oscilloscope",
-  "cymatics",
-  "audio-reactive",
-  "vector-art",
-  "envelop",
-  "live-av",
-  "electronic-music",
-  "interactive-poster",
-  "poster-design",
-  "graphic-design",
-  "camera-tracking",
-  "realtime",
-  "dora-night",
-  "kinect",
-  "pointcloud",
-  "dissolve",
-  "microcontroller",
-  "c",
-  "embedded",
-  "sensors",
-  "education",
-  "vector",
-  "pcb",
-  "iot",
-  "mqtt",
-  "web",
-  "shaders",
-  "procedural",
-  "calligraphy",
-  "persian",
-  "ink",
-  "graffiti",
-  "computer-vision",
-  "python",
-  "mediapipe",
-  "installation",
-  "festival",
-  "esp32",
-  "fastled",
-  "wled",
-  "projection-mapping",
-  "leadership",
-  "turin",
-  "udp",
-  "osc",
-  "art",
-  "ui",
-  "software",
-  "natural vibes",
-  "stage design",
-  "laser mapping",
-  "video mapping",
-  "interactive",
+  "ableton-live",
+  "adc",
+  "addressable-leds",
+  "ambient-installation",
+  "analog-electronics",
+  "analog-synths",
+  "aprile-festival",
+  "arabic-typography",
+  "arcade-controller",
+  "architectural-lighting",
   "arduino",
-  "led",
-  "ultrasonic",
-  "web ui",
-  "gyroscope",
-  "stage lighting",
-  "laser",
-  "robotics",
-  "infinity mirror",
-  "interactive installation",
-  "s2 mini",
-  "pixel art",
-  "display",
-  "raspberry pi",
-  "bash",
-  "video streaming",
-  "linux",
-  "creative engineering",
-  "project x festival",
-  "dmx",
-  "architectural",
-  "projection mapping",
-  "bright festival",
-  "florence",
-  "stage setup",
-  "production",
-  "gamification",
-  "aprile festival",
-  "creative tech",
-  "bio-art",
-  "plant music",
-  "visual art",
-  "scenography",
-  "gaussian splatting",
-  "depth map",
-  "generative 3d",
-  "machine learning",
-  "electronic music",
-  "synthesizers",
-  "live performance",
-  "3d animation",
-  "computer graphics",
-  "creative coding",
-  "polito",
-  "sustainability",
-  "streamdiffusion",
-  "generative ai",
-  "realtime ai",
-  "arm",
+  "arm-cortex-m3",
+  "art",
   "assembly",
-  "gaming",
+  "atmega",
+  "audio-reactive",
+  "audio-synthesis",
+  "audiovisual",
+  "audiovisual-collaboration",
+  "avr",
+  "bare-metal",
+  "bash",
+  "bio-art",
+  "bio-sensing",
+  "blender",
+  "body-as-interface",
+  "brian-eno",
+  "bright-festival",
+  "bunker-turin",
+  "c",
+  "calligraphy",
+  "camera-tracking",
+  "cgi",
+  "character-rigging",
+  "club-scenography",
+  "comala",
+  "community-jam",
+  "computer-graphics",
+  "computer-vision",
+  "creative-coding",
+  "creative-engineering",
+  "creative-production",
+  "creative-tech",
+  "cultural-memory",
+  "cycles-render",
+  "dance",
+  "depth-map",
+  "depth-sensor",
+  "dma",
+  "dmx",
+  "dora-night",
+  "dorafaus",
+  "electronic-music-history",
+  "electronics",
+  "embedded",
+  "embedded-systems",
+  "embedded-video",
+  "envelop",
+  "esp32",
+  "esp32-s2",
+  "eurorack",
+  "event-tech",
+  "experimental-sound",
+  "festival",
+  "festival-production",
+  "firmware",
+  "florence",
   "fpga",
-  "avr"
+  "game-dev",
+  "game-development",
+  "gamification",
+  "gaussian-splatting",
+  "generative-3d",
+  "generative-ai",
+  "generative-art",
+  "generative-type",
+  "generative-visuals",
+  "gestural-interface",
+  "glitch-art",
+  "glsl",
+  "glsl-shaders",
+  "graphic-design",
+  "gyroscope",
+  "hardware",
+  "hardware-engineering",
+  "hardware-hacking",
+  "hardware-showcase",
+  "human-computer-interaction",
+  "ieee",
+  "imu",
+  "infinity-mirror",
+  "instrumentation",
+  "interactive",
+  "interactive-installation",
+  "interactive-poster",
+  "interactive-sculpture",
+  "joystick",
+  "kinect",
+  "kinetic-art",
+  "kinetic-typography",
+  "kraftwerk",
+  "laser-control",
+  "laser-installation",
+  "laser-mapping",
+  "leapmotion",
+  "led-mapping",
+  "linux",
+  "lissajous",
+  "listening-party",
+  "live-audio",
+  "live-av",
+  "live-jam",
+  "live-performance",
+  "live-visuals",
+  "lpc1768",
+  "m5stack",
+  "madmapper",
+  "microcontroller",
+  "minimalism",
+  "motion-graphics",
+  "muslimgauze",
+  "namerea",
+  "natural-vibes",
+  "networking",
+  "opengl",
+  "optical-flow",
+  "os",
+  "osc",
+  "oscilloscope-art",
+  "outdoor-installation",
+  "particle-systems",
+  "pcb-design",
+  "persian-art",
+  "persian-carpet",
+  "physical-computing",
+  "pixel-shaders",
+  "plant-music",
+  "pointcloud",
+  "politecnico",
+  "politecnico-di-torino",
+  "politek",
+  "polito",
+  "poster",
+  "project-x",
+  "projection-mapping",
+  "python",
+  "raspberry-pi",
+  "realtime-ai",
+  "research-paper",
+  "resolume",
+  "robotics",
+  "runpolito",
+  "scenography",
+  "sensors",
+  "spi",
+  "spi-display",
+  "stage-design",
+  "stage-lighting",
+  "stage-production",
+  "streamdiffusion",
+  "sustainability",
+  "synthesizers",
+  "textile-aesthetics",
+  "thesis",
+  "touchdesigner",
+  "traditional-media",
+  "typography",
+  "udp",
+  "ultrasonic-sensor",
+  "unity3d",
+  "upcycling",
+  "vector-graphics",
+  "video-mapping",
+  "video-streaming",
+  "virtual-reality",
+  "visual-art",
+  "visual-arts",
+  "visual-identity",
+  "vjing",
+  "web-ui",
+  "workshop",
+  "xenos",
+  "xr"
 ];
 
 let INITIAL_PROJECTS = [
   {
-    "t": "Custom Development Board for ATmega AVR Microcontrollers",
+    "t": "Modular Development Board for ATmega AVR",
     "d": "2015-07",
     "status": "active",
     "g": [
-      "Microcontroller",
-      "Electronics",
-      "AVR",
-      "Hardware",
-      "Sensors"
+      "avr",
+      "atmega",
+      "pcb-design",
+      "hardware",
+      "embedded-systems",
+      "electronics",
+      "microcontroller"
     ],
-    "x": 0,
+    "x": "A modular hardware development and educational board designed around the 8-bit ATmega AVR microcontroller family. The circuit board features onboard regulated power supplies, ISP programming headers, modular expansion connectors, and integrated peripheral interfaces for character LCDs, 7-segment displays, ADC potentiometer inputs, relays, and GPIO breakout matrices used for rapid embedded prototyping.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -3456,6 +3505,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_39.jpg",
     "media": [
       {
         "type": "photo",
@@ -3487,17 +3537,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "ARM Cortex-M3 LPC1768 Modular Educational Development Board",
+    "t": "ARM Cortex-M3 LPC1768 Multi-Peripheral Board",
     "d": "2016-07",
     "status": "active",
     "g": [
-      "Hardware",
-      "Embedded",
-      "Microcontroller",
-      "Sensors",
-      "iot"
+      "arm-cortex-m3",
+      "lpc1768",
+      "pcb-design",
+      "hardware-engineering",
+      "thesis",
+      "embedded",
+      "microcontroller"
     ],
-    "x": 0,
+    "x": "My Bachelor's graduation engineering thesis project: the complete schematic design, PCB layout, fabrication, and firmware development of a comprehensive modular evaluation platform powered by the 32-bit NXP LPC1768 ARM Cortex-M3 microcontroller. The board integrates hardware drivers and breakout headers for color graphic TFT displays, touchscreens, SD cards via SPI, USB connectivity, DAC audio outputs, RS-232, and analog sensor acquisition buses.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -3505,6 +3557,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_40.jpg",
     "media": [
       {
         "type": "photo",
@@ -3588,19 +3641,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Pac-Man Arcade Game in Assembly & C on ARM Cortex Microcontroller",
-    "d": "2024-12",
+    "t": "Calligraphic Forms & Typographic Studies",
+    "d": "2020",
     "status": "active",
     "g": [
-      "ARM",
-      "Assembly",
-      "C",
-      "Microcontroller",
-      "Embedded",
-      "Gaming",
-      "Hardware"
+      "calligraphy",
+      "typography",
+      "persian-art",
+      "visual-arts",
+      "traditional-media",
+      "art"
     ],
-    "x": 0,
+    "x": "A curated personal collection of hand-drawn Persian calligraphy and experimental Latin typographic studies using traditional reed pens, brushes, and ink. These exercises examine spatial balance, stroke velocity, curvature dynamics, and structural geometry. Beyond classical craftsmanship, these tactile calligraphic explorations form the core geometric and rhythmic foundation that informs my digital generative typography, vector synthesis, and kinetic motion experiments in TouchDesigner.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -3608,6 +3660,254 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_41.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20231227_181613.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20231227_181613.jpg",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_41.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240109_234927_221.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240109_234927_221.jpg",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240208_094130.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240208_094130.jpg",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240216_174418.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240216_174418.jpg",
+        "video": "",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240219_012041.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240219_012041.jpg",
+        "video": "",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240219_012129.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/IMG_20240219_012129.jpg",
+        "video": "",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-01-30_10-45-34-772.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-01-30_10-45-34-772.jpg",
+        "video": "",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-01-30_10-50-57-163.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-01-30_10-50-57-163.jpg",
+        "video": "",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-02_06-07-58-229.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-02_06-07-58-229.jpg",
+        "video": "",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-15-27-373.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-15-27-373.jpg",
+        "video": "",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-27-36-262.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-27-36-262.jpg",
+        "video": "",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-53-17-962.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-53-17-962.jpg",
+        "video": "",
+        "x": 680,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-57-29-265.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Picsart_24-02-19_03-57-29-265.jpg",
+        "video": "",
+        "x": 140,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/q.png",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/q.png",
+        "video": "",
+        "x": 320,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/Screenshot_2026-11-02_002431.png",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/Screenshot_2026-11-02_002431.png",
+        "video": "",
+        "x": 500,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/unaware.jpg",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/unaware.jpg",
+        "video": "",
+        "x": 680,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/2020_calligraphic_forms_persian_typography/zz.png",
+        "img": "assets/projects/2020_calligraphic_forms_persian_typography/zz.png",
+        "video": "",
+        "x": 140,
+        "y": 610,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      }
+    ]
+  },
+  {
+    "t": "Pac-Man: Bare-Metal ARM Cortex-M3 & Assembly",
+    "d": "2024-12",
+    "status": "active",
+    "g": [
+      "arm-cortex-m3",
+      "assembly",
+      "c",
+      "bare-metal",
+      "game-dev",
+      "lpc1768",
+      "embedded"
+    ],
+    "x": "A bare-metal hardware implementation of the legendary Pac-Man arcade game built entirely in ARM Cortex-M3 assembly language and C on the Landtiger LPC1768 development board. The project features custom frame-buffer graphics rendering on a 320x240 color TFT LCD, hardware timer-driven sound synthesis for arcade chimes and game sound effects, joystick interrupt routines, and cycle-optimized ghost pathfinding logic running without an operating system.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_37.jpg",
     "media": [
       {
         "type": "photo",
@@ -3665,17 +3965,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "PSP & Politek Student Community: Electronic Hardware & Synth Lab",
+    "t": "PSP: Plant Signal Processing Bio-Synthesizer",
     "d": "2025-02",
     "status": "active",
     "g": [
-      "Politek",
-      "Interactive",
-      "Creative Coding",
-      "Audiovisual",
-      "Electronics"
+      "politek",
+      "bio-sensing",
+      "plant-music",
+      "esp32",
+      "hardware",
+      "analog-electronics",
+      "synthesizers"
     ],
-    "x": 0,
+    "x": "An open-source bio-musical instrument and hardware interface developed under the Politek collective that converts the electrical impedance and micro-voltage biorhythms of living plants into MIDI and sound. Using high-sensitivity analog operational amplifiers and an ESP32 microcontroller, human touch and moisture changes on plant foliage are converted into note triggers, control voltages (CV), and MIDI signals to drive synthesizers in Ableton Live.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -3683,6 +3985,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_36.jpg",
     "media": [
       {
         "type": "photo",
@@ -3714,18 +4017,20 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Digital Voltmeter: Embedded Systems & FPGA Hardware Implementation",
+    "t": "Hybrid FPGA & Microcontroller Digital Voltmeter",
     "d": "2025-02",
     "status": "active",
     "g": [
-      "FPGA",
-      "Microcontroller",
-      "Electronics",
-      "Hardware",
-      "Sensors",
-      "TouchDesigner"
+      "fpga",
+      "arduino",
+      "embedded-systems",
+      "adc",
+      "spi",
+      "hardware",
+      "instrumentation",
+      "electronics"
     ],
-    "x": 0,
+    "x": "A hybrid instrumentation system designed and implemented using an Arduino Mega 2560 and an FPGA to perform precision voltage sampling and hardware performance benchmarking. The project compared the internal 10-bit successive-approximation ADC of the AVR microcontroller against an external 8-bit FPGA-based ADC pipeline with high-speed SRAM temporary storage. Sampled values were formatted across SPI and displayed in real-time on an I2C OLED screen.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -3733,6 +4038,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_38.jpg",
     "media": [
       {
         "type": "photo",
@@ -3777,17 +4083,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "POULEHOUSE: 3D Computer Animation & Visual Spot in Blender",
+    "t": "POULEHOUSE: 3D Character Commercial Animation",
     "d": "2025-05",
     "status": "active",
     "g": [
-      "Blender",
-      "3D Animation",
-      "Computer Graphics",
-      "Creative Coding",
-      "CGI"
+      "blender",
+      "3d-animation",
+      "character-rigging",
+      "cgi",
+      "cycles-render",
+      "computer-graphics"
     ],
-    "x": 0,
+    "x": "A full 3D animated commercial spot produced for the Computer Animation Master's coursework at Politecnico di Torino. Built from initial concept art and storyboards to final post-production entirely in Blender, the project involved complete polygonal modeling, rigging, weight painting, expressive character keyframe animation, procedural texturing, and multi-pass Cycles rendering. The narrative delivers a humorous commercial spot spotlighting animal welfare with cinematic camera direction and comedic timing.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -3795,6 +4102,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_32.jpg",
     "media": [
       {
         "type": "photo",
@@ -3930,17 +4238,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Interactive Installation & Hardware Showcase: Sustainability Hub Lingotto",
+    "t": "Sustainability Hub Lingotto: Eco-Interactive Electronics",
     "d": "2025-05",
     "status": "active",
     "g": [
-      "Interactive",
-      "Hardware",
-      "Polito",
-      "Sustainability",
-      "Installation"
+      "sustainability",
+      "politecnico-di-torino",
+      "physical-computing",
+      "hardware",
+      "interactive-installation",
+      "polito"
     ],
-    "x": 0,
+    "x": "Interactive technology exhibits and maker showcase presented at the Sustainability Hub in Politecnico di Torino's Lingotto campus. I exhibited custom sustainable hardware prototypes, solar-assisted sensor gadgets, and bio-interactive plant monitoring interfaces. Visitors engaged directly with working prototypes, demonstrating how creative physical computing and low-power electronics can foster ecological awareness and interactive education.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -3948,6 +4257,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_33.jpg",
     "media": [
       {
         "type": "photo",
@@ -4057,17 +4367,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "RunPoliTO Interactive Systems & Hardware Integration x Politek",
+    "t": "RunPoliTO: Interactive Event Installations",
     "d": "2025-05",
     "status": "active",
     "g": [
-      "Interactive",
-      "Politek",
-      "Polito",
-      "Creative Tech",
-      "Audiovisual"
+      "runpolito",
+      "politek",
+      "interactive-installation",
+      "physical-computing",
+      "event-tech",
+      "politecnico"
     ],
-    "x": 0,
+    "x": "Interactive hardware and audiovisual installations designed and deployed for the university-wide RunPoliTO marathon event in Turin with the Politek collective. We engineered participatory outdoor sensory stations, including distance sensor triggers, interactive visual countdown timers, and celebratory audio-reactive projection mapping to energize runners and spectators along the race course and finish line plaza.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -4075,6 +4386,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_34.jpg",
     "media": [
       {
         "type": "photo",
@@ -4236,17 +4548,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "StreamDiffusion in TouchDesigner: Realtime AI Generative Synthesis",
+    "t": "StreamDiffusion: Realtime AI Synthesis in TouchDesigner",
     "d": "2025-05",
     "status": "active",
     "g": [
-      "TouchDesigner",
-      "StreamDiffusion",
-      "Generative AI",
-      "Realtime AI",
-      "Creative Coding"
+      "streamdiffusion",
+      "touchdesigner",
+      "generative-ai",
+      "realtime-ai",
+      "python",
+      "creative-coding"
     ],
-    "x": 0,
+    "x": "An experimental integration bridging real-time generative AI diffusion models directly into TouchDesigner's live pipeline. Using the low-latency StreamDiffusion framework over local Python sockets, live camera inputs and 2D canvas textures were continuously transformed through image-to-image neural models at 30+ frames per second, demonstrating how generative neural models can be steered live like an interactive visual synthesizer.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -4254,6 +4567,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_35.jpg",
     "media": [
       {
         "type": "photo",
@@ -4298,17 +4612,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Synth Playground & Electronic Jam Session: Comala x Dorafaus x Politek",
+    "t": "Synth Playground: Community Modular Jam at Comala",
     "d": "2025-06",
     "status": "active",
     "g": [
-      "Synthesizers",
-      "Politek",
-      "Hardware",
-      "Audiovisual",
-      "Live Performance"
+      "synthesizers",
+      "politek",
+      "community-jam",
+      "comala",
+      "live-audio",
+      "hardware",
+      "eurorack"
     ],
-    "x": 0,
+    "x": "An open-access community synth playground and live modular jam session organized at Comala in Turin by Politek and Durafaus. We assembled tables of analog synthesizers, drum machines, DIY Eurorack gear, and pedals, inviting musicians, students, and curious visitors to plug in, jam, and collaborate. I managed audio routing, technical setup, and projected reactive generative visual backdrops that responded to the collective multi-hour jam.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -4316,6 +4632,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_31.jpg",
     "media": [
       {
         "type": "photo",
@@ -4516,17 +4833,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Histories of Electronic Music: Listening Party Vol. 4 with Politek",
+    "t": "Listening Party Vol. 4: Early Electronic Music Heritage",
     "d": "2025-10",
     "status": "active",
     "g": [
-      "Politek",
-      "Audiovisual",
-      "Electronic Music",
-      "Stage Design",
-      "VJing"
+      "politek",
+      "listening-party",
+      "electronic-music-history",
+      "stage-design",
+      "audiovisual",
+      "vjing"
     ],
-    "x": 0,
+    "x": "Curated audiovisual scenography and stage design for Listening Party Vol. 4 hosted by the Politek student collective. Dedicated to early avant-garde electronic sound, Musique Concrète, and tape experiments, the visual system generated minimalist vector typography, tape reel mechanical simulations, and historical archival imagery projected across architectural surfaces, creating an intimate educational and sonic community gathering.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -4534,6 +4852,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_30.jpg",
     "media": [
       {
         "type": "photo",
@@ -4786,17 +5105,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Listening Party Vol. 5: Histories of Electronic Music Stage & Generative Visuals x Politek",
+    "t": "Listening Party Vol. 5: Histories of Electronic Music",
     "d": "2025-11",
     "status": "active",
     "g": [
       "politek",
       "listening-party",
       "stage-design",
-      "audiovisual",
-      "vjing"
+      "projection-mapping",
+      "electronic-music-history",
+      "audiovisual"
     ],
-    "x": "Live generative stage visuals and projection mapping for Listening Party Vol. 5 exploring electronic music history with Politek.",
+    "x": "Stage scenography, spatial lighting, and multi-screen visual projection mapping designed for Listening Party Vol. 5 with the Politek collective. The visual narrative accompanied a historical journey through the evolution of early electronic sound, tape music, and ambient minimalism. Using TouchDesigner, generative animations simulated oscilloscope traces, analog tape head reels, and minimalist geometric waveforms synchronized to live curated musical chapters.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -4804,6 +5124,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_10.jpg",
     "media": [
       {
         "type": "photo",
@@ -4913,17 +5234,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Oscilloscope Art & Analog Waveform Visual Synthesis",
+    "t": "Oscilloscope Art & Lissajous Vector Synthesis",
     "d": "2025-11",
     "status": "active",
     "g": [
-      "oscilloscope",
-      "cymatics",
-      "audio-reactive",
-      "vector-art",
-      "touchdesigner"
+      "oscilloscope-art",
+      "vector-graphics",
+      "lissajous",
+      "touchdesigner",
+      "audio-synthesis",
+      "analog-electronics"
     ],
-    "x": "Analog waveform synthesis, vector graphics, and oscilloscope art exploring direct audio-to-visual modulation and Lissajous patterns.",
+    "x": "An audiovisual study exploring classic oscilloscope vector graphics using dual-channel audio signals in XY mode. By synthesizing calibrated sine and cosine wave phase relationships in software and routing them to cathode-ray tube (CRT) hardware and TouchDesigner vector emulators, sound literally draws visual form. Complex harmonic ratios and musical chords generate evolving Lissajous figures, 3D rotating cubes, and intricate harmonic wireframes without traditional pixel buffers.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -4931,6 +5253,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_11.jpg",
     "media": [
       {
         "type": "photo",
@@ -5027,17 +5350,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Envelop Electronic Music Live Set: Stage & Audiovisual Performance",
+    "t": "Envelop: Live Stage Scenography & Audiovisual Set",
     "d": "2025-11",
     "status": "active",
     "g": [
       "envelop",
-      "stage-design",
       "live-av",
-      "electronic-music",
-      "touchdesigner"
+      "stage-lighting",
+      "touchdesigner",
+      "vjing",
+      "scenography"
     ],
-    "x": "Stage lighting, visual performance, and live reactive audiovisuals delivered for the Envelop electronic live music event.",
+    "x": "Full stage lighting design, generative visuals, and live AV performance executed for the Envelop electronic music event. I developed custom TouchDesigner networks to synchronize architectural stage lighting, vertical projection pillars, and atmospheric strobes with the live electronic music sets. The visual system transitioned seamlessly between ambient organic fluid simulations and high-contrast strobing vector grids, echoing the dramatic dynamic shifts of the performance.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -5045,6 +5369,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_12.jpg",
     "media": [
       {
         "type": "photo",
@@ -5310,17 +5635,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Envelop Live Set: Interactive Audiovisual Poster & Visual Identity",
+    "t": "Envelop: Interactive Poster & Visual Identity",
     "d": "2025-11",
     "status": "active",
     "g": [
-      "interactive-poster",
       "envelop",
-      "poster-design",
-      "audiovisual",
-      "graphic-design"
+      "interactive-poster",
+      "visual-identity",
+      "graphic-design",
+      "touchdesigner",
+      "poster"
     ],
-    "x": "Audiovisual interactive poster design and event identity for the Envelop electronic music live set.",
+    "x": "Visual identity, typography, and interactive poster design created for the Envelop live electronic music series. Moving beyond static promotional graphics, the poster was engineered in TouchDesigner as an audio-reactive, interactive visual piece. Typography and warped structural frames fluctuate with ambient microphone sound and mouse interaction, bridging graphic print design with interactive new media.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -5328,6 +5654,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_13.jpg",
     "media": [
       {
         "type": "photo",
@@ -5463,17 +5790,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Dora Night: Realtime Camera Tracking & Generative Visual Performance in TouchDesigner",
+    "t": "Dora Night: Optical Flow & Live Camera Tracking",
     "d": "2025-11",
     "status": "active",
     "g": [
+      "optical-flow",
       "camera-tracking",
-      "realtime",
+      "live-visuals",
       "touchdesigner",
       "dora-night",
-      "live-performance"
+      "computer-vision"
     ],
-    "x": "Realtime stage performance integrating live camera tracking, optical flow, and generative visuals in TouchDesigner for Dora Night.",
+    "x": "Real-time interactive stage performance created for Dora Night in Turin. Using live low-latency camera feeds pointed at the stage and performers, TouchDesigner calculated optical flow vectors and motion velocity fields in real time. The performers' physical movements continuously smeared, ignited, and displaced live generative video feedback onto large-scale projections, dissolving the boundary between performer and digital projection.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -5481,6 +5809,7 @@ let INITIAL_PROJECTS = [
       -4.87,
       4.92
     ],
+    "cover": "assets/covers/cover_14.jpg",
     "media": [
       {
         "type": "photo",
@@ -5577,17 +5906,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Particle Dissolve Visual Effects with Kinect Depth Sensing in TouchDesigner",
+    "t": "Kinect Depth Sensing: Point Cloud Dissolve Effects",
     "d": "2025-11",
     "status": "active",
     "g": [
       "kinect",
       "pointcloud",
-      "dissolve",
       "touchdesigner",
+      "particle-systems",
+      "depth-sensor",
+      "glsl",
       "creative-coding"
     ],
-    "x": "Realtime depth-sensing experiments and particle dissolve visual effects built using Microsoft Kinect integration in TouchDesigner.",
+    "x": "Experimental creative coding research in TouchDesigner using the Microsoft Kinect V2 depth sensor. By extracting real-time 3D point cloud coordinate buffers (XYZ + RGB), custom GPU particle systems simulated physical disintegration and gravity dissolution effects on human bodies standing before the sensor. When users waved or stepped forward, their 3D voxel representations dissolved into thousands of free-floating luminous particles.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -5595,6 +5926,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_15.jpg",
     "media": [
       {
         "type": "photo",
@@ -5691,17 +6023,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Experimental Jam & Live Visual Performance colab with Namerea",
+    "t": "Namerea Collab: Experimental Audiovisual Jam",
     "d": "2025-12",
     "status": "active",
     "g": [
-      "live-performance",
-      "generative",
+      "audiovisual-collaboration",
       "touchdesigner",
-      "audiovisual",
+      "live-jam",
+      "experimental-sound",
+      "generative-visuals",
       "namerea"
     ],
-    "x": "Collaborative experimental audiovisual performance and local live jam session created in partnership with Namerea.",
+    "x": "A collaborative live audiovisual performance developed in direct synergy with sound artist Namerea. Using TouchDesigner connected to Namerea's live hardware synth feeds and acoustic percussions via multi-channel audio interfaces, I built bespoke reactive visual shaders where high-transient percussive hits triggered organic particle dispersion and fluid feedback loops, creating an unscripted, symbiotic live sonic and visual dialogue.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -5709,6 +6042,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_06.jpg",
     "media": [
       {
         "type": "photo",
@@ -5792,17 +6126,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Visual Performance for Sintetica Electronic Jam at Bunker Club Turin (Joystick Integration)",
+    "t": "Sintetica Jam at Bunker: Joystick-Driven VJ System",
     "d": "2025-12",
     "status": "active",
     "g": [
+      "vjing",
       "touchdesigner",
-      "joystick",
-      "live",
+      "physical-computing",
       "bunker-turin",
-      "vjing"
+      "live-performance",
+      "arcade-controller",
+      "joystick"
     ],
-    "x": "Live VJ performance and joystick-driven generative visual system built in TouchDesigner for the Sintetica electronic jam at Bunker Club Turin.",
+    "x": "Live VJ performance delivered for the Sintetica electronic jam at Bunker Club in Turin. To break away from automated audio-reactive presets, I integrated a physical arcade joystick and multi-switch arcade button interface into TouchDesigner via USB HID. This allowed me to manually steer generative feedback vectors, punch in video glitches, and shift optical color look-up tables with the physical tactility of an arcade gamer, perfectly matching the high-tempo live electronic jam.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -5810,6 +6146,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_07.jpg",
     "media": [
       {
         "type": "photo",
@@ -6010,17 +6347,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Experimental Visual Performance: Muslimgauze & Persian Carpet Textures",
+    "t": "Muslimgauze & Carpet Textures: Generative Visual Study",
     "d": "2025-12",
     "status": "active",
     "g": [
-      "muslimgauze",
-      "carpet-visuals",
-      "experimental",
+      "generative-art",
       "touchdesigner",
-      "audiovisual"
+      "muslimgauze",
+      "cultural-memory",
+      "textile-aesthetics",
+      "persian-carpet"
     ],
-    "x": "Experimental home studio audiovisual study exploring textured live visual performances driven by Muslimgauze percussion and organic textures.",
+    "x": "A home-studio experimental visual exploration examining cultural memory, rhythm, and material texture. Setting the dense, rhythmic percussions of Muslimgauze as the auditory spine, I photographed intricate Persian rug weaves and processed them through TouchDesigner feedback displacements, edge-detection TOPs, and geometric mirrors. The intricate textile knots and floral medallions dissolved and recombined in lockstep with the polyrhythmic Middle Eastern percussion.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -6028,6 +6366,7 @@ let INITIAL_PROJECTS = [
       -4.66,
       -7
     ],
+    "cover": "assets/covers/cover_08.jpg",
     "media": [
       {
         "type": "photo",
@@ -6124,17 +6463,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Hardware & Electronics Instrument Showcase: Eurorack, Pedals & Bio-Interactive Plant Music x Politek",
+    "t": "PoliTeK Hardware Showcase: Eurorack, Pedals & Plant Synthesizers",
     "d": "2025-12",
     "status": "active",
     "g": [
-      "hardware",
       "politek",
+      "hardware-showcase",
       "eurorack",
-      "plant-music",
-      "electronics"
+      "synthesizers",
+      "electronics",
+      "plant-music"
     ],
-    "x": "Hands-on exhibition and review of custom hardware, Eurorack modular synthesizers, effects pedals, and bio-interactive plant music devices with Politek.",
+    "x": "An interactive hardware showcase and technology exhibition organized for the Politek student collective meeting at Politecnico di Torino. I curated and exhibited custom-built Eurorack synthesizer modules, modified analog effects pedals, and our proprietary bio-conductive PSP (Plant Signal Processing) interface. Students and guests interacted directly with patched modular cables and bio-feedback circuits, demystifying the electronics behind analog sound synthesis and live interactive installations.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -6142,6 +6482,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_09.jpg",
     "media": [
       {
         "type": "photo",
@@ -6381,18 +6722,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "3DUI IEEE Paper: Adaptive XR Presentation System via Diegetic Cluster Lenses",
+    "t": "IEEE 3DUI Paper: Adaptive XR Attention Feedback System",
     "d": "2026-01",
     "status": "active",
     "g": [
-      "research",
-      "xr",
-      "3dui",
       "ieee",
-      "hci",
-      "vr"
+      "research-paper",
+      "virtual-reality",
+      "xr",
+      "human-computer-interaction",
+      "unity3d",
+      "3dui"
     ],
-    "x": "IEEE 3DUI academic publication: Adaptive XR Presentation System Presenter with Controlled Attention Feedback via Diegetic Cluster Lenses.",
+    "x": "Peer-reviewed research publication accepted at the IEEE 3DUI (3D User Interfaces) symposium. The paper presents an adaptive Extended Reality (XR) presentation framework featuring a diegetic cluster lens interface that tracks audience gaze distribution and delivers real-time attention feedback to presenters. I contributed to the Unity/C# virtual reality implementation, spatial interface design, and experimental user study evaluations comparing non-intrusive HUD feedback with traditional presentation aids.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -6400,6 +6742,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_05.jpg",
     "media": [
       {
         "type": "photo",
@@ -6522,17 +6865,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Brian Eno, Kraftwerk: Stage, Visuals & Poster for Listening Party Vol. 6 x Politek",
+    "t": "Listening Party Vol. 6: Brian Eno & Kraftwerk Homage",
     "d": "2026-02",
     "status": "active",
     "g": [
       "politek",
+      "listening-party",
       "kraftwerk",
+      "brian-eno",
       "stage-design",
-      "audiovisual",
-      "poster"
+      "visual-identity",
+      "touchdesigner"
     ],
-    "x": "Poster identity, stage design, and generative visual sets dedicated to Brian Eno and Kraftwerk for Listening Party Vol. 6 x Politek.",
+    "x": "Complete artistic direction, poster print identity, and generative stage visuals produced for Listening Party Vol. 6 with the Politek collective, celebrating the seminal legacies of Brian Eno and Kraftwerk. The stage visuals paid homage to Kraftwerk's early computer graphics, green phosphor vector terminals, and Eno's pioneering ambient tape loops through real-time TouchDesigner generative networks, creating a cohesive historical and futuristic visual dialogue.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -6540,6 +6885,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_03.jpg",
     "media": [
       {
         "type": "photo",
@@ -6818,17 +7164,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Post-Apocalyptic Scene: Blender & OpenGL Dash Game (POULEHOUSE)",
+    "t": "Post-Apocalyptic Environment & OpenGL Dash Engine",
     "d": "2026-02",
     "status": "active",
     "g": [
+      "opengl",
       "blender",
-      "3d",
+      "c++",
       "computer-graphics",
-      "creative-coding",
-      "cgi"
+      "glsl-shaders",
+      "game-development",
+      "3d"
     ],
-    "x": "3D animated commercial spot 'POULEHOUSE' produced for Computer Animation coursework utilizing Blender for modeling, texturing, and rendering.",
+    "x": "Final delivery for the Computer Graphics Master's coursework at Politecnico di Torino. The project combined 3D asset modeling, atmospheric lighting, and texturing of an expansive post-apocalyptic cityscape in Blender with an interactive C++/OpenGL game engine. I implemented custom GLSL vertex and fragment shaders for dynamic fog, specular lighting models, shadow mapping, and camera collision physics, running an interactive third-person dash navigation through the derelict environment.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -6836,6 +7184,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_04.jpg",
     "media": [
       {
         "type": "photo",
@@ -7218,17 +7567,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Visual performance for synth analog jam and electronic music fest - Dorafaus",
+    "t": "Dorafaus Synth Jam: Generative VJ Set",
     "d": "2026-03",
     "status": "active",
     "g": [
-      "touchdesigner",
-      "generative",
       "vjing",
+      "touchdesigner",
+      "generative-art",
+      "live-visuals",
       "analog-synths",
-      "live"
+      "audio-reactive",
+      "dorafaus"
     ],
-    "x": "Generative VJ set and live reactive visuals completely programmed in TouchDesigner for analog synth jam and electronic music festival at Dorafaus.",
+    "x": "A completely live, unrendered generative VJ performance delivered for an analog synthesizer jam and electronic music gathering at Dorafaus. Programmed entirely within TouchDesigner, the visual engine utilized real-time audio FFT spectral analysis and MIDI clock sync to drive modular TOP feedback loops, reaction-diffusion simulations, and geometric distortion shaders. The visuals reacted organically to the raw, fluctuating analog waveforms produced by modular synthesizer performers on stage.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -7236,6 +7587,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_01.jpg",
     "media": [
       {
         "type": "photo",
@@ -7488,17 +7840,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Preparation stage and VJing for electronic music event in Bunker Turin",
+    "t": "Bunker Turin: Arabic Typographic VJ Performance",
     "d": "2026-03",
     "status": "active",
     "g": [
-      "touchdesigner",
-      "typography",
       "vjing",
+      "touchdesigner",
+      "arabic-typography",
       "bunker-turin",
-      "live"
+      "live-performance",
+      "club-scenography",
+      "typography"
     ],
-    "x": "Stage visual preparation and live VJing for electronic music event at Bunker Turin, experimenting with reactive Arabic typography in TouchDesigner.",
+    "x": "Stage setup, visual scenography, and live VJ performance at Bunker Club in Turin, centered around kinetic experimentation with Arabic calligraphy and typography. In TouchDesigner, I designed parametric systems that fractured, distorted, and reassembled Arabic calligraphic ligatures in sync with heavy sub-bass and rhythmic percussive hits. The fusion of Middle Eastern typographic heritage with industrial underground club culture created a distinct aesthetic resonance on the dance floor.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -7506,6 +7860,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_02.jpg",
     "media": [
       {
         "type": "photo",
@@ -7563,17 +7918,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Bright Festival Florence: Backstage Operations & TouchDesigner Workshop",
+    "t": "Bright Festival Florence: Production & TouchDesigner Workshop",
     "d": "2026-04",
     "status": "active",
     "g": [
-      "Bright Festival",
-      "Florence",
-      "TouchDesigner",
-      "Stage Setup",
-      "Production"
+      "bright-festival",
+      "florence",
+      "touchdesigner",
+      "creative-production",
+      "projection-mapping",
+      "workshop"
     ],
-    "x": 0,
+    "x": "Hands-on technical production residency and masterclass workshop experience at Bright Festival in Florence, Italy. I contributed to the backstage installation, cabling, network infrastructure, and hardware maintenance of international interactive digital art exhibits and large-scale projection mapping installations. In parallel, I attended advanced TouchDesigner creative coding masterclasses focusing on GLSL shaders, multi-projector blending, and real-time generative visual optimization.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -7581,6 +7937,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_25.jpg",
     "media": [
       {
         "type": "photo",
@@ -7794,17 +8151,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "The Great Mau Secrets: Interactive Installation for Cats at Aprile Festival",
+    "t": "The Great Mau Secrets: Interactive Installation for Cats",
     "d": "2026-04",
     "status": "active",
     "g": [
-      "Interactive",
-      "Installation",
-      "Gamification",
-      "Aprile Festival",
-      "Creative Tech"
+      "aprile-festival",
+      "interactive-installation",
+      "gamification",
+      "sensors",
+      "audiovisual",
+      "physical-computing"
     ],
-    "x": 0,
+    "x": "An interactive audiovisual art installation created for Aprile Festival in Turin, conceived specifically from the perspective and agency of feline inhabitants. Drawing inspiration from the ancient Egyptian sun god Ra's incarnation as the Great Cat Mau, the installation challenges human visitors to engage with domestic cats using an interactive sensor-equipped toy ball. When the cats play with the ball or approach designated interaction zones, capacitive and motion sensors trigger hidden generative projections and sacred ambient soundscapes, granting human spectators temporary access to the 'sacred knowledge' guarded by the cats.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -7812,6 +8170,7 @@ let INITIAL_PROJECTS = [
       -8,
       20.32
     ],
+    "cover": "assets/covers/cover_26.jpg",
     "media": [
       {
         "type": "photo",
@@ -8116,18 +8475,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Echoes of Eco: Immersive Botanical Instrument Performance x Politek",
+    "t": "Echoes of Eco: Bio-Electrical Botanical Instrument",
     "d": "2026-04",
     "status": "active",
     "g": [
-      "Politek",
-      "Bio-Art",
-      "Interactive",
-      "Plant Music",
-      "Audiovisual",
-      "Aprile Festival"
+      "bio-art",
+      "plant-music",
+      "politek",
+      "interactive",
+      "touchdesigner",
+      "ableton-live",
+      "aprile-festival"
     ],
-    "x": 0,
+    "x": "An immersive botanical bio-art installation and live performance presented at Aprile Festival in collaboration with the Politek collective. Living plants serve as the physical interface: by touching the leaves and stems, visitors complete micro-voltage bio-electrical circuits. High-impedance analog sensors capture galvanic skin-plant conductance and electrical fluctuations, which custom microcontrollers translate into MIDI/OSC data for Ableton Live and TouchDesigner. Natural plant responses blossom instantly into ambient polyphonic harmonies and organic generative visual projections.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -8135,6 +8495,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_27.jpg",
     "media": [
       {
         "type": "photo",
@@ -8335,17 +8696,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Abyss of Peace: Visual Art, Silence & Dissolution at Aprile Festival",
+    "t": "Abyss of Peace: Contemplative Visual Scenography",
     "d": "2026-04",
     "status": "active",
     "g": [
-      "Aprile Festival",
-      "Visual Art",
-      "Audiovisual",
-      "Scenography",
-      "Installation"
+      "aprile-festival",
+      "visual-art",
+      "scenography",
+      "ambient-installation",
+      "minimalism",
+      "audiovisual"
     ],
-    "x": 0,
+    "x": "A meditative visual scenography and spatial installation created for Aprile Festival in Turin. 'Abyss of Peace' is conceived as a sanctuary of silence and perceptual dissolution, inviting visitors to sit in contemplative stillness amid slow-moving, monolithic visual gradients and deep monochromatic projections. The visual pacing and subtle spatial luminance were designed to induce slow breathing and decompression, contrasting the relentless sensory noise of contemporary urban existence with organic digital calm.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -8353,6 +8715,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_28.jpg",
     "media": [
       {
         "type": "photo",
@@ -8436,17 +8799,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "2D to 3D Neural Spatialization: Depth Maps & Gaussian Splatting in TouchDesigner",
+    "t": "2D to 3D Spatialization: Depth Maps & Gaussian Splatting",
     "d": "2026-04",
     "status": "active",
     "g": [
-      "TouchDesigner",
-      "Gaussian Splatting",
-      "Depth Map",
-      "Generative 3D",
-      "Machine Learning"
+      "touchdesigner",
+      "gaussian-splatting",
+      "depth-map",
+      "pointcloud",
+      "glsl",
+      "3d-vision",
+      "generative-3d"
     ],
-    "x": 0,
+    "x": "A technical research project exploring modern computer vision and neural 3D scene reconstruction within TouchDesigner. The pipeline investigates methods for lifting flat 2D imagery and video into interactive spatial geometry using monocular AI depth estimation models, MLsharp point cloud generators, and 3D Gaussian Splatting (3DGS). By rendering point clouds with custom GLSL vertex shaders, virtual camera positions can orbit, navigate, and dynamically fragment volumetric scenes in real time.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -8454,6 +8819,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_29.jpg",
     "media": [
       {
         "type": "photo",
@@ -8550,17 +8916,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Low-Latency Video Stream & Bash Controls: Raspberry Pi x TouchDesigner",
+    "t": "RPi Video Stream: Bash Automation & Latency Glitch",
     "d": "2026-05",
     "status": "active",
     "g": [
-      "Raspberry Pi",
-      "Bash",
-      "Video Streaming",
-      "Linux",
-      "Creative Engineering"
+      "raspberry-pi",
+      "bash",
+      "linux",
+      "video-streaming",
+      "glitch-art",
+      "touchdesigner",
+      "creative-engineering"
     ],
-    "x": 0,
+    "x": "A distributed camera streaming and generative glitch system driven by a Raspberry Pi 3B paired with an official camera module. Using custom Bash automation scripts, video is encoded into an RTSP/UDP H.264 stream and piped across local networks into TouchDesigner. By intentionally stressing network buffers, tuning packet dropping rules, and modulating bitrate throttles from the Linux terminal, transmission artifacts and compression macroblocks become generative glitch textures integrated into live projection visuals.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -8568,6 +8936,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_22.jpg",
     "media": [
       {
         "type": "photo",
@@ -8690,17 +9059,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Project X Festival: Backstage Technical Control, Lasers & Video Mapping",
+    "t": "Project X Festival: Stage Lighting, Laser & Projection Control",
     "d": "2026-05",
     "status": "active",
     "g": [
-      "Project X Festival",
-      "Stage Lighting",
-      "Laser Mapping",
-      "Video Mapping",
-      "VJing"
+      "stage-production",
+      "laser-mapping",
+      "dmx",
+      "video-mapping",
+      "touchdesigner",
+      "festival-production",
+      "project-x"
     ],
-    "x": 0,
+    "x": "Technical backstage management and live master control executed for Project X Festival. I oversaw the setup, signal routing, and live operation of synchronized high-power show lasers, moving-head DMX fixtures, and architectural video projection mapping. Operating from the front-of-house booth, TouchDesigner and lighting consoles were orchestrated to deliver dynamic visual crescendos, laser geometry, and spatial video cues tightly locked to artist sets throughout the multi-stage electronic music event.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -8708,6 +9079,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_23.jpg",
     "media": [
       {
         "type": "photo",
@@ -8947,17 +9319,18 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Architectural Video Mapping & Laser Synthesis: DMX Creative Interference",
+    "t": "Architectural Laser Mapping via DMX & TouchDesigner",
     "d": "2026-05",
     "status": "active",
     "g": [
-      "Laser Mapping",
-      "DMX",
-      "TouchDesigner",
-      "Architectural",
-      "Projection Mapping"
+      "architectural-lighting",
+      "laser-mapping",
+      "dmx",
+      "touchdesigner",
+      "outdoor-installation",
+      "projection-mapping"
     ],
-    "x": 0,
+    "x": "An outdoor architectural lighting experiment casting large-scale laser lines and geometric projection mapping across urban building facades. The installation utilized professional show lasers controlled via DMX protocols driven directly by custom TouchDesigner networks. By injecting algorithmic randomness and audio-reactive frequency modulation into the laser beam paths, clean architectural lines were subjected to controlled 'creative interference,' bending and vibrating across windows, brick textures, and rooflines.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -8965,6 +9338,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_24.jpg",
     "media": [
       {
         "type": "photo",
@@ -9035,18 +9409,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Natural Vibes Festival: Stage Lighting, Laser Mapping & Kinect Particles",
+    "t": "Natural Vibes: Full Stage Production & Kinect Visuals",
     "d": "2026-06",
     "status": "active",
     "g": [
-      "Natural Vibes",
-      "Stage Design",
-      "Laser Mapping",
-      "Video Mapping",
-      "Kinect",
-      "VJing"
+      "stage-design",
+      "laser-mapping",
+      "kinect",
+      "touchdesigner",
+      "video-mapping",
+      "live-performance",
+      "natural-vibes"
     ],
-    "x": 0,
+    "x": "Comprehensive technical stage production, live lighting, and reactive visuals delivered for the Natural Vibes Festival. The setup featured high-power laser mapping integrated with architectural projection mapping, complemented by an interactive Kinect particle installation where performers' silhouettes were captured in real-time and exploded into organic visual fields across the stage backdrop. The entire ecosystem was driven live via TouchDesigner, bridging sensory stage architecture with live electronic music.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -9054,6 +9429,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_16.jpg",
     "media": [
       {
         "type": "photo",
@@ -9176,19 +9552,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Interactive LED Data Flowers: Ultrasonic Distance & ESP32 Microcontrollers",
+    "t": "Interactive LED Data Flowers: Proximity Light Sculptures",
     "d": "2026-06",
     "status": "active",
     "g": [
-      "Interactive",
-      "ESP32",
-      "Arduino",
-      "LED",
-      "Ultrasonic",
-      "Web UI",
-      "Natural Vibes"
+      "interactive-sculpture",
+      "esp32",
+      "arduino",
+      "ultrasonic-sensor",
+      "addressable-leds",
+      "web-ui",
+      "natural-vibes"
     ],
-    "x": 0,
+    "x": "An outdoor physical computing installation created for Natural Vibes Festival, featuring sculptural biomimetic flowers illuminated by individually addressable LED strips. Each flower incorporates HC-SR04 ultrasonic distance sensors connected to an ESP32 microcontroller running bare-metal C/Arduino code. As festival attendees approach or dance around the flowers, the system detects their proximity and modulates light blooming speed, color temperature, and pulse frequency. Additionally, I implemented an onboard asynchronous web server on the ESP32, enabling wireless real-time tuning and calibration via a smartphone web UI.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -9196,6 +9572,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_17.jpg",
     "media": [
       {
         "type": "photo",
@@ -9370,18 +9747,20 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Gyroscope Stage & Laser Controller: Experimental Handheld IMU Instrument",
+    "t": "Handheld Gyroscope Laser & Stage Controller",
     "d": "2026-06",
     "status": "active",
     "g": [
-      "Gyroscope",
-      "Sensors",
-      "Natural Vibes",
-      "Stage Lighting",
-      "Laser",
-      "Interactive"
+      "gyroscope",
+      "imu",
+      "esp32",
+      "osc",
+      "laser-control",
+      "stage-lighting",
+      "touchdesigner",
+      "natural-vibes"
     ],
-    "x": 0,
+    "x": "An experimental physical interface developed for live performance at Natural Vibes Festival. By packaging an MPU-6050 6-axis gyroscope/accelerometer into a compact handheld ergonomic controller connected to an ESP32, spatial orientation (pitch, roll, yaw) and sudden accelerations are broadcast wirelessly over WiFi via OSC into TouchDesigner. The performer can aim and sweep high-powered laser beams and DMX moving heads through physical wrist motions and spatial pointing, creating an immediate, visceral connection between bodily motion and massive lighting rigs.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -9389,6 +9768,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_18.jpg",
     "media": [
       {
         "type": "photo",
@@ -9537,18 +9917,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "Robotic Laser Hand in Infinite Mirror: 4-Arm Motor & Joystick Controller",
+    "t": "Robotic Laser Arm in Infinity Mirror",
     "d": "2026-06",
     "status": "active",
     "g": [
-      "Robotics",
-      "Infinity Mirror",
-      "Laser",
-      "Hardware",
-      "Interactive Installation",
-      "Sensors"
+      "kinetic-art",
+      "robotics",
+      "infinity-mirror",
+      "laser-installation",
+      "physical-computing",
+      "sensors",
+      "hardware"
     ],
-    "x": 0,
+    "x": "A standalone kinetic light installation merging mechanical robotics with optical recursion. Built within a custom two-way mirror infinity enclosure, a 4-axis motorized robotic arm holds an active laser diode that fires beam patterns into the infinite optical depth. Visitors control the robotic arm's 4 degrees of freedom in real time using a physical arcade joystick and buttons, while an onboard microcontroller reads atmospheric fog sensor data to adjust beam visibility. The resulting reflections multiply endlessly toward optical infinity, turning kinetic mechanics into spatial sculpture.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -9556,6 +9937,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_19.jpg",
     "media": [
       {
         "type": "photo",
@@ -9769,18 +10151,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "ESP32 S2 Mini Pixel Matrix: Standalone Embedded Microcontroller Display",
+    "t": "ESP32-S2 Pixel Shader Micro-Display",
     "d": "2026-06",
     "status": "active",
     "g": [
-      "ESP32",
-      "S2 Mini",
-      "Microcontroller",
-      "Pixel Art",
-      "Embedded",
-      "Display"
+      "esp32-s2",
+      "embedded",
+      "pixel-shaders",
+      "generative-art",
+      "c++",
+      "hardware",
+      "microcontroller"
     ],
-    "x": 0,
+    "x": "An embedded experimentation project pushing the single-core 240MHz ESP32-S2 Mini to drive standalone mathematical pixel shaders and procedural animations on miniature SPI color displays. By crafting highly optimized math algorithms without external graphics libraries, the micro-display renders real-time plasma fields, cellular automata, and geometric noise patterns directly on chip. The device operates fully standalone on battery power, serving as a pocket-sized generative sculpture.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -9788,6 +10171,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_20.jpg",
     "media": [
       {
         "type": "photo",
@@ -9871,18 +10255,19 @@ let INITIAL_PROJECTS = [
     ]
   },
   {
-    "t": "TouchDesigner to S2 Mini Video Stream: Embedded Hardware Streaming Device",
+    "t": "TouchDesigner to ESP32-S2 Video Streaming Bridge",
     "d": "2026-06",
     "status": "active",
     "g": [
-      "ESP32",
-      "S2 Mini",
-      "TouchDesigner",
-      "Embedded",
-      "Microcontroller",
-      "Hardware"
+      "touchdesigner",
+      "esp32-s2",
+      "video-streaming",
+      "udp",
+      "embedded-video",
+      "dma",
+      "hardware"
     ],
-    "x": 0,
+    "x": "A technical bridge pipeline designed to stream real-time compressed video frames from TouchDesigner over WiFi to an ESP32-S2 Mini microcontroller driving a tiny SPI screen. TouchDesigner downsamples and quantizes visual textures into raw RGB565 byte packets sent over high-speed UDP sockets. The firmware receives the UDP stream into a double-buffered DMA memory block, pushing frames instantly to the display with minimal latency. This research serves as a foundational prototype for wireless networked miniature video installations.",
     "tier": 1,
     "textAlign": "left",
     "uo": [
@@ -9890,6 +10275,7 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
+    "cover": "assets/covers/cover_21.jpg",
     "media": [
       {
         "type": "photo",
@@ -9956,6 +10342,1930 @@ let INITIAL_PROJECTS = [
         "w": 170,
         "h": 110,
         "style": 0
+      }
+    ]
+  },
+  {
+    "t": "Embedded Displays & Pocket Art Gadgets",
+    "d": "2026-08",
+    "status": "active",
+    "g": [
+      "embedded",
+      "esp32",
+      "hardware",
+      "spi-display",
+      "c++",
+      "creative-tech",
+      "microcontroller"
+    ],
+    "x": "An ongoing hardware research initiative exploring the outer limits of minimal microcontrollers paired with tiny color TFT displays. By writing low-level C++ rendering loops and custom frame-buffering algorithms on memory-constrained single-core ESP32 chips, I create self-contained interactive visual gadgets. The project focuses on autonomous wearable aesthetics, battery management, and sensor-driven generative graphics that prove powerful digital art can live on resource-constrained embedded silicon rather than power-hungry GPUs.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_48.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5512.jpg",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5512.jpg",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_48.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5519.jpg",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5519.jpg",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_E5500.jpg",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_E5500.jpg",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-10-27_175213.png",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-10-27_175213.png",
+        "video": "",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-10-27_175325.png",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-10-27_175325.png",
+        "video": "",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-11-01_202902.png",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-11-01_202902.png",
+        "video": "",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-11-01_212647.png",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-11-01_212647.png",
+        "video": "",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-11-01_212656.png",
+        "img": "assets/projects/202608_embedded_displays_pocket_art_gadgets/Screenshot_2026-11-01_212656.png",
+        "video": "",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5514.mp4",
+        "img": "assets/covers/cover_48.jpg",
+        "video": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5514.mp4",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5515.mp4",
+        "img": "assets/covers/cover_48.jpg",
+        "video": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5515.mp4",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5517.mp4",
+        "img": "assets/covers/cover_48.jpg",
+        "video": "assets/projects/202608_embedded_displays_pocket_art_gadgets/IMG_5517.mp4",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_embedded_displays_pocket_art_gadgets/QDQC5478.mp4",
+        "img": "assets/covers/cover_48.jpg",
+        "video": "assets/projects/202608_embedded_displays_pocket_art_gadgets/QDQC5478.mp4",
+        "x": 680,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      }
+    ]
+  },
+  {
+    "t": "The Art of Missed Data: UDP Video Glitch Stream",
+    "d": "2026-08",
+    "status": "active",
+    "g": [
+      "glitch-art",
+      "udp",
+      "video-streaming",
+      "raspberry-pi",
+      "esp32",
+      "networking",
+      "touchdesigner"
+    ],
+    "x": "At the intersection of network engineering and glitch aesthetics, this ongoing experimental project reclaims packet loss, bandwidth bottlenecks, and network jitter as creative generative mediums. Using ESP32-S2/S3 microcontrollers and Raspberry Pi 3B single-board computers, live video feeds are broadcast over UDP across local and wide-area networks without error correction. By intentionally stressing transfer bandwidth and buffer allocations, packet drops manifest as organic digital artifacting, datamoshing, and spectral smears—transforming network imperfections into raw, unpredictable visual poetry.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_49.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5402.jpg",
+        "img": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5402.jpg",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_49.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5408.jpg",
+        "img": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5408.jpg",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5410.jpg",
+        "img": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5410.jpg",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5414.jpg",
+        "img": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5414.jpg",
+        "video": "",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5500.jpg",
+        "img": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5500.jpg",
+        "video": "",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5418.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5418.mp4",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5421.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5421.mp4",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5422.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5422.mp4",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5445.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5445.mp4",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5448.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5448.mp4",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5449.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5449.mp4",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5501.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5501.mp4",
+        "x": 680,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5502.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5502.mp4",
+        "x": 140,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5526.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5526.mp4",
+        "x": 320,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5527.mp4",
+        "img": "assets/covers/cover_49.jpg",
+        "video": "assets/projects/202608_udp_video_glitch_stream_art/IMG_5527.mp4",
+        "x": 500,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      }
+    ]
+  },
+  {
+    "t": "Komorebi: Gestural VJing & LeapMotion Interface",
+    "d": "2026-09",
+    "status": "active",
+    "g": [
+      "vjing",
+      "leapmotion",
+      "live-performance",
+      "touchdesigner",
+      "resolume",
+      "madmapper",
+      "gestural-interface"
+    ],
+    "x": "Live performance research demonstrating new gestural methodologies for electronic music visual performance at Komorebi Festival in Cuneo. Rather than relying on traditional MIDI keyboards or mouse clicks, I implemented a hands-free spatial interface using the LeapMotion sensor integrated with TouchDesigner. Tracking sub-millimeter finger and hand gestures in 3D space, I modulated real-time shader parameters, particle turbulence, and strobe triggers on the fly, routing the generative output through Resolume Arena and MadMapper to create a deeply physical, dance-like visual performance.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_47.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201809.png",
+        "img": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201809.png",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_47.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201554.png",
+        "img": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201554.png",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201712.png",
+        "img": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201712.png",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201735.png",
+        "img": "assets/projects/202609_komorebi_leapmotion_gestural_vj/Screenshot_2026-10-30_201735.png",
+        "video": "",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/BSOI0397.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/BSOI0397.mp4",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4405.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4405.mp4",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4407.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4407.mp4",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4409.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4409.mp4",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4411.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4411.mp4",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4413.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4413.mp4",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4414.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4414.mp4",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4418.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4418.mp4",
+        "x": 680,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4430.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4430.mp4",
+        "x": 140,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4436.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4436.mp4",
+        "x": 320,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4485.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4485.mp4",
+        "x": 500,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4487.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/IMG_4487.mp4",
+        "x": 680,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/KYJY1208.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/KYJY1208.mp4",
+        "x": 140,
+        "y": 610,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_leapmotion_gestural_vj/RDUV4578.mp4",
+        "img": "assets/covers/cover_47.jpg",
+        "video": "assets/projects/202609_komorebi_leapmotion_gestural_vj/RDUV4578.mp4",
+        "x": 320,
+        "y": 610,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      }
+    ]
+  },
+  {
+    "t": "TechTrash: Rotary Telephone Interactive Controller",
+    "d": "2026-09",
+    "status": "active",
+    "g": [
+      "physical-computing",
+      "esp32",
+      "touchdesigner",
+      "upcycling",
+      "hardware-hacking",
+      "osc",
+      "interactive"
+    ],
+    "x": "An upcycling and physical computing project transforming a decommissioned vintage rotary telephone into an expressive audiovisual controller. By hacking the mechanical pulse-dialing mechanism, hook switch, and internal bells, I interfaced the rotary pulses with an ESP32 microcontroller running custom debouncing firmware. Dialed numbers and handset interactions are translated into serial/OSC signals sent directly to TouchDesigner and digital audio workstations, allowing users to physically 'dial' parameters, trigger audio stems, and manipulate generative video shaders through nostalgic physical hardware.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_44.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5643.jpg",
+        "img": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5643.jpg",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_44.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5651.jpg",
+        "img": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5651.jpg",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5634.mp4",
+        "img": "assets/covers/cover_44.jpg",
+        "video": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5634.mp4",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5636.mp4",
+        "img": "assets/covers/cover_44.jpg",
+        "video": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5636.mp4",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5650.mp4",
+        "img": "assets/covers/cover_44.jpg",
+        "video": "assets/projects/202609_techtrash_rotary_telephone_controller/IMG_5650.mp4",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_techtrash_rotary_telephone_controller/SPHM4269.mp4",
+        "img": "assets/covers/cover_44.jpg",
+        "video": "assets/projects/202609_techtrash_rotary_telephone_controller/SPHM4269.mp4",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      }
+    ]
+  },
+  {
+    "t": "Komorebi Festival: Stage Scenography & Laser Mapping",
+    "d": "2026-09",
+    "status": "active",
+    "g": [
+      "stage-design",
+      "laser-mapping",
+      "projection-mapping",
+      "led-mapping",
+      "madmapper",
+      "touchdesigner",
+      "festival"
+    ],
+    "x": "Complete stage scenography, architectural lighting, and audiovisual integration designed and executed for the Komorebi electronic music festival in Cuneo. The installation centered on custom-constructed LED data panel arrays acting as a multi-dimensional canvas, illuminated by synchronized laser mapping, projection mapping, and pixel-mapped LED bars. TouchDesigner managed the master generative pipeline, while MadMapper handled precision spatial calibration and DMX fixtures, delivering an immersive open-air visual environment that evolved across the night.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_46.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4040.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4040.jpg",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_46.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4049.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4049.jpg",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4057.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4057.jpg",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4092.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4092.jpg",
+        "video": "",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4096.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4096.jpg",
+        "video": "",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4097.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4097.jpg",
+        "video": "",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4200.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4200.jpg",
+        "video": "",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4205.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4205.jpg",
+        "video": "",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4208.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4208.jpg",
+        "video": "",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4210.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4210.jpg",
+        "video": "",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4219.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4219.jpg",
+        "video": "",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4226.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4226.jpg",
+        "video": "",
+        "x": 680,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4270.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4270.jpg",
+        "video": "",
+        "x": 140,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4274.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4274.jpg",
+        "video": "",
+        "x": 320,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4282.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4282.jpg",
+        "video": "",
+        "x": 500,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4313.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4313.jpg",
+        "video": "",
+        "x": 680,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4314.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4314.jpg",
+        "video": "",
+        "x": 140,
+        "y": 610,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4320.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4320.jpg",
+        "video": "",
+        "x": 320,
+        "y": 610,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4324.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4324.jpg",
+        "video": "",
+        "x": 500,
+        "y": 610,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4328.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4328.jpg",
+        "video": "",
+        "x": 680,
+        "y": 610,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4350.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4350.jpg",
+        "video": "",
+        "x": 140,
+        "y": 740,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4382.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4382.jpg",
+        "video": "",
+        "x": 320,
+        "y": 740,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4425.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4425.jpg",
+        "video": "",
+        "x": 500,
+        "y": 740,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4449.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4449.jpg",
+        "video": "",
+        "x": 680,
+        "y": 740,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4475.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4475.jpg",
+        "video": "",
+        "x": 140,
+        "y": 870,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4496.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4496.jpg",
+        "video": "",
+        "x": 320,
+        "y": 870,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4538.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4538.jpg",
+        "video": "",
+        "x": 500,
+        "y": 870,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4544.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4544.jpg",
+        "video": "",
+        "x": 680,
+        "y": 870,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4597.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4597.jpg",
+        "video": "",
+        "x": 140,
+        "y": 1000,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4598.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4598.jpg",
+        "video": "",
+        "x": 320,
+        "y": 1000,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_E4472.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/IMG_E4472.jpg",
+        "video": "",
+        "x": 500,
+        "y": 1000,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/LLNS2387.jpg",
+        "img": "assets/projects/202609_komorebi_festival_stage_laser/LLNS2387.jpg",
+        "video": "",
+        "x": 680,
+        "y": 1000,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4221.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4221.mp4",
+        "x": 140,
+        "y": 1130,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4287.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4287.mp4",
+        "x": 320,
+        "y": 1130,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4294.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4294.mp4",
+        "x": 500,
+        "y": 1130,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4323.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4323.mp4",
+        "x": 680,
+        "y": 1130,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4383.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4383.mp4",
+        "x": 140,
+        "y": 1260,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4389.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4389.mp4",
+        "x": 320,
+        "y": 1260,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4447.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4447.mp4",
+        "x": 500,
+        "y": 1260,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4467.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4467.mp4",
+        "x": 680,
+        "y": 1260,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4473.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4473.mp4",
+        "x": 140,
+        "y": 1390,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4482.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4482.mp4",
+        "x": 320,
+        "y": 1390,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4493.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4493.mp4",
+        "x": 500,
+        "y": 1390,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4495.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4495.mp4",
+        "x": 680,
+        "y": 1390,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4497.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/IMG_4497.mp4",
+        "x": 140,
+        "y": 1520,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202609_komorebi_festival_stage_laser/SEJV8870.mp4",
+        "img": "assets/covers/cover_46.jpg",
+        "video": "assets/projects/202609_komorebi_festival_stage_laser/SEJV8870.mp4",
+        "x": 320,
+        "y": 1520,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      }
+    ]
+  },
+  {
+    "t": "Body as Interface: Dance, Sound & Generative Canvas",
+    "d": "2026-10",
+    "status": "active",
+    "g": [
+      "body-as-interface",
+      "dance",
+      "kinect",
+      "touchdesigner",
+      "ableton-live",
+      "interactive",
+      "computer-vision"
+    ],
+    "x": "An ongoing interactive study and image-processing research project exploring the human body as an expressive input device. By capturing body movements and choreographic gestures using depth sensors (Microsoft Kinect) and machine learning pose estimation, I translate movement into coherent musical compositions and dynamic visual responses. The pipeline connects Kinect skeletal tracking to TouchDesigner and Ableton Live to construct a virtual theremin and gesture-controlled synthesizer, alongside generative visual experiments where body motion drives kinetic typography instancing and real-time digital brushstrokes.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_42.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3875.jpg",
+        "img": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3875.jpg",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_42.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_6361.jpg",
+        "img": "assets/projects/202610_body_as_interface_dance_kinect/IMG_6361.jpg",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/Screenshot_2026-10-31_200528.png",
+        "img": "assets/projects/202610_body_as_interface_dance_kinect/Screenshot_2026-10-31_200528.png",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/DGUH6639.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/DGUH6639.mp4",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/EMKY7748.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/EMKY7748.mp4",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_1045.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/IMG_1045.mp4",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_1072.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/IMG_1072.mp4",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3878.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3878.mp4",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3996.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3996.mp4",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3998.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/IMG_3998.mp4",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_6362.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/IMG_6362.mp4",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/IMG_6375.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/IMG_6375.mp4",
+        "x": 680,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_body_as_interface_dance_kinect/KYZY0584.mp4",
+        "img": "assets/covers/cover_42.jpg",
+        "video": "assets/projects/202610_body_as_interface_dance_kinect/KYZY0584.mp4",
+        "x": 140,
+        "y": 480,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      }
+    ]
+  },
+  {
+    "t": "Kinetic Typography Vol. 1",
+    "d": "2026-10",
+    "status": "active",
+    "g": [
+      "kinetic-typography",
+      "touchdesigner",
+      "generative-type",
+      "motion-graphics",
+      "creative-coding",
+      "typography"
+    ],
+    "x": "A series of real-time typography studies developed in TouchDesigner, investigating how letterforms, Arabic scripts, and Latin typography can behave as dynamic physical matter. Using instancing, feedback loops, and SOP-to-CHOP data translation, letter geometry deforms, flows, and explodes in response to audio frequencies and interactive parameters. This experimentation bridges typographic design with computational physics, examining how text communicates beyond semantic meaning through motion and generative rhythm.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_45.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/Screenshot_2026-10-29_134829.png",
+        "img": "assets/projects/202610_kinetic_typography_touchdesigner/Screenshot_2026-10-29_134829.png",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_45.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6589.jpg",
+        "img": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6589.jpg",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6590.jpg",
+        "img": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6590.jpg",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/Screenshot_2026-11-01_230448.png",
+        "img": "assets/projects/202610_kinetic_typography_touchdesigner/Screenshot_2026-11-01_230448.png",
+        "video": "",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/DFJS0302.mp4",
+        "img": "assets/covers/cover_45.jpg",
+        "video": "assets/projects/202610_kinetic_typography_touchdesigner/DFJS0302.mp4",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/document_6014729822599649824.mp4",
+        "img": "assets/covers/cover_45.jpg",
+        "video": "assets/projects/202610_kinetic_typography_touchdesigner/document_6014729822599649824.mp4",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/document_6014729822599649827.mp4",
+        "img": "assets/covers/cover_45.jpg",
+        "video": "assets/projects/202610_kinetic_typography_touchdesigner/document_6014729822599649827.mp4",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/FSRO0114.mp4",
+        "img": "assets/covers/cover_45.jpg",
+        "video": "assets/projects/202610_kinetic_typography_touchdesigner/FSRO0114.mp4",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6566.mp4",
+        "img": "assets/covers/cover_45.jpg",
+        "video": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6566.mp4",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6588.mp4",
+        "img": "assets/covers/cover_45.jpg",
+        "video": "assets/projects/202610_kinetic_typography_touchdesigner/IMG_6588.mp4",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_kinetic_typography_touchdesigner/Screen_Recording_2026-11-01_184400.mp4",
+        "img": "assets/covers/cover_45.jpg",
+        "video": "assets/projects/202610_kinetic_typography_touchdesigner/Screen_Recording_2026-11-01_184400.mp4",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      }
+    ]
+  },
+  {
+    "t": "XENOS: Custom OS for Creative Micro-Displays",
+    "d": "2026-10",
+    "status": "active",
+    "g": [
+      "xenos",
+      "esp32",
+      "m5stack",
+      "embedded-systems",
+      "c++",
+      "hardware",
+      "firmware",
+      "os"
+    ],
+    "x": "XENOS is a custom lightweight operating system and firmware architecture I am developing for ultra-compact ESP32 devices and the M5Stack ecosystem (such as the M5StickC Plus2). The goal is to create standalone, pocket-sized art gadgets and dedicated creative displays that operate without external computers. The system optimizes bare-metal C++ graphics rendering on SPI TFT panels while tapping into onboard 6-axis IMUs and environmental sensors, allowing the device to alternate between a generative pocket art canvas, a wireless sensor node, and an interactive physical controller for larger stage setups.",
+    "tier": 1,
+    "textAlign": "left",
+    "uo": [
+      0,
+      0,
+      0
+    ],
+    "cover": "assets/covers/cover_43.jpg",
+    "media": [
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211439.png",
+        "img": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211439.png",
+        "video": "",
+        "x": 140,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0,
+        "cover": "assets/covers/cover_43.jpg"
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211619.png",
+        "img": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211619.png",
+        "video": "",
+        "x": 320,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211636.png",
+        "img": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211636.png",
+        "video": "",
+        "x": 500,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211700.png",
+        "img": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211700.png",
+        "video": "",
+        "x": 680,
+        "y": 90,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211709.png",
+        "img": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_211709.png",
+        "video": "",
+        "x": 140,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "photo",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_233842.png",
+        "img": "assets/projects/202610_xenos_custom_os_micro_displays/Screenshot_2026-11-01_233842.png",
+        "video": "",
+        "x": 320,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_5961.mp4",
+        "img": "assets/covers/cover_43.jpg",
+        "video": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_5961.mp4",
+        "x": 500,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_5962.mp4",
+        "img": "assets/covers/cover_43.jpg",
+        "video": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_5962.mp4",
+        "x": 680,
+        "y": 220,
+        "w": 170,
+        "h": 110,
+        "style": 1
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_6206.mp4",
+        "img": "assets/covers/cover_43.jpg",
+        "video": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_6206.mp4",
+        "x": 140,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 2
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_6364.mp4",
+        "img": "assets/covers/cover_43.jpg",
+        "video": "assets/projects/202610_xenos_custom_os_micro_displays/IMG_6364.mp4",
+        "x": 320,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 0
+      },
+      {
+        "type": "video",
+        "title": "",
+        "note": "",
+        "url": "assets/projects/202610_xenos_custom_os_micro_displays/ISGK9055.mp4",
+        "img": "assets/covers/cover_43.jpg",
+        "video": "assets/projects/202610_xenos_custom_os_micro_displays/ISGK9055.mp4",
+        "x": 500,
+        "y": 350,
+        "w": 170,
+        "h": 110,
+        "style": 1
       }
     ]
   }
@@ -10115,15 +12425,240 @@ function bootSupernovaEngine() {
   let EDGES = [];
   let checkedTags = new Set(TAG_POOL);
   const TAG_CATEGORIES = [
-    {id:'all',name:'ALL',tags:[]},
-    {id:'art',name:'ART & TYPE',tags:['art','calligraphy','persian','typography','ink','graffiti','vector','poster']},
-    {id:'coding',name:'CREATIVE CODING',tags:['touchdesigner','generative','shaders','python','computer-vision','mediapipe','procedural','software','ui','web']},
-    {id:'hardware',name:'HARDWARE & EMBEDDED',tags:['electronics','esp32','microcontroller','pcb','fastled','wled','udp','osc','sensors','iot','mqtt']},
-    {id:'live',name:'LIVE & INSTALLATIONS',tags:['installation','projection-mapping','vjing','audio-reactive','festival','sensors']},
-    {id:'3d',name:'3D & SHADERS',tags:['blender','3d','procedural','shaders']},
-    {id:'about',name:'ABOUT & RESEARCH',tags:['about','leadership','turin','research']},
-    {id:'other',name:'OTHER',tags:[]}
-  ];
+    {
+        "id": "all",
+        "name": "ALL",
+        "tags": []
+    },
+    {
+        "id": "art",
+        "name": "ART & TYPE",
+        "tags": [
+            "art",
+            "calligraphy",
+            "persian-art",
+            "typography",
+            "kinetic-typography",
+            "visual-arts",
+            "traditional-media",
+            "generative-type",
+            "motion-graphics",
+            "vector-graphics",
+            "lissajous",
+            "oscilloscope-art",
+            "persian-carpet",
+            "textile-aesthetics",
+            "cultural-memory",
+            "interactive-poster",
+            "poster",
+            "visual-identity",
+            "graphic-design"
+        ]
+    },
+    {
+        "id": "coding",
+        "name": "CREATIVE CODING",
+        "tags": [
+            "touchdesigner",
+            "generative",
+            "generative-art",
+            "creative-coding",
+            "shaders",
+            "glsl",
+            "glsl-shaders",
+            "python",
+            "computer-vision",
+            "camera-tracking",
+            "optical-flow",
+            "mediapipe",
+            "streamdiffusion",
+            "generative-ai",
+            "realtime-ai",
+            "udp",
+            "video-streaming",
+            "glitch-art",
+            "networking",
+            "creative-engineering",
+            "particle-systems",
+            "pointcloud",
+            "c++",
+            "procedural",
+            "software",
+            "ui",
+            "web"
+        ]
+    },
+    {
+        "id": "hardware",
+        "name": "HARDWARE & EMBEDDED",
+        "tags": [
+            "hardware",
+            "embedded",
+            "embedded-systems",
+            "microcontroller",
+            "electronics",
+            "analog-electronics",
+            "esp32",
+            "esp32-s2",
+            "m5stack",
+            "xenos",
+            "arm-cortex-m3",
+            "assembly",
+            "c",
+            "bare-metal",
+            "lpc1768",
+            "avr",
+            "atmega",
+            "fpga",
+            "pcb-design",
+            "hardware-engineering",
+            "physical-computing",
+            "upcycling",
+            "hardware-hacking",
+            "osc",
+            "spi",
+            "spi-display",
+            "pixel-shaders",
+            "dma",
+            "embedded-video",
+            "bio-sensing",
+            "plant-music",
+            "synthesizers",
+            "eurorack",
+            "instrumentation",
+            "adc",
+            "iot",
+            "sensors",
+            "imu",
+            "gyroscope",
+            "laser-control",
+            "arcade-controller",
+            "joystick",
+            "ultrasonic-sensor",
+            "addressable-leds",
+            "firmware",
+            "os"
+        ]
+    },
+    {
+        "id": "live",
+        "name": "LIVE & INSTALLATIONS",
+        "tags": [
+            "installation",
+            "interactive-installation",
+            "live-performance",
+            "live-av",
+            "live-visuals",
+            "vjing",
+            "stage-design",
+            "stage-lighting",
+            "scenography",
+            "laser-mapping",
+            "projection-mapping",
+            "video-mapping",
+            "led-mapping",
+            "madmapper",
+            "resolume",
+            "dmx",
+            "architectural-lighting",
+            "outdoor-installation",
+            "ambient-installation",
+            "kinetic-art",
+            "robotics",
+            "infinity-mirror",
+            "laser-installation",
+            "interactive-sculpture",
+            "leapmotion",
+            "gestural-interface",
+            "body-as-interface",
+            "dance",
+            "kinect",
+            "ableton-live",
+            "interactive",
+            "politek",
+            "listening-party",
+            "kraftwerk",
+            "brian-eno",
+            "bunker-turin",
+            "club-scenography",
+            "arabic-typography",
+            "natural-vibes",
+            "festival",
+            "festival-production",
+            "project-x",
+            "bright-festival",
+            "florence",
+            "workshop",
+            "aprile-festival",
+            "gamification",
+            "community-jam",
+            "comala",
+            "live-audio",
+            "envelop",
+            "dorafaus",
+            "analog-synths",
+            "audio-reactive",
+            "audio-synthesis",
+            "namerea",
+            "audiovisual-collaboration",
+            "live-jam",
+            "experimental-sound",
+            "generative-visuals",
+            "audiovisual",
+            "runpolito",
+            "event-tech",
+            "minimalism"
+        ]
+    },
+    {
+        "id": "3d",
+        "name": "3D & SHADERS",
+        "tags": [
+            "blender",
+            "3d",
+            "3d-animation",
+            "character-rigging",
+            "cgi",
+            "cycles-render",
+            "computer-graphics",
+            "opengl",
+            "game-development",
+            "game-dev",
+            "gaussian-splatting",
+            "depth-map",
+            "depth-sensor",
+            "3d-vision",
+            "generative-3d"
+        ]
+    },
+    {
+        "id": "about",
+        "name": "ABOUT & RESEARCH",
+        "tags": [
+            "about",
+            "leadership",
+            "turin",
+            "research",
+            "research-paper",
+            "ieee",
+            "3dui",
+            "virtual-reality",
+            "xr",
+            "human-computer-interaction",
+            "unity3d",
+            "sustainability",
+            "politecnico-di-torino",
+            "polito",
+            "university",
+            "thesis"
+        ]
+    },
+    {
+        "id": "other",
+        "name": "OTHER",
+        "tags": []
+    }
+];
   const tagCategorySets=new Map(TAG_CATEGORIES.map(category=>[category.id,new Set(category.tags)]));
   const categorizedTags=new Set(TAG_CATEGORIES.flatMap(category=>category.tags));
   let activeTagCategory='all';
@@ -12085,7 +14620,7 @@ function bootSupernovaEngine() {
     photoCardsGroup.visible = isInstancing;
     if (!isInstancing) return;
 
-    const countLimit = Math.max(0, Math.min(43, Math.round(PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : 43)));
+    const countLimit = Math.max(0, Math.min(60, Math.round(PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : 60)));
     const activeLayers = Math.max(1, Math.min(4, Math.round(PARAMS.photoCardLayers || 1)));
     const layerSpread = Math.max(0, Math.min(1, Number(PARAMS.photoCardLayerSpread) !== undefined ? Number(PARAMS.photoCardLayerSpread) : 0.30));
     const w = Math.max(10, window.innerWidth || 800);
