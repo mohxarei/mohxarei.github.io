@@ -1257,7 +1257,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 #reticle:not(.active) .photo-preview-box *,
 .sim-hub-reticle:not(.active) .photo-preview-box,
 .sim-hub-reticle:not(.active) .photo-preview-box * { pointer-events:none !important; }
-.morph-faded-box { width:clamp(280px,36vw,440px); max-width:calc(100vw - 120px); }
+.morph-faded-box { width:auto; max-width:none; }
 .morph-bottom-row { flex-direction:row; gap:12px; }
 .line-particle-track { flex:1; min-width:0; height:30px; position:relative; }
 .line-particle-track::before { content:""; position:absolute; left:0; right:0; top:50%; height:1px; background:rgba(255,255,255,.32); }
@@ -1268,6 +1268,221 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 #bottomLineParticleMix::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:26px; height:26px; border:0; border-radius:0; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat; filter:drop-shadow(0 0 4px #000); }
 #bottomLineParticleMix::-moz-range-thumb { width:26px; height:26px; border:0; border-radius:0; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat; }
 #bottomLineParticleMix:focus-visible { outline:1px solid var(--line-bright); outline-offset:3px; }
+
+/* ==========================================================================
+   DOWN-RIGHT MINIMAL CONTROLS (Symbols Cluster & Sharp Sliders)
+   ========================================================================== */
+#downRightControls {
+  position: fixed;
+  right: max(24px, calc(env(safe-area-inset-right, 0px) + 20px));
+  bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+  z-index: 22;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: auto;
+  user-select: none;
+  transform-origin: bottom right;
+}
+
+/* Studio-Only Arrange & Scale HUD Bar */
+.dr-studio-bar {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  background: rgba(10, 12, 18, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 3px 6px;
+  font-size: 9px;
+  margin-bottom: 2px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+}
+body.studio-mode .dr-studio-bar {
+  display: flex;
+}
+.dr-bar-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #e2e8f0;
+  font-family: inherit;
+  font-size: 9px;
+  padding: 2px 6px;
+  cursor: pointer;
+  line-height: 1.1;
+  transition: background 0.15s, color 0.15s;
+}
+.dr-bar-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+.dr-bar-btn:active {
+  background: rgba(255, 255, 255, 0.35);
+}
+#btnDragDrControls {
+  cursor: grab;
+  background: rgba(99, 102, 241, 0.28);
+  border-color: rgba(129, 140, 248, 0.55);
+  color: #c7d2fe;
+}
+#btnDragDrControls:active {
+  cursor: grabbing;
+}
+.dr-bar-scale-val {
+  color: #94a3b8;
+  font-size: 9px;
+  padding: 0 2px;
+  white-space: nowrap;
+}
+.dr-bar-hud {
+  color: #38bdf8;
+  font-weight: 500;
+  font-size: 9px;
+  padding: 0 4px;
+  white-space: nowrap;
+}
+
+/* Organic Symbols Cluster (◈ ▦ ※ and direct/curved line toggle) */
+.dr-symbols {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-bottom: 6px;
+  padding: 0 2px;
+}
+.dr-sym-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.42);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 24px;
+  line-height: 1;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.18s ease, transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), text-shadow 0.18s ease, opacity 0.18s ease;
+}
+.dr-sym-btn:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.75);
+}
+.dr-sym-btn.active {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
+  opacity: 1;
+}
+/* Organic staggered positioning offsets */
+.dr-sym-stagger-1 { transform: translateY(-3px); }
+.dr-sym-stagger-2 { transform: translateY(4px); font-size: 26px; }
+.dr-sym-stagger-3 { transform: translateY(-5px); font-size: 26px; }
+.dr-sym-stagger-4 { transform: translateY(3px); font-size: 25px; }
+.dr-sym-stagger-5 { transform: translateY(-2px); font-size: 28px; }
+.dr-sym-stagger-1:hover { transform: translateY(-3px) scale(1.18); }
+.dr-sym-stagger-2:hover { transform: translateY(4px) scale(1.18); }
+.dr-sym-stagger-3:hover { transform: translateY(-5px) scale(1.18); }
+.dr-sym-stagger-4:hover { transform: translateY(3px) scale(1.18); }
+.dr-sym-stagger-5:hover { transform: translateY(-2px) scale(1.18); }
+
+@keyframes symSpinPop {
+  0% { transform: translateY(-2px) scale(1) rotate(0deg); color: #fff; }
+  50% { transform: translateY(-2px) scale(1.4) rotate(180deg); color: #fff; text-shadow: 0 0 16px #fff; }
+  100% { transform: translateY(-2px) scale(1) rotate(360deg); }
+}
+.dr-sym-btn.spin-pop {
+  animation: symSpinPop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Sliders Cluster */
+.dr-sliders {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.dr-slider-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.dr-track-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 196px;
+  height: 24px;
+}
+.dr-bracket {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.42);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+.dr-bracket-l { margin-right: 4px; }
+.dr-bracket-r { margin-left: 4px; }
+.dr-track-line {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 50%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.32);
+  pointer-events: none;
+}
+.dr-slider {
+  position: relative;
+  z-index: 2;
+  display: block;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.dr-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  filter: drop-shadow(0 0 4px #000);
+}
+.dr-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.dr-slider:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+.dr-slider-label {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  user-select: none;
+  pointer-events: none;
+  margin-top: 1px;
+  text-align: center;
+  text-shadow: 0 0 4px #000;
+}
 @media(max-width:760px){.morph-faded-box{width:min(320px,calc(100vw - 140px));max-width:calc(100vw - 120px)}.morph-bottom-row{gap:6px}.line-particle-label{font-size:9px;letter-spacing:.03em}}
 @media(prefers-reduced-motion:reduce){.brand h1{transition:opacity .18s,text-shadow .18s}}
 
@@ -2568,48 +2783,20 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     max-height: 180px;
   }
 
-  /* 6. Bottom Middle Slider (Line // Particles): Touch-Optimized Standard */
+  /* 6. Bottom Center Pills & Down-Right Controls */
   .morph-faded-box {
     position: fixed !important;
     bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 14px)) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    width: min(200px, calc(100vw - 128px)) !important;
-    padding: 4px 8px !important;
+    width: auto !important;
+    padding: 4px 6px !important;
     opacity: 0.9 !important;
-    z-index: 40 !important;
+    z-index: 30 !important;
     display: flex !important;
   }
   .morph-bottom-row {
     gap: 8px !important;
-  }
-  .line-particle-track {
-    height: 32px !important;
-  }
-  .line-particle-track::before {
-    background: rgba(255, 255, 255, 0.38) !important;
-  }
-  .line-particle-label {
-    font-size: 10px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.05em !important;
-    color: rgba(255, 255, 255, 0.65) !important;
-  }
-  .line-particle-midpoint {
-    font-size: 13px !important;
-    color: rgba(255, 255, 255, 0.7) !important;
-  }
-  #bottomLineParticleMix {
-    height: 32px !important;
-    touch-action: none !important;
-  }
-  #bottomLineParticleMix::-webkit-slider-thumb {
-    width: 28px !important;
-    height: 28px !important;
-  }
-  #bottomLineParticleMix::-moz-range-thumb {
-    width: 28px !important;
-    height: 28px !important;
   }
   .auto-pill.reset-pill {
     width: 24px !important;
@@ -2618,6 +2805,41 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   .auto-pill.reset-pill svg {
     width: 11px !important;
     height: 11px !important;
+  }
+
+  #downRightControls {
+    right: max(10px, calc(env(safe-area-inset-right, 0px) + 8px)) !important;
+    bottom: max(10px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
+    transform: scale(0.82) !important;
+    transform-origin: bottom right !important;
+    z-index: 35 !important;
+    gap: 6px !important;
+  }
+  .dr-track-wrap {
+    width: 150px !important;
+    height: 22px !important;
+  }
+  .dr-slider {
+    height: 22px !important;
+  }
+  .dr-slider::-webkit-slider-thumb {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .dr-slider::-moz-range-thumb {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .dr-symbols {
+    gap: 12px !important;
+    margin-bottom: 4px !important;
+  }
+  .dr-sym-btn {
+    font-size: 22px !important;
+    padding: 3px !important;
+  }
+  .dr-slider-label {
+    font-size: 9px !important;
   }
 
   /* 7. Modals on Phone & Small Screens */
@@ -2763,7 +2985,65 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   <div class="morph-bottom-row">
     <button type="button" class="auto-pill reset-pill" id="btnResetView" title="Reset view and camera" aria-label="Reset view and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
     <button type="button" class="auto-pill on" id="btnVisitorAuto" title="Toggle Auto-Rotation" aria-label="Toggle Auto-Rotation"><i></i>AUTO</button>
-    <div class="line-particle-track"><span class="line-particle-label">LINE</span><span class="line-particle-label">PARTICLES</span><span class="line-particle-midpoint" aria-hidden="true">|</span><input id="bottomLineParticleMix" type="range" min="0" max="100" value="50" step="1" aria-label="Line–particles visibility balance" title="Left: lines · Middle: both · Right: particles"></div>
+  </div>
+</div>
+
+<!-- Down-Right Controls: Symbols Cluster & Sliders with labels underneath -->
+<div class="dr-controls mono" id="downRightControls">
+  <!-- Studio-Only Arrange & Scale HUD Bar -->
+  <div class="dr-studio-bar studio-only mono" id="drStudioBar">
+    <button type="button" class="dr-bar-btn" id="btnDragDrControls" title="Drag to relocate sliders &amp; symbols anywhere on screen">DRAG</button>
+    <button type="button" class="dr-bar-btn" id="btnScaleDrDown" title="Decrease Scale">-</button>
+    <span class="dr-bar-scale-val" id="valDrScale">100%</span>
+    <button type="button" class="dr-bar-btn" id="btnScaleDrUp" title="Increase Scale">+</button>
+    <span class="dr-bar-hud" id="hudDrCoords" title="Coordinates and scale for reference/screenshot">X:0 Y:0 S:1.0</span>
+    <button type="button" class="dr-bar-btn" id="btnSaveDrUi" title="Save position and scale to settings">SAVE UI</button>
+    <button type="button" class="dr-bar-btn" id="btnResetDrUi" title="Reset to default bottom-right">RESET</button>
+  </div>
+
+  <!-- Organic Symbols Cluster -->
+  <div class="dr-symbols" id="drSymbolsCluster">
+    <button type="button" class="dr-sym-btn dr-sym-stagger-1 active" id="btnToggleLineDirect" title="Direct Straight Lines" aria-label="Direct Lines">―</button>
+    <button type="button" class="dr-sym-btn dr-sym-stagger-2" id="btnToggleLineCurved" title="Curved Bouncy Lines" aria-label="Curved Lines">∿</button>
+    <button type="button" class="dr-sym-btn dr-sym-stagger-3" id="btnToggleMouseFollow" title="Mouse Follow (Face Cursor)" aria-label="Face Cursor">◈</button>
+    <button type="button" class="dr-sym-btn dr-sym-stagger-4" id="btnToggleInstancing" title="Photo Instancing" aria-label="Photo Instancing">▦</button>
+    <button type="button" class="dr-sym-btn dr-sym-stagger-5" id="btnScatterHubSeed" title="Scatter Hub Seed" aria-label="Scatter Hubs">※</button>
+  </div>
+
+  <!-- Sliders with labels underneath -->
+  <div class="dr-sliders" id="drSlidersGroup">
+    <!-- Slider 1: Deform -->
+    <div class="dr-slider-unit">
+      <div class="dr-track-wrap">
+        <span class="dr-bracket dr-bracket-l">&lt;</span>
+        <div class="dr-track-line"></div>
+        <input id="drDeformSlider" type="range" class="dr-slider" min="0" max="150" value="49" step="1" aria-label="Sphere Deformation" title="Sphere Deformation">
+        <span class="dr-bracket dr-bracket-r">&gt;</span>
+      </div>
+      <div class="dr-slider-label">deform</div>
+    </div>
+
+    <!-- Slider 2: Twist -->
+    <div class="dr-slider-unit">
+      <div class="dr-track-wrap">
+        <span class="dr-bracket dr-bracket-l">&lt;</span>
+        <div class="dr-track-line"></div>
+        <input id="drTwistSlider" type="range" class="dr-slider" min="-150" max="150" value="12" step="1" aria-label="Sphere Twist" title="Sphere Twist">
+        <span class="dr-bracket dr-bracket-r">&gt;</span>
+      </div>
+      <div class="dr-slider-label">twist</div>
+    </div>
+
+    <!-- Slider 3: Particles // Lines -->
+    <div class="dr-slider-unit">
+      <div class="dr-track-wrap">
+        <span class="dr-bracket dr-bracket-l">&lt;</span>
+        <div class="dr-track-line"></div>
+        <input id="bottomLineParticleMix" type="range" class="dr-slider" min="0" max="100" value="50" step="1" aria-label="Line-particles visibility balance" title="Left: lines · Middle: both · Right: particles">
+        <span class="dr-bracket dr-bracket-r">&gt;</span>
+      </div>
+      <div class="dr-slider-label">particles // lines</div>
+    </div>
   </div>
 </div>
 
@@ -3177,7 +3457,10 @@ let UI_PARAMS = {
   "hashX": null,
   "hashY": null,
   "contactX": null,
-  "contactY": null
+  "contactY": null,
+  "drSlidersX": null,
+  "drSlidersY": null,
+  "drSlidersScale": 1.0
 };
 
 let PSYS = {
@@ -3234,6 +3517,7 @@ let DEFAULTS = {
   "lineThick": 1.08,
   "linkShine": 0.62,
   "linkDensity": 0.39,
+  "lineCurved": false,
   "defaultZoom": 177,
   "hubBright": 0.9,
   "pulseAmt": 0.45,
@@ -12314,6 +12598,9 @@ function bootSupernovaEngine() {
       if (savedUi.hashY !== undefined) UI_PARAMS.hashY = savedUi.hashY;
       if (savedUi.contactX !== undefined) UI_PARAMS.contactX = savedUi.contactX;
       if (savedUi.contactY !== undefined) UI_PARAMS.contactY = savedUi.contactY;
+      if (savedUi.drSlidersX !== undefined) UI_PARAMS.drSlidersX = savedUi.drSlidersX;
+      if (savedUi.drSlidersY !== undefined) UI_PARAMS.drSlidersY = savedUi.drSlidersY;
+      if (savedUi.drSlidersScale !== undefined) UI_PARAMS.drSlidersScale = savedUi.drSlidersScale;
     }
   } catch (err) {}
 
@@ -12383,9 +12670,48 @@ function bootSupernovaEngine() {
     el.style.zIndex = "25";
   };
 
+  const updateDrHud = () => {
+    const el = document.getElementById("downRightControls");
+    const hud = document.getElementById("hudDrCoords");
+    if (!el || !hud) return;
+    const rect = el.getBoundingClientRect();
+    const s = UI_PARAMS.drSlidersScale || 1.0;
+    hud.textContent = `X:${Math.round(rect.left)} Y:${Math.round(rect.top)} S:${s.toFixed(2)}`;
+  };
+
+  const applyDrSlidersPosition = () => {
+    const el = document.getElementById("downRightControls");
+    if (!el) return;
+    const scale = (UI_PARAMS.drSlidersScale !== undefined && UI_PARAMS.drSlidersScale !== null) ? UI_PARAMS.drSlidersScale : 1.0;
+    if ($("valDrScale")) $("valDrScale").textContent = `${Math.round(scale * 100)}%`;
+    if (isMobileViewport() || UI_PARAMS.drSlidersX == null || UI_PARAMS.drSlidersY == null || UI_PARAMS.drSlidersX > window.innerWidth - 60 || UI_PARAMS.drSlidersY > window.innerHeight - 60) {
+      el.classList.remove("corner-custom-pos");
+      el.style.position = "";
+      el.style.left = "";
+      el.style.top = "";
+      el.style.bottom = "";
+      el.style.right = "";
+      el.style.transform = isMobileViewport() ? "" : (scale !== 1.0 ? `scale(${scale})` : "");
+      el.style.transformOrigin = "bottom right";
+      el.style.zIndex = "";
+    } else {
+      el.classList.add("corner-custom-pos");
+      el.style.position = "fixed";
+      el.style.left = UI_PARAMS.drSlidersX + "px";
+      el.style.top = UI_PARAMS.drSlidersY + "px";
+      el.style.bottom = "auto";
+      el.style.right = "auto";
+      el.style.transform = `scale(${scale})`;
+      el.style.transformOrigin = "top left";
+      el.style.zIndex = "25";
+    }
+    updateDrHud();
+  };
+
   applyBrandPosition();
   applyHashCornerPosition();
   applyContactCornerPosition();
+  applyDrSlidersPosition();
 
   const getResponsiveCamDist = () => {
     const base = Math.max(30, Number(PARAMS.defaultZoom) || 145);
@@ -13009,6 +13335,118 @@ function bootSupernovaEngine() {
         localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
         pushUndoState();
       });
+    }
+
+    // 3. Down-Right Controls Relocation (Studio Mode - Drag & Scale)
+    const drEl = document.getElementById("downRightControls");
+    const drDragBtn = document.getElementById("btnDragDrControls");
+    if (drEl && drDragBtn) {
+      let isDraggingDr = false;
+      let drDragOrigin = { x: 0, y: 0 };
+      let initialDrPos = { x: 0, y: 0 };
+
+      function startDrDrag(e) {
+        if (!isStudioMode) return;
+        isDraggingDr = true;
+        const rect = drEl.getBoundingClientRect();
+        drDragOrigin = { x: e.clientX, y: e.clientY };
+        initialDrPos = { x: rect.left, y: rect.top };
+        drEl.classList.add("corner-dragging");
+        try { drDragBtn.setPointerCapture(e.pointerId); } catch(err){}
+        e.stopPropagation();
+        e.preventDefault();
+      }
+
+      function moveDrDrag(e) {
+        if (!isDraggingDr) return;
+        const dx = e.clientX - drDragOrigin.x;
+        const dy = e.clientY - drDragOrigin.y;
+        const newX = Math.round(initialDrPos.x + dx);
+        const newY = Math.round(initialDrPos.y + dy);
+        drEl.classList.add("corner-custom-pos");
+        drEl.style.position = "fixed";
+        drEl.style.left = newX + "px";
+        drEl.style.top = newY + "px";
+        drEl.style.bottom = "auto";
+        drEl.style.right = "auto";
+        drEl.style.transformOrigin = "top left";
+        drEl.style.zIndex = "25";
+        UI_PARAMS.drSlidersX = newX;
+        UI_PARAMS.drSlidersY = newY;
+        updateDrHud();
+      }
+
+      function stopDrDrag(e) {
+        if (!isDraggingDr) return;
+        isDraggingDr = false;
+        drEl.classList.remove("corner-dragging");
+        try { drDragBtn.releasePointerCapture(e.pointerId); } catch(err){}
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      }
+
+      drDragBtn.addEventListener("pointerdown", startDrDrag);
+      drDragBtn.addEventListener("pointermove", moveDrDrag);
+      drDragBtn.addEventListener("pointerup", stopDrDrag);
+      drDragBtn.addEventListener("pointercancel", stopDrDrag);
+      drDragBtn.addEventListener("dblclick", e => {
+        e.stopPropagation();
+        UI_PARAMS.drSlidersX = null;
+        UI_PARAMS.drSlidersY = null;
+        UI_PARAMS.drSlidersScale = 1.0;
+        applyDrSlidersPosition();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      });
+
+      const setDrScale = (scale) => {
+        scale = Math.max(0.5, Math.min(2.0, Math.round(scale * 100) / 100));
+        UI_PARAMS.drSlidersScale = scale;
+        drEl.style.transform = `scale(${scale})`;
+        if ($("valDrScale")) $("valDrScale").textContent = `${Math.round(scale * 100)}%`;
+        updateDrHud();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      };
+
+      if ($("btnScaleDrDown")) {
+        $("btnScaleDrDown").addEventListener("click", e => {
+          e.stopPropagation();
+          const curr = UI_PARAMS.drSlidersScale || 1.0;
+          setDrScale(curr - 0.10);
+        });
+      }
+      if ($("btnScaleDrUp")) {
+        $("btnScaleDrUp").addEventListener("click", e => {
+          e.stopPropagation();
+          const curr = UI_PARAMS.drSlidersScale || 1.0;
+          setDrScale(curr + 0.10);
+        });
+      }
+      if ($("btnResetDrUi")) {
+        $("btnResetDrUi").addEventListener("click", e => {
+          e.stopPropagation();
+          UI_PARAMS.drSlidersX = null;
+          UI_PARAMS.drSlidersY = null;
+          UI_PARAMS.drSlidersScale = 1.0;
+          applyDrSlidersPosition();
+          localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+          pushUndoState();
+        });
+      }
+      if ($("btnSaveDrUi")) {
+        $("btnSaveDrUi").addEventListener("click", e => {
+          e.stopPropagation();
+          localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+          const hud = $("hudDrCoords");
+          if (hud) {
+            const orig = hud.textContent;
+            hud.textContent = "SAVED ✓";
+            hud.style.color = "#34d399";
+            setTimeout(() => { hud.textContent = orig; hud.style.color = ""; }, 1400);
+          }
+        });
+      }
     }
 
     // 3. Tuner Layout Reset Buttons
@@ -13649,7 +14087,7 @@ function bootSupernovaEngine() {
     r.setProperty("--star-dur", UI_PARAMS.starDur + "s");
     r.setProperty("--star-r", (UI_PARAMS.starR * k) + "px");
   }
-  window.addEventListener("resize", () => { applyUiParams(); updateSliderGap(); measureStar(); });
+  window.addEventListener("resize", () => { applyUiParams(); updateSliderGap(); measureStar(); applyDrSlidersPosition(); });
   applyUiParams();
   renderContacts();
   updateSliderGap();
@@ -13748,6 +14186,7 @@ function bootSupernovaEngine() {
       Object.assign(UI_PARAMS, snap.uiParams);
       applyHashCornerPosition();
       applyContactCornerPosition();
+      applyDrSlidersPosition();
     }
     if (snap.contacts) {
       CONTACTS = JSON.parse(JSON.stringify(snap.contacts));
@@ -14796,6 +15235,10 @@ function bootSupernovaEngine() {
      STRAIGHT-LINE HASHTAG SIMILARITY RIBBON ENGINE
      ============================================================================ */
   let hubAdjacency = Array.from({ length: CORE_HUB_COUNT }, () => []);
+  const EDGE_SEGS = 8;
+  const edgeScratchPts = Array.from({ length: EDGE_SEGS + 1 }, () => new THREE.Vector3());
+  const edgeChordMid = new THREE.Vector3();
+  const edgeChordNorm = new THREE.Vector3();
   let ribbonMesh = null, ribPosAttr = null, ribOtherAttr = null, ribColAttr = null, ribWidthAttr = null;
   let psPairAttr = null;
   const uLineResolution = { value: new THREE.Vector2(window.innerWidth, window.innerHeight) };
@@ -15333,18 +15776,24 @@ function bootSupernovaEngine() {
 
     if (ribbonMesh) { scene.remove(ribbonMesh); ribbonMesh.geometry.dispose(); }
     const numEdges = Math.max(1, EDGES.length);
-    const posArr = new Float32Array(numEdges * 12), otherArr = new Float32Array(numEdges * 12);
-    const sideArr = new Float32Array(numEdges * 4), isEndArr = new Float32Array(numEdges * 4);
-    const widthArr = new Float32Array(numEdges * 4), isFakeArr = new Float32Array(numEdges * 4);
-    const lumArr = new Float32Array(numEdges * 4), indices = new Uint32Array(numEdges * 6);
+    const S = EDGE_SEGS;
+    const totalQuads = numEdges * S;
+    const posArr = new Float32Array(totalQuads * 12), otherArr = new Float32Array(totalQuads * 12);
+    const sideArr = new Float32Array(totalQuads * 4), isEndArr = new Float32Array(totalQuads * 4);
+    const widthArr = new Float32Array(totalQuads * 4), isFakeArr = new Float32Array(totalQuads * 4);
+    const lumArr = new Float32Array(totalQuads * 4), indices = new Uint32Array(totalQuads * 6);
 
     for (let i = 0; i < EDGES.length; i++) {
-      const v = i * 4, idx = i * 6, bw = EDGES[i].baseWidth, fk = EDGES[i].tier === 3 ? 1.0 : 0.0;
-      sideArr.set([-1, 1, -1, 1], v);
-      isEndArr.set([0, 0, 1, 1], v);
-      widthArr.set([bw, bw, bw, bw], v);
-      isFakeArr.set([fk, fk, fk, fk], v);
-      indices.set([v, v + 1, v + 2, v + 1, v + 3, v + 2], idx);
+      const bw = EDGES[i].baseWidth, fk = EDGES[i].tier === 3 ? 1.0 : 0.0;
+      for (let s = 0; s < S; s++) {
+        const q = i * S + s;
+        const v = q * 4, idx = q * 6;
+        sideArr.set([-1, 1, -1, 1], v);
+        isEndArr.set([0, 0, 1, 1], v);
+        widthArr.set([bw, bw, bw, bw], v);
+        isFakeArr.set([fk, fk, fk, fk], v);
+        indices.set([v, v + 1, v + 2, v + 1, v + 3, v + 2], idx);
+      }
     }
 
     const rGeo = new THREE.BufferGeometry();
@@ -16485,7 +16934,7 @@ function bootSupernovaEngine() {
   });
   window.addEventListener("pointerup", () => { isDraggingMorphSlider = false; });
 
-  document.querySelectorAll("#tuner input[type='range'], #bottomLineParticleMix, #morphSlider").forEach(sl => {
+  document.querySelectorAll("#tuner input[type='range'], #bottomLineParticleMix, #morphSlider, #drDeformSlider, #drTwistSlider").forEach(sl => {
     sl.addEventListener("pointerdown", e => {
       e.stopPropagation();
       if (sl.id !== "morphSlider") pushUndoState();
@@ -16493,6 +16942,11 @@ function bootSupernovaEngine() {
     sl.addEventListener("touchstart", e => {
       e.stopPropagation();
     }, { passive: true });
+  });
+
+  document.querySelectorAll(".dr-sym-btn, .dr-bar-btn").forEach(btn => {
+    btn.addEventListener("pointerdown", e => { e.stopPropagation(); });
+    btn.addEventListener("touchstart", e => { e.stopPropagation(); }, { passive: true });
   });
 
   const bindSl = (id, fn) => {
@@ -16667,6 +17121,8 @@ function bootSupernovaEngine() {
       if ($('sl_' + key)) $('sl_' + key).value = Math.round(PARAMS[key] * scale);
       if ($('val_' + key)) $('val_' + key).textContent = PARAMS[key].toFixed(digits);
     });
+    if ($("drDeformSlider")) $("drDeformSlider").value = Math.round(PARAMS.sphereDeform * 100);
+    if ($("drTwistSlider")) $("drTwistSlider").value = Math.round(PARAMS.sphereTwist * 100);
   }
 
   function syncPreviewCircleSpeed() {
@@ -16695,6 +17151,105 @@ function bootSupernovaEngine() {
     const updateLineParticleMix = event => { PARAMS.lineParticleMix = Number(event.target.value) / 100; syncLineParticleMix(); };
     elBlpm.addEventListener('input', updateLineParticleMix);
     elBlpm.addEventListener('change', updateLineParticleMix);
+  }
+
+  // Down-Right Sliders: Deform & Twist
+  const elDrDeform = $('drDeformSlider');
+  if (elDrDeform) {
+    elDrDeform.addEventListener('pointerdown', () => { pushUndoState(); });
+    const updateDrDeform = e => {
+      PARAMS.sphereDeform = Number(e.target.value) / 100;
+      if ($('sl_sphereDeform')) $('sl_sphereDeform').value = e.target.value;
+      if ($('val_sphereDeform')) $('val_sphereDeform').textContent = PARAMS.sphereDeform.toFixed(2);
+      if (typeof U !== 'undefined' && U && U.uSphereDeform) U.uSphereDeform.value = PARAMS.sphereDeform * PARAMS.deformAmt;
+    };
+    elDrDeform.addEventListener('input', updateDrDeform);
+    elDrDeform.addEventListener('change', updateDrDeform);
+  }
+
+  const elDrTwist = $('drTwistSlider');
+  if (elDrTwist) {
+    elDrTwist.addEventListener('pointerdown', () => { pushUndoState(); });
+    const updateDrTwist = e => {
+      PARAMS.sphereTwist = Number(e.target.value) / 100;
+      if ($('sl_sphereTwist')) $('sl_sphereTwist').value = e.target.value;
+      if ($('val_sphereTwist')) $('val_sphereTwist').textContent = PARAMS.sphereTwist.toFixed(2);
+      if (typeof U !== 'undefined' && U && U.uSphereTwist) U.uSphereTwist.value = PARAMS.sphereTwist;
+    };
+    elDrTwist.addEventListener('input', updateDrTwist);
+    elDrTwist.addEventListener('change', updateDrTwist);
+  }
+
+  // Down-Right Symbols Cluster: Line Mode Toggle, Mouse Follow, Instancing, Hub Scatter Seed
+  function syncLineCurvedUI() {
+    const isCurved = Boolean(PARAMS.lineCurved);
+    const btnDirect = $('btnToggleLineDirect');
+    const btnCurved = $('btnToggleLineCurved');
+    if (btnDirect) btnDirect.classList.toggle('active', !isCurved);
+    if (btnCurved) btnCurved.classList.toggle('active', isCurved);
+  }
+
+  function syncMouseFollowUI() {
+    const btn = $('btnToggleMouseFollow');
+    if (btn) btn.classList.toggle('active', Boolean(PARAMS.photoCardMouseFollow));
+  }
+
+  function syncInstancingUI() {
+    const btn = $('btnToggleInstancing');
+    if (btn) btn.classList.toggle('active', Boolean(PARAMS.photoInstancing));
+  }
+
+  if ($('btnToggleLineDirect')) {
+    $('btnToggleLineDirect').addEventListener('click', e => {
+      e.stopPropagation();
+      pushUndoState();
+      PARAMS.lineCurved = false;
+      syncLineCurvedUI();
+    });
+  }
+  if ($('btnToggleLineCurved')) {
+    $('btnToggleLineCurved').addEventListener('click', e => {
+      e.stopPropagation();
+      pushUndoState();
+      PARAMS.lineCurved = true;
+      syncLineCurvedUI();
+    });
+  }
+  if ($('btnToggleMouseFollow')) {
+    $('btnToggleMouseFollow').addEventListener('click', e => {
+      e.stopPropagation();
+      pushUndoState();
+      PARAMS.photoCardMouseFollow = !PARAMS.photoCardMouseFollow;
+      if ($('chkPhotoCardMouseFollow')) $('chkPhotoCardMouseFollow').checked = PARAMS.photoCardMouseFollow;
+      if ($('valPhotoCardMouseFollow')) $('valPhotoCardMouseFollow').textContent = PARAMS.photoCardMouseFollow ? 'ON' : 'OFF';
+      syncMouseFollowUI();
+    });
+  }
+  if ($('btnToggleInstancing')) {
+    $('btnToggleInstancing').addEventListener('click', e => {
+      e.stopPropagation();
+      pushUndoState();
+      PARAMS.photoInstancing = !PARAMS.photoInstancing;
+      if ($('chkPhotoInstancing')) $('chkPhotoInstancing').checked = PARAMS.photoInstancing;
+      if ($('valPhotoInstancing')) $('valPhotoInstancing').textContent = PARAMS.photoInstancing ? 'ON' : 'OFF';
+      if (typeof photoCardsGroup !== 'undefined' && photoCardsGroup) photoCardsGroup.visible = Boolean(PARAMS.photoInstancing);
+      syncInstancingUI();
+    });
+  }
+  if ($('btnScatterHubSeed')) {
+    $('btnScatterHubSeed').addEventListener('click', e => {
+      e.stopPropagation();
+      pushUndoState();
+      const btn = $('btnScatterHubSeed');
+      if (btn) {
+        btn.classList.remove('spin-pop');
+        void btn.offsetWidth;
+        btn.classList.add('spin-pop');
+      }
+      PARAMS.hubSeed = Math.floor(Math.random() * 9000) + 1000;
+      if ($('sl_hubSeed')) $('sl_hubSeed').value = PARAMS.hubSeed;
+      if ($('val_hubSeed')) $('val_hubSeed').textContent = String(PARAMS.hubSeed);
+    });
   }
 
   function hslToRgb(h, s, l) {
@@ -16753,6 +17308,9 @@ function bootSupernovaEngine() {
     syncLineParticleMix();
     syncPreviewCircleSpeed();
     syncSphereSliders();
+    syncLineCurvedUI();
+    syncMouseFollowUI();
+    syncInstancingUI();
     setAutoMorphState(PARAMS.autoMorph);
     morphTarget = PARAMS.morphState;
     updateShapeButtonsUI(morphTarget);
@@ -18263,7 +18821,7 @@ function bootSupernovaEngine() {
     if (e.pointerType !== "touch") {
       previewPointerX = e.clientX;
       previewPointerY = e.clientY;
-      const overUiCheck = Boolean(e.target && e.target.closest && e.target.closest("#tuner, #projectPopup, .corner-filter, .contact-corner, .studio-bar, .morph-faded-box, #confirmModal, #lightbox, #uiArrangeTools"));
+      const overUiCheck = Boolean(e.target && e.target.closest && e.target.closest("#tuner, #projectPopup, .corner-filter, .contact-corner, .studio-bar, .morph-faded-box, #confirmModal, #lightbox, #uiArrangeTools, #downRightControls"));
       previewPointerActive = !overUiCheck;
       previewPointerOnCanvas = !overUiCheck;
     }
@@ -18274,7 +18832,7 @@ function bootSupernovaEngine() {
       if (prevPinchDist > 10) camDist = Math.max(22, Math.min(440, camDist * (prevPinchDist / dist)));
       prevMid = mid; prevPinchDist = dist; totalDragMoved = 99; return;
     }
-    const overUI = Boolean(e.target && e.target.closest && e.target.closest("#tuner, #projectPopup, .corner-filter, .contact-corner, .studio-bar, .morph-faded-box, #confirmModal, #lightbox, #uiArrangeTools"));
+    const overUI = Boolean(e.target && e.target.closest && e.target.closest("#tuner, #projectPopup, .corner-filter, .contact-corner, .studio-bar, .morph-faded-box, #confirmModal, #lightbox, #uiArrangeTools, #downRightControls"));
     const overReticleCard = Boolean(e.target.closest && e.target.closest('#reticlePhotoBox'));
     if (!isPointerDown && overReticleCard) { isReticlePhotoHovered = true; cursorActiveTarget = 0; return; }
     if (overUI && !isPointerDown) clearHoverPreview();
@@ -18874,20 +19432,60 @@ function bootSupernovaEngine() {
     });
     t3Geo.attributes.position.needsUpdate = true;
 
-    // 4. Update Straight Hashtag Similarity Lines & Sub-Threads
+    // 4. Update Straight / Curved Hashtag Similarity Lines & Sub-Threads
     const pArr = ribPosAttr.array, oArr = ribOtherAttr.array, lArr = ribColAttr.array, wArr = ribWidthAttr.array;
     const focusId = hoveredId >= 0 ? hoveredId : selectedId;
     const density = PARAMS.linkDensity, shine = PARAMS.linkShine * rBr, fVis = PARAMS.fakeVis * rBr;
     const depthStretch = 0.65 + PARAMS.depthScale * 0.55;
+    const S = EDGE_SEGS;
+    const isCurvedEnabled = Boolean(PARAMS.lineCurved);
+    const sphR = (PARAMS.sphereRadius || 36);
 
     for (let i = 0; i < EDGES.length; i++) {
-      const E = EDGES[i], A = NODES[E.a], B = NODES[E.b], a = A.pos, b = B.pos, vBase = i * 4, pBase = vBase * 3;
-      for (let v=0;v<4;v++) {
-        const p=v<2?a:b, other=v<2?b:a, at=pBase+v*3;
-        pArr[at]=p.x;pArr[at+1]=p.y;pArr[at+2]=p.z;
-        oArr[at]=other.x;oArr[at+1]=other.y;oArr[at+2]=other.z;
-      }
+      const E = EDGES[i], A = NODES[E.a], B = NODES[E.b], a = A.pos, b = B.pos;
+      const isCurved = isCurvedEnabled && E.tier <= 2;
       const d = a.distanceTo(b);
+
+      if (isCurved) {
+        edgeChordMid.addVectors(a, b).multiplyScalar(0.5);
+        const midLen = edgeChordMid.length();
+        if (midLen > 0.001) {
+          edgeChordNorm.copy(edgeChordMid).divideScalar(midLen);
+        } else {
+          edgeChordNorm.set(0, 1, 0);
+        }
+        const arcH = Math.max(0, sphR - midLen) * 1.25 + d * 0.12;
+        const wave = Math.sin(time * 2.5 + (E.a * 1.618 + E.b * 2.718)) * (d * 0.07);
+        const totalBow = arcH + wave;
+
+        for (let s = 0; s <= S; s++) {
+          const t = s / S;
+          const disp = totalBow * Math.sin(Math.PI * t);
+          edgeScratchPts[s].lerpVectors(a, b, t).addScaledVector(edgeChordNorm, disp);
+        }
+      } else {
+        for (let s = 0; s <= S; s++) {
+          const t = s / S;
+          edgeScratchPts[s].lerpVectors(a, b, t);
+        }
+      }
+
+      for (let s = 0; s < S; s++) {
+        const p1 = edgeScratchPts[s], p2 = edgeScratchPts[s + 1];
+        const v = (i * S + s) * 4;
+        const at = v * 3;
+        // Vertices 0 & 1 at p1
+        pArr[at]     = p1.x; pArr[at + 1] = p1.y; pArr[at + 2] = p1.z;
+        oArr[at]     = p2.x; oArr[at + 1] = p2.y; oArr[at + 2] = p2.z;
+        pArr[at + 3] = p1.x; pArr[at + 4] = p1.y; pArr[at + 5] = p1.z;
+        oArr[at + 3] = p2.x; oArr[at + 4] = p2.y; oArr[at + 5] = p2.z;
+        // Vertices 2 & 3 at p2
+        pArr[at + 6] = p2.x; pArr[at + 7] = p2.y; pArr[at + 8] = p2.z;
+        oArr[at + 6] = p1.x; oArr[at + 7] = p1.y; oArr[at + 8] = p1.z;
+        pArr[at + 9] = p2.x; pArr[at + 10]= p2.y; pArr[at + 11]= p2.z;
+        oArr[at + 9] = p1.x; oArr[at + 10]= p1.y; oArr[at + 11]= p1.z;
+      }
+
       let lum = 0;
       let dynW = E.baseWidth;
       if (E.tier <= 2) {
@@ -18916,8 +19514,10 @@ function bootSupernovaEngine() {
           }
         }
       }
-      wArr.fill(dynW,vBase,vBase+4);
-      lArr.fill(lum*lineVisibility,vBase,vBase+4);
+      const qBase = i * S * 4;
+      const totalEdgeVerts = S * 4;
+      wArr.fill(dynW, qBase, qBase + totalEdgeVerts);
+      lArr.fill(lum * lineVisibility, qBase, qBase + totalEdgeVerts);
     }
     ribPosAttr.needsUpdate = true;
     ribOtherAttr.needsUpdate = true;
