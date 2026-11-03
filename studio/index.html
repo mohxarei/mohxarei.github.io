@@ -971,8 +971,10 @@ body.studio-mode .studio-key-pill {
 /* Hashtag panel: whole-icon slide and tall, transparent mixed cloud. */
 .hash-stage { position: relative; min-height: 110px; }
 .hash-half.hh-l { position: absolute; left: 0; bottom: 0; width: 1ch; overflow: visible; transition: transform calc(var(--hash-dur, .7s) * 1.7) cubic-bezier(.22,.61,.36,1), opacity .2s ease; }
+.hash-half.hh-l:active { transform: translateX(-6px) scale(0.97); }
 .hash-half.hh-r { display: none; }
 .corner-filter:not(.collapsed) .hh-l { transform: translateX(calc(-36px - 50%)); }
+.corner-filter:not(.collapsed) .hh-l:active { transform: translateX(calc(-42px - 50%)) scale(0.97); }
 .cf-slot { margin-left: 24px; width: calc(var(--slot-w, 300px) * .8); }
 .cf-body { width: calc(var(--slot-w, 300px) * .8); height: 275px; max-height: calc(100dvh - 100px); padding: 0 4px 6px 0; }
 .hash-edit-btn { position: absolute; left: 28px; bottom: 112px; margin: 0; padding: 4px 7px; z-index: 4; }
@@ -1287,141 +1289,166 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transform-origin: bottom right;
 }
 
-/* Studio-Only Arrange, Scale & Rotate HUD Bar */
-.dr-studio-bar {
+/* UI Arrange HUD - Sleek floating bar below top studio bar */
+.ui-arrange-hud {
   display: none;
-  flex-direction: column;
-  gap: 4px;
-  background: rgba(8, 10, 16, 0.94);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  border-radius: 4px;
-  padding: 5px 8px;
-  font-size: 9px;
-  margin-bottom: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  max-width: 330px;
+  position: fixed;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 85;
+  background: rgba(8, 11, 18, 0.94);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 6px;
+  padding: 6px 12px;
+  align-items: center;
+  gap: 8px;
+  color: #e2e8f0;
+  font-size: 10px;
   user-select: none;
-}
-body.studio-mode .dr-studio-bar {
-  display: flex;
-}
-.dr-bar-row {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex-wrap: nowrap;
-}
-.dr-bar-subrow {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  max-width: 95vw;
   flex-wrap: wrap;
 }
-.dr-bar-label {
-  color: #94a3b8;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+body.studio-mode.arrange-ui-mode .ui-arrange-hud {
+  display: flex;
 }
-.dr-bar-select {
+
+#btnToggleArrangeUi.active {
+  background: rgba(14, 165, 233, 0.3) !important;
+  color: #38bdf8 !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.uah-badge {
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+}
+.uah-select {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 3px;
-  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  color: #fff;
   font-family: inherit;
-  font-size: 9px;
-  padding: 2px 4px;
+  font-size: 10px;
+  padding: 3px 6px;
   outline: none;
   cursor: pointer;
-  max-width: 125px;
+  max-width: 230px;
 }
-.dr-bar-select option {
+.uah-select option {
   background: #090d16;
   color: #f1f5f9;
 }
-.dr-bar-btn {
+.uah-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+}
+.uah-stepper {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.uah-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 3px;
+  border-radius: 4px;
   color: #e2e8f0;
   font-family: inherit;
-  font-size: 9px;
-  padding: 2px 5px;
+  font-size: 10px;
+  padding: 3px 7px;
   cursor: pointer;
   line-height: 1.1;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  transition: all 0.15s ease;
 }
-.dr-bar-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
+.uah-stepper .uah-btn {
+  border: none;
+  border-radius: 0;
+  padding: 3px 6px;
+}
+.uah-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
 }
-.dr-bar-btn:active {
-  background: rgba(255, 255, 255, 0.35);
-}
-.dr-drag-handle {
-  cursor: grab;
-  background: rgba(99, 102, 241, 0.28);
-  border-color: rgba(129, 140, 248, 0.55);
+.uah-drag-btn {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: rgba(129, 140, 248, 0.6);
   color: #c7d2fe;
+  cursor: grab;
 }
-.dr-drag-handle:active {
+.uah-drag-btn:active {
   cursor: grabbing;
 }
-.dr-bar-scale-val, .dr-bar-rot-val {
+.uah-val {
   color: #94a3b8;
-  font-size: 9px;
-  padding: 0 1px;
-  white-space: nowrap;
-  min-width: 24px;
+  font-size: 10px;
+  padding: 0 4px;
+  min-width: 30px;
   text-align: center;
 }
-.dr-bar-hud {
+.uah-coords {
   color: #38bdf8;
-  font-weight: 500;
-  font-size: 9px;
-  padding: 0 3px;
+  font-weight: 600;
+  font-size: 10px;
+  padding: 0 4px;
   white-space: nowrap;
-  flex: 1;
 }
-.dr-btn-save {
-  background: rgba(16, 185, 129, 0.22);
-  border-color: rgba(52, 211, 153, 0.45);
+.uah-btn-save {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(52, 211, 153, 0.5);
   color: #6ee7b7;
 }
-.dr-btn-save:hover {
-  background: rgba(16, 185, 129, 0.38);
+.uah-btn-save:hover {
+  background: rgba(16, 185, 129, 0.45);
   color: #fff;
 }
-.dr-btn-copy {
+.uah-btn-copy {
   background: rgba(14, 165, 233, 0.22);
   border-color: rgba(56, 189, 248, 0.45);
   color: #7dd3fc;
 }
-.dr-btn-copy:hover {
+.uah-btn-copy:hover {
   background: rgba(14, 165, 233, 0.38);
   color: #fff;
 }
+.uah-btn-exit {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #fff;
+  font-weight: 600;
+}
+.uah-btn-exit:hover {
+  background: #0369a1;
+}
 
-/* Studio draggable items & outlines */
-body.studio-mode [data-dr-item] {
-  cursor: grab;
+/* Arrange UI Mode Hover & Selection */
+[data-arrange-id] {
   transform-origin: center center;
 }
-body.studio-mode [data-dr-item]:hover {
-  outline: 1px dashed rgba(56, 189, 248, 0.55);
-  outline-offset: 3px;
+body.arrange-ui-mode [data-arrange-id] {
+  cursor: grab !important;
+  transition: transform 0.04s ease-out;
 }
-body.studio-mode [data-dr-item].dr-selected {
-  outline: 1.5px solid #38bdf8 !important;
+body.arrange-ui-mode [data-arrange-id]:hover {
+  outline: 1.5px dashed rgba(56, 189, 248, 0.65) !important;
   outline-offset: 4px !important;
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
 }
-body.studio-mode [data-dr-item].dr-item-dragging {
+body.arrange-ui-mode [data-arrange-id].uah-selected {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 5px !important;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.6) !important;
+}
+body.arrange-ui-mode [data-arrange-id].uah-dragging {
   cursor: grabbing !important;
 }
 .dr-toggle-item {
@@ -3038,6 +3065,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
 <div class="studio-bar mono studio-only" id="studioBar">
   <button class="st-pill active" id="btnModeStudio">⚙ STUDIO EDITOR</button>
   <button class="st-pill" id="btnModeViewer">👁 VIEWER PREVIEW</button>
+  <button class="st-pill" id="btnToggleArrangeUi" title="Toggle interactive UI Arrange mode: drag, scale, rotate all on-screen elements">📐 ARRANGE UI</button>
   <span style="color:var(--dim)" class="studio-only">|</span>
   <button class="btn-act studio-only" id="btnUndo" title="Undo (Ctrl + Z)" disabled="">↶ Undo</button>
   <button class="btn-act studio-only" id="btnRedo" title="Redo (Ctrl + Y or Ctrl + Shift + Z)" disabled="">↷ Redo</button>
@@ -3049,6 +3077,46 @@ body.studio-mode [data-dr-item].dr-item-dragging {
   <button type="button" class="bar-tab" id="barTab" title="Show / hide this bar"></button>
 </div>
 
+<!-- Sleek Floating UI Arrange HUD -->
+<div class="ui-arrange-hud mono studio-only" id="uiArrangeHud">
+  <div class="uah-badge">📐 ARRANGE MODE</div>
+  <select id="uahItemSelect" class="uah-select mono" title="Choose element to transform">
+    <option value="brand">BRAND &amp; BIO (MOHSEN ZAREI)</option>
+    <option value="hash"># HASHTAG POOL</option>
+    <option value="contact">* CONTACT STAR</option>
+    <option value="resetBtn">RESET VIEW BUTTON</option>
+    <option value="autoBtn">AUTO ROTATION BUTTON</option>
+    <option value="drGroup">DOWN-RIGHT CONTROLS CLUSTER</option>
+    <option value="deform">SLIDER: &lt; DEFORM &gt;</option>
+    <option value="twist">SLIDER: &lt; TWIST &gt;</option>
+    <option value="lineMix">SLIDER: &lt; LINE|PARTICLES &gt;</option>
+    <option value="scatter">SYMBOL: ※ SCATTER (ⵆ)</option>
+    <option value="mouseFollow">SYMBOL: ☉ FACE CURSOR (ⵙ)</option>
+    <option value="instancing">SYMBOL: ⴼ INSTANCING (][)</option>
+    <option value="lineDirect">SYMBOL: ― DIRECT LINE</option>
+    <option value="lineCurved">SYMBOL: ~ CURVED LINE</option>
+  </select>
+  <div class="uah-actions">
+    <button type="button" class="uah-btn uah-drag-btn" id="uahBtnDrag" title="Click &amp; drag anywhere on the element or here to move">DRAG</button>
+    <div class="uah-stepper">
+      <button type="button" class="uah-btn" id="uahBtnScaleDown" title="Scale Down (Shift + Wheel)">-</button>
+      <span class="uah-val" id="uahValScale">100%</span>
+      <button type="button" class="uah-btn" id="uahBtnScaleUp" title="Scale Up (Shift + Wheel)">+</button>
+    </div>
+    <div class="uah-stepper">
+      <button type="button" class="uah-btn" id="uahBtnRotCcw" title="Rotate Counter-Clockwise (Alt + Wheel)">↺</button>
+      <span class="uah-val" id="uahValRot">0°</span>
+      <button type="button" class="uah-btn" id="uahBtnRotCw" title="Rotate Clockwise (Alt + Wheel)">↻</button>
+    </div>
+    <span class="uah-coords" id="uahCoords">X:0 Y:0</span>
+    <button type="button" class="uah-btn uah-btn-reset" id="uahBtnResetItem" title="Reset this element to factory position">RESET</button>
+    <button type="button" class="uah-btn uah-btn-resetall" id="uahBtnResetAll" title="Reset all UI elements">RESET ALL</button>
+    <button type="button" class="uah-btn uah-btn-save" id="uahBtnSave" title="Save layout to browser">SAVE</button>
+    <button type="button" class="uah-btn uah-btn-copy" id="uahBtnCopy" title="Copy layout JSON to clipboard">COPY CODE</button>
+    <button type="button" class="uah-btn uah-btn-exit" id="uahBtnExit" title="Exit Arrange Mode">DONE ✓</button>
+  </div>
+</div>
+
 <!-- Floating Exit Preview Button (visible when viewing preview from Studio) -->
 <button id="btnExitStudioPreview" type="button" class="mono" title="Exit viewer preview and return to Studio Editor">
   <span style="font-size:13px">←</span> Exit Preview (Back to Studio)
@@ -3058,11 +3126,10 @@ body.studio-mode [data-dr-item].dr-item-dragging {
   <div class="brand">
     <div class="brand-row">
       <h1 id="btnHomeReset" role="button" tabindex="0" aria-expanded="false" aria-controls="brandName brandDesc" title="Show / hide name" aria-label="Show or hide name and description">𝗫̘̚</h1>
-      <div class="brand-text-holder" id="brandTextHolder">
+      <div class="brand-text-holder" id="brandTextHolder" data-arrange-id="brand">
         <div class="brand-name-group" id="brandNameGroup">
           <span id="brandName" class="brand-name" aria-hidden="true" spellcheck="false" tabindex="0" aria-label="Name, editable in Studio mode">MOHSEN ZAREI</span>
           <button type="button" class="btn-bio-photo studio-only mono" id="btnAddBioPhoto" title="Add / change Photo or GIF for bio">📷 + Photo / GIF</button>
-          <button type="button" class="btn-act studio-only brand-drag-btn mono" id="btnDragBrandText" title="Drag to relocate MOHSEN ZAREI text holder anywhere on screen" style="font-size:10px;padding:2px 6px;margin-left:4px;cursor:grab;color:#a5b4fc;border:1px dashed rgba(165,180,252,0.4);border-radius:4px;">⠿ Move</button>
           <div class="bio-photo-popover mono studio-only" id="bioPhotoPopover" style="display:none" role="dialog" aria-label="Bio Photo or GIF Settings">
             <div class="bpp-header">
               <span>BIO PHOTO / GIF / VIDEO (𝗫)</span>
@@ -3113,7 +3180,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
 </div>
 
 <!-- Bottom-Left Frameless '#' Icon & Floating Hashtag Cloud -->
-<div class="corner-filter collapsed mono" id="cornerFilter">
+<div class="corner-filter collapsed mono" id="cornerFilter" data-arrange-id="hash">
   <div class="hash-stage">
     <button type="button" class="hash-half hh-l" id="btnHashToggle" title="Click to open/close #hashtags" aria-expanded="false" aria-controls="cfBody"><span>#</span></button>
     <button type="button" class="hash-edit-btn studio-only" id="btnEditTagMode" title="Toggle Hashtag Delete Mode">✎</button>
@@ -3153,49 +3220,17 @@ body.studio-mode [data-dr-item].dr-item-dragging {
 <!-- Bottom-Center Controls -->
 <div class="morph-faded-box mono">
   <div class="morph-bottom-row">
-    <button type="button" class="auto-pill reset-pill" id="btnResetView" title="Reset view and camera" aria-label="Reset view and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-    <button type="button" class="auto-pill on" id="btnVisitorAuto" title="Toggle Auto-Rotation" aria-label="Toggle Auto-Rotation"><i></i>AUTO</button>
+    <button type="button" class="auto-pill reset-pill" id="btnResetView" data-arrange-id="resetBtn" title="Reset view and camera" aria-label="Reset view and camera"><svg width="6" height="6" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5a5.5 5.5 0 1 1-.5 5M3 1v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    <button type="button" class="auto-pill on" id="btnVisitorAuto" data-arrange-id="autoBtn" title="Toggle Auto-Rotation" aria-label="Toggle Auto-Rotation"><i></i>AUTO</button>
   </div>
 </div>
 
 <!-- Down-Right Controls: Symbols Cluster & Sliders with names on the line -->
-<div class="dr-controls mono" id="downRightControls">
-  <!-- Studio-Only Arrange, Scale & Rotate HUD Bar -->
-  <div class="dr-studio-bar studio-only mono" id="drStudioBar">
-    <div class="dr-bar-row">
-      <span class="dr-bar-label">EDIT:</span>
-      <select id="drItemSelect" class="dr-bar-select mono" title="Select element to reposition, scale, or rotate">
-        <option value="group">ALL (Entire Group)</option>
-        <option value="scatter">※ Scatter Seed (ⵆ)</option>
-        <option value="mouseFollow">☉ Face Cursor (ⵙ)</option>
-        <option value="instancing">ⴼ Instancing (][)</option>
-        <option value="lineDirect">― Direct Line</option>
-        <option value="lineCurved">~ Curved Line</option>
-        <option value="deform">&lt; DEFORM &gt;</option>
-        <option value="twist">&lt; TWIST &gt;</option>
-        <option value="lineMix">&lt; LINE|PARTICLES &gt;</option>
-      </select>
-      <button type="button" class="dr-bar-btn dr-drag-handle" id="btnDragActiveItem" title="Drag to relocate selected element">DRAG</button>
-      <button type="button" class="dr-bar-btn" id="btnScaleItemDown" title="Decrease Scale (Shift + Wheel)">-</button>
-      <span class="dr-bar-scale-val" id="valItemScale">100%</span>
-      <button type="button" class="dr-bar-btn" id="btnScaleItemUp" title="Increase Scale (Shift + Wheel)">+</button>
-      <button type="button" class="dr-bar-btn" id="btnRotItemCcw" title="Rotate Counter-Clockwise (Alt + Wheel)">↺</button>
-      <span class="dr-bar-rot-val" id="valItemRot">0°</span>
-      <button type="button" class="dr-bar-btn" id="btnRotItemCw" title="Rotate Clockwise (Alt + Wheel)">↻</button>
-    </div>
-    <div class="dr-bar-row dr-bar-subrow">
-      <span class="dr-bar-hud" id="hudDrCoords" title="Coordinates, scale &amp; rotation">GRP X:0 Y:0 S:1.0</span>
-      <button type="button" class="dr-bar-btn" id="btnResetActiveItem" title="Reset selected element to default">RESET ITEM</button>
-      <button type="button" class="dr-bar-btn" id="btnResetDrUi" title="Reset all elements to default">RESET ALL</button>
-      <button type="button" class="dr-bar-btn dr-btn-save" id="btnSaveDrUi" title="Save changes to browser localStorage">SAVE UI</button>
-      <button type="button" class="dr-bar-btn dr-btn-copy" id="btnCopyDrCode" title="Copy layout JSON to clipboard">COPY CODE</button>
-    </div>
-  </div>
-
+<div class="dr-controls mono" id="downRightControls" data-arrange-id="drGroup">
   <!-- Organic Symbols Composition (exact layout from Image 2 & 3) -->
   <div class="dr-symbols-composition" id="drSymbolsCluster">
     <!-- Top-right: Hub scatter seed ⵆ -->
-    <div class="dr-sym-cell dr-cell-scatter dr-item" data-dr-item="scatter">
+    <div class="dr-sym-cell dr-cell-scatter" data-arrange-id="scatter" id="drCellScatter">
       <button type="button" class="dr-sym-btn" id="btnScatterHubSeed" title="Scatter Hub Seed" aria-label="Scatter Hubs">
         <svg viewBox="0 0 40 40" width="38" height="38" fill="none" stroke="currentColor">
           <line x1="9" y1="9" x2="31" y2="31" stroke-width="3" stroke-linecap="round"/>
@@ -3208,7 +3243,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
       </button>
     </div>
     <!-- Center-left: Big Circle with Center Dot ⵙ ⴻ (Mouse follow / Face cursor) -->
-    <div class="dr-sym-cell dr-cell-diamond dr-item" data-dr-item="mouseFollow">
+    <div class="dr-sym-cell dr-cell-diamond" data-arrange-id="mouseFollow" id="drCellDiamond">
       <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Follow (Face Cursor)" aria-label="Face Cursor">
         <svg viewBox="0 0 100 100" width="94" height="94" fill="none">
           <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8.5" />
@@ -3217,7 +3252,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
       </button>
     </div>
     <!-- Lower-right: Photo instancing ⴼ -->
-    <div class="dr-sym-cell dr-cell-grid dr-item" data-dr-item="instancing">
+    <div class="dr-sym-cell dr-cell-grid" data-arrange-id="instancing" id="drCellGrid">
       <button type="button" class="dr-sym-btn active" id="btnToggleInstancing" title="Photo Instancing" aria-label="Photo Instancing">
         <svg viewBox="0 0 38 46" width="36" height="44" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="square">
           <path d="M4 6 L12 6 M4 6 L4 40 M4 40 L12 40" />
@@ -3228,14 +3263,14 @@ body.studio-mode [data-dr-item].dr-item-dragging {
     </div>
     <!-- Lower-left: Straight vs Curved line toggle (Crisp vector icons) -->
     <div class="dr-sym-cell dr-cell-toggle">
-      <div class="dr-toggle-item dr-item" data-dr-item="lineDirect">
+      <div class="dr-toggle-item" data-arrange-id="lineDirect" id="drToggleDirect">
         <button type="button" class="dr-sym-btn active" id="btnToggleLineDirect" title="Direct Straight Lines" aria-label="Direct Lines">
           <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
             <line x1="2" y1="10" x2="26" y2="10" />
           </svg>
         </button>
       </div>
-      <div class="dr-toggle-item dr-item" data-dr-item="lineCurved">
+      <div class="dr-toggle-item" data-arrange-id="lineCurved" id="drToggleCurved">
         <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Curved Bouncy Lines" aria-label="Curved Lines">
           <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M2 13 Q 8 4, 14 10 T 26 7" />
@@ -3248,7 +3283,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
   <!-- Sliders: Names written directly on the line itself (exact match to Image 1) -->
   <div class="dr-sliders" id="drSlidersGroup">
     <!-- Slider 1: Deform -->
-    <div class="dr-track-wrap dr-item" data-dr-item="deform" id="wrapDrDeform">
+    <div class="dr-track-wrap" data-arrange-id="deform" id="wrapDrDeform">
       <span class="dr-bracket dr-bracket-l">&lt;</span>
       <div class="dr-track-line"></div>
       <span class="dr-track-text dr-track-text-center">DEFORM</span>
@@ -3257,7 +3292,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
     </div>
 
     <!-- Slider 2: Twist -->
-    <div class="dr-track-wrap dr-item" data-dr-item="twist" id="wrapDrTwist">
+    <div class="dr-track-wrap" data-arrange-id="twist" id="wrapDrTwist">
       <span class="dr-bracket dr-bracket-l">&lt;</span>
       <div class="dr-track-line"></div>
       <span class="dr-track-text dr-track-text-center">TWIST</span>
@@ -3266,7 +3301,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
     </div>
 
     <!-- Slider 3: Particles // Lines (exact match to Image 1) -->
-    <div class="dr-track-wrap dr-item" data-dr-item="lineMix" id="wrapDrLineMix">
+    <div class="dr-track-wrap" data-arrange-id="lineMix" id="wrapDrLineMix">
       <span class="dr-bracket dr-bracket-l">&lt;</span>
       <div class="dr-track-line"></div>
       <span class="dr-track-text dr-track-text-left">LINE</span>
@@ -3279,7 +3314,7 @@ body.studio-mode [data-dr-item].dr-item-dragging {
 </div>
 
 <!-- Bottom-right contact star -->
-<div class="contact-corner mono" id="contactCorner">
+<div class="contact-corner mono" id="contactCorner" data-arrange-id="contact">
   <div class="contact-orbit" id="contactOrbit"></div>
   <div class="contact-btn" id="btnContact" role="button" tabindex="0" title="Contact" aria-label="Contact"><span class="contact-glyph" aria-hidden="true">*</span></div>
   <button type="button" class="star-edit-btn studio-only" id="btnEditContacts" title="Edit Contact Links">✎</button>
@@ -3692,15 +3727,21 @@ let UI_PARAMS = {
   "drSlidersX": null,
   "drSlidersY": null,
   "drSlidersScale": 1.0,
-  "drItems": {
+  "uiLayout": {
+    "brand": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "hash": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "contact": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "resetBtn": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "autoBtn": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "drGroup": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "deform": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "twist": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "lineMix": { "x": 0, "y": 0, "s": 1, "r": 0 },
     "scatter": { "x": 0, "y": 0, "s": 1, "r": 0 },
     "mouseFollow": { "x": 0, "y": 0, "s": 1, "r": 0 },
     "instancing": { "x": 0, "y": 0, "s": 1, "r": 0 },
     "lineDirect": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "lineCurved": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "deform": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "twist": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "lineMix": { "x": 0, "y": 0, "s": 1, "r": 0 }
+    "lineCurved": { "x": 0, "y": 0, "s": 1, "r": 0 }
   }
 };
 
@@ -12842,8 +12883,10 @@ function bootSupernovaEngine() {
       if (savedUi.drSlidersX !== undefined) UI_PARAMS.drSlidersX = savedUi.drSlidersX;
       if (savedUi.drSlidersY !== undefined) UI_PARAMS.drSlidersY = savedUi.drSlidersY;
       if (savedUi.drSlidersScale !== undefined) UI_PARAMS.drSlidersScale = savedUi.drSlidersScale;
-      if (savedUi.drItems && typeof savedUi.drItems === "object") {
-        UI_PARAMS.drItems = Object.assign({}, UI_PARAMS.drItems, savedUi.drItems);
+      if (savedUi.uiLayout && typeof savedUi.uiLayout === "object") {
+        UI_PARAMS.uiLayout = Object.assign({}, UI_PARAMS.uiLayout, savedUi.uiLayout);
+      } else if (savedUi.drItems && typeof savedUi.drItems === "object") {
+        UI_PARAMS.uiLayout = Object.assign({}, UI_PARAMS.uiLayout, savedUi.drItems);
       }
     }
   } catch (err) {}
@@ -12919,14 +12962,14 @@ function bootSupernovaEngine() {
     el.style.zIndex = "25";
   };
 
-  let activeDrKey = "group";
+  let activeArrangeId = "brand";
 
-  const applyDrItemsTransforms = () => {
-    if (!UI_PARAMS.drItems) return;
-    const items = document.querySelectorAll("[data-dr-item]");
+  const applyUiLayout = () => {
+    if (!UI_PARAMS.uiLayout) return;
+    const items = document.querySelectorAll("[data-arrange-id]");
     items.forEach(el => {
-      const key = el.getAttribute("data-dr-item");
-      const itemData = UI_PARAMS.drItems[key];
+      const id = el.getAttribute("data-arrange-id");
+      const itemData = UI_PARAMS.uiLayout[id];
       if (!itemData) return;
       const x = Number(itemData.x) || 0;
       const y = Number(itemData.y) || 0;
@@ -12941,24 +12984,26 @@ function bootSupernovaEngine() {
     });
   };
 
-  const updateDrHud = () => {
-    const el = document.getElementById("downRightControls");
-    const hud = document.getElementById("hudDrCoords");
-    if (!el || !hud) return;
-    if (activeDrKey === "group") {
-      const rect = el.getBoundingClientRect();
-      const s = UI_PARAMS.drSlidersScale || 1.0;
-      hud.textContent = `GRP X:${Math.round(rect.left)} Y:${Math.round(rect.top)} S:${s.toFixed(2)}`;
-      if ($("valItemScale")) $("valItemScale").textContent = `${Math.round(s * 100)}%`;
-      if ($("valItemRot")) $("valItemRot").textContent = `0°`;
-    } else {
-      const it = (UI_PARAMS.drItems && UI_PARAMS.drItems[activeDrKey]) || { x: 0, y: 0, s: 1, r: 0 };
-      const s = it.s !== undefined ? it.s : 1;
-      const r = it.r || 0;
-      hud.textContent = `${activeDrKey.toUpperCase()} X:${it.x} Y:${it.y} S:${s.toFixed(2)} R:${r}°`;
-      if ($("valItemScale")) $("valItemScale").textContent = `${Math.round(s * 100)}%`;
-      if ($("valItemRot")) $("valItemRot").textContent = `${r}°`;
+  const updateArrangeHud = () => {
+    const hud = document.getElementById("uiArrangeHud");
+    if (!hud) return;
+    const sel = document.getElementById("uahItemSelect");
+    if (sel && sel.value !== activeArrangeId) {
+      sel.value = activeArrangeId;
     }
+    const it = (UI_PARAMS.uiLayout && UI_PARAMS.uiLayout[activeArrangeId]) || { x: 0, y: 0, s: 1, r: 0 };
+    const s = it.s !== undefined ? Number(it.s) : 1;
+    const r = Number(it.r) || 0;
+    const valScale = document.getElementById("uahValScale");
+    const valRot = document.getElementById("uahValRot");
+    const coords = document.getElementById("uahCoords");
+    if (valScale) valScale.textContent = `${Math.round(s * 100)}%`;
+    if (valRot) valRot.textContent = `${r}°`;
+    if (coords) coords.textContent = `X:${it.x || 0} Y:${it.y || 0}`;
+
+    document.querySelectorAll("[data-arrange-id]").forEach(node => {
+      node.classList.toggle("uah-selected", node.getAttribute("data-arrange-id") === activeArrangeId);
+    });
   };
 
   const applyDrSlidersPosition = () => {
@@ -12986,14 +13031,13 @@ function bootSupernovaEngine() {
       el.style.transformOrigin = "top left";
       el.style.zIndex = "25";
     }
-    applyDrItemsTransforms();
-    updateDrHud();
   };
 
   applyBrandPosition();
   applyHashCornerPosition();
   applyContactCornerPosition();
   applyDrSlidersPosition();
+  applyUiLayout();
 
   const getResponsiveCamDist = () => {
     const base = Math.max(30, Number(PARAMS.defaultZoom) || 145);
@@ -13619,54 +13663,69 @@ function bootSupernovaEngine() {
       });
     }
 
-    // 3. Down-Right Controls & Individual Elements Studio Handler
-    const drEl = document.getElementById("downRightControls");
-    const itemSelect = document.getElementById("drItemSelect");
+    // 3. Global UI Arrange Controller (Top Bar [📐 ARRANGE UI] Mode)
+    function setArrangeMode(on) {
+      const isArrange = (on !== undefined) ? !!on : !document.body.classList.contains("arrange-ui-mode");
+      document.body.classList.toggle("arrange-ui-mode", isArrange);
+      const toggleBtn = document.getElementById("btnToggleArrangeUi");
+      if (toggleBtn) toggleBtn.classList.toggle("active", isArrange);
+      if (isArrange) {
+        selectArrangeItem(activeArrangeId || "brand");
+      } else {
+        document.querySelectorAll("[data-arrange-id]").forEach(node => {
+          node.classList.remove("uah-selected", "uah-dragging");
+        });
+      }
+    }
 
-    const selectDrItem = (key) => {
-      activeDrKey = key || "group";
-      if (itemSelect) itemSelect.value = activeDrKey;
-      document.querySelectorAll("[data-dr-item]").forEach(node => {
-        node.classList.toggle("dr-selected", node.getAttribute("data-dr-item") === activeDrKey);
+    function selectArrangeItem(id) {
+      if (!id) return;
+      activeArrangeId = id;
+      const sel = document.getElementById("uahItemSelect");
+      if (sel && sel.value !== id) sel.value = id;
+      document.querySelectorAll("[data-arrange-id]").forEach(node => {
+        node.classList.toggle("uah-selected", node.getAttribute("data-arrange-id") === id);
       });
-      updateDrHud();
-    };
+      updateArrangeHud();
+    }
 
-    if (itemSelect) {
-      itemSelect.addEventListener("change", () => {
-        selectDrItem(itemSelect.value);
+    const uahSel = document.getElementById("uahItemSelect");
+    if (uahSel) {
+      uahSel.addEventListener("change", () => {
+        selectArrangeItem(uahSel.value);
       });
     }
 
-    // Direct click/drag on any .dr-item in Studio Mode
-    document.querySelectorAll("[data-dr-item]").forEach(el => {
-      const key = el.getAttribute("data-dr-item");
+    // Direct pointer drag & wheel scale/rotate for all on-screen elements
+    document.querySelectorAll("[data-arrange-id]").forEach(el => {
+      const id = el.getAttribute("data-arrange-id");
+
       el.addEventListener("pointerdown", e => {
-        if (!isStudioMode) return;
-        // Don't initiate drag if user is interacting with a range slider track thumb
-        if (e.target.tagName === "INPUT") return;
-        selectDrItem(key);
+        if (!document.body.classList.contains("arrange-ui-mode")) return;
+        selectArrangeItem(id);
+        e.stopPropagation();
+        e.preventDefault();
 
         let startX = e.clientX;
         let startY = e.clientY;
-        const initialItem = { ...(UI_PARAMS.drItems && UI_PARAMS.drItems[key] ? UI_PARAMS.drItems[key] : { x: 0, y: 0, s: 1, r: 0 }) };
+        if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
+        if (!UI_PARAMS.uiLayout[id]) UI_PARAMS.uiLayout[id] = { x: 0, y: 0, s: 1, r: 0 };
+        const initialPos = { x: Number(UI_PARAMS.uiLayout[id].x) || 0, y: Number(UI_PARAMS.uiLayout[id].y) || 0 };
         let isMoving = false;
 
         const onPointerMove = (ev) => {
           const dx = ev.clientX - startX;
           const dy = ev.clientY - startY;
-          if (!isMoving && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
+          if (!isMoving && (Math.abs(dx) > 2 || Math.abs(dy) > 2)) {
             isMoving = true;
-            el.classList.add("dr-item-dragging");
+            el.classList.add("uah-dragging");
             try { el.setPointerCapture(e.pointerId); } catch(err){}
           }
           if (isMoving) {
-            if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
-            if (!UI_PARAMS.drItems[key]) UI_PARAMS.drItems[key] = { x: 0, y: 0, s: 1, r: 0 };
-            UI_PARAMS.drItems[key].x = Math.round(initialItem.x + dx);
-            UI_PARAMS.drItems[key].y = Math.round(initialItem.y + dy);
-            applyDrItemsTransforms();
-            updateDrHud();
+            UI_PARAMS.uiLayout[id].x = Math.round(initialPos.x + dx);
+            UI_PARAMS.uiLayout[id].y = Math.round(initialPos.y + dy);
+            applyUiLayout();
+            updateArrangeHud();
           }
         };
 
@@ -13674,7 +13733,7 @@ function bootSupernovaEngine() {
           window.removeEventListener("pointermove", onPointerMove);
           window.removeEventListener("pointerup", onPointerUp);
           window.removeEventListener("pointercancel", onPointerUp);
-          el.classList.remove("dr-item-dragging");
+          el.classList.remove("uah-dragging");
           try { el.releasePointerCapture(e.pointerId); } catch(err){}
           if (isMoving) {
             localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
@@ -13687,259 +13746,219 @@ function bootSupernovaEngine() {
         window.addEventListener("pointercancel", onPointerUp);
       });
 
-      // Shift + Wheel to scale, Alt + Wheel to rotate
+      // Shift + Wheel to scale, Alt + Wheel to rotate directly on element
       el.addEventListener("wheel", e => {
-        if (!isStudioMode) return;
+        if (!document.body.classList.contains("arrange-ui-mode")) return;
+        selectArrangeItem(id);
         if (e.shiftKey) {
           e.preventDefault();
-          selectDrItem(key);
+          e.stopPropagation();
           const delta = e.deltaY < 0 ? 0.05 : -0.05;
-          setItemScale(delta, true);
+          modifyArrangeScale(delta, true);
         } else if (e.altKey) {
           e.preventDefault();
-          selectDrItem(key);
+          e.stopPropagation();
           const delta = e.deltaY < 0 ? -5 : 5;
-          setItemRot(delta);
+          modifyArrangeRotation(delta);
         }
       }, { passive: false });
     });
 
-    // Dedicated DRAG handle button in Studio Bar
-    const btnDragActive = document.getElementById("btnDragActiveItem") || document.getElementById("btnDragDrControls");
-    if (btnDragActive && drEl) {
-      let isDraggingActive = false;
+    // Dedicated DRAG handle button in HUD
+    const uahDragBtn = document.getElementById("uahBtnDrag");
+    if (uahDragBtn) {
+      let isDraggingHud = false;
       let startX = 0, startY = 0;
-      let initialItemPos = { x: 0, y: 0 };
-      let initialGroupPos = { x: 0, y: 0 };
+      let initialPos = { x: 0, y: 0 };
 
-      btnDragActive.addEventListener("pointerdown", e => {
-        if (!isStudioMode) return;
-        isDraggingActive = true;
+      uahDragBtn.addEventListener("pointerdown", e => {
+        if (!activeArrangeId) return;
+        isDraggingHud = true;
         startX = e.clientX;
         startY = e.clientY;
-        if (activeDrKey === "group") {
-          const rect = drEl.getBoundingClientRect();
-          initialGroupPos = { x: rect.left, y: rect.top };
-          drEl.classList.add("corner-dragging");
-        } else {
-          const it = (UI_PARAMS.drItems && UI_PARAMS.drItems[activeDrKey]) || { x: 0, y: 0, s: 1, r: 0 };
-          initialItemPos = { x: it.x, y: it.y };
-          const targetEl = document.querySelector(`[data-dr-item="${activeDrKey}"]`);
-          if (targetEl) targetEl.classList.add("dr-item-dragging");
-        }
-        try { btnDragActive.setPointerCapture(e.pointerId); } catch(err){}
+        if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
+        if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
+        initialPos = { x: Number(UI_PARAMS.uiLayout[activeArrangeId].x) || 0, y: Number(UI_PARAMS.uiLayout[activeArrangeId].y) || 0 };
+        const targetEl = document.querySelector(`[data-arrange-id="${activeArrangeId}"]`);
+        if (targetEl) targetEl.classList.add("uah-dragging");
+        try { uahDragBtn.setPointerCapture(e.pointerId); } catch(err){}
         e.preventDefault();
         e.stopPropagation();
       });
 
-      btnDragActive.addEventListener("pointermove", e => {
-        if (!isDraggingActive) return;
+      uahDragBtn.addEventListener("pointermove", e => {
+        if (!isDraggingHud || !activeArrangeId) return;
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
-        if (activeDrKey === "group") {
-          const newX = Math.round(initialGroupPos.x + dx);
-          const newY = Math.round(initialGroupPos.y + dy);
-          drEl.classList.add("corner-custom-pos");
-          drEl.style.position = "fixed";
-          drEl.style.left = newX + "px";
-          drEl.style.top = newY + "px";
-          drEl.style.bottom = "auto";
-          drEl.style.right = "auto";
-          drEl.style.transformOrigin = "top left";
-          drEl.style.zIndex = "25";
-          UI_PARAMS.drSlidersX = newX;
-          UI_PARAMS.drSlidersY = newY;
-        } else {
-          if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
-          if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
-          UI_PARAMS.drItems[activeDrKey].x = Math.round(initialItemPos.x + dx);
-          UI_PARAMS.drItems[activeDrKey].y = Math.round(initialItemPos.y + dy);
-          applyDrItemsTransforms();
-        }
-        updateDrHud();
+        UI_PARAMS.uiLayout[activeArrangeId].x = Math.round(initialPos.x + dx);
+        UI_PARAMS.uiLayout[activeArrangeId].y = Math.round(initialPos.y + dy);
+        applyUiLayout();
+        updateArrangeHud();
       });
 
-      const stopActiveDrag = (e) => {
-        if (!isDraggingActive) return;
-        isDraggingActive = false;
-        drEl.classList.remove("corner-dragging");
-        const targetEl = document.querySelector(`[data-dr-item="${activeDrKey}"]`);
-        if (targetEl) targetEl.classList.remove("dr-item-dragging");
-        try { btnDragActive.releasePointerCapture(e.pointerId); } catch(err){}
+      const stopHudDrag = (e) => {
+        if (!isDraggingHud) return;
+        isDraggingHud = false;
+        const targetEl = document.querySelector(`[data-arrange-id="${activeArrangeId}"]`);
+        if (targetEl) targetEl.classList.remove("uah-dragging");
+        try { uahDragBtn.releasePointerCapture(e.pointerId); } catch(err){}
         localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
         pushUndoState();
       };
-
-      btnDragActive.addEventListener("pointerup", stopActiveDrag);
-      btnDragActive.addEventListener("pointercancel", stopActiveDrag);
+      uahDragBtn.addEventListener("pointerup", stopHudDrag);
+      uahDragBtn.addEventListener("pointercancel", stopHudDrag);
     }
 
-    // Scale Controls
-    const setItemScale = (deltaOrVal, isDelta = true) => {
-      if (activeDrKey === "group") {
-        let curr = UI_PARAMS.drSlidersScale || 1.0;
-        let next = isDelta ? (curr + deltaOrVal) : deltaOrVal;
-        next = Math.max(0.4, Math.min(2.5, Math.round(next * 100) / 100));
-        UI_PARAMS.drSlidersScale = next;
-        drEl.style.transform = `scale(${next})`;
-      } else {
-        if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
-        if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
-        let curr = UI_PARAMS.drItems[activeDrKey].s !== undefined ? UI_PARAMS.drItems[activeDrKey].s : 1.0;
-        let next = isDelta ? (curr + deltaOrVal) : deltaOrVal;
-        next = Math.max(0.2, Math.min(3.0, Math.round(next * 100) / 100));
-        UI_PARAMS.drItems[activeDrKey].s = next;
-        applyDrItemsTransforms();
-      }
-      updateDrHud();
+    // Scale Modifier
+    function modifyArrangeScale(deltaOrVal, isDelta = true) {
+      if (!activeArrangeId) return;
+      if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
+      if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
+      let curr = UI_PARAMS.uiLayout[activeArrangeId].s !== undefined ? Number(UI_PARAMS.uiLayout[activeArrangeId].s) : 1.0;
+      let next = isDelta ? (curr + deltaOrVal) : deltaOrVal;
+      next = Math.max(0.15, Math.min(3.5, Math.round(next * 100) / 100));
+      UI_PARAMS.uiLayout[activeArrangeId].s = next;
+      applyUiLayout();
+      updateArrangeHud();
       localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
       pushUndoState();
-    };
-
-    if ($("btnScaleItemDown") || $("btnScaleDrDown")) {
-      const btn = $("btnScaleItemDown") || $("btnScaleDrDown");
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        setItemScale(-0.05, true);
-      });
     }
 
-    if ($("btnScaleItemUp") || $("btnScaleDrUp")) {
-      const btn = $("btnScaleItemUp") || $("btnScaleDrUp");
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        setItemScale(+0.05, true);
-      });
-    }
-
-    // Rotate Controls
-    const setItemRot = (deltaDeg) => {
-      if (activeDrKey === "group") return;
-      if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
-      if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
-      let curr = Number(UI_PARAMS.drItems[activeDrKey].r) || 0;
+    // Rotation Modifier
+    function modifyArrangeRotation(deltaDeg) {
+      if (!activeArrangeId) return;
+      if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
+      if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
+      let curr = Number(UI_PARAMS.uiLayout[activeArrangeId].r) || 0;
       let next = Math.round((curr + deltaDeg) % 360);
       if (next < 0) next += 360;
-      UI_PARAMS.drItems[activeDrKey].r = next;
-      applyDrItemsTransforms();
-      updateDrHud();
+      UI_PARAMS.uiLayout[activeArrangeId].r = next;
+      applyUiLayout();
+      updateArrangeHud();
+      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+      pushUndoState();
+    }
+
+    const btnScaleDown = document.getElementById("uahBtnScaleDown");
+    if (btnScaleDown) btnScaleDown.onclick = (e) => { e.stopPropagation(); modifyArrangeScale(-0.05, true); };
+    const btnScaleUp = document.getElementById("uahBtnScaleUp");
+    if (btnScaleUp) btnScaleUp.onclick = (e) => { e.stopPropagation(); modifyArrangeScale(+0.05, true); };
+
+    const btnRotCcw = document.getElementById("uahBtnRotCcw");
+    if (btnRotCcw) btnRotCcw.onclick = (e) => { e.stopPropagation(); modifyArrangeRotation(e.shiftKey ? -15 : -5); };
+    const btnRotCw = document.getElementById("uahBtnRotCw");
+    if (btnRotCw) btnRotCw.onclick = (e) => { e.stopPropagation(); modifyArrangeRotation(e.shiftKey ? 15 : 5); };
+
+    // Reset Active Item
+    const btnResetItem = document.getElementById("uahBtnResetItem");
+    if (btnResetItem) btnResetItem.onclick = (e) => {
+      e.stopPropagation();
+      if (!activeArrangeId) return;
+      if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
+      UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
+      applyUiLayout();
+      updateArrangeHud();
       localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
       pushUndoState();
     };
 
-    if ($("btnRotItemCcw")) {
-      $("btnRotItemCcw").addEventListener("click", e => {
-        e.stopPropagation();
-        setItemRot(e.shiftKey ? -15 : -5);
-      });
-    }
-    if ($("btnRotItemCw")) {
-      $("btnRotItemCw").addEventListener("click", e => {
-        e.stopPropagation();
-        setItemRot(e.shiftKey ? 15 : 5);
-      });
-    }
-
-    // Reset Active Item
-    if ($("btnResetActiveItem")) {
-      $("btnResetActiveItem").addEventListener("click", e => {
-        e.stopPropagation();
-        if (activeDrKey === "group") {
-          UI_PARAMS.drSlidersX = null;
-          UI_PARAMS.drSlidersY = null;
-          UI_PARAMS.drSlidersScale = 1.0;
-          applyDrSlidersPosition();
-        } else {
-          if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
-          UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
-          applyDrItemsTransforms();
-        }
-        updateDrHud();
-        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-        pushUndoState();
-      });
-    }
-
-    // Reset All Elements
-    if ($("btnResetDrUi")) {
-      $("btnResetDrUi").addEventListener("click", e => {
-        e.stopPropagation();
-        UI_PARAMS.drSlidersX = null;
-        UI_PARAMS.drSlidersY = null;
-        UI_PARAMS.drSlidersScale = 1.0;
-        UI_PARAMS.drItems = {
-          scatter: { x: 0, y: 0, s: 1, r: 0 },
-          mouseFollow: { x: 0, y: 0, s: 1, r: 0 },
-          instancing: { x: 0, y: 0, s: 1, r: 0 },
-          lineDirect: { x: 0, y: 0, s: 1, r: 0 },
-          lineCurved: { x: 0, y: 0, s: 1, r: 0 },
-          deform: { x: 0, y: 0, s: 1, r: 0 },
-          twist: { x: 0, y: 0, s: 1, r: 0 },
-          lineMix: { x: 0, y: 0, s: 1, r: 0 }
-        };
-        applyDrSlidersPosition();
-        updateDrHud();
-        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-        pushUndoState();
-      });
-    }
+    // Reset All UI Items
+    const btnResetAll = document.getElementById("uahBtnResetAll");
+    if (btnResetAll) btnResetAll.onclick = (e) => {
+      e.stopPropagation();
+      if (!confirm("Reset all UI elements layout and positions to default?")) return;
+      UI_PARAMS.uiLayout = {
+        brand: { x: 0, y: 0, s: 1, r: 0 },
+        hash: { x: 0, y: 0, s: 1, r: 0 },
+        contact: { x: 0, y: 0, s: 1, r: 0 },
+        resetBtn: { x: 0, y: 0, s: 1, r: 0 },
+        autoBtn: { x: 0, y: 0, s: 1, r: 0 },
+        drGroup: { x: 0, y: 0, s: 1, r: 0 },
+        deform: { x: 0, y: 0, s: 1, r: 0 },
+        twist: { x: 0, y: 0, s: 1, r: 0 },
+        lineMix: { x: 0, y: 0, s: 1, r: 0 },
+        scatter: { x: 0, y: 0, s: 1, r: 0 },
+        mouseFollow: { x: 0, y: 0, s: 1, r: 0 },
+        instancing: { x: 0, y: 0, s: 1, r: 0 },
+        lineDirect: { x: 0, y: 0, s: 1, r: 0 },
+        lineCurved: { x: 0, y: 0, s: 1, r: 0 }
+      };
+      applyUiLayout();
+      updateArrangeHud();
+      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+      pushUndoState();
+    };
 
     // Save UI
-    if ($("btnSaveDrUi")) {
-      $("btnSaveDrUi").addEventListener("click", e => {
-        e.stopPropagation();
-        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-        const hud = $("hudDrCoords");
-        if (hud) {
-          const orig = hud.textContent;
-          hud.textContent = "SAVED UI ✓";
-          hud.style.color = "#34d399";
-          setTimeout(() => { hud.textContent = orig; hud.style.color = ""; }, 1500);
-        }
-      });
-    }
+    const btnSave = document.getElementById("uahBtnSave");
+    if (btnSave) btnSave.onclick = (e) => {
+      e.stopPropagation();
+      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+      const coords = document.getElementById("uahCoords");
+      if (coords) {
+        const orig = coords.textContent;
+        coords.textContent = "SAVED ✓";
+        coords.style.color = "#34d399";
+        setTimeout(() => { coords.textContent = orig; coords.style.color = ""; }, 1500);
+      }
+    };
 
     // Copy Code JSON
-    if ($("btnCopyDrCode")) {
-      $("btnCopyDrCode").addEventListener("click", async e => {
+    const btnCopy = document.getElementById("uahBtnCopy");
+    if (btnCopy) btnCopy.onclick = async (e) => {
+      e.stopPropagation();
+      const code = JSON.stringify(UI_PARAMS.uiLayout || {}, null, 2);
+      try {
+        await navigator.clipboard.writeText(code);
+      } catch (err) {
+        const ta = document.createElement("textarea");
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+      const coords = document.getElementById("uahCoords");
+      if (coords) {
+        const orig = coords.textContent;
+        coords.textContent = "COPIED ✓";
+        coords.style.color = "#38bdf8";
+        setTimeout(() => { coords.textContent = orig; coords.style.color = ""; }, 1500);
+      }
+    };
+
+    // Done / Exit Arrange Mode
+    const btnExit = document.getElementById("uahBtnExit");
+    if (btnExit) btnExit.onclick = (e) => {
+      e.stopPropagation();
+      setArrangeMode(false);
+    };
+
+    // Studio Bar Toggle Button
+    const btnToggleArrangeUi = document.getElementById("btnToggleArrangeUi");
+    if (btnToggleArrangeUi) {
+      btnToggleArrangeUi.onclick = (e) => {
         e.stopPropagation();
-        const code = JSON.stringify(UI_PARAMS.drItems || {}, null, 2);
-        try {
-          await navigator.clipboard.writeText(code);
-        } catch (err) {
-          const ta = document.createElement("textarea");
-          ta.value = code;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          ta.remove();
-        }
-        const hud = $("hudDrCoords");
-        if (hud) {
-          const orig = hud.textContent;
-          hud.textContent = "COPIED CODE ✓";
-          hud.style.color = "#38bdf8";
-          setTimeout(() => { hud.textContent = orig; hud.style.color = ""; }, 1500);
-        }
-      });
+        setArrangeMode();
+      };
     }
 
-    // Arrow keys nudge in Studio Mode
+    // Keyboard Nudge in Arrange Mode
     window.addEventListener("keydown", e => {
-      if (!isStudioMode) return;
+      if (!document.body.classList.contains("arrange-ui-mode")) return;
       const typing = ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable;
       if (typing) return;
-      if (activeDrKey && activeDrKey !== "group" && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+      if (activeArrangeId && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
         e.preventDefault();
-        if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
-        if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
+        if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
+        if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
         const step = e.shiftKey ? 5 : 1;
-        if (e.key === "ArrowUp") UI_PARAMS.drItems[activeDrKey].y -= step;
-        if (e.key === "ArrowDown") UI_PARAMS.drItems[activeDrKey].y += step;
-        if (e.key === "ArrowLeft") UI_PARAMS.drItems[activeDrKey].x -= step;
-        if (e.key === "ArrowRight") UI_PARAMS.drItems[activeDrKey].x += step;
-        applyDrItemsTransforms();
-        updateDrHud();
+        if (e.key === "ArrowUp") UI_PARAMS.uiLayout[activeArrangeId].y -= step;
+        if (e.key === "ArrowDown") UI_PARAMS.uiLayout[activeArrangeId].y += step;
+        if (e.key === "ArrowLeft") UI_PARAMS.uiLayout[activeArrangeId].x -= step;
+        if (e.key === "ArrowRight") UI_PARAMS.uiLayout[activeArrangeId].x += step;
+        applyUiLayout();
+        updateArrangeHud();
         localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
       }
     });
@@ -13983,20 +14002,28 @@ function bootSupernovaEngine() {
         UI_PARAMS.drSlidersX = null;
         UI_PARAMS.drSlidersY = null;
         UI_PARAMS.drSlidersScale = 1.0;
-        UI_PARAMS.drItems = {
+        UI_PARAMS.uiLayout = {
+          brand: { x: 0, y: 0, s: 1, r: 0 },
+          hash: { x: 0, y: 0, s: 1, r: 0 },
+          contact: { x: 0, y: 0, s: 1, r: 0 },
+          resetBtn: { x: 0, y: 0, s: 1, r: 0 },
+          autoBtn: { x: 0, y: 0, s: 1, r: 0 },
+          drGroup: { x: 0, y: 0, s: 1, r: 0 },
+          deform: { x: 0, y: 0, s: 1, r: 0 },
+          twist: { x: 0, y: 0, s: 1, r: 0 },
+          lineMix: { x: 0, y: 0, s: 1, r: 0 },
           scatter: { x: 0, y: 0, s: 1, r: 0 },
           mouseFollow: { x: 0, y: 0, s: 1, r: 0 },
           instancing: { x: 0, y: 0, s: 1, r: 0 },
           lineDirect: { x: 0, y: 0, s: 1, r: 0 },
-          lineCurved: { x: 0, y: 0, s: 1, r: 0 },
-          deform: { x: 0, y: 0, s: 1, r: 0 },
-          twist: { x: 0, y: 0, s: 1, r: 0 },
-          lineMix: { x: 0, y: 0, s: 1, r: 0 }
+          lineCurved: { x: 0, y: 0, s: 1, r: 0 }
         };
         applyBrandPosition();
         applyHashCornerPosition();
         applyContactCornerPosition();
         applyDrSlidersPosition();
+        applyUiLayout();
+        updateArrangeHud();
         localStorage.setItem("supernova_site_header", JSON.stringify(SITE_HEADER));
         localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
         pushUndoState();
