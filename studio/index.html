@@ -1343,108 +1343,178 @@ body.studio-mode .dr-studio-bar {
   white-space: nowrap;
 }
 
-/* Organic Symbols Cluster (◈ ▦ ※ and direct/curved line toggle) */
-.dr-symbols {
+/* ==========================================================================
+   DOWN-RIGHT CONTROLS: COMPOSITION MATCHING IMAGE 1 & IMAGE 2
+   ========================================================================== */
+
+/* Organic Symbols Composition (exact placement from Image 2) */
+.dr-symbols-composition {
+  position: relative;
+  width: 230px;
+  height: 125px;
+  user-select: none;
+  margin-bottom: 8px;
+}
+.dr-sym-cell {
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
-  margin-bottom: 6px;
-  padding: 0 2px;
+  justify-content: center;
 }
+/* Top-left: Hub scatter seed ※ */
+.dr-cell-scatter {
+  top: 10px;
+  left: 6px;
+}
+.dr-cell-scatter .dr-sym-btn {
+  font-size: 32px;
+}
+
+/* Top-right: Large Diamond ◈ */
+.dr-cell-diamond {
+  top: 0px;
+  right: 14px;
+}
+.dr-cell-diamond .dr-sym-btn {
+  font-size: 54px;
+  line-height: 0.9;
+}
+
+/* Middle: Photo instancing grid ▦ */
+.dr-cell-grid {
+  top: 56px;
+  right: 48px;
+}
+.dr-cell-grid .dr-sym-btn {
+  font-size: 30px;
+}
+
+/* Lower-left: Straight vs Curved line toggle ― and ~ */
+.dr-cell-toggle {
+  bottom: 4px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.dr-cell-toggle .dr-sym-btn {
+  font-size: 26px;
+}
+
 .dr-sym-btn {
   background: transparent;
   border: none;
   outline: none;
-  padding: 4px;
+  padding: 0;
   margin: 0;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.40);
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 24px;
   line-height: 1;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color 0.18s ease, transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), text-shadow 0.18s ease, opacity 0.18s ease;
+  transition: color 0.15s ease, text-shadow 0.15s ease, transform 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .dr-sym-btn:hover {
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.75);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.85);
+  transform: scale(1.08);
 }
 .dr-sym-btn.active {
   color: #ffffff;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.95), 0 0 4px #ffffff;
   opacity: 1;
 }
-/* Organic staggered positioning offsets */
-.dr-sym-stagger-1 { transform: translateY(-3px); }
-.dr-sym-stagger-2 { transform: translateY(4px); font-size: 26px; }
-.dr-sym-stagger-3 { transform: translateY(-5px); font-size: 26px; }
-.dr-sym-stagger-4 { transform: translateY(3px); font-size: 25px; }
-.dr-sym-stagger-5 { transform: translateY(-2px); font-size: 28px; }
-.dr-sym-stagger-1:hover { transform: translateY(-3px) scale(1.18); }
-.dr-sym-stagger-2:hover { transform: translateY(4px) scale(1.18); }
-.dr-sym-stagger-3:hover { transform: translateY(-5px) scale(1.18); }
-.dr-sym-stagger-4:hover { transform: translateY(3px) scale(1.18); }
-.dr-sym-stagger-5:hover { transform: translateY(-2px) scale(1.18); }
 
 @keyframes symSpinPop {
-  0% { transform: translateY(-2px) scale(1) rotate(0deg); color: #fff; }
-  50% { transform: translateY(-2px) scale(1.4) rotate(180deg); color: #fff; text-shadow: 0 0 16px #fff; }
-  100% { transform: translateY(-2px) scale(1) rotate(360deg); }
+  0% { transform: scale(1) rotate(0deg); color: #fff; }
+  50% { transform: scale(1.35) rotate(180deg); color: #fff; text-shadow: 0 0 16px #fff; }
+  100% { transform: scale(1) rotate(360deg); }
 }
 .dr-sym-btn.spin-pop {
   animation: symSpinPop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Sliders Cluster */
+/* Sliders: Names written directly ON the line itself (matching Image 1) */
 .dr-sliders {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 10px;
-}
-.dr-slider-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+  gap: 8px;
 }
 .dr-track-wrap {
   position: relative;
   display: flex;
   align-items: center;
-  width: 196px;
-  height: 24px;
+  width: 230px;
+  height: 28px;
 }
 .dr-bracket {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-size: 13px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.45);
   user-select: none;
   pointer-events: none;
   line-height: 1;
 }
-.dr-bracket-l { margin-right: 4px; }
-.dr-bracket-r { margin-left: 4px; }
+.dr-bracket-l { margin-right: 6px; }
+.dr-bracket-r { margin-left: 6px; }
 .dr-track-line {
   position: absolute;
-  left: 12px;
-  right: 12px;
+  left: 14px;
+  right: 14px;
   top: 50%;
   height: 1px;
-  background: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+  z-index: 2;
+}
+.dr-track-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.52);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  white-space: nowrap;
+}
+.dr-track-text-center {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.dr-track-text-left {
+  right: calc(50% + 14px);
+}
+.dr-track-text-right {
+  left: calc(50% + 14px);
+}
+.dr-track-midpoint {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.70);
+  font: 300 13px/1 "IBM Plex Mono", monospace;
   pointer-events: none;
 }
 .dr-slider {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: block;
   appearance: none;
   -webkit-appearance: none;
   width: 100%;
-  height: 24px;
+  height: 28px;
   margin: 0;
   background: transparent;
   cursor: ew-resize;
@@ -1453,16 +1523,16 @@ body.studio-mode .dr-studio-bar {
 .dr-slider::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border: 0;
   border-radius: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
   filter: drop-shadow(0 0 4px #000);
 }
 .dr-slider::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border: 0;
   border-radius: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
@@ -1470,19 +1540,6 @@ body.studio-mode .dr-studio-bar {
 .dr-slider:focus-visible {
   outline: 1px solid rgba(255, 255, 255, 0.6);
   outline-offset: 2px;
-}
-.dr-slider-label {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.42);
-  user-select: none;
-  pointer-events: none;
-  margin-top: 1px;
-  text-align: center;
-  text-shadow: 0 0 4px #000;
 }
 @media(max-width:760px){.morph-faded-box{width:min(320px,calc(100vw - 140px));max-width:calc(100vw - 120px)}.morph-bottom-row{gap:6px}.line-particle-label{font-size:9px;letter-spacing:.03em}}
 @media(prefers-reduced-motion:reduce){.brand h1{transition:opacity .18s,text-shadow .18s}}
@@ -2811,36 +2868,33 @@ body.studio-mode .dr-studio-bar {
   #downRightControls {
     right: max(10px, calc(env(safe-area-inset-right, 0px) + 8px)) !important;
     bottom: max(10px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
-    transform: scale(0.82) !important;
+    transform: scale(0.80) !important;
     transform-origin: bottom right !important;
     z-index: 35 !important;
     gap: 6px !important;
   }
+  .dr-symbols-composition {
+    width: 185px !important;
+    height: 110px !important;
+  }
   .dr-track-wrap {
-    width: 150px !important;
-    height: 22px !important;
+    width: 185px !important;
+    height: 24px !important;
   }
-  .dr-slider {
-    height: 22px !important;
+  .dr-cell-diamond .dr-sym-btn {
+    font-size: 44px !important;
   }
-  .dr-slider::-webkit-slider-thumb {
-    width: 22px !important;
-    height: 22px !important;
+  .dr-cell-scatter .dr-sym-btn {
+    font-size: 26px !important;
   }
-  .dr-slider::-moz-range-thumb {
-    width: 22px !important;
-    height: 22px !important;
+  .dr-cell-grid .dr-sym-btn {
+    font-size: 24px !important;
   }
-  .dr-symbols {
-    gap: 12px !important;
-    margin-bottom: 4px !important;
-  }
-  .dr-sym-btn {
+  .dr-cell-toggle .dr-sym-btn {
     font-size: 22px !important;
-    padding: 3px !important;
   }
-  .dr-slider-label {
-    font-size: 9px !important;
+  .dr-track-text {
+    font-size: 10px !important;
   }
 
   /* 7. Modals on Phone & Small Screens */
@@ -2989,7 +3043,7 @@ body.studio-mode .dr-studio-bar {
   </div>
 </div>
 
-<!-- Down-Right Controls: Symbols Cluster & Sliders with labels underneath -->
+<!-- Down-Right Controls: Symbols Cluster & Sliders with names on the line -->
 <div class="dr-controls mono" id="downRightControls">
   <!-- Studio-Only Arrange & Scale HUD Bar -->
   <div class="dr-studio-bar studio-only mono" id="drStudioBar">
@@ -3002,48 +3056,56 @@ body.studio-mode .dr-studio-bar {
     <button type="button" class="dr-bar-btn" id="btnResetDrUi" title="Reset to default bottom-right">RESET</button>
   </div>
 
-  <!-- Organic Symbols Cluster -->
-  <div class="dr-symbols" id="drSymbolsCluster">
-    <button type="button" class="dr-sym-btn dr-sym-stagger-1 active" id="btnToggleLineDirect" title="Direct Straight Lines" aria-label="Direct Lines">―</button>
-    <button type="button" class="dr-sym-btn dr-sym-stagger-2" id="btnToggleLineCurved" title="Curved Bouncy Lines" aria-label="Curved Lines">∿</button>
-    <button type="button" class="dr-sym-btn dr-sym-stagger-3" id="btnToggleMouseFollow" title="Mouse Follow (Face Cursor)" aria-label="Face Cursor">◈</button>
-    <button type="button" class="dr-sym-btn dr-sym-stagger-4" id="btnToggleInstancing" title="Photo Instancing" aria-label="Photo Instancing">▦</button>
-    <button type="button" class="dr-sym-btn dr-sym-stagger-5" id="btnScatterHubSeed" title="Scatter Hub Seed" aria-label="Scatter Hubs">※</button>
+  <!-- Organic Symbols Composition (exact layout from Image 2) -->
+  <div class="dr-symbols-composition" id="drSymbolsCluster">
+    <!-- Top-left: Hub scatter seed ※ -->
+    <div class="dr-sym-cell dr-cell-scatter">
+      <button type="button" class="dr-sym-btn" id="btnScatterHubSeed" title="Scatter Hub Seed" aria-label="Scatter Hubs">※</button>
+    </div>
+    <!-- Top-right: Large Diamond ◈ (Mouse follow / Face cursor) -->
+    <div class="dr-sym-cell dr-cell-diamond">
+      <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Follow (Face Cursor)" aria-label="Face Cursor">◈</button>
+    </div>
+    <!-- Middle: Photo instancing grid ▦ -->
+    <div class="dr-sym-cell dr-cell-grid">
+      <button type="button" class="dr-sym-btn active" id="btnToggleInstancing" title="Photo Instancing" aria-label="Photo Instancing">▦</button>
+    </div>
+    <!-- Lower-left: Straight vs Curved line toggle ― and ~ -->
+    <div class="dr-sym-cell dr-cell-toggle">
+      <button type="button" class="dr-sym-btn active" id="btnToggleLineDirect" title="Direct Straight Lines" aria-label="Direct Lines">―</button>
+      <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Curved Bouncy Lines" aria-label="Curved Lines">~</button>
+    </div>
   </div>
 
-  <!-- Sliders with labels underneath -->
+  <!-- Sliders: Names written directly on the line itself (exact match to Image 1) -->
   <div class="dr-sliders" id="drSlidersGroup">
     <!-- Slider 1: Deform -->
-    <div class="dr-slider-unit">
-      <div class="dr-track-wrap">
-        <span class="dr-bracket dr-bracket-l">&lt;</span>
-        <div class="dr-track-line"></div>
-        <input id="drDeformSlider" type="range" class="dr-slider" min="0" max="150" value="49" step="1" aria-label="Sphere Deformation" title="Sphere Deformation">
-        <span class="dr-bracket dr-bracket-r">&gt;</span>
-      </div>
-      <div class="dr-slider-label">deform</div>
+    <div class="dr-track-wrap">
+      <span class="dr-bracket dr-bracket-l">&lt;</span>
+      <div class="dr-track-line"></div>
+      <span class="dr-track-text dr-track-text-center">DEFORM</span>
+      <input id="drDeformSlider" type="range" class="dr-slider" min="0" max="150" value="49" step="1" aria-label="Sphere Deformation" title="Sphere Deformation">
+      <span class="dr-bracket dr-bracket-r">&gt;</span>
     </div>
 
     <!-- Slider 2: Twist -->
-    <div class="dr-slider-unit">
-      <div class="dr-track-wrap">
-        <span class="dr-bracket dr-bracket-l">&lt;</span>
-        <div class="dr-track-line"></div>
-        <input id="drTwistSlider" type="range" class="dr-slider" min="-150" max="150" value="12" step="1" aria-label="Sphere Twist" title="Sphere Twist">
-        <span class="dr-bracket dr-bracket-r">&gt;</span>
-      </div>
-      <div class="dr-slider-label">twist</div>
+    <div class="dr-track-wrap">
+      <span class="dr-bracket dr-bracket-l">&lt;</span>
+      <div class="dr-track-line"></div>
+      <span class="dr-track-text dr-track-text-center">TWIST</span>
+      <input id="drTwistSlider" type="range" class="dr-slider" min="-150" max="150" value="12" step="1" aria-label="Sphere Twist" title="Sphere Twist">
+      <span class="dr-bracket dr-bracket-r">&gt;</span>
     </div>
 
-    <!-- Slider 3: Particles // Lines -->
-    <div class="dr-slider-unit">
-      <div class="dr-track-wrap">
-        <span class="dr-bracket dr-bracket-l">&lt;</span>
-        <div class="dr-track-line"></div>
-        <input id="bottomLineParticleMix" type="range" class="dr-slider" min="0" max="100" value="50" step="1" aria-label="Line-particles visibility balance" title="Left: lines · Middle: both · Right: particles">
-        <span class="dr-bracket dr-bracket-r">&gt;</span>
-      </div>
-      <div class="dr-slider-label">particles // lines</div>
+    <!-- Slider 3: Particles // Lines (exact match to Image 1) -->
+    <div class="dr-track-wrap">
+      <span class="dr-bracket dr-bracket-l">&lt;</span>
+      <div class="dr-track-line"></div>
+      <span class="dr-track-text dr-track-text-left">LINE</span>
+      <span class="dr-track-midpoint" aria-hidden="true">|</span>
+      <span class="dr-track-text dr-track-text-right">PARTICLES</span>
+      <input id="bottomLineParticleMix" type="range" class="dr-slider" min="0" max="100" value="50" step="1" aria-label="Line–particles visibility balance" title="Left: lines · Middle: both · Right: particles">
+      <span class="dr-bracket dr-bracket-r">&gt;</span>
     </div>
   </div>
 </div>
@@ -12652,6 +12714,11 @@ function bootSupernovaEngine() {
   const applyContactCornerPosition = () => {
     const el = document.getElementById("contactCorner");
     if (!el) return;
+    if (UI_PARAMS.contactY != null && UI_PARAMS.contactY > 160) {
+      UI_PARAMS.contactX = null;
+      UI_PARAMS.contactY = null;
+      try { localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS)); } catch (e) {}
+    }
     if (isMobileViewport() || UI_PARAMS.contactX == null || UI_PARAMS.contactY == null || UI_PARAMS.contactX > window.innerWidth - 60 || UI_PARAMS.contactY > window.innerHeight - 60) {
       el.classList.remove("corner-custom-pos");
       el.style.position = "";
@@ -15060,7 +15127,8 @@ function bootSupernovaEngine() {
     photoCardsGroup.visible = isInstancing;
     if (!isInstancing) return;
 
-    const countLimit = Math.max(0, Math.min(60, Math.round(PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : 60)));
+    const totalCandidateCount = NODES.filter(n => n.tier <= 2).length || CORE_HUB_COUNT;
+    const countLimit = Math.max(totalCandidateCount, Math.round(PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : totalCandidateCount));
     const activeLayers = Math.max(1, Math.min(4, Math.round(PARAMS.photoCardLayers || 1)));
     const layerSpread = Math.max(0, Math.min(1, Number(PARAMS.photoCardLayerSpread) !== undefined ? Number(PARAMS.photoCardLayerSpread) : 0.30));
     const w = Math.max(10, window.innerWidth || 800);
@@ -19406,7 +19474,7 @@ function bootSupernovaEngine() {
           const baseOp = (n.status === "active" ? 0.94 : (n.status === "draft" ? 0.95 : 0.82)) * Math.min(1.3, hBright * 1.15);
           const op = vis ? Math.min(1.0, (act ? 1.0 : baseOp * filterHighlight) + beepBoost * 0.35) : 0.0;
           n.sprite.material.opacity += (op - n.sprite.material.opacity) * smoothVisRate;
-          n.sprite.visible = n.sprite.material.opacity > 0.004;
+          n.sprite.visible = !PARAMS.photoInstancing && (n.sprite.material.opacity > 0.004);
         }
         if (n.beacon) {
           n.beacon.position.copy(n.pos); n.beacon.scale.set(ringScale, ringScale, 1);
@@ -19456,18 +19524,18 @@ function bootSupernovaEngine() {
           edgeChordNorm.set(0, 1, 0);
         }
         const arcH = Math.max(0, sphR - midLen) * 1.25 + d * 0.12;
-        const wave = Math.sin(time * 2.5 + (E.a * 1.618 + E.b * 2.718)) * (d * 0.07);
+        const wave = Math.sin(t * 2.5 + (E.a * 1.618 + E.b * 2.718)) * (d * 0.07);
         const totalBow = arcH + wave;
 
         for (let s = 0; s <= S; s++) {
-          const t = s / S;
-          const disp = totalBow * Math.sin(Math.PI * t);
-          edgeScratchPts[s].lerpVectors(a, b, t).addScaledVector(edgeChordNorm, disp);
+          const segT = s / S;
+          const disp = totalBow * Math.sin(Math.PI * segT);
+          edgeScratchPts[s].lerpVectors(a, b, segT).addScaledVector(edgeChordNorm, disp);
         }
       } else {
         for (let s = 0; s <= S; s++) {
-          const t = s / S;
-          edgeScratchPts[s].lerpVectors(a, b, t);
+          const segT = s / S;
+          edgeScratchPts[s].lerpVectors(a, b, segT);
         }
       }
 
