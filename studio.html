@@ -1286,60 +1286,148 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transform-origin: bottom right;
 }
 
-/* Studio-Only Arrange & Scale HUD Bar */
+/* Studio-Only Arrange, Scale & Rotate HUD Bar */
 .dr-studio-bar {
   display: none;
-  align-items: center;
-  gap: 5px;
-  background: rgba(10, 12, 18, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 3px 6px;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(8, 10, 16, 0.94);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 4px;
+  padding: 5px 8px;
   font-size: 9px;
-  margin-bottom: 2px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  margin-bottom: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  max-width: 330px;
+  user-select: none;
 }
 body.studio-mode .dr-studio-bar {
   display: flex;
 }
+.dr-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+.dr-bar-subrow {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.dr-bar-label {
+  color: #94a3b8;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.dr-bar-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 3px;
+  color: #f1f5f9;
+  font-family: inherit;
+  font-size: 9px;
+  padding: 2px 4px;
+  outline: none;
+  cursor: pointer;
+  max-width: 125px;
+}
+.dr-bar-select option {
+  background: #090d16;
+  color: #f1f5f9;
+}
 .dr-bar-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 3px;
   color: #e2e8f0;
   font-family: inherit;
   font-size: 9px;
-  padding: 2px 6px;
+  padding: 2px 5px;
   cursor: pointer;
   line-height: 1.1;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .dr-bar-btn:hover {
   background: rgba(255, 255, 255, 0.22);
   color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 .dr-bar-btn:active {
   background: rgba(255, 255, 255, 0.35);
 }
-#btnDragDrControls {
+.dr-drag-handle {
   cursor: grab;
   background: rgba(99, 102, 241, 0.28);
   border-color: rgba(129, 140, 248, 0.55);
   color: #c7d2fe;
 }
-#btnDragDrControls:active {
+.dr-drag-handle:active {
   cursor: grabbing;
 }
-.dr-bar-scale-val {
+.dr-bar-scale-val, .dr-bar-rot-val {
   color: #94a3b8;
   font-size: 9px;
-  padding: 0 2px;
+  padding: 0 1px;
   white-space: nowrap;
+  min-width: 24px;
+  text-align: center;
 }
 .dr-bar-hud {
   color: #38bdf8;
   font-weight: 500;
   font-size: 9px;
-  padding: 0 4px;
+  padding: 0 3px;
   white-space: nowrap;
+  flex: 1;
+}
+.dr-btn-save {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: rgba(52, 211, 153, 0.45);
+  color: #6ee7b7;
+}
+.dr-btn-save:hover {
+  background: rgba(16, 185, 129, 0.38);
+  color: #fff;
+}
+.dr-btn-copy {
+  background: rgba(14, 165, 233, 0.22);
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #7dd3fc;
+}
+.dr-btn-copy:hover {
+  background: rgba(14, 165, 233, 0.38);
+  color: #fff;
+}
+
+/* Studio draggable items & outlines */
+body.studio-mode [data-dr-item] {
+  cursor: grab;
+  transform-origin: center center;
+}
+body.studio-mode [data-dr-item]:hover {
+  outline: 1px dashed rgba(56, 189, 248, 0.55);
+  outline-offset: 3px;
+}
+body.studio-mode [data-dr-item].dr-selected {
+  outline: 1.5px solid #38bdf8 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+}
+body.studio-mode [data-dr-item].dr-item-dragging {
+  cursor: grabbing !important;
+}
+.dr-toggle-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
 }
 
 /* ==========================================================================
@@ -3071,21 +3159,42 @@ body.studio-mode .dr-studio-bar {
 
 <!-- Down-Right Controls: Symbols Cluster & Sliders with names on the line -->
 <div class="dr-controls mono" id="downRightControls">
-  <!-- Studio-Only Arrange & Scale HUD Bar -->
+  <!-- Studio-Only Arrange, Scale & Rotate HUD Bar -->
   <div class="dr-studio-bar studio-only mono" id="drStudioBar">
-    <button type="button" class="dr-bar-btn" id="btnDragDrControls" title="Drag to relocate sliders &amp; symbols anywhere on screen">DRAG</button>
-    <button type="button" class="dr-bar-btn" id="btnScaleDrDown" title="Decrease Scale">-</button>
-    <span class="dr-bar-scale-val" id="valDrScale">100%</span>
-    <button type="button" class="dr-bar-btn" id="btnScaleDrUp" title="Increase Scale">+</button>
-    <span class="dr-bar-hud" id="hudDrCoords" title="Coordinates and scale for reference/screenshot">X:0 Y:0 S:1.0</span>
-    <button type="button" class="dr-bar-btn" id="btnSaveDrUi" title="Save position and scale to settings">SAVE UI</button>
-    <button type="button" class="dr-bar-btn" id="btnResetDrUi" title="Reset to default bottom-right">RESET</button>
+    <div class="dr-bar-row">
+      <span class="dr-bar-label">EDIT:</span>
+      <select id="drItemSelect" class="dr-bar-select mono" title="Select element to reposition, scale, or rotate">
+        <option value="group">ALL (Entire Group)</option>
+        <option value="scatter">※ Scatter Seed (ⵆ)</option>
+        <option value="mouseFollow">☉ Face Cursor (ⵙ)</option>
+        <option value="instancing">ⴼ Instancing (][)</option>
+        <option value="lineDirect">― Direct Line</option>
+        <option value="lineCurved">~ Curved Line</option>
+        <option value="deform">&lt; DEFORM &gt;</option>
+        <option value="twist">&lt; TWIST &gt;</option>
+        <option value="lineMix">&lt; LINE|PARTICLES &gt;</option>
+      </select>
+      <button type="button" class="dr-bar-btn dr-drag-handle" id="btnDragActiveItem" title="Drag to relocate selected element">DRAG</button>
+      <button type="button" class="dr-bar-btn" id="btnScaleItemDown" title="Decrease Scale (Shift + Wheel)">-</button>
+      <span class="dr-bar-scale-val" id="valItemScale">100%</span>
+      <button type="button" class="dr-bar-btn" id="btnScaleItemUp" title="Increase Scale (Shift + Wheel)">+</button>
+      <button type="button" class="dr-bar-btn" id="btnRotItemCcw" title="Rotate Counter-Clockwise (Alt + Wheel)">↺</button>
+      <span class="dr-bar-rot-val" id="valItemRot">0°</span>
+      <button type="button" class="dr-bar-btn" id="btnRotItemCw" title="Rotate Clockwise (Alt + Wheel)">↻</button>
+    </div>
+    <div class="dr-bar-row dr-bar-subrow">
+      <span class="dr-bar-hud" id="hudDrCoords" title="Coordinates, scale &amp; rotation">GRP X:0 Y:0 S:1.0</span>
+      <button type="button" class="dr-bar-btn" id="btnResetActiveItem" title="Reset selected element to default">RESET ITEM</button>
+      <button type="button" class="dr-bar-btn" id="btnResetDrUi" title="Reset all elements to default">RESET ALL</button>
+      <button type="button" class="dr-bar-btn dr-btn-save" id="btnSaveDrUi" title="Save changes to browser localStorage">SAVE UI</button>
+      <button type="button" class="dr-bar-btn dr-btn-copy" id="btnCopyDrCode" title="Copy layout JSON to clipboard">COPY CODE</button>
+    </div>
   </div>
 
-  <!-- Organic Symbols Composition (exact layout from Image 2) -->
+  <!-- Organic Symbols Composition (exact layout from Image 2 & 3) -->
   <div class="dr-symbols-composition" id="drSymbolsCluster">
     <!-- Top-right: Hub scatter seed ⵆ -->
-    <div class="dr-sym-cell dr-cell-scatter">
+    <div class="dr-sym-cell dr-cell-scatter dr-item" data-dr-item="scatter">
       <button type="button" class="dr-sym-btn" id="btnScatterHubSeed" title="Scatter Hub Seed" aria-label="Scatter Hubs">
         <svg viewBox="0 0 40 40" width="38" height="38" fill="none" stroke="currentColor">
           <line x1="9" y1="9" x2="31" y2="31" stroke-width="3" stroke-linecap="round"/>
@@ -3098,7 +3207,7 @@ body.studio-mode .dr-studio-bar {
       </button>
     </div>
     <!-- Center-left: Big Circle with Center Dot ⵙ ⴻ (Mouse follow / Face cursor) -->
-    <div class="dr-sym-cell dr-cell-diamond">
+    <div class="dr-sym-cell dr-cell-diamond dr-item" data-dr-item="mouseFollow">
       <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Follow (Face Cursor)" aria-label="Face Cursor">
         <svg viewBox="0 0 100 100" width="94" height="94" fill="none">
           <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8.5" />
@@ -3107,7 +3216,7 @@ body.studio-mode .dr-studio-bar {
       </button>
     </div>
     <!-- Lower-right: Photo instancing ⴼ -->
-    <div class="dr-sym-cell dr-cell-grid">
+    <div class="dr-sym-cell dr-cell-grid dr-item" data-dr-item="instancing">
       <button type="button" class="dr-sym-btn active" id="btnToggleInstancing" title="Photo Instancing" aria-label="Photo Instancing">
         <svg viewBox="0 0 38 46" width="36" height="44" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="square">
           <path d="M4 6 L12 6 M4 6 L4 40 M4 40 L12 40" />
@@ -3118,23 +3227,27 @@ body.studio-mode .dr-studio-bar {
     </div>
     <!-- Lower-left: Straight vs Curved line toggle (Crisp vector icons) -->
     <div class="dr-sym-cell dr-cell-toggle">
-      <button type="button" class="dr-sym-btn active" id="btnToggleLineDirect" title="Direct Straight Lines" aria-label="Direct Lines">
-        <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
-          <line x1="2" y1="10" x2="26" y2="10" />
-        </svg>
-      </button>
-      <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Curved Bouncy Lines" aria-label="Curved Lines">
-        <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 13 Q 8 4, 14 10 T 26 7" />
-        </svg>
-      </button>
+      <div class="dr-toggle-item dr-item" data-dr-item="lineDirect">
+        <button type="button" class="dr-sym-btn active" id="btnToggleLineDirect" title="Direct Straight Lines" aria-label="Direct Lines">
+          <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
+            <line x1="2" y1="10" x2="26" y2="10" />
+          </svg>
+        </button>
+      </div>
+      <div class="dr-toggle-item dr-item" data-dr-item="lineCurved">
+        <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Curved Bouncy Lines" aria-label="Curved Lines">
+          <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 13 Q 8 4, 14 10 T 26 7" />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Sliders: Names written directly on the line itself (exact match to Image 1) -->
   <div class="dr-sliders" id="drSlidersGroup">
     <!-- Slider 1: Deform -->
-    <div class="dr-track-wrap">
+    <div class="dr-track-wrap dr-item" data-dr-item="deform" id="wrapDrDeform">
       <span class="dr-bracket dr-bracket-l">&lt;</span>
       <div class="dr-track-line"></div>
       <span class="dr-track-text dr-track-text-center">DEFORM</span>
@@ -3143,7 +3256,7 @@ body.studio-mode .dr-studio-bar {
     </div>
 
     <!-- Slider 2: Twist -->
-    <div class="dr-track-wrap">
+    <div class="dr-track-wrap dr-item" data-dr-item="twist" id="wrapDrTwist">
       <span class="dr-bracket dr-bracket-l">&lt;</span>
       <div class="dr-track-line"></div>
       <span class="dr-track-text dr-track-text-center">TWIST</span>
@@ -3152,7 +3265,7 @@ body.studio-mode .dr-studio-bar {
     </div>
 
     <!-- Slider 3: Particles // Lines (exact match to Image 1) -->
-    <div class="dr-track-wrap">
+    <div class="dr-track-wrap dr-item" data-dr-item="lineMix" id="wrapDrLineMix">
       <span class="dr-bracket dr-bracket-l">&lt;</span>
       <div class="dr-track-line"></div>
       <span class="dr-track-text dr-track-text-left">LINE</span>
@@ -3577,7 +3690,17 @@ let UI_PARAMS = {
   "contactY": null,
   "drSlidersX": null,
   "drSlidersY": null,
-  "drSlidersScale": 1.0
+  "drSlidersScale": 1.0,
+  "drItems": {
+    "scatter": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "mouseFollow": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "instancing": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "lineDirect": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "lineCurved": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "deform": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "twist": { "x": 0, "y": 0, "s": 1, "r": 0 },
+    "lineMix": { "x": 0, "y": 0, "s": 1, "r": 0 }
+  }
 };
 
 let PSYS = {
@@ -12718,6 +12841,9 @@ function bootSupernovaEngine() {
       if (savedUi.drSlidersX !== undefined) UI_PARAMS.drSlidersX = savedUi.drSlidersX;
       if (savedUi.drSlidersY !== undefined) UI_PARAMS.drSlidersY = savedUi.drSlidersY;
       if (savedUi.drSlidersScale !== undefined) UI_PARAMS.drSlidersScale = savedUi.drSlidersScale;
+      if (savedUi.drItems && typeof savedUi.drItems === "object") {
+        UI_PARAMS.drItems = Object.assign({}, UI_PARAMS.drItems, savedUi.drItems);
+      }
     }
   } catch (err) {}
 
@@ -12792,20 +12918,52 @@ function bootSupernovaEngine() {
     el.style.zIndex = "25";
   };
 
+  let activeDrKey = "group";
+
+  const applyDrItemsTransforms = () => {
+    if (!UI_PARAMS.drItems) return;
+    const items = document.querySelectorAll("[data-dr-item]");
+    items.forEach(el => {
+      const key = el.getAttribute("data-dr-item");
+      const itemData = UI_PARAMS.drItems[key];
+      if (!itemData) return;
+      const x = Number(itemData.x) || 0;
+      const y = Number(itemData.y) || 0;
+      const s = (itemData.s !== undefined && itemData.s !== null) ? Number(itemData.s) : 1;
+      const r = Number(itemData.r) || 0;
+      if (x === 0 && y === 0 && s === 1 && r === 0) {
+        el.style.transform = "";
+      } else {
+        el.style.transform = `translate3d(${x}px, ${y}px, 0px) rotate(${r}deg) scale(${s})`;
+        el.style.transformOrigin = "center center";
+      }
+    });
+  };
+
   const updateDrHud = () => {
     const el = document.getElementById("downRightControls");
     const hud = document.getElementById("hudDrCoords");
     if (!el || !hud) return;
-    const rect = el.getBoundingClientRect();
-    const s = UI_PARAMS.drSlidersScale || 1.0;
-    hud.textContent = `X:${Math.round(rect.left)} Y:${Math.round(rect.top)} S:${s.toFixed(2)}`;
+    if (activeDrKey === "group") {
+      const rect = el.getBoundingClientRect();
+      const s = UI_PARAMS.drSlidersScale || 1.0;
+      hud.textContent = `GRP X:${Math.round(rect.left)} Y:${Math.round(rect.top)} S:${s.toFixed(2)}`;
+      if ($("valItemScale")) $("valItemScale").textContent = `${Math.round(s * 100)}%`;
+      if ($("valItemRot")) $("valItemRot").textContent = `0°`;
+    } else {
+      const it = (UI_PARAMS.drItems && UI_PARAMS.drItems[activeDrKey]) || { x: 0, y: 0, s: 1, r: 0 };
+      const s = it.s !== undefined ? it.s : 1;
+      const r = it.r || 0;
+      hud.textContent = `${activeDrKey.toUpperCase()} X:${it.x} Y:${it.y} S:${s.toFixed(2)} R:${r}°`;
+      if ($("valItemScale")) $("valItemScale").textContent = `${Math.round(s * 100)}%`;
+      if ($("valItemRot")) $("valItemRot").textContent = `${r}°`;
+    }
   };
 
   const applyDrSlidersPosition = () => {
     const el = document.getElementById("downRightControls");
     if (!el) return;
     const scale = (UI_PARAMS.drSlidersScale !== undefined && UI_PARAMS.drSlidersScale !== null) ? UI_PARAMS.drSlidersScale : 1.0;
-    if ($("valDrScale")) $("valDrScale").textContent = `${Math.round(scale * 100)}%`;
     if (isMobileViewport() || UI_PARAMS.drSlidersX == null || UI_PARAMS.drSlidersY == null || UI_PARAMS.drSlidersX > window.innerWidth - 60 || UI_PARAMS.drSlidersY > window.innerHeight - 60) {
       el.classList.remove("corner-custom-pos");
       el.style.position = "";
@@ -12827,6 +12985,7 @@ function bootSupernovaEngine() {
       el.style.transformOrigin = "top left";
       el.style.zIndex = "25";
     }
+    applyDrItemsTransforms();
     updateDrHud();
   };
 
@@ -13459,117 +13618,330 @@ function bootSupernovaEngine() {
       });
     }
 
-    // 3. Down-Right Controls Relocation (Studio Mode - Drag & Scale)
+    // 3. Down-Right Controls & Individual Elements Studio Handler
     const drEl = document.getElementById("downRightControls");
-    const drDragBtn = document.getElementById("btnDragDrControls");
-    if (drEl && drDragBtn) {
-      let isDraggingDr = false;
-      let drDragOrigin = { x: 0, y: 0 };
-      let initialDrPos = { x: 0, y: 0 };
+    const itemSelect = document.getElementById("drItemSelect");
 
-      function startDrDrag(e) {
+    const selectDrItem = (key) => {
+      activeDrKey = key || "group";
+      if (itemSelect) itemSelect.value = activeDrKey;
+      document.querySelectorAll("[data-dr-item]").forEach(node => {
+        node.classList.toggle("dr-selected", node.getAttribute("data-dr-item") === activeDrKey);
+      });
+      updateDrHud();
+    };
+
+    if (itemSelect) {
+      itemSelect.addEventListener("change", () => {
+        selectDrItem(itemSelect.value);
+      });
+    }
+
+    // Direct click/drag on any .dr-item in Studio Mode
+    document.querySelectorAll("[data-dr-item]").forEach(el => {
+      const key = el.getAttribute("data-dr-item");
+      el.addEventListener("pointerdown", e => {
         if (!isStudioMode) return;
-        isDraggingDr = true;
-        const rect = drEl.getBoundingClientRect();
-        drDragOrigin = { x: e.clientX, y: e.clientY };
-        initialDrPos = { x: rect.left, y: rect.top };
-        drEl.classList.add("corner-dragging");
-        try { drDragBtn.setPointerCapture(e.pointerId); } catch(err){}
-        e.stopPropagation();
-        e.preventDefault();
-      }
+        // Don't initiate drag if user is interacting with a range slider track thumb
+        if (e.target.tagName === "INPUT") return;
+        selectDrItem(key);
 
-      function moveDrDrag(e) {
-        if (!isDraggingDr) return;
-        const dx = e.clientX - drDragOrigin.x;
-        const dy = e.clientY - drDragOrigin.y;
-        const newX = Math.round(initialDrPos.x + dx);
-        const newY = Math.round(initialDrPos.y + dy);
-        drEl.classList.add("corner-custom-pos");
-        drEl.style.position = "fixed";
-        drEl.style.left = newX + "px";
-        drEl.style.top = newY + "px";
-        drEl.style.bottom = "auto";
-        drEl.style.right = "auto";
-        drEl.style.transformOrigin = "top left";
-        drEl.style.zIndex = "25";
-        UI_PARAMS.drSlidersX = newX;
-        UI_PARAMS.drSlidersY = newY;
-        updateDrHud();
-      }
+        let startX = e.clientX;
+        let startY = e.clientY;
+        const initialItem = { ...(UI_PARAMS.drItems && UI_PARAMS.drItems[key] ? UI_PARAMS.drItems[key] : { x: 0, y: 0, s: 1, r: 0 }) };
+        let isMoving = false;
 
-      function stopDrDrag(e) {
-        if (!isDraggingDr) return;
-        isDraggingDr = false;
-        drEl.classList.remove("corner-dragging");
-        try { drDragBtn.releasePointerCapture(e.pointerId); } catch(err){}
-        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-        pushUndoState();
-      }
+        const onPointerMove = (ev) => {
+          const dx = ev.clientX - startX;
+          const dy = ev.clientY - startY;
+          if (!isMoving && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
+            isMoving = true;
+            el.classList.add("dr-item-dragging");
+            try { el.setPointerCapture(e.pointerId); } catch(err){}
+          }
+          if (isMoving) {
+            if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
+            if (!UI_PARAMS.drItems[key]) UI_PARAMS.drItems[key] = { x: 0, y: 0, s: 1, r: 0 };
+            UI_PARAMS.drItems[key].x = Math.round(initialItem.x + dx);
+            UI_PARAMS.drItems[key].y = Math.round(initialItem.y + dy);
+            applyDrItemsTransforms();
+            updateDrHud();
+          }
+        };
 
-      drDragBtn.addEventListener("pointerdown", startDrDrag);
-      drDragBtn.addEventListener("pointermove", moveDrDrag);
-      drDragBtn.addEventListener("pointerup", stopDrDrag);
-      drDragBtn.addEventListener("pointercancel", stopDrDrag);
-      drDragBtn.addEventListener("dblclick", e => {
-        e.stopPropagation();
-        UI_PARAMS.drSlidersX = null;
-        UI_PARAMS.drSlidersY = null;
-        UI_PARAMS.drSlidersScale = 1.0;
-        applyDrSlidersPosition();
-        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-        pushUndoState();
+        const onPointerUp = (ev) => {
+          window.removeEventListener("pointermove", onPointerMove);
+          window.removeEventListener("pointerup", onPointerUp);
+          window.removeEventListener("pointercancel", onPointerUp);
+          el.classList.remove("dr-item-dragging");
+          try { el.releasePointerCapture(e.pointerId); } catch(err){}
+          if (isMoving) {
+            localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+            pushUndoState();
+          }
+        };
+
+        window.addEventListener("pointermove", onPointerMove);
+        window.addEventListener("pointerup", onPointerUp);
+        window.addEventListener("pointercancel", onPointerUp);
       });
 
-      const setDrScale = (scale) => {
-        scale = Math.max(0.5, Math.min(2.0, Math.round(scale * 100) / 100));
-        UI_PARAMS.drSlidersScale = scale;
-        drEl.style.transform = `scale(${scale})`;
-        if ($("valDrScale")) $("valDrScale").textContent = `${Math.round(scale * 100)}%`;
+      // Shift + Wheel to scale, Alt + Wheel to rotate
+      el.addEventListener("wheel", e => {
+        if (!isStudioMode) return;
+        if (e.shiftKey) {
+          e.preventDefault();
+          selectDrItem(key);
+          const delta = e.deltaY < 0 ? 0.05 : -0.05;
+          setItemScale(delta, true);
+        } else if (e.altKey) {
+          e.preventDefault();
+          selectDrItem(key);
+          const delta = e.deltaY < 0 ? -5 : 5;
+          setItemRot(delta);
+        }
+      }, { passive: false });
+    });
+
+    // Dedicated DRAG handle button in Studio Bar
+    const btnDragActive = document.getElementById("btnDragActiveItem") || document.getElementById("btnDragDrControls");
+    if (btnDragActive && drEl) {
+      let isDraggingActive = false;
+      let startX = 0, startY = 0;
+      let initialItemPos = { x: 0, y: 0 };
+      let initialGroupPos = { x: 0, y: 0 };
+
+      btnDragActive.addEventListener("pointerdown", e => {
+        if (!isStudioMode) return;
+        isDraggingActive = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        if (activeDrKey === "group") {
+          const rect = drEl.getBoundingClientRect();
+          initialGroupPos = { x: rect.left, y: rect.top };
+          drEl.classList.add("corner-dragging");
+        } else {
+          const it = (UI_PARAMS.drItems && UI_PARAMS.drItems[activeDrKey]) || { x: 0, y: 0, s: 1, r: 0 };
+          initialItemPos = { x: it.x, y: it.y };
+          const targetEl = document.querySelector(`[data-dr-item="${activeDrKey}"]`);
+          if (targetEl) targetEl.classList.add("dr-item-dragging");
+        }
+        try { btnDragActive.setPointerCapture(e.pointerId); } catch(err){}
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      btnDragActive.addEventListener("pointermove", e => {
+        if (!isDraggingActive) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        if (activeDrKey === "group") {
+          const newX = Math.round(initialGroupPos.x + dx);
+          const newY = Math.round(initialGroupPos.y + dy);
+          drEl.classList.add("corner-custom-pos");
+          drEl.style.position = "fixed";
+          drEl.style.left = newX + "px";
+          drEl.style.top = newY + "px";
+          drEl.style.bottom = "auto";
+          drEl.style.right = "auto";
+          drEl.style.transformOrigin = "top left";
+          drEl.style.zIndex = "25";
+          UI_PARAMS.drSlidersX = newX;
+          UI_PARAMS.drSlidersY = newY;
+        } else {
+          if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
+          if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
+          UI_PARAMS.drItems[activeDrKey].x = Math.round(initialItemPos.x + dx);
+          UI_PARAMS.drItems[activeDrKey].y = Math.round(initialItemPos.y + dy);
+          applyDrItemsTransforms();
+        }
         updateDrHud();
+      });
+
+      const stopActiveDrag = (e) => {
+        if (!isDraggingActive) return;
+        isDraggingActive = false;
+        drEl.classList.remove("corner-dragging");
+        const targetEl = document.querySelector(`[data-dr-item="${activeDrKey}"]`);
+        if (targetEl) targetEl.classList.remove("dr-item-dragging");
+        try { btnDragActive.releasePointerCapture(e.pointerId); } catch(err){}
         localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
         pushUndoState();
       };
 
-      if ($("btnScaleDrDown")) {
-        $("btnScaleDrDown").addEventListener("click", e => {
-          e.stopPropagation();
-          const curr = UI_PARAMS.drSlidersScale || 1.0;
-          setDrScale(curr - 0.10);
-        });
+      btnDragActive.addEventListener("pointerup", stopActiveDrag);
+      btnDragActive.addEventListener("pointercancel", stopActiveDrag);
+    }
+
+    // Scale Controls
+    const setItemScale = (deltaOrVal, isDelta = true) => {
+      if (activeDrKey === "group") {
+        let curr = UI_PARAMS.drSlidersScale || 1.0;
+        let next = isDelta ? (curr + deltaOrVal) : deltaOrVal;
+        next = Math.max(0.4, Math.min(2.5, Math.round(next * 100) / 100));
+        UI_PARAMS.drSlidersScale = next;
+        drEl.style.transform = `scale(${next})`;
+      } else {
+        if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
+        if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
+        let curr = UI_PARAMS.drItems[activeDrKey].s !== undefined ? UI_PARAMS.drItems[activeDrKey].s : 1.0;
+        let next = isDelta ? (curr + deltaOrVal) : deltaOrVal;
+        next = Math.max(0.2, Math.min(3.0, Math.round(next * 100) / 100));
+        UI_PARAMS.drItems[activeDrKey].s = next;
+        applyDrItemsTransforms();
       }
-      if ($("btnScaleDrUp")) {
-        $("btnScaleDrUp").addEventListener("click", e => {
-          e.stopPropagation();
-          const curr = UI_PARAMS.drSlidersScale || 1.0;
-          setDrScale(curr + 0.10);
-        });
-      }
-      if ($("btnResetDrUi")) {
-        $("btnResetDrUi").addEventListener("click", e => {
-          e.stopPropagation();
+      updateDrHud();
+      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+      pushUndoState();
+    };
+
+    if ($("btnScaleItemDown") || $("btnScaleDrDown")) {
+      const btn = $("btnScaleItemDown") || $("btnScaleDrDown");
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        setItemScale(-0.05, true);
+      });
+    }
+
+    if ($("btnScaleItemUp") || $("btnScaleDrUp")) {
+      const btn = $("btnScaleItemUp") || $("btnScaleDrUp");
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        setItemScale(+0.05, true);
+      });
+    }
+
+    // Rotate Controls
+    const setItemRot = (deltaDeg) => {
+      if (activeDrKey === "group") return;
+      if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
+      if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
+      let curr = Number(UI_PARAMS.drItems[activeDrKey].r) || 0;
+      let next = Math.round((curr + deltaDeg) % 360);
+      if (next < 0) next += 360;
+      UI_PARAMS.drItems[activeDrKey].r = next;
+      applyDrItemsTransforms();
+      updateDrHud();
+      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+      pushUndoState();
+    };
+
+    if ($("btnRotItemCcw")) {
+      $("btnRotItemCcw").addEventListener("click", e => {
+        e.stopPropagation();
+        setItemRot(e.shiftKey ? -15 : -5);
+      });
+    }
+    if ($("btnRotItemCw")) {
+      $("btnRotItemCw").addEventListener("click", e => {
+        e.stopPropagation();
+        setItemRot(e.shiftKey ? 15 : 5);
+      });
+    }
+
+    // Reset Active Item
+    if ($("btnResetActiveItem")) {
+      $("btnResetActiveItem").addEventListener("click", e => {
+        e.stopPropagation();
+        if (activeDrKey === "group") {
           UI_PARAMS.drSlidersX = null;
           UI_PARAMS.drSlidersY = null;
           UI_PARAMS.drSlidersScale = 1.0;
           applyDrSlidersPosition();
-          localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-          pushUndoState();
-        });
-      }
-      if ($("btnSaveDrUi")) {
-        $("btnSaveDrUi").addEventListener("click", e => {
-          e.stopPropagation();
-          localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-          const hud = $("hudDrCoords");
-          if (hud) {
-            const orig = hud.textContent;
-            hud.textContent = "SAVED ✓";
-            hud.style.color = "#34d399";
-            setTimeout(() => { hud.textContent = orig; hud.style.color = ""; }, 1400);
-          }
-        });
-      }
+        } else {
+          if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
+          UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
+          applyDrItemsTransforms();
+        }
+        updateDrHud();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      });
     }
+
+    // Reset All Elements
+    if ($("btnResetDrUi")) {
+      $("btnResetDrUi").addEventListener("click", e => {
+        e.stopPropagation();
+        UI_PARAMS.drSlidersX = null;
+        UI_PARAMS.drSlidersY = null;
+        UI_PARAMS.drSlidersScale = 1.0;
+        UI_PARAMS.drItems = {
+          scatter: { x: 0, y: 0, s: 1, r: 0 },
+          mouseFollow: { x: 0, y: 0, s: 1, r: 0 },
+          instancing: { x: 0, y: 0, s: 1, r: 0 },
+          lineDirect: { x: 0, y: 0, s: 1, r: 0 },
+          lineCurved: { x: 0, y: 0, s: 1, r: 0 },
+          deform: { x: 0, y: 0, s: 1, r: 0 },
+          twist: { x: 0, y: 0, s: 1, r: 0 },
+          lineMix: { x: 0, y: 0, s: 1, r: 0 }
+        };
+        applyDrSlidersPosition();
+        updateDrHud();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        pushUndoState();
+      });
+    }
+
+    // Save UI
+    if ($("btnSaveDrUi")) {
+      $("btnSaveDrUi").addEventListener("click", e => {
+        e.stopPropagation();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+        const hud = $("hudDrCoords");
+        if (hud) {
+          const orig = hud.textContent;
+          hud.textContent = "SAVED UI ✓";
+          hud.style.color = "#34d399";
+          setTimeout(() => { hud.textContent = orig; hud.style.color = ""; }, 1500);
+        }
+      });
+    }
+
+    // Copy Code JSON
+    if ($("btnCopyDrCode")) {
+      $("btnCopyDrCode").addEventListener("click", async e => {
+        e.stopPropagation();
+        const code = JSON.stringify(UI_PARAMS.drItems || {}, null, 2);
+        try {
+          await navigator.clipboard.writeText(code);
+        } catch (err) {
+          const ta = document.createElement("textarea");
+          ta.value = code;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+        }
+        const hud = $("hudDrCoords");
+        if (hud) {
+          const orig = hud.textContent;
+          hud.textContent = "COPIED CODE ✓";
+          hud.style.color = "#38bdf8";
+          setTimeout(() => { hud.textContent = orig; hud.style.color = ""; }, 1500);
+        }
+      });
+    }
+
+    // Arrow keys nudge in Studio Mode
+    window.addEventListener("keydown", e => {
+      if (!isStudioMode) return;
+      const typing = ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable;
+      if (typing) return;
+      if (activeDrKey && activeDrKey !== "group" && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+        e.preventDefault();
+        if (!UI_PARAMS.drItems) UI_PARAMS.drItems = {};
+        if (!UI_PARAMS.drItems[activeDrKey]) UI_PARAMS.drItems[activeDrKey] = { x: 0, y: 0, s: 1, r: 0 };
+        const step = e.shiftKey ? 5 : 1;
+        if (e.key === "ArrowUp") UI_PARAMS.drItems[activeDrKey].y -= step;
+        if (e.key === "ArrowDown") UI_PARAMS.drItems[activeDrKey].y += step;
+        if (e.key === "ArrowLeft") UI_PARAMS.drItems[activeDrKey].x -= step;
+        if (e.key === "ArrowRight") UI_PARAMS.drItems[activeDrKey].x += step;
+        applyDrItemsTransforms();
+        updateDrHud();
+        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
+      }
+    });
 
     // 3. Tuner Layout Reset Buttons
     if ($("btnResetNamePos")) {
@@ -13607,9 +13979,23 @@ function bootSupernovaEngine() {
         UI_PARAMS.hashY = null;
         UI_PARAMS.contactX = null;
         UI_PARAMS.contactY = null;
+        UI_PARAMS.drSlidersX = null;
+        UI_PARAMS.drSlidersY = null;
+        UI_PARAMS.drSlidersScale = 1.0;
+        UI_PARAMS.drItems = {
+          scatter: { x: 0, y: 0, s: 1, r: 0 },
+          mouseFollow: { x: 0, y: 0, s: 1, r: 0 },
+          instancing: { x: 0, y: 0, s: 1, r: 0 },
+          lineDirect: { x: 0, y: 0, s: 1, r: 0 },
+          lineCurved: { x: 0, y: 0, s: 1, r: 0 },
+          deform: { x: 0, y: 0, s: 1, r: 0 },
+          twist: { x: 0, y: 0, s: 1, r: 0 },
+          lineMix: { x: 0, y: 0, s: 1, r: 0 }
+        };
         applyBrandPosition();
         applyHashCornerPosition();
         applyContactCornerPosition();
+        applyDrSlidersPosition();
         localStorage.setItem("supernova_site_header", JSON.stringify(SITE_HEADER));
         localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
         pushUndoState();
@@ -18616,7 +19002,7 @@ function bootSupernovaEngine() {
     html = html.replace(/<base\s+href="[^"]*"\s*\/?>/gi, "");
     const k = html.indexOf("three.min.js"), i = html.indexOf("<script>", k), j = html.indexOf(CLOSE, i);
     if (k >= 0 && i > k && j > i) html = html.slice(0, i) + block + html.slice(j + CLOSE.length);
-    html = html.replace(/<body[^>]*>/i, publishViewerOnly ? '<body class="studio-mode">' : '<body class="studio-mode">');
+    html = html.replace(/<body[^>]*>/i, publishViewerOnly ? '<body class="viewer-mode published-lock">' : '<body class="studio-mode">');
     return html;
   }
 
