@@ -2896,9 +2896,208 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   }
 }
 
+/* ==========================================================================
+   SUPERNOVA MINIMAL PRELOADER SCREEN
+   ========================================================================== */
+#supernovaLoader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999999;
+  background: #030504;
+  background: radial-gradient(circle at 50% 50%, #080d09 0%, #030504 75%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+#supernovaLoader.loader-done {
+  opacity: 0 !important;
+  transform: scale(1.03) !important;
+  pointer-events: none !important;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  max-width: 540px;
+  width: 90%;
+  pointer-events: auto;
+}
+
+.loader-brand-glyph {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 26px;
+  font-weight: 700;
+  color: #f4f4f5;
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.08), inset 0 0 10px rgba(255, 255, 255, 0.04);
+  animation: loaderPulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes loaderPulse {
+  0% {
+    transform: scale(0.96);
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+  100% {
+    transform: scale(1.04);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.loader-msg-box {
+  margin-bottom: 28px;
+}
+
+.loader-line-main {
+  font-family: 'IBM Plex Mono', 'Space Mono', monospace;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  line-height: 1.35;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.32);
+}
+
+.loader-line-sub {
+  font-family: 'IBM Plex Mono', 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  color: rgba(255, 255, 255, 0.78);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.loader-line-sub .loader-hash {
+  color: #ffffff;
+  font-weight: 800;
+  padding: 0 1px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
+}
+
+.loader-line-sub .loader-wink {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0;
+  display: inline-block;
+}
+
+.loader-progress-wrap {
+  width: 220px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.loader-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
+  transition: width 0.18s ease-out;
+}
+
+.loader-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 220px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+}
+
+.loader-enter-hint {
+  transition: color 0.2s ease;
+}
+
+#supernovaLoader:hover .loader-enter-hint {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 600px) {
+  .loader-brand-glyph {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .loader-line-main {
+    font-size: 15px;
+    letter-spacing: 0.11em;
+  }
+  .loader-line-sub {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .loader-progress-wrap,
+  .loader-status-row {
+    width: 190px;
+  }
+}
+
 </style>
 </head>
 <body class="viewer-mode published-lock">
+
+<!-- Supernova Minimal Preloader -->
+<div id="supernovaLoader" role="status" aria-live="polite" title="Click anywhere to enter" onclick="window.__dismissSupernovaLoader&amp;&amp;window.__dismissSupernovaLoader()">
+  <div class="loader-inner">
+    <div class="loader-brand-glyph">𝗫̘̚</div>
+    <div class="loader-msg-box">
+      <div class="loader-line-main">CLICK / DRAG / PLAY &gt;&gt;</div>
+      <div class="loader-line-sub">USE <span class="loader-hash">#</span> / GET IN FOR MORE INFO <span class="loader-wink">;)</span></div>
+    </div>
+    <div class="loader-progress-wrap">
+      <div class="loader-progress-bar" id="loaderBar"></div>
+    </div>
+    <div class="loader-status-row">
+      <span id="loaderPct">0%</span>
+      <span class="loader-enter-hint">[ TAP TO ENTER ]</span>
+    </div>
+  </div>
+</div>
+<script>
+  window.__dismissSupernovaLoader = function() {
+    var l = document.getElementById('supernovaLoader');
+    if (l && !l.classList.contains('loader-done')) {
+      l.classList.add('loader-done');
+      setTimeout(function() { try { l.remove(); } catch(e){} }, 500);
+    }
+  };
+</script>
 
 <canvas id="webgl"></canvas>
 
@@ -12662,6 +12861,47 @@ let INITIAL_PROJECTS = [
 function bootSupernovaEngine() {
   const $ = id => document.getElementById(id);
   const PAGE_HTML_AT_BOOT = document.documentElement.outerHTML;
+
+  // Supernova Minimal Preloader Manager
+  let loaderProgress = 16;
+  let loaderDismissed = false;
+  let initialRenderFrames = 0;
+  const loaderEl = $("supernovaLoader");
+  const loaderBarEl = $("loaderBar");
+  const loaderPctEl = $("loaderPct");
+
+  function updateLoaderProgress(pct) {
+    if (loaderDismissed || !loaderBarEl || !loaderPctEl) return;
+    loaderProgress = Math.max(loaderProgress, Math.min(100, Math.round(pct)));
+    loaderBarEl.style.width = loaderProgress + "%";
+    loaderPctEl.textContent = loaderProgress + "%";
+  }
+
+  function dismissLoader() {
+    if (loaderDismissed) return;
+    loaderDismissed = true;
+    updateLoaderProgress(100);
+    if (typeof window.__dismissSupernovaLoader === "function") {
+      window.__dismissSupernovaLoader();
+    }
+  }
+
+  if (loaderEl) {
+    loaderEl.addEventListener("click", dismissLoader, { once: true });
+    loaderEl.addEventListener("touchstart", dismissLoader, { once: true, passive: true });
+  }
+
+  const loaderSimInterval = setInterval(() => {
+    if (loaderDismissed) {
+      clearInterval(loaderSimInterval);
+      return;
+    }
+    if (loaderProgress < 88) {
+      updateLoaderProgress(loaderProgress + Math.floor(Math.random() * 7) + 5);
+    }
+  }, 110);
+
+  setTimeout(dismissLoader, 3500);
   const PRESET_VER = "v6.7-faux-depth-layers-2026-10-27";
 
   // Load any previously Set/Saved preset right at boot BEFORE initializing PARAMS & uniforms
@@ -19726,6 +19966,13 @@ function bootSupernovaEngine() {
     renderer.render(bgScene, bgCam);
     renderer.clearDepth();
     renderer.render(scene, camera);
+
+    if (!loaderDismissed) {
+      initialRenderFrames++;
+      if (initialRenderFrames >= 2) {
+        dismissLoader();
+      }
+    }
   }
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && !animationFrame) {
