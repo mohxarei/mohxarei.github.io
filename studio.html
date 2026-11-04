@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -1288,167 +1289,8 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transform-origin: bottom right;
 }
 
-/* UI Arrange HUD - Sleek floating bar below top studio bar */
-.ui-arrange-hud {
-  display: none;
-  position: fixed;
-  top: 48px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 85;
-  background: rgba(8, 11, 18, 0.94);
-  border: 1px solid rgba(56, 189, 248, 0.45);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.25);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 6px;
-  padding: 6px 12px;
-  align-items: center;
-  gap: 8px;
-  color: #e2e8f0;
-  font-size: 10px;
-  user-select: none;
-  max-width: 95vw;
-  flex-wrap: wrap;
-}
-body.studio-mode.arrange-ui-mode .ui-arrange-hud {
-  display: flex;
-}
-
-#btnToggleArrangeUi.active {
-  background: rgba(14, 165, 233, 0.3) !important;
-  color: #38bdf8 !important;
-  border-color: #38bdf8 !important;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-}
-
-.uah-badge {
-  font-weight: 700;
-  color: #38bdf8;
-  letter-spacing: 0.08em;
-  font-size: 10px;
-}
-.uah-select {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 4px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 10px;
-  padding: 3px 6px;
-  outline: none;
-  cursor: pointer;
-  max-width: 230px;
-}
-.uah-select option {
-  background: #090d16;
-  color: #f1f5f9;
-}
-.uah-actions {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: nowrap;
-}
-.uah-stepper {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.uah-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 4px;
-  color: #e2e8f0;
-  font-family: inherit;
-  font-size: 10px;
-  padding: 3px 7px;
-  cursor: pointer;
-  line-height: 1.1;
-  transition: all 0.15s ease;
-}
-.uah-stepper .uah-btn {
-  border: none;
-  border-radius: 0;
-  padding: 3px 6px;
-}
-.uah-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
-}
-.uah-drag-btn {
-  background: rgba(99, 102, 241, 0.3);
-  border-color: rgba(129, 140, 248, 0.6);
-  color: #c7d2fe;
-  cursor: grab;
-}
-.uah-drag-btn:active {
-  cursor: grabbing;
-}
-.uah-val {
-  color: #94a3b8;
-  font-size: 10px;
-  padding: 0 4px;
-  min-width: 30px;
-  text-align: center;
-}
-.uah-coords {
-  color: #38bdf8;
-  font-weight: 600;
-  font-size: 10px;
-  padding: 0 4px;
-  white-space: nowrap;
-}
-.uah-btn-save {
-  background: rgba(16, 185, 129, 0.25);
-  border-color: rgba(52, 211, 153, 0.5);
-  color: #6ee7b7;
-}
-.uah-btn-save:hover {
-  background: rgba(16, 185, 129, 0.45);
-  color: #fff;
-}
-.uah-btn-copy {
-  background: rgba(14, 165, 233, 0.22);
-  border-color: rgba(56, 189, 248, 0.45);
-  color: #7dd3fc;
-}
-.uah-btn-copy:hover {
-  background: rgba(14, 165, 233, 0.38);
-  color: #fff;
-}
-.uah-btn-exit {
-  background: #0284c7;
-  border-color: #38bdf8;
-  color: #fff;
-  font-weight: 600;
-}
-.uah-btn-exit:hover {
-  background: #0369a1;
-}
-
-/* Arrange UI Mode Hover & Selection */
 [data-arrange-id] {
   transform-origin: center center;
-}
-body.arrange-ui-mode [data-arrange-id] {
-  cursor: grab !important;
-  transition: transform 0.04s ease-out;
-}
-body.arrange-ui-mode [data-arrange-id]:hover {
-  outline: 1.5px dashed rgba(56, 189, 248, 0.65) !important;
-  outline-offset: 4px !important;
-}
-body.arrange-ui-mode [data-arrange-id].uah-selected {
-  outline: 2px solid #38bdf8 !important;
-  outline-offset: 5px !important;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.6) !important;
-}
-body.arrange-ui-mode [data-arrange-id].uah-dragging {
-  cursor: grabbing !important;
 }
 .dr-toggle-item {
   display: inline-flex;
@@ -3064,7 +2906,6 @@ body.arrange-ui-mode [data-arrange-id].uah-dragging {
 <div class="studio-bar mono studio-only" id="studioBar">
   <button class="st-pill active" id="btnModeStudio">⚙ STUDIO EDITOR</button>
   <button class="st-pill" id="btnModeViewer">👁 VIEWER PREVIEW</button>
-  <button class="st-pill" id="btnToggleArrangeUi" title="Toggle interactive UI Arrange mode: drag, scale, rotate all on-screen elements">📐 ARRANGE UI</button>
   <span style="color:var(--dim)" class="studio-only">|</span>
   <button class="btn-act studio-only" id="btnUndo" title="Undo (Ctrl + Z)" disabled="">↶ Undo</button>
   <button class="btn-act studio-only" id="btnRedo" title="Redo (Ctrl + Y or Ctrl + Shift + Z)" disabled="">↷ Redo</button>
@@ -3074,46 +2915,6 @@ body.arrange-ui-mode [data-arrange-id].uah-dragging {
   <button class="btn-act studio-only" id="btnChangeKey" title="Change Secret Key for Studio">🔑 Key</button>
   <button class="btn-act studio-only" id="btnStudioLock" title="Lock Studio and return to Viewer Mode" style="color:#fca5a5">🔒 Lock</button>
   <button type="button" class="bar-tab" id="barTab" title="Show / hide this bar"></button>
-</div>
-
-<!-- Sleek Floating UI Arrange HUD -->
-<div class="ui-arrange-hud mono studio-only" id="uiArrangeHud">
-  <div class="uah-badge">📐 ARRANGE MODE</div>
-  <select id="uahItemSelect" class="uah-select mono" title="Choose element to transform">
-    <option value="brand">BRAND &amp; BIO (MOHSEN ZAREI)</option>
-    <option value="hash"># HASHTAG POOL</option>
-    <option value="contact">* CONTACT STAR</option>
-    <option value="resetBtn">RESET VIEW BUTTON</option>
-    <option value="autoBtn">AUTO ROTATION BUTTON</option>
-    <option value="drGroup">DOWN-RIGHT CONTROLS CLUSTER</option>
-    <option value="deform">SLIDER: &lt; DEFORM &gt;</option>
-    <option value="twist">SLIDER: &lt; TWIST &gt;</option>
-    <option value="lineMix">SLIDER: &lt; LINE|PARTICLES &gt;</option>
-    <option value="scatter">SYMBOL: ※ SCATTER (ⵆ)</option>
-    <option value="mouseFollow">SYMBOL: ☉ FACE CURSOR (ⵙ)</option>
-    <option value="instancing">SYMBOL: ⴼ INSTANCING (][)</option>
-    <option value="lineDirect">SYMBOL: ― DIRECT LINE</option>
-    <option value="lineCurved">SYMBOL: ~ CURVED LINE</option>
-  </select>
-  <div class="uah-actions">
-    <button type="button" class="uah-btn uah-drag-btn" id="uahBtnDrag" title="Click &amp; drag anywhere on the element or here to move">DRAG</button>
-    <div class="uah-stepper">
-      <button type="button" class="uah-btn" id="uahBtnScaleDown" title="Scale Down (Shift + Wheel)">-</button>
-      <span class="uah-val" id="uahValScale">100%</span>
-      <button type="button" class="uah-btn" id="uahBtnScaleUp" title="Scale Up (Shift + Wheel)">+</button>
-    </div>
-    <div class="uah-stepper">
-      <button type="button" class="uah-btn" id="uahBtnRotCcw" title="Rotate Counter-Clockwise (Alt + Wheel)">↺</button>
-      <span class="uah-val" id="uahValRot">0°</span>
-      <button type="button" class="uah-btn" id="uahBtnRotCw" title="Rotate Clockwise (Alt + Wheel)">↻</button>
-    </div>
-    <span class="uah-coords" id="uahCoords">X:0 Y:0</span>
-    <button type="button" class="uah-btn uah-btn-reset" id="uahBtnResetItem" title="Reset this element to factory position">RESET</button>
-    <button type="button" class="uah-btn uah-btn-resetall" id="uahBtnResetAll" title="Reset all UI elements">RESET ALL</button>
-    <button type="button" class="uah-btn uah-btn-save" id="uahBtnSave" title="Save layout to browser">SAVE</button>
-    <button type="button" class="uah-btn uah-btn-copy" id="uahBtnCopy" title="Copy layout JSON to clipboard">COPY CODE</button>
-    <button type="button" class="uah-btn uah-btn-exit" id="uahBtnExit" title="Exit Arrange Mode">DONE ✓</button>
-  </div>
 </div>
 
 <!-- Floating Exit Preview Button (visible when viewing preview from Studio) -->
@@ -3232,12 +3033,12 @@ body.arrange-ui-mode [data-arrange-id].uah-dragging {
     <div class="dr-sym-cell dr-cell-scatter" data-arrange-id="scatter" id="drCellScatter">
       <button type="button" class="dr-sym-btn" id="btnScatterHubSeed" title="Scatter Hub Seed" aria-label="Scatter Hubs">
         <svg viewBox="0 0 40 40" width="38" height="38" fill="none" stroke="currentColor">
-          <line x1="9" y1="9" x2="31" y2="31" stroke-width="3" stroke-linecap="round"/>
-          <line x1="31" y1="9" x2="9" y2="31" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="20" cy="5" r="2.8" fill="currentColor"/>
-          <circle cx="20" cy="35" r="2.8" fill="currentColor"/>
-          <circle cx="5" cy="20" r="2.8" fill="currentColor"/>
-          <circle cx="35" cy="20" r="2.8" fill="currentColor"/>
+          <line x1="9" y1="9" x2="31" y2="31" stroke-width="3" stroke-linecap="round"></line>
+          <line x1="31" y1="9" x2="9" y2="31" stroke-width="3" stroke-linecap="round"></line>
+          <circle cx="20" cy="5" r="2.8" fill="currentColor"></circle>
+          <circle cx="20" cy="35" r="2.8" fill="currentColor"></circle>
+          <circle cx="5" cy="20" r="2.8" fill="currentColor"></circle>
+          <circle cx="35" cy="20" r="2.8" fill="currentColor"></circle>
         </svg>
       </button>
     </div>
@@ -3245,8 +3046,8 @@ body.arrange-ui-mode [data-arrange-id].uah-dragging {
     <div class="dr-sym-cell dr-cell-diamond" data-arrange-id="mouseFollow" id="drCellDiamond">
       <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Follow (Face Cursor)" aria-label="Face Cursor">
         <svg viewBox="0 0 100 100" width="94" height="94" fill="none">
-          <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8.5" />
-          <circle cx="50" cy="50" r="14" fill="currentColor" />
+          <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8.5"></circle>
+          <circle cx="50" cy="50" r="14" fill="currentColor"></circle>
         </svg>
       </button>
     </div>
@@ -3254,9 +3055,9 @@ body.arrange-ui-mode [data-arrange-id].uah-dragging {
     <div class="dr-sym-cell dr-cell-grid" data-arrange-id="instancing" id="drCellGrid">
       <button type="button" class="dr-sym-btn active" id="btnToggleInstancing" title="Photo Instancing" aria-label="Photo Instancing">
         <svg viewBox="0 0 38 46" width="36" height="44" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="square">
-          <path d="M4 6 L12 6 M4 6 L4 40 M4 40 L12 40" />
-          <path d="M34 6 L26 6 M34 6 L34 40 M34 40 L26 40" />
-          <line x1="4" y1="23" x2="34" y2="23" />
+          <path d="M4 6 L12 6 M4 6 L4 40 M4 40 L12 40"></path>
+          <path d="M34 6 L26 6 M34 6 L34 40 M34 40 L26 40"></path>
+          <line x1="4" y1="23" x2="34" y2="23"></line>
         </svg>
       </button>
     </div>
@@ -3265,14 +3066,14 @@ body.arrange-ui-mode [data-arrange-id].uah-dragging {
       <div class="dr-toggle-item" data-arrange-id="lineDirect" id="drToggleDirect">
         <button type="button" class="dr-sym-btn active" id="btnToggleLineDirect" title="Direct Straight Lines" aria-label="Direct Lines">
           <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
-            <line x1="2" y1="10" x2="26" y2="10" />
+            <line x1="2" y1="10" x2="26" y2="10"></line>
           </svg>
         </button>
       </div>
       <div class="dr-toggle-item" data-arrange-id="lineCurved" id="drToggleCurved">
         <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Curved Bouncy Lines" aria-label="Curved Lines">
           <svg viewBox="0 0 28 20" width="26" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 13 Q 8 4, 14 10 T 26 7" />
+            <path d="M2 13 Q 8 4, 14 10 T 26 7"></path>
           </svg>
         </button>
       </div>
@@ -3672,16 +3473,16 @@ let STUDIO_SECRET_KEY = "mohsen";
 
 let SITE_HEADER = {
   "name": "MOHSEN ZAREI",
-  "desc": "Interactive art, embedded systems, kinetic calligraphy & 3D shaders. Click any star hub to explore its project space.",
+  "desc": "I'm multidimensional as life itself / a piece of a whole, which is a whole in pieces )))))\nInteractive art // embedded systems // kinetic calligraphy // 3D // shaders and so on;\n                                  Click any star hub to explore its project space.",
   "descPinned": true,
-  "x": 45,
-  "y": 47
+  "x": 67,
+  "y": 64
 };
 
 let BRAND_AVATAR = {
   "url": "assets/profile_avatar.jpg",
-  "x": 32,
-  "y": 118,
+  "x": 62,
+  "y": 234,
   "w": 180,
   "h": 180
 };
@@ -3719,28 +3520,98 @@ let UI_PARAMS = {
   "starR": 130,
   "starA0": 100,
   "starA1": 170,
-  "hashX": null,
-  "hashY": null,
+  "hashX": 83,
+  "hashY": 395,
   "contactX": null,
   "contactY": null,
   "drSlidersX": null,
   "drSlidersY": null,
-  "drSlidersScale": 1.0,
+  "drSlidersScale": 0.9,
   "uiLayout": {
-    "brand": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "hash": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "contact": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "resetBtn": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "autoBtn": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "drGroup": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "deform": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "twist": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "lineMix": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "scatter": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "mouseFollow": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "instancing": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "lineDirect": { "x": 0, "y": 0, "s": 1, "r": 0 },
-    "lineCurved": { "x": 0, "y": 0, "s": 1, "r": 0 }
+    "brand": {
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "r": 0
+    },
+    "hash": {
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "r": 0
+    },
+    "contact": {
+      "x": -8,
+      "y": 21,
+      "s": 1.35,
+      "r": 0
+    },
+    "resetBtn": {
+      "x": 0,
+      "y": 0,
+      "s": 1.45,
+      "r": 0
+    },
+    "autoBtn": {
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "r": 0
+    },
+    "drGroup": {
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "r": 0
+    },
+    "deform": {
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "r": 0
+    },
+    "twist": {
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "r": 0
+    },
+    "lineMix": {
+      "x": 0,
+      "y": 0,
+      "s": 1,
+      "r": 0
+    },
+    "scatter": {
+      "x": -26,
+      "y": 19,
+      "s": 1.3,
+      "r": 0
+    },
+    "mouseFollow": {
+      "x": 145,
+      "y": -78,
+      "s": 0.55,
+      "r": 0
+    },
+    "instancing": {
+      "x": 9,
+      "y": 26,
+      "s": 1,
+      "r": 0
+    },
+    "lineDirect": {
+      "x": 28,
+      "y": -4,
+      "s": 1.4,
+      "r": 0
+    },
+    "lineCurved": {
+      "x": 47,
+      "y": -27,
+      "s": 1.6,
+      "r": 0
+    }
   }
 };
 
@@ -3819,21 +3690,21 @@ let DEFAULTS = {
   "sphereRadius": 36,
   "sphereDeform": 0.49,
   "sphereStretch": 0.9,
-  "sphereTwist": 0.12,
+  "sphereTwist": -1.33,
   "sphereFlow": 0.52,
   "sphereSpin": 0.06,
   "sphereThickness": 6.2,
   "sphereTension": 0.28,
-  "hubSeed": 3905,
+  "hubSeed": 9779,
   "hubFollowStrength": 1.31,
   "mouseEffectStrength": 2.52,
   "previewPulseSpeed": 0.5,
   "previewStayTime": 2.9,
-  "lineParticleMix": 0.28,
+  "lineParticleMix": 0.49,
   "photoInstancing": true,
   "photoCardSize": 6.53,
-  "photoCardCount": 49,
-  "photoCardTitleFontSize": 29,
+  "photoCardCount": 40,
+  "photoCardTitleFontSize": 28,
   "photoCardBackDim": 0.74,
   "photoCardAspect": 0.66,
   "photoCardFrameWidth": 0,
@@ -3842,12 +3713,12 @@ let DEFAULTS = {
   "photoCardHoverScale": 1.89,
   "photoCardOffset": 2.14,
   "photoCardBeaconDot": false,
-  "photoCardMouseFollow": false,
+  "photoCardMouseFollow": true,
   "photoCardMouseFollowStrength": 0.5,
-  "photoCardLayers": 1,
-  "photoCardFauxDepth": 2,
-  "photoCardFauxSpread": 15,
-  "photoCardLayerSpread": 0.39,
+  "photoCardLayers": 2,
+  "photoCardFauxDepth": 0,
+  "photoCardFauxSpread": 17,
+  "photoCardLayerSpread": 0,
   "previewPanelWidth": 581,
   "previewPanelHeight": 514,
   "previewMediaHeight": 334,
@@ -4045,7 +3916,8 @@ let TAG_POOL = [
   "web-ui",
   "workshop",
   "xenos",
-  "xr"
+  "xr",
+  "c++"
 ];
 
 let INITIAL_PROJECTS = [
@@ -4070,7 +3942,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_39.jpg",
     "media": [
       {
         "type": "photo",
@@ -4122,7 +3993,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_40.jpg",
     "media": [
       {
         "type": "photo",
@@ -4225,7 +4095,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_41.jpg",
     "media": [
       {
         "type": "photo",
@@ -4472,7 +4341,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_37.jpg",
     "media": [
       {
         "type": "photo",
@@ -4550,7 +4418,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_36.jpg",
     "media": [
       {
         "type": "photo",
@@ -4603,7 +4470,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_38.jpg",
     "media": [
       {
         "type": "photo",
@@ -4667,7 +4533,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_32.jpg",
     "media": [
       {
         "type": "photo",
@@ -4822,7 +4687,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_33.jpg",
     "media": [
       {
         "type": "photo",
@@ -4951,7 +4815,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_34.jpg",
     "media": [
       {
         "type": "photo",
@@ -5132,7 +4995,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_35.jpg",
     "media": [
       {
         "type": "photo",
@@ -5197,7 +5059,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_31.jpg",
     "media": [
       {
         "type": "photo",
@@ -5417,7 +5278,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_30.jpg",
     "media": [
       {
         "type": "photo",
@@ -5689,7 +5549,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_10.jpg",
     "media": [
       {
         "type": "photo",
@@ -5818,7 +5677,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_11.jpg",
     "media": [
       {
         "type": "photo",
@@ -5934,7 +5792,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_12.jpg",
     "media": [
       {
         "type": "photo",
@@ -6219,7 +6076,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_13.jpg",
     "media": [
       {
         "type": "photo",
@@ -6370,11 +6226,10 @@ let INITIAL_PROJECTS = [
     "tier": 1,
     "textAlign": "left",
     "uo": [
-      -5.49,
-      -4.87,
-      4.92
+      0,
+      0,
+      0
     ],
-    "cover": "assets/covers/cover_14.jpg",
     "media": [
       {
         "type": "photo",
@@ -6491,7 +6346,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_15.jpg",
     "media": [
       {
         "type": "photo",
@@ -6607,7 +6461,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_06.jpg",
     "media": [
       {
         "type": "photo",
@@ -6711,7 +6564,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_07.jpg",
     "media": [
       {
         "type": "photo",
@@ -6927,11 +6779,10 @@ let INITIAL_PROJECTS = [
     "tier": 1,
     "textAlign": "left",
     "uo": [
-      4.41,
-      -4.66,
-      -7
+      0,
+      0,
+      0
     ],
-    "cover": "assets/covers/cover_08.jpg",
     "media": [
       {
         "type": "photo",
@@ -7047,7 +6898,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_09.jpg",
     "media": [
       {
         "type": "photo",
@@ -7307,7 +7157,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_05.jpg",
     "media": [
       {
         "type": "photo",
@@ -7450,7 +7299,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_03.jpg",
     "media": [
       {
         "type": "photo",
@@ -7749,7 +7597,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_04.jpg",
     "media": [
       {
         "type": "photo",
@@ -8152,7 +7999,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_01.jpg",
     "media": [
       {
         "type": "photo",
@@ -8425,7 +8271,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_02.jpg",
     "media": [
       {
         "type": "photo",
@@ -8502,7 +8347,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_25.jpg",
     "media": [
       {
         "type": "photo",
@@ -8731,11 +8575,10 @@ let INITIAL_PROJECTS = [
     "tier": 1,
     "textAlign": "left",
     "uo": [
-      1.38,
-      -8,
-      20.32
+      0,
+      0,
+      0
     ],
-    "cover": "assets/covers/cover_26.jpg",
     "media": [
       {
         "type": "photo",
@@ -9060,7 +8903,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_27.jpg",
     "media": [
       {
         "type": "photo",
@@ -9280,7 +9122,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_28.jpg",
     "media": [
       {
         "type": "photo",
@@ -9384,7 +9225,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_29.jpg",
     "media": [
       {
         "type": "photo",
@@ -9501,7 +9341,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_22.jpg",
     "media": [
       {
         "type": "photo",
@@ -9644,7 +9483,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_23.jpg",
     "media": [
       {
         "type": "photo",
@@ -9903,7 +9741,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_24.jpg",
     "media": [
       {
         "type": "photo",
@@ -9994,7 +9831,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_16.jpg",
     "media": [
       {
         "type": "photo",
@@ -10137,7 +9973,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_17.jpg",
     "media": [
       {
         "type": "photo",
@@ -10333,7 +10168,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_18.jpg",
     "media": [
       {
         "type": "photo",
@@ -10502,7 +10336,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_19.jpg",
     "media": [
       {
         "type": "photo",
@@ -10736,7 +10569,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_20.jpg",
     "media": [
       {
         "type": "photo",
@@ -10840,7 +10672,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_21.jpg",
     "media": [
       {
         "type": "photo",
@@ -10931,7 +10762,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_48.jpg",
     "media": [
       {
         "type": "photo",
@@ -11113,7 +10943,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_49.jpg",
     "media": [
       {
         "type": "photo",
@@ -11334,7 +11163,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_47.jpg",
     "media": [
       {
         "type": "photo",
@@ -11594,7 +11422,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_44.jpg",
     "media": [
       {
         "type": "photo",
@@ -11698,7 +11525,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_46.jpg",
     "media": [
       {
         "type": "photo",
@@ -12322,7 +12148,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_42.jpg",
     "media": [
       {
         "type": "photo",
@@ -12516,7 +12341,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_45.jpg",
     "media": [
       {
         "type": "photo",
@@ -12686,7 +12510,6 @@ let INITIAL_PROJECTS = [
       0,
       0
     ],
-    "cover": "assets/covers/cover_43.jpg",
     "media": [
       {
         "type": "photo",
@@ -12961,8 +12784,6 @@ function bootSupernovaEngine() {
     el.style.zIndex = "25";
   };
 
-  let activeArrangeId = "brand";
-
   const applyUiLayout = () => {
     if (!UI_PARAMS.uiLayout) return;
     const items = document.querySelectorAll("[data-arrange-id]");
@@ -12980,28 +12801,6 @@ function bootSupernovaEngine() {
         el.style.transform = `translate3d(${x}px, ${y}px, 0px) rotate(${r}deg) scale(${s})`;
         el.style.transformOrigin = "center center";
       }
-    });
-  };
-
-  const updateArrangeHud = () => {
-    const hud = document.getElementById("uiArrangeHud");
-    if (!hud) return;
-    const sel = document.getElementById("uahItemSelect");
-    if (sel && sel.value !== activeArrangeId) {
-      sel.value = activeArrangeId;
-    }
-    const it = (UI_PARAMS.uiLayout && UI_PARAMS.uiLayout[activeArrangeId]) || { x: 0, y: 0, s: 1, r: 0 };
-    const s = it.s !== undefined ? Number(it.s) : 1;
-    const r = Number(it.r) || 0;
-    const valScale = document.getElementById("uahValScale");
-    const valRot = document.getElementById("uahValRot");
-    const coords = document.getElementById("uahCoords");
-    if (valScale) valScale.textContent = `${Math.round(s * 100)}%`;
-    if (valRot) valRot.textContent = `${r}°`;
-    if (coords) coords.textContent = `X:${it.x || 0} Y:${it.y || 0}`;
-
-    document.querySelectorAll("[data-arrange-id]").forEach(node => {
-      node.classList.toggle("uah-selected", node.getAttribute("data-arrange-id") === activeArrangeId);
     });
   };
 
@@ -13661,306 +13460,6 @@ function bootSupernovaEngine() {
         pushUndoState();
       });
     }
-
-    // 3. Global UI Arrange Controller (Top Bar [📐 ARRANGE UI] Mode)
-    function setArrangeMode(on) {
-      const isArrange = (on !== undefined) ? !!on : !document.body.classList.contains("arrange-ui-mode");
-      document.body.classList.toggle("arrange-ui-mode", isArrange);
-      const toggleBtn = document.getElementById("btnToggleArrangeUi");
-      if (toggleBtn) toggleBtn.classList.toggle("active", isArrange);
-      if (isArrange) {
-        selectArrangeItem(activeArrangeId || "brand");
-      } else {
-        document.querySelectorAll("[data-arrange-id]").forEach(node => {
-          node.classList.remove("uah-selected", "uah-dragging");
-        });
-      }
-    }
-
-    function selectArrangeItem(id) {
-      if (!id) return;
-      activeArrangeId = id;
-      const sel = document.getElementById("uahItemSelect");
-      if (sel && sel.value !== id) sel.value = id;
-      document.querySelectorAll("[data-arrange-id]").forEach(node => {
-        node.classList.toggle("uah-selected", node.getAttribute("data-arrange-id") === id);
-      });
-      updateArrangeHud();
-    }
-
-    const uahSel = document.getElementById("uahItemSelect");
-    if (uahSel) {
-      uahSel.addEventListener("change", () => {
-        selectArrangeItem(uahSel.value);
-      });
-    }
-
-    // Direct pointer drag & wheel scale/rotate for all on-screen elements
-    document.querySelectorAll("[data-arrange-id]").forEach(el => {
-      const id = el.getAttribute("data-arrange-id");
-
-      el.addEventListener("pointerdown", e => {
-        if (!document.body.classList.contains("arrange-ui-mode")) return;
-        selectArrangeItem(id);
-        e.stopPropagation();
-        e.preventDefault();
-
-        let startX = e.clientX;
-        let startY = e.clientY;
-        if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
-        if (!UI_PARAMS.uiLayout[id]) UI_PARAMS.uiLayout[id] = { x: 0, y: 0, s: 1, r: 0 };
-        const initialPos = { x: Number(UI_PARAMS.uiLayout[id].x) || 0, y: Number(UI_PARAMS.uiLayout[id].y) || 0 };
-        let isMoving = false;
-
-        const onPointerMove = (ev) => {
-          const dx = ev.clientX - startX;
-          const dy = ev.clientY - startY;
-          if (!isMoving && (Math.abs(dx) > 2 || Math.abs(dy) > 2)) {
-            isMoving = true;
-            el.classList.add("uah-dragging");
-            try { el.setPointerCapture(e.pointerId); } catch(err){}
-          }
-          if (isMoving) {
-            UI_PARAMS.uiLayout[id].x = Math.round(initialPos.x + dx);
-            UI_PARAMS.uiLayout[id].y = Math.round(initialPos.y + dy);
-            applyUiLayout();
-            updateArrangeHud();
-          }
-        };
-
-        const onPointerUp = (ev) => {
-          window.removeEventListener("pointermove", onPointerMove);
-          window.removeEventListener("pointerup", onPointerUp);
-          window.removeEventListener("pointercancel", onPointerUp);
-          el.classList.remove("uah-dragging");
-          try { el.releasePointerCapture(e.pointerId); } catch(err){}
-          if (isMoving) {
-            localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-            pushUndoState();
-          }
-        };
-
-        window.addEventListener("pointermove", onPointerMove);
-        window.addEventListener("pointerup", onPointerUp);
-        window.addEventListener("pointercancel", onPointerUp);
-      });
-
-      // Shift + Wheel to scale, Alt + Wheel to rotate directly on element
-      el.addEventListener("wheel", e => {
-        if (!document.body.classList.contains("arrange-ui-mode")) return;
-        selectArrangeItem(id);
-        if (e.shiftKey) {
-          e.preventDefault();
-          e.stopPropagation();
-          const delta = e.deltaY < 0 ? 0.05 : -0.05;
-          modifyArrangeScale(delta, true);
-        } else if (e.altKey) {
-          e.preventDefault();
-          e.stopPropagation();
-          const delta = e.deltaY < 0 ? -5 : 5;
-          modifyArrangeRotation(delta);
-        }
-      }, { passive: false });
-    });
-
-    // Dedicated DRAG handle button in HUD
-    const uahDragBtn = document.getElementById("uahBtnDrag");
-    if (uahDragBtn) {
-      let isDraggingHud = false;
-      let startX = 0, startY = 0;
-      let initialPos = { x: 0, y: 0 };
-
-      uahDragBtn.addEventListener("pointerdown", e => {
-        if (!activeArrangeId) return;
-        isDraggingHud = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
-        if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
-        initialPos = { x: Number(UI_PARAMS.uiLayout[activeArrangeId].x) || 0, y: Number(UI_PARAMS.uiLayout[activeArrangeId].y) || 0 };
-        const targetEl = document.querySelector(`[data-arrange-id="${activeArrangeId}"]`);
-        if (targetEl) targetEl.classList.add("uah-dragging");
-        try { uahDragBtn.setPointerCapture(e.pointerId); } catch(err){}
-        e.preventDefault();
-        e.stopPropagation();
-      });
-
-      uahDragBtn.addEventListener("pointermove", e => {
-        if (!isDraggingHud || !activeArrangeId) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        UI_PARAMS.uiLayout[activeArrangeId].x = Math.round(initialPos.x + dx);
-        UI_PARAMS.uiLayout[activeArrangeId].y = Math.round(initialPos.y + dy);
-        applyUiLayout();
-        updateArrangeHud();
-      });
-
-      const stopHudDrag = (e) => {
-        if (!isDraggingHud) return;
-        isDraggingHud = false;
-        const targetEl = document.querySelector(`[data-arrange-id="${activeArrangeId}"]`);
-        if (targetEl) targetEl.classList.remove("uah-dragging");
-        try { uahDragBtn.releasePointerCapture(e.pointerId); } catch(err){}
-        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-        pushUndoState();
-      };
-      uahDragBtn.addEventListener("pointerup", stopHudDrag);
-      uahDragBtn.addEventListener("pointercancel", stopHudDrag);
-    }
-
-    // Scale Modifier
-    function modifyArrangeScale(deltaOrVal, isDelta = true) {
-      if (!activeArrangeId) return;
-      if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
-      if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
-      let curr = UI_PARAMS.uiLayout[activeArrangeId].s !== undefined ? Number(UI_PARAMS.uiLayout[activeArrangeId].s) : 1.0;
-      let next = isDelta ? (curr + deltaOrVal) : deltaOrVal;
-      next = Math.max(0.15, Math.min(3.5, Math.round(next * 100) / 100));
-      UI_PARAMS.uiLayout[activeArrangeId].s = next;
-      applyUiLayout();
-      updateArrangeHud();
-      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-      pushUndoState();
-    }
-
-    // Rotation Modifier
-    function modifyArrangeRotation(deltaDeg) {
-      if (!activeArrangeId) return;
-      if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
-      if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
-      let curr = Number(UI_PARAMS.uiLayout[activeArrangeId].r) || 0;
-      let next = Math.round((curr + deltaDeg) % 360);
-      if (next < 0) next += 360;
-      UI_PARAMS.uiLayout[activeArrangeId].r = next;
-      applyUiLayout();
-      updateArrangeHud();
-      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-      pushUndoState();
-    }
-
-    const btnScaleDown = document.getElementById("uahBtnScaleDown");
-    if (btnScaleDown) btnScaleDown.onclick = (e) => { e.stopPropagation(); modifyArrangeScale(-0.05, true); };
-    const btnScaleUp = document.getElementById("uahBtnScaleUp");
-    if (btnScaleUp) btnScaleUp.onclick = (e) => { e.stopPropagation(); modifyArrangeScale(+0.05, true); };
-
-    const btnRotCcw = document.getElementById("uahBtnRotCcw");
-    if (btnRotCcw) btnRotCcw.onclick = (e) => { e.stopPropagation(); modifyArrangeRotation(e.shiftKey ? -15 : -5); };
-    const btnRotCw = document.getElementById("uahBtnRotCw");
-    if (btnRotCw) btnRotCw.onclick = (e) => { e.stopPropagation(); modifyArrangeRotation(e.shiftKey ? 15 : 5); };
-
-    // Reset Active Item
-    const btnResetItem = document.getElementById("uahBtnResetItem");
-    if (btnResetItem) btnResetItem.onclick = (e) => {
-      e.stopPropagation();
-      if (!activeArrangeId) return;
-      if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
-      UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
-      applyUiLayout();
-      updateArrangeHud();
-      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-      pushUndoState();
-    };
-
-    // Reset All UI Items
-    const btnResetAll = document.getElementById("uahBtnResetAll");
-    if (btnResetAll) btnResetAll.onclick = (e) => {
-      e.stopPropagation();
-      if (!confirm("Reset all UI elements layout and positions to default?")) return;
-      UI_PARAMS.uiLayout = {
-        brand: { x: 0, y: 0, s: 1, r: 0 },
-        hash: { x: 0, y: 0, s: 1, r: 0 },
-        contact: { x: 0, y: 0, s: 1, r: 0 },
-        resetBtn: { x: 0, y: 0, s: 1, r: 0 },
-        autoBtn: { x: 0, y: 0, s: 1, r: 0 },
-        drGroup: { x: 0, y: 0, s: 1, r: 0 },
-        deform: { x: 0, y: 0, s: 1, r: 0 },
-        twist: { x: 0, y: 0, s: 1, r: 0 },
-        lineMix: { x: 0, y: 0, s: 1, r: 0 },
-        scatter: { x: 0, y: 0, s: 1, r: 0 },
-        mouseFollow: { x: 0, y: 0, s: 1, r: 0 },
-        instancing: { x: 0, y: 0, s: 1, r: 0 },
-        lineDirect: { x: 0, y: 0, s: 1, r: 0 },
-        lineCurved: { x: 0, y: 0, s: 1, r: 0 }
-      };
-      applyUiLayout();
-      updateArrangeHud();
-      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-      pushUndoState();
-    };
-
-    // Save UI
-    const btnSave = document.getElementById("uahBtnSave");
-    if (btnSave) btnSave.onclick = (e) => {
-      e.stopPropagation();
-      localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-      const coords = document.getElementById("uahCoords");
-      if (coords) {
-        const orig = coords.textContent;
-        coords.textContent = "SAVED ✓";
-        coords.style.color = "#34d399";
-        setTimeout(() => { coords.textContent = orig; coords.style.color = ""; }, 1500);
-      }
-    };
-
-    // Copy Code JSON
-    const btnCopy = document.getElementById("uahBtnCopy");
-    if (btnCopy) btnCopy.onclick = async (e) => {
-      e.stopPropagation();
-      const code = JSON.stringify(UI_PARAMS.uiLayout || {}, null, 2);
-      try {
-        await navigator.clipboard.writeText(code);
-      } catch (err) {
-        const ta = document.createElement("textarea");
-        ta.value = code;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-      }
-      const coords = document.getElementById("uahCoords");
-      if (coords) {
-        const orig = coords.textContent;
-        coords.textContent = "COPIED ✓";
-        coords.style.color = "#38bdf8";
-        setTimeout(() => { coords.textContent = orig; coords.style.color = ""; }, 1500);
-      }
-    };
-
-    // Done / Exit Arrange Mode
-    const btnExit = document.getElementById("uahBtnExit");
-    if (btnExit) btnExit.onclick = (e) => {
-      e.stopPropagation();
-      setArrangeMode(false);
-    };
-
-    // Studio Bar Toggle Button
-    const btnToggleArrangeUi = document.getElementById("btnToggleArrangeUi");
-    if (btnToggleArrangeUi) {
-      btnToggleArrangeUi.onclick = (e) => {
-        e.stopPropagation();
-        setArrangeMode();
-      };
-    }
-
-    // Keyboard Nudge in Arrange Mode
-    window.addEventListener("keydown", e => {
-      if (!document.body.classList.contains("arrange-ui-mode")) return;
-      const typing = ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) || document.activeElement.isContentEditable;
-      if (typing) return;
-      if (activeArrangeId && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
-        e.preventDefault();
-        if (!UI_PARAMS.uiLayout) UI_PARAMS.uiLayout = {};
-        if (!UI_PARAMS.uiLayout[activeArrangeId]) UI_PARAMS.uiLayout[activeArrangeId] = { x: 0, y: 0, s: 1, r: 0 };
-        const step = e.shiftKey ? 5 : 1;
-        if (e.key === "ArrowUp") UI_PARAMS.uiLayout[activeArrangeId].y -= step;
-        if (e.key === "ArrowDown") UI_PARAMS.uiLayout[activeArrangeId].y += step;
-        if (e.key === "ArrowLeft") UI_PARAMS.uiLayout[activeArrangeId].x -= step;
-        if (e.key === "ArrowRight") UI_PARAMS.uiLayout[activeArrangeId].x += step;
-        applyUiLayout();
-        updateArrangeHud();
-        localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS));
-      }
-    });
 
     // 3. Tuner Layout Reset Buttons
     if ($("btnResetNamePos")) {
@@ -15116,10 +14615,22 @@ function bootSupernovaEngine() {
 
   function preloadCardCovers() {
     if (!Array.isArray(NODES)) return;
-    NODES.forEach(n => {
-      const src = (n.cover || (n.media && n.media[0] && n.media[0].cover) || "").trim();
-      if (src) getCachedCardImage(src);
-    });
+    const candidates = NODES.filter(n => n.tier <= 2);
+    let pIdx = 0;
+    function loadNextSlice() {
+      if (pIdx >= candidates.length) return;
+      const end = Math.min(candidates.length, pIdx + 4);
+      for (let i = pIdx; i < end; i++) {
+        const n = candidates[i];
+        const src = (n.cover || (n.media && n.media[0] && n.media[0].cover) || "").trim();
+        if (src) getCachedCardImage(src);
+      }
+      pIdx = end;
+      if (pIdx < candidates.length) {
+        setTimeout(loadNextSlice, 60);
+      }
+    }
+    loadNextSlice();
   }
 
   function generateCardCanvas(node, aspect, frameW, beaconDot, targetMesh, isHover = false, layerIndex = 0) {
@@ -15481,6 +14992,8 @@ function bootSupernovaEngine() {
     const cardGeom = new THREE.PlaneGeometry(1, 1);
     const candidateNodes = NODES.filter(n => n.tier <= 2);
     const initialLayers = Math.max(1, Math.min(4, Math.round(PARAMS.photoCardLayers || 1)));
+    const pendingTextureWarmup = [];
+
     candidateNodes.forEach((n, rank) => {
       const MAX_LAYERS = 4;
       n.photoCardMeshes = [];
@@ -15502,8 +15015,11 @@ function bootSupernovaEngine() {
           texNormal: null,
           texHover: null
         };
-        if (layer < initialLayers) {
+        // Top 6 primary tier-1 cards get rendered immediately on frame 0 for instant visual presence
+        if (layer === 0 && rank < 6) {
           ensureLayerTexture(mesh);
+        } else if (layer < initialLayers) {
+          pendingTextureWarmup.push(mesh);
         }
         if (layer === 0) {
           n.photoCardMesh = mesh;
@@ -15514,6 +15030,22 @@ function bootSupernovaEngine() {
         n.photoCardMeshes.push(mesh);
       }
     });
+
+    // Progressively warm up remaining card textures in background animation frames with zero freeze
+    let warmupPtr = 0;
+    function warmupNextBatch() {
+      if (warmupPtr >= pendingTextureWarmup.length) return;
+      const end = Math.min(pendingTextureWarmup.length, warmupPtr + 2);
+      for (let i = warmupPtr; i < end; i++) {
+        const m = pendingTextureWarmup[i];
+        if (m && !m.userData.texNormal) ensureLayerTexture(m);
+      }
+      warmupPtr = end;
+      if (warmupPtr < pendingTextureWarmup.length) {
+        requestAnimationFrame(warmupNextBatch);
+      }
+    }
+    requestAnimationFrame(warmupNextBatch);
   }
 
   function refreshPhotoCardTextures() {
@@ -16500,14 +16032,19 @@ function bootSupernovaEngine() {
     const out = [], R = () => sRnd();
     const add = (x, y, z, a, b, t, k) => out.push({ x, y, z, a, b, t, k, seed: R(), rank: R(), op: 0.14 + 0.86 * R() });
 
+    // Adaptive particle density for mobile vs desktop
+    const isMobile = isMobileViewport();
+    const countShell = isMobile ? 32000 : 70000;
+    const countDust = isMobile ? 1200 : 2500;
+
     // Irregular shell sampling; every particle has persistent velocity.
-    for (let i=0;i<70000;i++) {
+    for (let i=0;i<countShell;i++) {
       const y=R()*2-1, angle=R()*Math.PI*2, r=Math.sqrt(1-y*y);
       const a=Math.floor(R()*CORE_HUB_COUNT), nb=pickNb(a), b=nb[Math.floor(R()*nb.length)];
       add(Math.cos(angle)*r*30,y*30,Math.sin(angle)*r*30,a,b,R(),R()<.2?1:0);
     }
-    // 4. Deep cosmos background stardust (2,500)
-    for (let i = 0; i < 2500; i++) {
+    // 4. Deep cosmos background stardust
+    for (let i = 0; i < countDust; i++) {
       const r = 140 + Math.pow(R(), 0.65) * 420, u = R() * 2 - 1, phi = R() * Math.PI * 2, sq = Math.sqrt(1 - u * u);
       add(r * sq * Math.cos(phi), r * u * 0.85, r * sq * Math.sin(phi), 0, 0, 0, 2);
     }
