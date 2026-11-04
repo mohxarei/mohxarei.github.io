@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
   
-  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -1339,14 +1338,98 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   line-height: 1;
 }
 
-/* Lower-right: Photo instancing ⴼ */
+/* Lower-right: Photo instancing ⴼ & Vertical Card Size Slider */
 .dr-cell-grid {
-  top: 66px;
-  right: 20px;
+  top: 58px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .dr-cell-grid .dr-sym-btn {
   width: 36px;
   height: 44px;
+  flex-shrink: 0;
+}
+.dr-vtrack-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 18px;
+  height: 54px;
+  user-select: none;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dr-vtrack-wrap.disabled {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.9);
+}
+.dr-vbracket {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+.dr-vbracket-t {
+  margin-bottom: 1px;
+}
+.dr-vbracket-b {
+  margin-top: 1px;
+}
+.dr-vtrack-line {
+  position: absolute;
+  top: 11px;
+  bottom: 11px;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+  z-index: 2;
+}
+.dr-vslider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 22px;
+  margin: 0;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: ns-resize;
+  touch-action: none;
+  z-index: 3;
+}
+.dr-vslider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  filter: drop-shadow(0 0 4px #000);
+}
+.dr-vslider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M7 20L12 6M14 20L19 6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.dr-vslider:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
 }
 
 /* Lower-left: Straight vs Curved line toggle ― and ~ */
@@ -3251,15 +3334,21 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
         </svg>
       </button>
     </div>
-    <!-- Lower-right: Photo instancing ⴼ -->
+    <!-- Lower-right: Photo instancing ⴼ & Vertical Card Size Slider -->
     <div class="dr-sym-cell dr-cell-grid" data-arrange-id="instancing" id="drCellGrid">
-      <button type="button" class="dr-sym-btn active" id="btnToggleInstancing" title="Photo Instancing" aria-label="Photo Instancing">
+      <button type="button" class="dr-sym-btn active" id="btnToggleInstancing" title="Photo Cards Visibility (ⵊ)" aria-label="Photo Cards Visibility">
         <svg viewBox="0 0 38 46" width="36" height="44" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="square">
           <path d="M4 6 L12 6 M4 6 L4 40 M4 40 L12 40"></path>
           <path d="M34 6 L26 6 M34 6 L34 40 M34 40 L26 40"></path>
           <line x1="4" y1="23" x2="34" y2="23"></line>
         </svg>
       </button>
+      <div class="dr-vtrack-wrap" id="drCardSizeVWrap" title="Card Size: 2.0 to 6.0">
+        <span class="dr-vbracket dr-vbracket-t">^</span>
+        <div class="dr-vtrack-line"></div>
+        <input id="drCardSizeSlider" type="range" class="dr-vslider" min="200" max="600" value="400" step="5" aria-label="Card Size Scale">
+        <span class="dr-vbracket dr-vbracket-b">v</span>
+      </div>
     </div>
     <!-- Lower-left: Straight vs Curved line toggle (Crisp vector icons) -->
     <div class="dr-sym-cell dr-cell-toggle">
@@ -3898,7 +3987,7 @@ let DEFAULTS = {
   "sphereRadius": 36,
   "sphereDeform": 0.49,
   "sphereStretch": 0.9,
-  "sphereTwist": 0.12,
+  "sphereTwist": -1.33,
   "sphereFlow": 0.52,
   "sphereSpin": 0.06,
   "sphereThickness": 6.2,
@@ -3908,7 +3997,7 @@ let DEFAULTS = {
   "mouseEffectStrength": 2.52,
   "previewPulseSpeed": 0.5,
   "previewStayTime": 2.9,
-  "lineParticleMix": 0.24,
+  "lineParticleMix": 0.49,
   "photoInstancing": true,
   "photoCardSize": 6.53,
   "photoCardCount": 40,
@@ -3921,7 +4010,7 @@ let DEFAULTS = {
   "photoCardHoverScale": 1.89,
   "photoCardOffset": 2.14,
   "photoCardBeaconDot": false,
-  "photoCardMouseFollow": false,
+  "photoCardMouseFollow": true,
   "photoCardMouseFollowStrength": 0.5,
   "photoCardLayers": 2,
   "photoCardFauxDepth": 0,
@@ -12871,6 +12960,24 @@ function bootSupernovaEngine() {
   const $ = id => document.getElementById(id);
   const PAGE_HTML_AT_BOOT = document.documentElement.outerHTML;
 
+  // Universal Asset URL Resolver (bulletproof across root /, /studio/, and local file paths)
+  function resolveAssetUrl(url) {
+    if (!url || typeof url !== "string") return url || "";
+    const trimmed = url.trim();
+    if (!trimmed) return "";
+    if (trimmed.startsWith("data:") || trimmed.startsWith("blob:") || trimmed.startsWith("http://") || trimmed.startsWith("https://") || trimmed.startsWith("//")) {
+      return trimmed;
+    }
+    const clean = trimmed.replace(/^\.?\//, "");
+    if (typeof window !== "undefined" && window.location && window.location.origin && window.location.origin !== "null" && window.location.protocol.startsWith("http")) {
+      return window.location.origin + "/" + clean;
+    }
+    if (typeof window !== "undefined" && window.location && window.location.pathname.includes("/studio")) {
+      return "../" + clean;
+    }
+    return clean;
+  }
+
   // Supernova Minimal Preloader Manager
   let loaderProgress = 16;
   let loaderDismissed = false;
@@ -14852,12 +14959,13 @@ function bootSupernovaEngine() {
   const CARD_IMAGE_CACHE = new Map();
   function getCachedCardImage(src) {
     if (!src) return null;
-    let img = CARD_IMAGE_CACHE.get(src);
+    const resolved = resolveAssetUrl(src);
+    let img = CARD_IMAGE_CACHE.get(resolved);
     if (!img) {
       img = new Image();
       img.crossOrigin = "anonymous";
-      img.src = src;
-      CARD_IMAGE_CACHE.set(src, img);
+      img.src = resolved;
+      CARD_IMAGE_CACHE.set(resolved, img);
     }
     return img;
   }
@@ -17007,7 +17115,8 @@ function bootSupernovaEngine() {
           if (linkUrl) window.open(linkUrl, "_blank", "noopener,noreferrer");
         };
       } else if (isVideo) {
-        const src = (m.img || m.video || m.url || "").trim();
+        const rawSrc = (m.img || m.video || m.url || "").trim();
+        const src = resolveAssetUrl(rawSrc);
         itemEl.innerHTML = `
           <video src="${src}" preload="metadata" muted playsinline loop></video>
           <div class="grid-play-icon">
@@ -17027,10 +17136,11 @@ function bootSupernovaEngine() {
         itemEl.onclick = () => openLightbox(idx);
       } else {
         // Photo / GIF
-        const src = (m.img || m.url || "").trim();
-        if (src) {
+        const rawSrc = (m.img || m.url || "").trim();
+        if (rawSrc) {
+          const src = resolveAssetUrl(rawSrc);
           itemEl.innerHTML = `
-            <img src="${src}" alt="${m.title || ''}" loading="lazy">
+            <img src="${src}" alt="${(m.title || '').replace(/"/g, '&quot;')}" loading="lazy">
           `;
         } else {
           const cv = document.createElement("canvas");
@@ -17141,7 +17251,7 @@ function bootSupernovaEngine() {
         wrap.appendChild(ifr);
       } else if (src) {
         const vid = document.createElement("video");
-        vid.src = src;
+        vid.src = resolveAssetUrl(src);
         vid.controls = true;
         vid.autoplay = true;
         vid.playsInline = true;
@@ -17155,7 +17265,7 @@ function bootSupernovaEngine() {
       }
     } else if (m.img && m.img.trim() !== "") {
       const im = document.createElement("img");
-      im.src = m.img;
+      im.src = resolveAssetUrl(m.img);
       im.alt = m.title || node.title || "";
       im.style.cssText = "max-width:100%;max-height:calc(88vh - 74px);width:auto;height:auto;object-fit:contain;display:block;";
       wrap.appendChild(im);
@@ -17292,7 +17402,11 @@ function bootSupernovaEngine() {
     if ($("hubPhotoPopupsOverlay")) $("hubPhotoPopupsOverlay").style.setProperty("--fade-dur", `${PARAMS.popupFadeDur.toFixed(2)}s`);
   });
 
-  bindSl("slPhotoCardSize", e => { PARAMS.photoCardSize = e.target.value / 100.0; $("valPhotoCardSize").textContent = PARAMS.photoCardSize.toFixed(2); });
+  bindSl("slPhotoCardSize", e => {
+    PARAMS.photoCardSize = e.target.value / 100.0;
+    $("valPhotoCardSize").textContent = PARAMS.photoCardSize.toFixed(2);
+    if ($("drCardSizeSlider")) $("drCardSizeSlider").value = e.target.value;
+  });
   bindSl("slPhotoCardTitleFontSize", e => {
     PARAMS.photoCardTitleFontSize = parseInt(e.target.value, 10);
     if ($("valPhotoCardTitleFontSize")) $("valPhotoCardTitleFontSize").textContent = `${PARAMS.photoCardTitleFontSize}px`;
@@ -17518,7 +17632,14 @@ function bootSupernovaEngine() {
 
   function syncInstancingUI() {
     const btn = $('btnToggleInstancing');
-    if (btn) btn.classList.toggle('active', Boolean(PARAMS.photoInstancing));
+    const isVis = Boolean(PARAMS.photoInstancing);
+    if (btn) btn.classList.toggle('active', isVis);
+    const vWrap = $('drCardSizeVWrap');
+    if (vWrap) {
+      vWrap.classList.toggle('disabled', !isVis);
+      const sl = $('drCardSizeSlider');
+      if (sl) sl.disabled = !isVis;
+    }
   }
 
   if ($('btnToggleLineDirect')) {
@@ -17557,6 +17678,18 @@ function bootSupernovaEngine() {
       if (typeof photoCardsGroup !== 'undefined' && photoCardsGroup) photoCardsGroup.visible = Boolean(PARAMS.photoInstancing);
       syncInstancingUI();
     });
+  }
+  if ($('drCardSizeSlider')) {
+    const curSize = Math.max(2, Math.min(6, Number(PARAMS.photoCardSize) !== undefined ? Number(PARAMS.photoCardSize) : 4.0));
+    $('drCardSizeSlider').value = String(Math.round(curSize * 100));
+    const onCardSizeChange = e => {
+      if (!PARAMS.photoInstancing) return;
+      PARAMS.photoCardSize = parseFloat(e.target.value) / 100.0;
+      if ($('slPhotoCardSize')) $('slPhotoCardSize').value = String(Math.round(PARAMS.photoCardSize * 100));
+      if ($('valPhotoCardSize')) $('valPhotoCardSize').textContent = PARAMS.photoCardSize.toFixed(2);
+    };
+    $('drCardSizeSlider').addEventListener('input', onCardSizeChange);
+    $('drCardSizeSlider').addEventListener('change', onCardSizeChange);
   }
   if ($('btnScatterHubSeed')) {
     $('btnScatterHubSeed').addEventListener('click', e => {
@@ -17672,6 +17805,10 @@ function bootSupernovaEngine() {
       $("valPhotoCardBeaconDot").textContent = PARAMS.photoCardBeaconDot ? "ON" : "OFF";
     }
     s("slPhotoCardSize", "valPhotoCardSize", PARAMS.photoCardSize !== undefined ? PARAMS.photoCardSize : 3.00);
+    if ($("drCardSizeSlider")) {
+      const curCardSz = Math.max(2, Math.min(6, Number(PARAMS.photoCardSize) !== undefined ? PARAMS.photoCardSize : 4.0));
+      $("drCardSizeSlider").value = String(Math.round(curCardSz * 100));
+    }
     if ($("slPhotoCardTitleFontSize")) {
       $("slPhotoCardTitleFontSize").value = PARAMS.photoCardTitleFontSize !== undefined ? PARAMS.photoCardTitleFontSize : 24;
       if ($("valPhotoCardTitleFontSize")) $("valPhotoCardTitleFontSize").textContent = `${PARAMS.photoCardTitleFontSize !== undefined ? PARAMS.photoCardTitleFontSize : 24}px`;
@@ -18080,10 +18217,10 @@ function bootSupernovaEngine() {
       } else if (isLink) {
         thumbHtml = '<span class="m-ed-thumb-icon" title="Link item">🔗</span>';
       } else if (isVideo) {
-        const vSrc = (m.img || m.video || m.url || "").trim();
+        const vSrc = resolveAssetUrl((m.img || m.video || m.url || "").trim());
         thumbHtml = `<video src="${vSrc}" class="m-ed-thumb" muted preload="metadata"></video>`;
       } else {
-        const iSrc = (m.img || m.url || "").trim();
+        const iSrc = resolveAssetUrl((m.img || m.url || "").trim());
         thumbHtml = iSrc ? `<img src="${iSrc}" class="m-ed-thumb" alt="thumb">` : '<span class="m-ed-thumb-icon">🖼</span>';
       }
 
@@ -18916,9 +19053,11 @@ function bootSupernovaEngine() {
       const isApexUserRepo = repoFull.toLowerCase().endsWith(".github.io");
       // If publishing to mohxarei.github.io, push viewer-only to index.html and full studio to studio/index.html
       const viewerHtml = buildFullHTML(true);
-      let studioHtml = buildFullHTML(false);
-      if (!studioHtml.includes('<base href="../">')) {
-        studioHtml = studioHtml.replace('<head>', '<head>\n  <base href="../">');
+      const studioHtml = buildFullHTML(false);
+      let studioFolderHtml = studioHtml;
+      const headClose = studioFolderHtml.indexOf('</head>');
+      if (headClose > 0 && !studioFolderHtml.slice(0, headClose).includes('<base')) {
+        studioFolderHtml = studioFolderHtml.replace(/<head([^>]*)>/i, '<head$1>\n  <base href="../">');
       }
       const updatedHtml = isApexUserRepo ? viewerHtml : studioHtml;
 
@@ -18959,7 +19098,7 @@ function bootSupernovaEngine() {
           await fetch(`https://api.github.com/repos/${repoFull}/contents/studio/index.html`, {
             method: "PUT",
             headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github.v3+json", "Content-Type": "application/json" },
-            body: JSON.stringify({ message: "Update Supernova Studio Admin Panel", content: toB64(studioHtml), branch: branch, ...(stSha ? { sha: stSha } : {}) })
+            body: JSON.stringify({ message: "Update Supernova Studio Admin Panel", content: toB64(studioFolderHtml), branch: branch, ...(stSha ? { sha: stSha } : {}) })
           });
         } catch (e) { console.warn("Studio subpath update:", e); }
       }
@@ -19054,6 +19193,11 @@ function bootSupernovaEngine() {
       if ($('chkPhotoInstancing')) $('chkPhotoInstancing').checked = true;
       if ($('valPhotoInstancing')) $('valPhotoInstancing').textContent = 'ON';
       if (typeof photoCardsGroup !== 'undefined' && photoCardsGroup) photoCardsGroup.visible = true;
+      const defCardSize = (DEFAULTS.photoCardSize !== undefined ? DEFAULTS.photoCardSize : (PARAMS.photoCardSize || 4.0));
+      PARAMS.photoCardSize = defCardSize;
+      if ($('drCardSizeSlider')) $('drCardSizeSlider').value = String(Math.round(defCardSize * 100));
+      if ($('slPhotoCardSize')) $('slPhotoCardSize').value = String(Math.round(defCardSize * 100));
+      if ($('valPhotoCardSize')) $('valPhotoCardSize').textContent = defCardSize.toFixed(2);
       syncInstancingUI();
 
       const defSeed = (DEFAULTS.hubSeed !== undefined ? DEFAULTS.hubSeed : 7236);
@@ -19464,13 +19608,13 @@ function bootSupernovaEngine() {
             if (mediaItem && (mediaItem.img || mediaItem.video || mediaItem.url)) {
               if (isVideoMedia(mediaItem)) {
                 const vid = document.createElement("video");
-                vid.src = (mediaItem.img || mediaItem.video || mediaItem.url).trim();
+                vid.src = resolveAssetUrl((mediaItem.img || mediaItem.video || mediaItem.url).trim());
                 vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
                 vid.setAttribute("playsinline", ""); vid.setAttribute("webkit-playsinline", "");
                 slot.mediaWrap.appendChild(vid);
               } else {
                 const img = document.createElement("img");
-                img.src = mediaItem.img;
+                img.src = resolveAssetUrl(mediaItem.img);
                 img.alt = pickedNode.title;
                 slot.mediaWrap.appendChild(img);
               }
@@ -19928,13 +20072,13 @@ function bootSupernovaEngine() {
             if (mediaItem && (mediaItem.img || mediaItem.video || mediaItem.url)) {
               if (isVideoMedia(mediaItem)) {
                 const vid = document.createElement("video");
-                vid.src = (mediaItem.img || mediaItem.video || mediaItem.url).trim();
+                vid.src = resolveAssetUrl((mediaItem.img || mediaItem.video || mediaItem.url).trim());
                 vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
                 vid.setAttribute("playsinline", ""); vid.setAttribute("webkit-playsinline", "");
                 mediaEl.appendChild(vid);
               } else {
                 const img = document.createElement("img");
-                img.src = mediaItem.img;
+                img.src = resolveAssetUrl(mediaItem.img);
                 img.alt = n.title;
                 mediaEl.appendChild(img);
               }
