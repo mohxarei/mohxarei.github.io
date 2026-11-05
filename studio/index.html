@@ -3059,31 +3059,31 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 .loader-line-main {
   font-family: 'IBM Plex Mono', 'Space Mono', monospace;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: #ffffff;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 9px;
   line-height: 1.35;
-  text-shadow: 0 0 16px rgba(255, 255, 255, 0.32);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
 }
 
 .loader-line-sub {
   font-family: 'IBM Plex Mono', 'Space Mono', monospace;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
-  letter-spacing: 0.11em;
-  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.82);
   text-transform: uppercase;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .loader-line-sub .loader-hash {
   color: #ffffff;
   font-weight: 800;
-  padding: 0 1px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
+  padding: 0 2px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 .loader-line-sub .loader-wink {
@@ -3094,9 +3094,9 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 }
 
 .loader-progress-wrap {
-  width: 220px;
+  width: 240px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   overflow: hidden;
   position: relative;
@@ -3107,15 +3107,15 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   width: 0%;
   height: 100%;
   background: #ffffff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
-  transition: width 0.18s ease-out;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+  transition: width 0.12s linear;
 }
 
 .loader-status-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 220px;
+  width: 240px;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
   font-weight: 600;
@@ -12980,7 +12980,9 @@ function bootSupernovaEngine() {
   }
 
   // Supernova Minimal Preloader Manager
-  let loaderProgress = 16;
+  const loaderStartTime = performance.now();
+  const LOADER_MIN_DISPLAY_MS = 2500; // Gives user comfortable time to read instructions and lets WebGL & 40+ textures fully warm up in background
+  let loaderProgress = 8;
   let loaderDismissed = false;
   let initialRenderFrames = 0;
   const loaderEl = $("supernovaLoader");
@@ -13013,12 +13015,18 @@ function bootSupernovaEngine() {
       clearInterval(loaderSimInterval);
       return;
     }
-    if (loaderProgress < 88) {
-      updateLoaderProgress(loaderProgress + Math.floor(Math.random() * 7) + 5);
-    }
-  }, 110);
+    const elapsed = performance.now() - loaderStartTime;
+    const progressRatio = Math.min(1.0, elapsed / LOADER_MIN_DISPLAY_MS);
+    const targetPct = Math.round(8 + (98 - 8) * Math.sin(progressRatio * Math.PI * 0.5));
+    updateLoaderProgress(targetPct);
 
-  setTimeout(dismissLoader, 3500);
+    if (elapsed >= LOADER_MIN_DISPLAY_MS && initialRenderFrames >= 35) {
+      clearInterval(loaderSimInterval);
+      dismissLoader();
+    }
+  }, 40);
+
+  setTimeout(dismissLoader, 4500);
   const PRESET_VER = "v6.7-faux-depth-layers-2026-10-27";
 
   // Load any previously Set/Saved preset right at boot BEFORE initializing PARAMS & uniforms
@@ -20123,7 +20131,8 @@ function bootSupernovaEngine() {
 
     if (!loaderDismissed) {
       initialRenderFrames++;
-      if (initialRenderFrames >= 2) {
+      const elapsed = performance.now() - loaderStartTime;
+      if (initialRenderFrames >= 35 && elapsed >= LOADER_MIN_DISPLAY_MS) {
         dismissLoader();
       }
     }
