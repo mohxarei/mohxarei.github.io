@@ -1589,10 +1589,11 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 
 /* A fixed center reference, independent of the moving // handle. */
 .line-particle-midpoint { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:3; color:rgba(255,255,255,.7); font:300 15px/1 "IBM Plex Mono",monospace; pointer-events:none; text-shadow:0 0 3px #000; }
-/* Exactly one tenth of the hash control's height sits below the viewport. */
-.corner-filter { bottom:calc(var(--hash-icon-size) * -.0785714); }
+/* Corner filter rests safely above bottom edge across all viewports */
+.corner-filter { bottom: max(22px, calc(env(safe-area-inset-bottom, 0px) + 16px)); }
 .hash-half.hh-l {
   rotate: 0deg !important;
+  overflow: visible !important;
   transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.3s ease !important;
 }
 .corner-filter.collapsed .hash-half.hh-l {
@@ -2474,6 +2475,107 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   border-color: rgba(255, 255, 255, 0.16);
 }
 
+/* ==========================================================================
+   TABLET SCREEN REGULATION (769px - 1024px, iPad & Android Tablets)
+   ========================================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #cornerFilter,
+  .corner-filter {
+    position: fixed !important;
+    left: max(20px, calc(env(safe-area-inset-left, 0px) + 16px)) !important;
+    bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 18px)) !important;
+    top: auto !important;
+    right: auto !important;
+    z-index: 25 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .hash-stage {
+    min-height: 72px !important;
+    height: 72px !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    overflow: visible !important;
+  }
+  .hash-half.hh-l {
+    position: relative !important;
+    left: auto !important;
+    bottom: 0 !important;
+    font-size: 78px !important;
+    line-height: 0.82 !important;
+    height: 64px !important;
+    width: 48px !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    overflow: visible !important;
+    opacity: 0.88 !important;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9) !important;
+  }
+  .corner-filter.collapsed .hash-half.hh-l {
+    transform: none !important;
+  }
+  .corner-filter:not(.collapsed) .hash-half.hh-l {
+    transform: translateX(-16px) !important;
+  }
+  .cf-slot {
+    margin-left: 12px !important;
+    width: min(320px, calc(100vw - 80px)) !important;
+  }
+  .cf-body {
+    width: 100% !important;
+    height: clamp(260px, 36vh, 380px) !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Center Pills on Tablet */
+  .morph-faded-box {
+    position: fixed !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 18px)) !important;
+    z-index: 24 !important;
+  }
+
+  /* Down-Right Controls on Tablet */
+  #downRightControls {
+    position: fixed !important;
+    right: max(18px, calc(env(safe-area-inset-right, 0px) + 16px)) !important;
+    bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 14px)) !important;
+    transform: scale(0.92) !important;
+    transform-origin: bottom right !important;
+    z-index: 24 !important;
+    gap: 8px !important;
+  }
+  .dr-symbols-composition {
+    width: 200px !important;
+    height: 128px !important;
+  }
+  .dr-track-wrap {
+    width: 200px !important;
+  }
+  .dr-cell-diamond .dr-sym-btn {
+    width: 78px !important;
+    height: 78px !important;
+  }
+  .dr-cell-diamond .dr-sym-btn svg {
+    width: 78px !important;
+    height: 78px !important;
+  }
+
+  /* Top Corners on Tablet */
+  #siteHeader, .brand {
+    top: max(18px, calc(env(safe-area-inset-top, 0px) + 16px)) !important;
+    left: max(20px, calc(env(safe-area-inset-left, 0px) + 16px)) !important;
+  }
+  #contactCorner, .contact-corner {
+    top: max(18px, calc(env(safe-area-inset-top, 0px) + 16px)) !important;
+    right: max(20px, calc(env(safe-area-inset-right, 0px) + 16px)) !important;
+    font-size: 58px !important;
+  }
+}
+
 @media(max-width:768px){
   html, body {
     width: 100vw;
@@ -2840,8 +2942,8 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   #cornerFilter,
   .corner-filter {
     position: fixed !important;
-    left: max(16px, calc(env(safe-area-inset-left, 0px) + 12px)) !important;
-    bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 14px)) !important;
+    left: max(14px, calc(env(safe-area-inset-left, 0px) + 10px)) !important;
+    bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 12px)) !important;
     top: auto !important;
     right: auto !important;
     z-index: 99 !important;
@@ -2862,7 +2964,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   .hash-half.hh-l {
     position: relative !important;
     left: auto !important;
-    bottom: auto !important;
+    bottom: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2908,60 +3010,95 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
     max-height: 180px;
   }
 
-  /* 6. Bottom Center Pills & Down-Right Controls */
+  /* 6. Bottom Center Pills & Down-Right Controls (No Overlap & In-Bounds) */
   .morph-faded-box {
     position: fixed !important;
-    bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 14px)) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 10px)) !important;
+    left: clamp(66px, 22vw, 115px) !important;
+    transform: none !important;
     width: auto !important;
-    padding: 4px 6px !important;
-    opacity: 0.9 !important;
+    padding: 3px 5px !important;
+    opacity: 0.92 !important;
     z-index: 30 !important;
     display: flex !important;
   }
   .morph-bottom-row {
-    gap: 8px !important;
+    gap: 6px !important;
   }
   .auto-pill.reset-pill {
-    width: 24px !important;
-    height: 24px !important;
+    width: 22px !important;
+    height: 22px !important;
   }
   .auto-pill.reset-pill svg {
-    width: 11px !important;
-    height: 11px !important;
+    width: 10px !important;
+    height: 10px !important;
+  }
+  .auto-pill {
+    padding: 2px 6px !important;
+    font-size: 8.5px !important;
+    height: 22px !important;
   }
 
   #downRightControls {
-    right: max(10px, calc(env(safe-area-inset-right, 0px) + 8px)) !important;
-    bottom: max(10px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
-    transform: scale(0.80) !important;
+    right: max(8px, calc(env(safe-area-inset-right, 0px) + 6px)) !important;
+    bottom: max(8px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
+    transform: scale(0.82) !important;
     transform-origin: bottom right !important;
     z-index: 35 !important;
-    gap: 6px !important;
+    gap: 5px !important;
   }
   .dr-symbols-composition {
-    width: 185px !important;
-    height: 110px !important;
+    width: 165px !important;
+    height: 104px !important;
   }
   .dr-track-wrap {
-    width: 185px !important;
-    height: 24px !important;
+    width: 165px !important;
+    height: 22px !important;
+  }
+  .dr-cell-diamond {
+    left: 2px !important;
+    top: 0 !important;
   }
   .dr-cell-diamond .dr-sym-btn {
-    font-size: 44px !important;
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 38px !important;
+  }
+  .dr-cell-diamond .dr-sym-btn svg {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .dr-cell-scatter {
+    right: 4px !important;
+    top: 2px !important;
   }
   .dr-cell-scatter .dr-sym-btn {
-    font-size: 26px !important;
-  }
-  .dr-cell-grid .dr-sym-btn {
+    width: 32px !important;
+    height: 32px !important;
     font-size: 24px !important;
   }
-  .dr-cell-toggle .dr-sym-btn {
+  .dr-cell-scatter .dr-sym-btn svg {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .dr-cell-grid {
+    right: 4px !important;
+    top: 44px !important;
+  }
+  .dr-cell-grid .dr-sym-btn {
+    width: 30px !important;
+    height: 38px !important;
     font-size: 22px !important;
   }
+  .dr-cell-grid .dr-sym-btn svg {
+    width: 28px !important;
+    height: 36px !important;
+  }
+  .dr-cell-toggle .dr-sym-btn {
+    font-size: 20px !important;
+  }
   .dr-track-text {
-    font-size: 10px !important;
+    font-size: 9.5px !important;
   }
 
   /* 7. Modals on Phone & Small Screens */
@@ -3817,8 +3954,8 @@ let UI_PARAMS = {
   "starR": 130,
   "starA0": 100,
   "starA1": 170,
-  "hashX": 83,
-  "hashY": 395,
+  "hashX": null,
+  "hashY": null,
   "contactX": null,
   "contactY": null,
   "drSlidersX": null,
@@ -13077,14 +13214,30 @@ function bootSupernovaEngine() {
     }
   } catch (err) {}
 
+  const checkTouchDevice = () => (typeof window !== "undefined" && (("ontouchstart" in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)));
   const isMobileViewport = () => {
     return (window.innerWidth <= 768) || (window.innerHeight <= 600 && window.innerWidth < 1024);
+  };
+  const isTabletViewport = () => {
+    return (window.innerWidth > 768 && window.innerWidth <= 1180 && checkTouchDevice()) || (window.innerWidth > 768 && window.innerWidth <= 1024);
+  };
+  const isTouchOrCompactViewport = () => isMobileViewport() || isTabletViewport();
+
+  const getAdaptivePixelRatio = () => {
+    const dpr = window.devicePixelRatio || 1;
+    const w = window.innerWidth || 800;
+    if (w <= 768) {
+      return Math.min(dpr, 1.10);
+    } else if (w <= 1024 || (checkTouchDevice() && w <= 1366)) {
+      return Math.min(dpr, 1.20);
+    }
+    return Math.min(dpr, 1.75);
   };
 
   const applyBrandPosition = () => {
     const textHolder = document.getElementById("brandTextHolder");
     if (!textHolder) return;
-    if (isMobileViewport() || SITE_HEADER.x == null || SITE_HEADER.y == null || SITE_HEADER.x > window.innerWidth - 60 || SITE_HEADER.y > window.innerHeight - 60) {
+    if (isTouchOrCompactViewport() || SITE_HEADER.x == null || SITE_HEADER.y == null || SITE_HEADER.x > window.innerWidth - 60 || SITE_HEADER.y > window.innerHeight - 60) {
       textHolder.style.position = "";
       textHolder.style.left = "";
       textHolder.style.top = "";
@@ -13102,7 +13255,7 @@ function bootSupernovaEngine() {
   const applyHashCornerPosition = () => {
     const el = document.getElementById("cornerFilter");
     if (!el) return;
-    if (isMobileViewport() || UI_PARAMS.hashX == null || UI_PARAMS.hashY == null || UI_PARAMS.hashX > window.innerWidth - 60 || UI_PARAMS.hashY > window.innerHeight - 60) {
+    if (isTouchOrCompactViewport() || UI_PARAMS.hashX == null || UI_PARAMS.hashY == null || UI_PARAMS.hashX > window.innerWidth - 60 || UI_PARAMS.hashY > window.innerHeight - 60) {
       el.classList.remove("corner-custom-pos");
       el.style.position = "";
       el.style.left = "";
@@ -13129,7 +13282,7 @@ function bootSupernovaEngine() {
       UI_PARAMS.contactY = null;
       try { localStorage.setItem("supernova_ui_params", JSON.stringify(UI_PARAMS)); } catch (e) {}
     }
-    if (isMobileViewport() || UI_PARAMS.contactX == null || UI_PARAMS.contactY == null || UI_PARAMS.contactX > window.innerWidth - 60 || UI_PARAMS.contactY > window.innerHeight - 60) {
+    if (isTouchOrCompactViewport() || UI_PARAMS.contactX == null || UI_PARAMS.contactY == null || UI_PARAMS.contactX > window.innerWidth - 60 || UI_PARAMS.contactY > window.innerHeight - 60) {
       el.classList.remove("corner-custom-pos");
       el.style.position = "";
       el.style.left = "";
@@ -13150,15 +13303,30 @@ function bootSupernovaEngine() {
 
   const applyUiLayout = () => {
     if (!UI_PARAMS.uiLayout) return;
+    const isMobile = isMobileViewport();
     const items = document.querySelectorAll("[data-arrange-id]");
     items.forEach(el => {
       const id = el.getAttribute("data-arrange-id");
       const itemData = UI_PARAMS.uiLayout[id];
       if (!itemData) return;
-      const x = Number(itemData.x) || 0;
-      const y = Number(itemData.y) || 0;
-      const s = (itemData.s !== undefined && itemData.s !== null) ? Number(itemData.s) : 1;
+      let x = Number(itemData.x) || 0;
+      let y = Number(itemData.y) || 0;
+      let s = (itemData.s !== undefined && itemData.s !== null) ? Number(itemData.s) : 1;
       const r = Number(itemData.r) || 0;
+
+      // On narrow mobile screens, adaptively clamp manual offsets so items never clip off-screen
+      if (isMobile) {
+        if (id === "mouseFollow") {
+          x = Math.min(x, 65);
+        } else if (id === "scatter") {
+          x = Math.max(-16, Math.min(x, 8));
+        } else if (id === "contact") {
+          x = Math.max(-12, Math.min(x, 6));
+          y = Math.max(0, Math.min(y, 14));
+          s = Math.min(s, 1.15);
+        }
+      }
+
       if (x === 0 && y === 0 && s === 1 && r === 0) {
         el.style.transform = "";
       } else {
@@ -13172,14 +13340,14 @@ function bootSupernovaEngine() {
     const el = document.getElementById("downRightControls");
     if (!el) return;
     const scale = (UI_PARAMS.drSlidersScale !== undefined && UI_PARAMS.drSlidersScale !== null) ? UI_PARAMS.drSlidersScale : 1.0;
-    if (isMobileViewport() || UI_PARAMS.drSlidersX == null || UI_PARAMS.drSlidersY == null || UI_PARAMS.drSlidersX > window.innerWidth - 60 || UI_PARAMS.drSlidersY > window.innerHeight - 60) {
+    if (isTouchOrCompactViewport() || UI_PARAMS.drSlidersX == null || UI_PARAMS.drSlidersY == null || UI_PARAMS.drSlidersX > window.innerWidth - 60 || UI_PARAMS.drSlidersY > window.innerHeight - 60) {
       el.classList.remove("corner-custom-pos");
       el.style.position = "";
       el.style.left = "";
       el.style.top = "";
       el.style.bottom = "";
       el.style.right = "";
-      el.style.transform = isMobileViewport() ? "" : (scale !== 1.0 ? `scale(${scale})` : "");
+      el.style.transform = isTouchOrCompactViewport() ? "" : (scale !== 1.0 ? `scale(${scale})` : "");
       el.style.transformOrigin = "bottom right";
       el.style.zIndex = "";
     } else {
@@ -14641,7 +14809,7 @@ function bootSupernovaEngine() {
   /* WEBGL & DEEP-SPACE MONOCHROME BACKGROUND SHADER */
   const canvas = $("webgl");
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(getAdaptivePixelRatio());
   renderer.autoClear = false;
 
   const scene = new THREE.Scene();
@@ -15492,7 +15660,12 @@ function bootSupernovaEngine() {
     if (!isInstancing) return;
 
     const totalCandidateCount = NODES.filter(n => n.tier <= 2).length || CORE_HUB_COUNT;
-    const countLimit = Math.max(totalCandidateCount, Math.round(PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : totalCandidateCount));
+    let countLimit = Math.max(totalCandidateCount, Math.round(PARAMS.photoCardCount !== undefined ? PARAMS.photoCardCount : totalCandidateCount));
+    if (isMobileViewport()) {
+      countLimit = Math.min(countLimit, 18);
+    } else if (isTabletViewport()) {
+      countLimit = Math.min(countLimit, 26);
+    }
     const activeLayers = Math.max(1, Math.min(4, Math.round(PARAMS.photoCardLayers || 1)));
     const layerSpread = Math.max(0, Math.min(1, Number(PARAMS.photoCardLayerSpread) !== undefined ? Number(PARAMS.photoCardLayerSpread) : 0.30));
     const w = Math.max(10, window.innerWidth || 800);
@@ -15668,7 +15841,7 @@ function bootSupernovaEngine() {
      STRAIGHT-LINE HASHTAG SIMILARITY RIBBON ENGINE
      ============================================================================ */
   let hubAdjacency = Array.from({ length: CORE_HUB_COUNT }, () => []);
-  const EDGE_SEGS = 8;
+  const EDGE_SEGS = (isMobileViewport() || isTabletViewport()) ? 4 : 8;
   const edgeScratchPts = Array.from({ length: EDGE_SEGS + 1 }, () => new THREE.Vector3());
   const edgeChordMid = new THREE.Vector3();
   const edgeChordNorm = new THREE.Vector3();
@@ -16397,10 +16570,18 @@ function bootSupernovaEngine() {
     const out = [], R = () => sRnd();
     const add = (x, y, z, a, b, t, k) => out.push({ x, y, z, a, b, t, k, seed: R(), rank: R(), op: 0.14 + 0.86 * R() });
 
-    // Adaptive particle density for mobile vs desktop
+    // Adaptive particle density for mobile vs tablet vs desktop
     const isMobile = isMobileViewport();
-    const countShell = isMobile ? 32000 : 70000;
-    const countDust = isMobile ? 1200 : 2500;
+    const isTablet = isTabletViewport();
+    let countShell = 65000;
+    let countDust = 2400;
+    if (isMobile) {
+      countShell = 18000;
+      countDust = 900;
+    } else if (isTablet) {
+      countShell = 28000;
+      countDust = 1400;
+    }
 
     // Irregular shell sampling; every particle has persistent velocity.
     for (let i=0;i<countShell;i++) {
@@ -19238,7 +19419,7 @@ function bootSupernovaEngine() {
   let reticleGraceTimer = 0;
   let previewPointerX=-1,previewPointerY=-1,previewPointerActive=false,previewPointerOnCanvas=false;
   let downHitNodeId = -1;
-  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+  const isTouchDevice = checkTouchDevice();
 
   function clearHoverPreview(){
     hoveredId=-1;currentReticleNodeId=-1;reticleGraceTimer=0;isReticlePhotoHovered=false;
@@ -19415,6 +19596,7 @@ function bootSupernovaEngine() {
   function onResize() {
     const w = Math.max(10, window.innerWidth || document.documentElement.clientWidth || 800);
     const h = Math.max(10, window.innerHeight || document.documentElement.clientHeight || 600);
+    renderer.setPixelRatio(getAdaptivePixelRatio());
     renderer.setSize(w, h);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
