@@ -1337,7 +1337,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transform: scale(1.1);
 }
 
-/* Middle Row - Left: Connection Style: O / (O: curve, /: line) */
+/* Middle Row - Left: Connection Style: ∅ (O / / toggle) */
 .dr-cell-line-toggle {
   bottom: 0px;
   left: 6px;
@@ -1359,39 +1359,31 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   margin: 0;
   cursor: pointer;
   color: #ffffff;
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 21px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  user-select: none;
-  transition: opacity 0.15s ease, filter 0.15s ease, transform 0.15s ease;
+  transition: transform 0.15s ease;
 }
 .dr-cell-line-toggle .dr-sym-btn:hover {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 .dr-cell-line-toggle .glyph-o,
 .dr-cell-line-toggle .glyph-slash {
-  display: inline-block;
-  cursor: pointer;
-  transition: opacity 0.2s ease, color 0.2s ease, filter 0.2s ease;
-  opacity: 0.35;
-  color: rgba(255, 255, 255, 0.45);
+  transition: opacity 0.2s ease, stroke 0.2s ease, filter 0.2s ease;
+  opacity: 0.32;
+  stroke: rgba(255, 255, 255, 0.38);
 }
 .dr-cell-line-toggle .glyph-o.active,
 .dr-cell-line-toggle .glyph-slash.active {
   opacity: 1 !important;
-  color: #ffffff !important;
-  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.9));
+  stroke: #ffffff !important;
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.95));
 }
 .dr-cell-line-toggle .dr-sym-btn:hover .glyph-o.active,
 .dr-cell-line-toggle .dr-sym-btn:hover .glyph-slash.active {
-  filter: drop-shadow(0 0 9px rgba(255, 255, 255, 1));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
 }
 .dr-cell-line-toggle .dr-sym-btn:hover .glyph-o:not(.active),
 .dr-cell-line-toggle .dr-sym-btn:hover .glyph-slash:not(.active) {
-  opacity: 0.65;
-  color: rgba(255, 255, 255, 0.7);
+  opacity: 0.6;
+  stroke: rgba(255, 255, 255, 0.65);
 }
 
 /* Middle Row - Center: ⵡ (Mouse Card Face Attraction) */
@@ -1415,11 +1407,6 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   padding: 0;
   margin: 0;
   cursor: pointer;
-  font-family: "Ebrima", "Noto Sans Tifinagh", "Segoe UI Historic", "IBM Plex Mono", sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1;
-  user-select: none;
   color: rgba(255, 255, 255, 0.42);
   opacity: 0.45;
   transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
@@ -1427,7 +1414,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 .dr-cell-mouse-follow .dr-sym-btn:hover {
   opacity: 0.85;
   color: #ffffff;
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 .dr-cell-mouse-follow .dr-sym-btn.active {
   opacity: 1 !important;
@@ -3861,17 +3848,22 @@ body.studio-mode .top-search-wrap {
       </button>
     </div>
 
-    <!-- Middle Row - Left: Connection Style O/ (O: curve, /: line) -->
+    <!-- Middle Row - Left: Connection Style: ∅ (round O / diagonal /) -->
     <div class="dr-sym-cell dr-cell-line-toggle" id="drCellLineMode" data-arrange-id="lineDirect">
-      <button type="button" class="dr-sym-btn dr-btn-line-mode" id="btnToggleLineCurved" title="Connection Lines: Straight (/) [Click for Curve (O)]" aria-label="Toggle Connection Lines: Straight (/) or Curve (O)">
-        <span class="glyph-o" id="btnSubGlyphO">O</span><span class="glyph-slash active" id="btnSubGlyphSlash">/</span>
+      <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Connection Lines: Straight (/) [Click for Curve (O)]" aria-label="Toggle Connection Lines: Straight (/) or Curve (O)">
+        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor">
+          <circle class="glyph-o" cx="19" cy="23" r="14.5" stroke-width="3.5"></circle>
+          <line class="glyph-slash active" x1="6" y1="36" x2="32" y2="10" stroke-width="3.5" stroke-linecap="round"></line>
+        </svg>
       </button>
     </div>
 
     <!-- Middle Row - Center: ⵡ (Mouse Card Face Attraction) -->
     <div class="dr-sym-cell dr-cell-mouse-follow" data-arrange-id="mouseFollow" id="drCellMouseFollow">
-      <button type="button" class="dr-sym-btn dr-btn-mouse-follow" id="btnToggleMouseFollow" title="Mouse Card Attraction: Face Cursor (ⵡ)" aria-label="Mouse Card Attraction (ⵡ)">
-        <span class="glyph-tifinagh">ⵡ</span>
+      <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Card Attraction: Face Cursor (ⵡ)" aria-label="Mouse Card Attraction (ⵡ)">
+        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9 L6 37 L32 37 L32 9"></path>
+        </svg>
       </button>
     </div>
 
@@ -18273,13 +18265,7 @@ function bootSupernovaEngine() {
     $('btnToggleLineCurved').addEventListener('click', e => {
       e.stopPropagation();
       pushUndoState();
-      if (e.target && e.target.id === 'btnSubGlyphO') {
-        PARAMS.lineCurved = true;
-      } else if (e.target && e.target.id === 'btnSubGlyphSlash') {
-        PARAMS.lineCurved = false;
-      } else {
-        PARAMS.lineCurved = !PARAMS.lineCurved;
-      }
+      PARAMS.lineCurved = !PARAMS.lineCurved;
       syncLineCurvedUI();
     });
   }
