@@ -1337,7 +1337,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transform: scale(1.1);
 }
 
-/* Middle Row - Left: ⵢ (Line Curve Toggle) */
+/* Middle Row - Left: Connection Style: O (curve) / / (line) on top of each other */
 .dr-cell-line-toggle {
   bottom: 0px;
   left: 6px;
@@ -1358,25 +1358,38 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   padding: 0;
   margin: 0;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.42);
-  opacity: 0.45;
-  transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
+  color: #ffffff;
+  transition: opacity 0.15s ease, filter 0.15s ease, transform 0.15s ease;
 }
 .dr-cell-line-toggle .dr-sym-btn:hover {
-  opacity: 0.85;
-  color: #ffffff;
   transform: scale(1.06);
 }
-.dr-cell-line-toggle .dr-sym-btn.active {
+.dr-cell-line-toggle .glyph-circle,
+.dr-cell-line-toggle .glyph-slash {
+  transition: opacity 0.2s ease, stroke 0.2s ease, filter 0.2s ease;
+  opacity: 0.32;
+  stroke: rgba(255, 255, 255, 0.45);
+}
+.dr-cell-line-toggle .glyph-circle.active,
+.dr-cell-line-toggle .glyph-slash.active {
   opacity: 1 !important;
-  color: #ffffff !important;
-  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85));
+  stroke: #ffffff !important;
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.9));
+}
+.dr-cell-line-toggle .dr-sym-btn:hover .glyph-circle.active,
+.dr-cell-line-toggle .dr-sym-btn:hover .glyph-slash.active {
+  filter: drop-shadow(0 0 9px rgba(255, 255, 255, 1));
+}
+.dr-cell-line-toggle .dr-sym-btn:hover .glyph-circle:not(.active),
+.dr-cell-line-toggle .dr-sym-btn:hover .glyph-slash:not(.active) {
+  opacity: 0.55;
+  stroke: rgba(255, 255, 255, 0.7);
 }
 
-/* Middle Row - Center: ⵇ (Mouse Follow / Face Cursor) */
+/* Middle Row - Center: ⵡ (Mouse Card Face Attraction) */
 .dr-cell-mouse-follow {
   bottom: 0px;
-  left: 98px;
+  left: 90px;
   width: 34px;
   height: 42px;
   display: flex;
@@ -3835,21 +3848,25 @@ body.studio-mode .top-search-wrap {
       </button>
     </div>
 
-    <!-- Middle Row - Left: ⵢ (Line Curve toggle: Click for curved, off for straight) -->
+    <!-- Middle Row - Left: Connection Style: O (curve) / / (line) on top of each other -->
     <div class="dr-sym-cell dr-cell-line-toggle" id="drCellLineMode" data-arrange-id="lineDirect">
-      <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Connection Lines: Curve (ⵢ) / Straight" aria-label="Toggle Connection Lines Curve (ⵢ)">
-        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 7 L8 20 C8 28 30 28 30 20 L30 7 M19 27 L19 41"></path>
+      <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Connection Lines: Straight (/) [Click for Curve (O)]" aria-label="Toggle Connection Lines: Straight (/) or Curve (O)">
+        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Top: (O) for curve -->
+          <circle class="glyph-circle" cx="19" cy="13" r="7.5" stroke-width="3.2"></circle>
+          <!-- Bottom: (/) for straight line -->
+          <line class="glyph-slash active" x1="12" y1="39" x2="26" y2="25" stroke-width="3.5"></line>
         </svg>
       </button>
     </div>
 
-    <!-- Middle Row - Center: ⵇ (Mouse Follow / Face Cursor) in matching size -->
+    <!-- Middle Row - Center: ⵡ (Mouse Card Face Attraction) exactly centered between Left and Right -->
     <div class="dr-sym-cell dr-cell-mouse-follow" data-arrange-id="mouseFollow" id="drCellMouseFollow">
-      <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Follow / Face Cursor (ⵇ)" aria-label="Mouse Follow (ⵇ)">
+      <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Card Attraction: Face Cursor (ⵡ)" aria-label="Mouse Card Attraction (ⵡ)">
         <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="19" cy="17.5" r="10.5"></circle>
-          <line x1="19" y1="28" x2="19" y2="41"></line>
+          <circle cx="19" cy="23" r="15.5"></circle>
+          <line x1="19" y1="7.5" x2="19" y2="38.5"></line>
+          <line x1="3.5" y1="23" x2="34.5" y2="23"></line>
         </svg>
       </button>
     </div>
@@ -18193,17 +18210,20 @@ function bootSupernovaEngine() {
     const isCurved = Boolean(PARAMS.lineCurved);
     const btnCurved = $('btnToggleLineCurved');
     if (btnCurved) {
-      btnCurved.classList.toggle('active', isCurved);
-      btnCurved.title = isCurved ? "Lines: Curved (ⵢ) [Click for Straight]" : "Lines: Straight [Click for Curved (ⵢ)]";
-      btnCurved.setAttribute('aria-label', isCurved ? "Lines: Curved (ⵢ)" : "Lines: Straight");
+      const elSlash = btnCurved.querySelector('.glyph-slash');
+      const elCircle = btnCurved.querySelector('.glyph-circle');
+      if (elSlash) elSlash.classList.toggle('active', !isCurved);
+      if (elCircle) elCircle.classList.toggle('active', isCurved);
+      btnCurved.title = isCurved ? "Lines: Curve (O) [Click for Line (/)]" : "Lines: Straight (/) [Click for Curve (O)]";
+      btnCurved.setAttribute('aria-label', isCurved ? "Lines: Curve (O)" : "Lines: Straight (/)");
     }
     const btnDirect = $('btnToggleLineDirect');
     if (btnDirect) btnDirect.classList.toggle('active', !isCurved);
     const btnMode = $('btnToggleLineMode');
     if (btnMode) {
       btnMode.classList.toggle('active', isCurved);
-      btnMode.title = isCurved ? "Lines: Curved (ⵢ) [Click for Straight]" : "Lines: Straight [Click for Curved (ⵢ)]";
-      btnMode.setAttribute('aria-label', isCurved ? "Lines: Curved (ⵢ)" : "Lines: Straight");
+      btnMode.title = isCurved ? "Lines: Curve (O) [Click for Line (/)]" : "Lines: Straight (/) [Click for Curve (O)]";
+      btnMode.setAttribute('aria-label', isCurved ? "Lines: Curve (O)" : "Lines: Straight (/)");
     }
   }
 
@@ -18212,8 +18232,8 @@ function bootSupernovaEngine() {
     if (btn) {
       const isOn = Boolean(PARAMS.photoCardMouseFollow);
       btn.classList.toggle('active', isOn);
-      btn.title = isOn ? "Mouse Follow: ON (ⵇ) [Click to Turn OFF]" : "Mouse Follow: OFF (ⵇ) [Click to Turn ON]";
-      btn.setAttribute('aria-label', isOn ? "Mouse Follow: ON (ⵇ)" : "Mouse Follow: OFF (ⵇ)");
+      btn.title = isOn ? "Mouse Card Attraction: ON (ⵡ) [Click to Turn OFF]" : "Mouse Card Attraction: OFF (ⵡ) [Click to Turn ON]";
+      btn.setAttribute('aria-label', isOn ? "Mouse Card Attraction: ON (ⵡ)" : "Mouse Card Attraction: OFF (ⵡ)");
     }
   }
 
