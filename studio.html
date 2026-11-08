@@ -1336,66 +1336,76 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transform: scale(1.1);
 }
 
-/* Middle Row - Left: _ and ^ connection line toggles */
+/* Middle Row - Left: ⵢ (Line Curve Toggle) */
 .dr-cell-line-toggle {
-  bottom: 4px;
-  left: 4px;
+  bottom: 0px;
+  left: 6px;
+  width: 34px;
+  height: 42px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
 }
-.dr-sym-btn-sub {
-  width: 24px;
-  height: 24px;
+.dr-cell-line-toggle .dr-sym-btn {
+  width: 34px;
+  height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
   padding: 0;
+  margin: 0;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.38);
-  opacity: 0.55;
-  transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease;
+  color: rgba(255, 255, 255, 0.42);
+  opacity: 0.45;
+  transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
 }
-.dr-sym-btn-sub:hover {
+.dr-cell-line-toggle .dr-sym-btn:hover {
   opacity: 0.85;
   color: #ffffff;
+  transform: scale(1.06);
 }
-.dr-sym-btn-sub.active {
+.dr-cell-line-toggle .dr-sym-btn.active {
   opacity: 1 !important;
   color: #ffffff !important;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.75));
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85));
 }
 
-/* Middle Row - Center: Mouse Follow Diamond with center dot ⟐ */
+/* Middle Row - Center: ⵇ (Mouse Follow / Face Cursor) */
 .dr-cell-mouse-follow {
-  bottom: 2px;
+  bottom: 0px;
   left: 98px;
   width: 34px;
-  height: 34px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .dr-cell-mouse-follow .dr-sym-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.42);
   opacity: 0.45;
   transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
 }
 .dr-cell-mouse-follow .dr-sym-btn:hover {
   opacity: 0.85;
   color: #ffffff;
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 .dr-cell-mouse-follow .dr-sym-btn.active {
   opacity: 1 !important;
   color: #ffffff !important;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85));
 }
 
 /* Middle Row - Right: Photo instancing ⴼ / [ ] & Vertical Card Size Slider */
@@ -1409,18 +1419,28 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 .dr-cell-grid .dr-sym-btn {
   width: 34px;
   height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.42);
   opacity: 0.45;
-  transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease;
+  transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
 }
 .dr-cell-grid .dr-sym-btn:hover {
   opacity: 0.85;
   color: #ffffff;
+  transform: scale(1.06);
 }
 .dr-cell-grid .dr-sym-btn.active {
   opacity: 1 !important;
   color: #ffffff !important;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.75));
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85));
 }
 .dr-vtrack-wrap {
   position: relative;
@@ -3814,26 +3834,21 @@ body.studio-mode .top-search-wrap {
       </button>
     </div>
 
-    <!-- Middle Row - Left: _ and ^ close to each other for connection lines -->
+    <!-- Middle Row - Left: ⵢ (Line Curve toggle: Click for curved, off for straight) -->
     <div class="dr-sym-cell dr-cell-line-toggle" id="drCellLineMode" data-arrange-id="lineDirect">
-      <button type="button" class="dr-sym-btn-sub active" id="btnToggleLineDirect" title="Straight Lines (_)" aria-label="Straight Lines">
-        <svg viewBox="0 0 24 22" width="22" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
-          <line x1="2" y1="16" x2="22" y2="16"></line>
-        </svg>
-      </button>
-      <button type="button" class="dr-sym-btn-sub" id="btnToggleLineCurved" title="Curved Lines (^)" aria-label="Curved Lines">
-        <svg viewBox="0 0 24 22" width="22" height="20" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 16 L12 6 L20 16"></path>
+      <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Connection Lines: Curve (ⵢ) / Straight" aria-label="Toggle Connection Lines Curve (ⵢ)">
+        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 7 L8 20 C8 28 30 28 30 20 L30 7 M19 27 L19 41"></path>
         </svg>
       </button>
     </div>
 
-    <!-- Middle Row - Center: Mouse Follow Diamond with center dot ⟐ -->
+    <!-- Middle Row - Center: ⵇ (Mouse Follow / Face Cursor) in matching size -->
     <div class="dr-sym-cell dr-cell-mouse-follow" data-arrange-id="mouseFollow" id="drCellMouseFollow">
-      <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Follow / Face Cursor (⟐)" aria-label="Mouse Follow">
-        <svg viewBox="0 0 34 34" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="17,3 31,17 17,31 3,17"></polygon>
-          <circle cx="17" cy="17" r="2.8" fill="currentColor"></circle>
+      <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Follow / Face Cursor (ⵇ)" aria-label="Mouse Follow (ⵇ)">
+        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="19" cy="17.5" r="10.5"></circle>
+          <line x1="19" y1="28" x2="19" y2="41"></line>
         </svg>
       </button>
     </div>
@@ -18175,22 +18190,30 @@ function bootSupernovaEngine() {
   // Down-Right Symbols Cluster: Line Mode Toggle, Mouse Follow, Instancing, Hub Scatter Seed
   function syncLineCurvedUI() {
     const isCurved = Boolean(PARAMS.lineCurved);
-    const btnDirect = $('btnToggleLineDirect');
     const btnCurved = $('btnToggleLineCurved');
+    if (btnCurved) {
+      btnCurved.classList.toggle('active', isCurved);
+      btnCurved.title = isCurved ? "Lines: Curved (ⵢ) [Click for Straight]" : "Lines: Straight [Click for Curved (ⵢ)]";
+      btnCurved.setAttribute('aria-label', isCurved ? "Lines: Curved (ⵢ)" : "Lines: Straight");
+    }
+    const btnDirect = $('btnToggleLineDirect');
     if (btnDirect) btnDirect.classList.toggle('active', !isCurved);
-    if (btnCurved) btnCurved.classList.toggle('active', isCurved);
     const btnMode = $('btnToggleLineMode');
     if (btnMode) {
-      btnMode.classList.toggle('active', true);
-      btnMode.classList.toggle('mode-curved', isCurved);
-      btnMode.title = isCurved ? "Lines: Triangle Curve (-^) [Click for Straight]" : "Lines: Straight (-^) [Click for Triangle Curve]";
-      btnMode.setAttribute('aria-label', isCurved ? "Lines: Triangle Curves (-^)" : "Lines: Straight (-^)");
+      btnMode.classList.toggle('active', isCurved);
+      btnMode.title = isCurved ? "Lines: Curved (ⵢ) [Click for Straight]" : "Lines: Straight [Click for Curved (ⵢ)]";
+      btnMode.setAttribute('aria-label', isCurved ? "Lines: Curved (ⵢ)" : "Lines: Straight");
     }
   }
 
   function syncMouseFollowUI() {
     const btn = $('btnToggleMouseFollow');
-    if (btn) btn.classList.toggle('active', Boolean(PARAMS.photoCardMouseFollow));
+    if (btn) {
+      const isOn = Boolean(PARAMS.photoCardMouseFollow);
+      btn.classList.toggle('active', isOn);
+      btn.title = isOn ? "Mouse Follow: ON (ⵇ) [Click to Turn OFF]" : "Mouse Follow: OFF (ⵇ) [Click to Turn ON]";
+      btn.setAttribute('aria-label', isOn ? "Mouse Follow: ON (ⵇ)" : "Mouse Follow: OFF (ⵇ)");
+    }
   }
 
   function syncInstancingUI() {
@@ -18225,7 +18248,7 @@ function bootSupernovaEngine() {
     $('btnToggleLineCurved').addEventListener('click', e => {
       e.stopPropagation();
       pushUndoState();
-      PARAMS.lineCurved = true;
+      PARAMS.lineCurved = !PARAMS.lineCurved;
       syncLineCurvedUI();
     });
   }
