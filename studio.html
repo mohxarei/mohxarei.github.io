@@ -1305,155 +1305,92 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
    DOWN-RIGHT CONTROLS: COMPOSITION MATCHING IMAGE 1 & IMAGE 2
    ========================================================================== */
 
-/* Organic Symbols Composition (exact placement matching user photo) */
+/* Control Symbols Row on top of sliders: % · (/) · /\ · ][ */
 .dr-symbols-composition {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 230px;
-  height: 110px;
+  height: 34px;
   user-select: none;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .dr-sym-cell {
-  position: absolute;
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-/* Top-right: Hub scatter seed ※ (directly above [ ] card instancing) */
-.dr-cell-scatter {
-  top: 2px;
-  right: 10px;
-}
-.dr-cell-scatter .dr-sym-btn {
-  width: 36px;
-  height: 36px;
-  opacity: 0.65;
-  transition: opacity 0.15s, transform 0.15s, color 0.15s;
-}
-.dr-cell-scatter .dr-sym-btn:hover {
-  opacity: 1;
-  color: #fff;
-  transform: scale(1.1);
 }
 
-/* Middle Row - Left: Connection Style: ∅ (O / / toggle) */
-.dr-cell-line-toggle {
-  bottom: 0px;
-  left: 6px;
-  width: 34px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.dr-cell-line-toggle .dr-sym-btn {
-  width: 34px;
-  height: 42px;
+/* Base Monospace ASCII Button (matching # * X minimal style) */
+.dr-ascii-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  padding: 0;
+  padding: 0 4px;
   margin: 0;
   cursor: pointer;
-  color: #ffffff;
-  transition: transform 0.15s ease;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #e5e7eb;
+  opacity: 0.38;
+  user-select: none;
+  transition: opacity 0.16s ease, color 0.16s ease, transform 0.15s ease;
 }
-.dr-cell-line-toggle .dr-sym-btn:hover {
+.dr-ascii-btn:hover {
+  opacity: 0.78;
+  color: #ffffff;
   transform: scale(1.06);
 }
-.dr-cell-line-toggle .glyph-o,
-.dr-cell-line-toggle .glyph-slash {
-  transition: opacity 0.2s ease, stroke 0.2s ease, filter 0.2s ease;
+.dr-ascii-btn.active {
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* 1. Hub scatter seed (%) */
+.dr-cell-scatter .dr-ascii-btn.spin-pop {
+  animation: symSpinPop 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* 2. Connection line style: (/) */
+.dr-btn-line-paren {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1 !important;
+}
+.dr-btn-line-paren .glyph-paren,
+.dr-btn-line-paren .glyph-slash {
+  display: inline-block;
+  transition: opacity 0.18s ease, color 0.18s ease;
+  color: #e5e7eb;
   opacity: 0.32;
-  stroke: rgba(255, 255, 255, 0.38);
+  font-weight: 400;
 }
-.dr-cell-line-toggle .glyph-o.active,
-.dr-cell-line-toggle .glyph-slash.active {
-  opacity: 1 !important;
-  stroke: #ffffff !important;
-  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.95));
-}
-.dr-cell-line-toggle .dr-sym-btn:hover .glyph-o.active,
-.dr-cell-line-toggle .dr-sym-btn:hover .glyph-slash.active {
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
-}
-.dr-cell-line-toggle .dr-sym-btn:hover .glyph-o:not(.active),
-.dr-cell-line-toggle .dr-sym-btn:hover .glyph-slash:not(.active) {
-  opacity: 0.6;
-  stroke: rgba(255, 255, 255, 0.65);
-}
-
-/* Middle Row - Center: ⵡ (Mouse Card Face Attraction) */
-.dr-cell-mouse-follow {
-  bottom: 0px;
-  left: 90px;
-  width: 34px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.dr-cell-mouse-follow .dr-sym-btn {
-  width: 34px;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.42);
-  opacity: 0.45;
-  transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
-}
-.dr-cell-mouse-follow .dr-sym-btn:hover {
-  opacity: 0.85;
-  color: #ffffff;
-  transform: scale(1.06);
-}
-.dr-cell-mouse-follow .dr-sym-btn.active {
+.dr-btn-line-paren .glyph-paren.active,
+.dr-btn-line-paren .glyph-slash.active {
   opacity: 1 !important;
   color: #ffffff !important;
-  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85));
+  font-weight: 600;
+}
+.dr-btn-line-paren:hover .glyph-paren:not(.active),
+.dr-btn-line-paren:hover .glyph-slash:not(.active) {
+  opacity: 0.65;
+  color: #ffffff;
 }
 
-/* Middle Row - Right: Photo instancing ⴼ / [ ] & Vertical Card Size Slider */
+/* 4. Photo card instancing (][) with vertical card size slider */
 .dr-cell-grid {
-  bottom: 0px;
-  right: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.dr-cell-grid .dr-sym-btn {
-  width: 34px;
-  height: 42px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.42);
-  opacity: 0.45;
-  transition: opacity 0.15s ease, color 0.15s ease, filter 0.15s ease, transform 0.15s ease;
-}
-.dr-cell-grid .dr-sym-btn:hover {
-  opacity: 0.85;
-  color: #ffffff;
-  transform: scale(1.06);
-}
-.dr-cell-grid .dr-sym-btn.active {
-  opacity: 1 !important;
-  color: #ffffff !important;
-  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85));
+  gap: 5px;
 }
 .dr-vtrack-wrap {
   position: relative;
@@ -3831,49 +3768,33 @@ body.studio-mode .top-search-wrap {
 
 <!-- Down-Right Controls: Symbols Cluster & Sliders matching user photo -->
 <div class="dr-controls mono" id="downRightControls" data-arrange-id="drGroup">
-  <!-- Organic Symbols Composition (Top-Right: ※, Middle: _^ , ⟐ , [ ] ) -->
+  <!-- Control Symbols Row on top of sliders: % · (/) · /\ · ][ -->
   <div class="dr-symbols-composition" id="drSymbolsCluster">
-    <!-- Top-right: Hub scatter seed ※ -->
+    <!-- 1. Hub scatter seed: % -->
     <div class="dr-sym-cell dr-cell-scatter" data-arrange-id="scatter" id="drCellScatter">
-      <button type="button" class="dr-sym-btn" id="btnScatterHubSeed" title="Scatter Hub Seed (※)" aria-label="Scatter Hub Seed">
-        <svg viewBox="0 0 40 40" width="34" height="34" fill="none" stroke="currentColor">
-          <line x1="9" y1="9" x2="31" y2="31" stroke-width="3" stroke-linecap="round"></line>
-          <line x1="31" y1="9" x2="9" y2="31" stroke-width="3" stroke-linecap="round"></line>
-          <circle cx="20" cy="5" r="2.8" fill="currentColor"></circle>
-          <circle cx="20" cy="35" r="2.8" fill="currentColor"></circle>
-          <circle cx="5" cy="20" r="2.8" fill="currentColor"></circle>
-          <circle cx="35" cy="20" r="2.8" fill="currentColor"></circle>
-        </svg>
+      <button type="button" class="dr-ascii-btn" id="btnScatterHubSeed" title="Scatter Hub Seed (%)" aria-label="Scatter Hub Seed (%)">
+        <span class="dr-ascii-char">%</span>
       </button>
     </div>
 
-    <!-- Middle Row - Left: Connection Style: ∅ (round O / diagonal /) -->
+    <!-- 2. Connection line style: (/) -->
     <div class="dr-sym-cell dr-cell-line-toggle" id="drCellLineMode" data-arrange-id="lineDirect">
-      <button type="button" class="dr-sym-btn" id="btnToggleLineCurved" title="Connection Lines: Straight (/) [Click for Curve (O)]" aria-label="Toggle Connection Lines: Straight (/) or Curve (O)">
-        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor">
-          <circle class="glyph-o" cx="19" cy="23" r="14.5" stroke-width="3.5"></circle>
-          <line class="glyph-slash active" x1="6" y1="36" x2="32" y2="10" stroke-width="3.5" stroke-linecap="round"></line>
-        </svg>
+      <button type="button" class="dr-ascii-btn dr-btn-line-paren" id="btnToggleLineCurved" title="Connection Lines: Straight / [Click for Curve ( )]" aria-label="Toggle Connection Lines: Straight / or Curve ( )">
+        <span class="glyph-paren">(</span><span class="glyph-slash active">/</span><span class="glyph-paren">)</span>
       </button>
     </div>
 
-    <!-- Middle Row - Center: ⵡ (Mouse Card Face Attraction) -->
+    <!-- 3. Mouse follow face: /\ -->
     <div class="dr-sym-cell dr-cell-mouse-follow" data-arrange-id="mouseFollow" id="drCellMouseFollow">
-      <button type="button" class="dr-sym-btn" id="btnToggleMouseFollow" title="Mouse Card Attraction: Face Cursor (ⵡ)" aria-label="Mouse Card Attraction (ⵡ)">
-        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 9 L6 37 L32 37 L32 9"></path>
-        </svg>
+      <button type="button" class="dr-ascii-btn" id="btnToggleMouseFollow" title="Mouse Follow Face Cursor (/\)" aria-label="Mouse Follow Face Cursor (/\)">
+        <span class="dr-ascii-char">/\</span>
       </button>
     </div>
 
-    <!-- Middle Row - Right: Photo Cards Instancing [ ] & Vertical Card Size Slider -->
+    <!-- 4. Photo card instancing: ][ and vertical slider -->
     <div class="dr-sym-cell dr-cell-grid" data-arrange-id="instancing" id="drCellGrid">
-      <button type="button" class="dr-sym-btn active" id="btnToggleInstancing" title="Photo Cards Visibility" aria-label="Photo Cards Visibility">
-        <svg viewBox="0 0 38 46" width="34" height="42" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="square">
-          <path d="M4 6 L12 6 M4 6 L4 40 M4 40 L12 40"></path>
-          <path d="M34 6 L26 6 M34 6 L34 40 M34 40 L26 40"></path>
-          <line x1="4" y1="23" x2="34" y2="23"></line>
-        </svg>
+      <button type="button" class="dr-ascii-btn active" id="btnToggleInstancing" title="Photo Cards Visibility (][)" aria-label="Photo Cards Visibility (][)">
+        <span class="dr-ascii-char">][</span>
       </button>
       <div class="dr-vtrack-wrap" id="drCardSizeVWrap" title="Card Size: 2.0 to 6.0">
         <span class="dr-vbracket dr-vbracket-t">&lt;</span>
@@ -13573,11 +13494,12 @@ function bootSupernovaEngine() {
       if (savedUi.drSlidersScale !== undefined) UI_PARAMS.drSlidersScale = savedUi.drSlidersScale;
       if (savedUi.uiLayout && typeof savedUi.uiLayout === "object") {
         UI_PARAMS.uiLayout = Object.assign({}, UI_PARAMS.uiLayout, savedUi.uiLayout);
-        if (savedUi.uiLayoutVer !== 2) {
+        if (savedUi.uiLayoutVer !== 3) {
           UI_PARAMS.uiLayout.scatter = { x: 0, y: 0, s: 1, r: 0 };
           UI_PARAMS.uiLayout.mouseFollow = { x: 0, y: 0, s: 1, r: 0 };
           UI_PARAMS.uiLayout.lineDirect = { x: 0, y: 0, s: 1, r: 0 };
           UI_PARAMS.uiLayout.lineCurved = { x: 0, y: 0, s: 1, r: 0 };
+          UI_PARAMS.uiLayout.instancing = { x: 0, y: 0, s: 1, r: 0 };
         }
       } else if (savedUi.drItems && typeof savedUi.drItems === "object") {
         UI_PARAMS.uiLayout = Object.assign({}, UI_PARAMS.uiLayout, savedUi.drItems);
@@ -18206,19 +18128,19 @@ function bootSupernovaEngine() {
     const btnCurved = $('btnToggleLineCurved');
     if (btnCurved) {
       const elSlash = btnCurved.querySelector('.glyph-slash');
-      const elCircle = btnCurved.querySelector('.glyph-o') || btnCurved.querySelector('.glyph-circle');
+      const elParens = btnCurved.querySelectorAll('.glyph-paren');
       if (elSlash) elSlash.classList.toggle('active', !isCurved);
-      if (elCircle) elCircle.classList.toggle('active', isCurved);
-      btnCurved.title = isCurved ? "Lines: Curve (O) [Click for Line (/)]" : "Lines: Straight (/) [Click for Curve (O)]";
-      btnCurved.setAttribute('aria-label', isCurved ? "Lines: Curve (O)" : "Lines: Straight (/)");
+      elParens.forEach(el => el.classList.toggle('active', isCurved));
+      btnCurved.title = isCurved ? "Lines: Curve ( ) [Click for Straight /]" : "Lines: Straight / [Click for Curve ( )]";
+      btnCurved.setAttribute('aria-label', isCurved ? "Lines: Curve ( )" : "Lines: Straight /");
     }
     const btnDirect = $('btnToggleLineDirect');
     if (btnDirect) btnDirect.classList.toggle('active', !isCurved);
     const btnMode = $('btnToggleLineMode');
     if (btnMode) {
       btnMode.classList.toggle('active', isCurved);
-      btnMode.title = isCurved ? "Lines: Curve (O) [Click for Line (/)]" : "Lines: Straight (/) [Click for Curve (O)]";
-      btnMode.setAttribute('aria-label', isCurved ? "Lines: Curve (O)" : "Lines: Straight (/)");
+      btnMode.title = isCurved ? "Lines: Curve ( ) [Click for Straight /]" : "Lines: Straight / [Click for Curve ( )]";
+      btnMode.setAttribute('aria-label', isCurved ? "Lines: Curve ( )" : "Lines: Straight /");
     }
   }
 
@@ -18227,8 +18149,8 @@ function bootSupernovaEngine() {
     if (btn) {
       const isOn = Boolean(PARAMS.photoCardMouseFollow);
       btn.classList.toggle('active', isOn);
-      btn.title = isOn ? "Mouse Card Attraction: ON (ⵡ) [Click to Turn OFF]" : "Mouse Card Attraction: OFF (ⵡ) [Click to Turn ON]";
-      btn.setAttribute('aria-label', isOn ? "Mouse Card Attraction: ON (ⵡ)" : "Mouse Card Attraction: OFF (ⵡ)");
+      btn.title = isOn ? "Mouse Follow: ON (/\\) [Click to Turn OFF]" : "Mouse Follow: OFF (/\\) [Click to Turn ON]";
+      btn.setAttribute('aria-label', isOn ? "Mouse Follow: ON (/\\)" : "Mouse Follow: OFF (/\\)");
     }
   }
 
