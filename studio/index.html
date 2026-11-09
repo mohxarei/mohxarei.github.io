@@ -1313,9 +1313,9 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   align-items: center;
   justify-content: space-between;
   width: 230px;
-  height: 34px;
+  height: 36px;
   user-select: none;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
 }
 .dr-sym-cell {
   position: relative;
@@ -1324,21 +1324,21 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   justify-content: center;
 }
 
-/* Base Monospace ASCII Button (matching # * X minimal style) */
+/* Base Monospace ASCII Button (matching # * X minimal style - 1.7x bigger & bold) */
 .dr-ascii-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  padding: 0 4px;
+  padding: 0 2px;
   margin: 0;
   cursor: pointer;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 30px;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.04em;
   color: #e5e7eb;
   opacity: 0.38;
   user-select: none;
@@ -1352,7 +1352,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 .dr-ascii-btn.active {
   opacity: 1 !important;
   color: #ffffff !important;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* 1. Hub scatter seed (%) */
@@ -1366,6 +1366,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   align-items: center;
   justify-content: center;
   opacity: 1 !important;
+  letter-spacing: -0.06em;
 }
 .dr-btn-line-paren .glyph-paren,
 .dr-btn-line-paren .glyph-slash {
@@ -1373,13 +1374,13 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
   transition: opacity 0.18s ease, color 0.18s ease;
   color: #e5e7eb;
   opacity: 0.32;
-  font-weight: 400;
+  font-weight: 700;
 }
 .dr-btn-line-paren .glyph-paren.active,
 .dr-btn-line-paren .glyph-slash.active {
   opacity: 1 !important;
   color: #ffffff !important;
-  font-weight: 600;
+  font-weight: 700;
 }
 .dr-btn-line-paren:hover .glyph-paren:not(.active),
 .dr-btn-line-paren:hover .glyph-slash:not(.active) {
@@ -1391,7 +1392,7 @@ body.studio-mode #brandDesc[contenteditable="true"] { -webkit-user-select: text;
 .dr-cell-grid {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 .dr-vtrack-wrap {
   position: relative;
