@@ -13393,10 +13393,7 @@ function bootSupernovaEngine() {
       return trimmed;
     }
     const clean = trimmed.replace(/^\.?\//, "");
-    if (typeof window !== "undefined" && window.location && window.location.origin && window.location.origin !== "null" && window.location.protocol.startsWith("http")) {
-      return window.location.origin + "/" + clean;
-    }
-    if (typeof window !== "undefined" && window.location && window.location.pathname.includes("/studio")) {
+    if (typeof window !== "undefined" && window.location && window.location.pathname.includes("/studio") && !document.querySelector("base")) {
       return "../" + clean;
     }
     return clean;
@@ -15584,7 +15581,7 @@ function bootSupernovaEngine() {
     if (layerIndex === 0) {
       imgSrc = (node.cover || (currentMedia && currentMedia.cover) || (currentMedia && (currentMedia.img || currentMedia.url)) || "").trim();
     } else if (currentMedia) {
-      imgSrc = (currentMedia.cover || (currentMedia.type === "photo" ? (currentMedia.img || currentMedia.url) : "") || node.cover || "").trim();
+      imgSrc = (currentMedia.cover || node.cover || (currentMedia.type === "photo" ? (currentMedia.img || currentMedia.url) : "") || "").trim();
     }
 
     function drawInnerArtwork() {
@@ -15741,16 +15738,19 @@ function bootSupernovaEngine() {
         renderPhotoAndOverlays(img);
       } else {
         renderPhotoAndOverlays(null);
-        img.addEventListener("load", () => {
+        const onImgReady = () => {
           renderPhotoAndOverlays(img);
-          if (targetMesh && targetMesh.material && targetMesh.material.map) {
-            targetMesh.material.map.needsUpdate = true;
+          if (targetMesh) {
+            if (targetMesh.userData && targetMesh.userData.texNormal) targetMesh.userData.texNormal.needsUpdate = true;
+            if (targetMesh.material && targetMesh.material.map) targetMesh.material.map.needsUpdate = true;
           }
-        }, { once: true });
+        };
+        img.addEventListener("load", onImgReady, { once: true });
         img.addEventListener("error", () => {
           renderPhotoAndOverlays(null);
-          if (targetMesh && targetMesh.material && targetMesh.material.map) {
-            targetMesh.material.map.needsUpdate = true;
+          if (targetMesh) {
+            if (targetMesh.userData && targetMesh.userData.texNormal) targetMesh.userData.texNormal.needsUpdate = true;
+            if (targetMesh.material && targetMesh.material.map) targetMesh.material.map.needsUpdate = true;
           }
         }, { once: true });
       }
@@ -17762,8 +17762,16 @@ function bootSupernovaEngine() {
         vid.controls = true;
         vid.autoplay = true;
         vid.playsInline = true;
+        vid.preload = "metadata";
         vid.setAttribute("playsinline", "");
         vid.style.cssText = "max-width:100%;max-height:calc(88vh - 74px);width:auto;height:auto;object-fit:contain;border-radius:var(--ui-radius, 1px);display:block;";
+        vid.onerror = () => {
+          vid.remove();
+          const errBox = document.createElement("div");
+          errBox.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;height:240px;color:rgba(255,255,255,0.7);font-family:monospace;font-size:12px;text-align:center;gap:6px;";
+          errBox.innerHTML = "<span>[ MEDIA FILE BUFFERING OR SYNCING ]</span><span style='font-size:10px;opacity:0.5'>Large asset pending archive delivery</span>";
+          wrap.appendChild(errBox);
+        };
         wrap.appendChild(vid);
       } else {
         const cv = document.createElement("canvas"); cv.width = 960; cv.height = 600;
@@ -20146,11 +20154,18 @@ function bootSupernovaEngine() {
             const mediaItem = mediaList[pickedMediaIdx];
 
             slot.mediaWrap.innerHTML = "";
-            if (mediaItem && (mediaItem.img || mediaItem.video || mediaItem.url)) {
+            const coverSrc = (mediaItem && mediaItem.cover) || pickedNode.cover || "";
+            if (isVideoMedia(mediaItem) && coverSrc) {
+              const img = document.createElement("img");
+              img.src = resolveAssetUrl(coverSrc);
+              img.alt = pickedNode.title;
+              slot.mediaWrap.appendChild(img);
+            } else if (mediaItem && (mediaItem.img || mediaItem.video || mediaItem.url)) {
               if (isVideoMedia(mediaItem)) {
                 const vid = document.createElement("video");
                 vid.src = resolveAssetUrl((mediaItem.img || mediaItem.video || mediaItem.url).trim());
                 vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
+                vid.preload = "metadata";
                 vid.setAttribute("playsinline", ""); vid.setAttribute("webkit-playsinline", "");
                 slot.mediaWrap.appendChild(vid);
               } else {
@@ -21005,11 +21020,18 @@ function bootSupernovaEngine() {
             const mediaEl = $("reticlePhotoMedia");
             mediaEl.innerHTML = "";
             const mediaItem = (n.media && (n.media[0]?.img || n.media[0]?.video || n.media[0]?.url ? n.media[0] : (n.media.find(m => m.img || m.video) || n.media[0]))) || null;
-            if (mediaItem && (mediaItem.img || mediaItem.video || mediaItem.url)) {
+            const reticleCover = n.cover || (mediaItem && mediaItem.cover) || "";
+            if (isVideoMedia(mediaItem) && reticleCover) {
+              const img = document.createElement("img");
+              img.src = resolveAssetUrl(reticleCover);
+              img.alt = n.title;
+              mediaEl.appendChild(img);
+            } else if (mediaItem && (mediaItem.img || mediaItem.video || mediaItem.url)) {
               if (isVideoMedia(mediaItem)) {
                 const vid = document.createElement("video");
                 vid.src = resolveAssetUrl((mediaItem.img || mediaItem.video || mediaItem.url).trim());
                 vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
+                vid.preload = "metadata";
                 vid.setAttribute("playsinline", ""); vid.setAttribute("webkit-playsinline", "");
                 mediaEl.appendChild(vid);
               } else {
